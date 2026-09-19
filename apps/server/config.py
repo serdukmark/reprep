@@ -8,6 +8,12 @@ class Settings:
     environment: str = 'development'
     demo: bool = False
     bot_token: str = ''
+    public_base_url: str = ''
+    max_bot_id: int = 0
+    max_bot_enabled: bool = False
+    max_outbound_enabled: bool = False
+    max_webhook_secret: str = ''
+    max_ca_bundle: str = ''
     ai_url: str = ''
     ai_key: str = ''
     ai_data_approved: bool = False
@@ -32,6 +38,12 @@ class Settings:
                     environment=os.getenv('APP_ENV', 'development'),
                     demo=os.getenv('DEMO_ENABLED', 'false').lower() == 'true',
                     bot_token=os.getenv('MAX_BOT_TOKEN', ''),
+                    public_base_url=os.getenv('PUBLIC_BASE_URL','').rstrip('/'),
+                    max_bot_id=int(os.getenv('MAX_BOT_ID','0') or 0),
+                    max_bot_enabled=os.getenv('MAX_BOT_ENABLED','false').lower()=='true',
+                    max_outbound_enabled=os.getenv('MAX_OUTBOUND_ENABLED','false').lower()=='true',
+                    max_webhook_secret=os.getenv('MAX_WEBHOOK_SECRET',''),
+                    max_ca_bundle=os.getenv('MAX_CA_BUNDLE',''),
                     ai_url=os.getenv('AI_ADAPTER_URL', ''), ai_key=os.getenv('AI_ADAPTER_KEY', ''),
                     ai_data_approved=os.getenv('AI_DATA_APPROVED', 'false').lower() == 'true',
                     openrouter_key=os.getenv('OPENROUTER_API_KEY', ''), openrouter_model=os.getenv('OPENROUTER_MODEL', ''),

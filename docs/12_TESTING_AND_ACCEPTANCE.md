@@ -213,3 +213,5 @@ This is local verification, not a completed shared-environment release gate. Det
 | FR-DEMO-001 / FR-OPS-001 | Scoped reset with real-user preservation, reference IDs, no secret/raw-provider logging; API tests | No monitoring service or production incident workflow |
 
 Known test limitations: no real tutor pilot, no real learner data, no MAX app/device test, no broad load test. Swagger OpenAPI is 3.1.0. The AI evaluation scripts make explicit paid requests; the default pytest suite uses local rules or mocks and never calls paid AI.
+
+MAX continuation: 34 server tests pass; full isolated browser suite 5/5 (including official JS Bridge snapshot) passes with synthetic MAX token and no external AI. Frozen HMAC fixture was generated independently using Node crypto. Mutation control actually runs the signature test against disabled-signature and wrong-HMAC-constant implementations; both are detected. MAX CDN is intercepted in the browser simulation. Real messenger/client and token-backed API remain untested.

@@ -64,6 +64,24 @@ def test_core_flow_and_immutable_original(env):
     assert len(p)==3 and sum(x['total'] for x in p)==3
 
 
+def test_long_submission_preserved_for_manual_review(env):
+    c,app,cfg,h=env
+    original=c.get('/api/assignments/demo-assignment',headers=h['tutor']).json()
+    body={k:original[k] for k in ('relationship_id','title','instructions','due_at','feedback_policy','tasks')}
+    body['tasks']=[{'id':str(i),'type':'short_text','prompt':'Explain this step','answer':'','rubric':'Explain','skill':'Math','hint':'','options':[]} for i in range(20)]
+    aid=c.post('/api/assignments',headers=h['tutor'],json=body).json()['id']
+    c.post('/api/assignments/'+aid+'/publish',headers=h['tutor'])
+    answers={str(i):'a'*5000 for i in range(20)}
+    r=submit(c,h['learner'],aid,answers)
+    assert r.status_code==200
+    asyncio.run(app.state.process_one())
+    s=c.get('/api/assignments/'+aid,headers=h['tutor']).json()['submission']
+    assert s['status']=='awaiting_review' and s['analysis']['failure_reason']=='context_too_large'
+    assert s['answers']==answers
+    r=c.post('/api/submissions/'+s['id']+'/review',headers=h['tutor'],json={'action':'corrected','note':'Проверено человеком','tasks':[{'task_id':str(i),'correctness':'unknown','feedback':'Нужен разбор на занятии'} for i in range(20)]})
+    assert r.status_code==200
+
+
 def test_cross_tutor_and_learner_isolation(env):
     c,app,cfg,h=env
     for who in ('outsider','learner-2'):

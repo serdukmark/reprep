@@ -15,7 +15,8 @@ from .db import initialize, connect, one, rows, dumps
 from .auth import token_hash, verify_max
 from .models import (AssignmentInput, DraftInput, ReviewInput, InviteInput, TokenInput,
                      MaxLogin, LessonInput, MaterialInput, ReportInput)
-from .ai import LocalRules, RemoteAdapter, OpenRouterAdapter, context_for, validate_analysis
+from .ai import ContextTooLarge, LocalRules, RemoteAdapter, OpenRouterAdapter, context_for, validate_analysis
+from .max_bot import public_origin, verify_webhook, accept_event, process_outbox
 from .service import uid, now, audit, seed, assignment_view, content_hash, progress
 
 log = logging.getLogger('reprep')
@@ -29,6 +30,12 @@ def create_app(settings=None, provider=None, run_worker=True):
     cfg = settings or Settings.load()
     if cfg.demo and cfg.environment not in ('development', 'test', 'demo'):
         raise RuntimeError('Demo access forbidden')
+    if cfg.public_base_url:
+        public_origin(cfg.public_base_url)
+    if cfg.max_bot_enabled and (not cfg.bot_token or not cfg.public_base_url or cfg.max_bot_id<=0):
+        raise RuntimeError('MAX bot requires token, public origin and bot ID; run setup check')
+    if cfg.max_outbound_enabled and not cfg.max_bot_enabled:
+        raise RuntimeError('MAX outbound requires bot enablement')
     engine = provider or (OpenRouterAdapter(cfg.openrouter_key, cfg.openrouter_model) if cfg.openrouter_key and cfg.openrouter_model else RemoteAdapter(cfg.ai_url, cfg.ai_key) if cfg.ai_url and cfg.ai_data_approved else LocalRules())
 
     def claim_job():
@@ -64,12 +71,16 @@ def create_app(settings=None, provider=None, run_worker=True):
             return False
         job, context, learner = claimed
         try:
+            if len(json.dumps(context,ensure_ascii=False).encode())>60000:
+                raise ContextTooLarge()
             if isinstance(engine, (OpenRouterAdapter, RemoteAdapter)):
                 if not learner['demo'] and (cfg.synthetic_only or not cfg.ai_data_approved):
                     raise RuntimeError('Real learner data not approved for external AI')
                 await asyncio.to_thread(reserve_ai_call, job['id'])
             output = await asyncio.wait_for(asyncio.to_thread(engine.analyze, context), timeout=60)
             output = validate_analysis(output.model_dump() if hasattr(output, 'model_dump') else output, context).model_dump()
+        except ContextTooLarge:
+            output = {'assessment_status':'output_invalid','engine':'unavailable','tasks':[],'requires_tutor_review':True,'failure_reason':'context_too_large'}
         except (ValidationError, ValueError):
             output = {'assessment_status': 'output_invalid', 'engine': 'unavailable', 'tasks': [], 'requires_tutor_review': True}
         except Exception:
@@ -88,6 +99,16 @@ def create_app(settings=None, provider=None, run_worker=True):
                 log.error('worker_failure')
                 await asyncio.sleep(1)
 
+    async def bot_worker():
+        while True:
+            try:
+                await asyncio.to_thread(process_outbox,cfg)
+            except asyncio.CancelledError:
+                raise
+            except Exception:
+                log.error('max_worker_failure')
+            await asyncio.sleep(1)
+
     @asynccontextmanager
     async def lifespan(app):
         initialize(cfg.database)
@@ -95,7 +116,12 @@ def create_app(settings=None, provider=None, run_worker=True):
             with connect(cfg.database) as c:
                 seed(c)
         task = asyncio.create_task(worker()) if run_worker else None
+        bot_task = asyncio.create_task(bot_worker()) if run_worker and cfg.max_outbound_enabled else None
         yield
+        if bot_task:
+            bot_task.cancel()
+            with suppress(asyncio.CancelledError):
+                await bot_task
         if task:
             task.cancel()
             with suppress(asyncio.CancelledError):
@@ -113,12 +139,19 @@ def create_app(settings=None, provider=None, run_worker=True):
         # Enforce same-origin writes; non-browser authenticated clients do not send Origin.
         if request.method not in ('GET', 'HEAD', 'OPTIONS'):
             origin = request.headers.get('origin')
-            allowed = f"{request.url.scheme}://{request.headers.get('host')}"
+            allowed = cfg.public_base_url or f"{request.url.scheme}://{request.headers.get('host')}"
             if origin and origin != allowed:
                 return JSONResponse({'error': {'code': 'ORIGIN', 'message': 'Недопустимый источник запроса', 'reference_id': reference}}, status_code=403)
         length = request.headers.get('content-length', '0')
         if not length.isdigit() or int(length) > 150_000:
             return JSONResponse({'error': {'code': 'TOO_LARGE', 'message': 'Запрос слишком большой', 'reference_id': reference}}, status_code=413)
+        if request.method in ('POST','PUT','PATCH'):
+            body=bytearray()
+            async for chunk in request.stream():
+                body.extend(chunk)
+                if len(body)>150_000:
+                    return JSONResponse({'error':{'code':'TOO_LARGE','message':'Запрос слишком большой','reference_id':reference}},status_code=413)
+            request._body=bytes(body)
         try:
             response = await call_next(request)
         except Exception:
@@ -128,9 +161,9 @@ def create_app(settings=None, provider=None, run_worker=True):
         response.headers['X-Content-Type-Options'] = 'nosniff'
         response.headers['Referrer-Policy'] = 'no-referrer'
         response.headers['Cache-Control'] = 'no-store' if request.url.path.startswith('/api') else 'no-cache'
-        response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'"
+        response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' https://st.max.ru; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self' https://max.ru https://*.max.ru https://*.oneme.ru"
         if request.url.path == '/api/docs':
-            response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' data: https://fastapi.tiangolo.com; connect-src 'self'; object-src 'none'; base-uri 'self'"
+            response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' data: https://fastapi.tiangolo.com; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self' https://max.ru https://*.max.ru https://*.oneme.ru"
         return response
 
     @app.exception_handler(HTTPException)
@@ -199,7 +232,21 @@ def create_app(settings=None, provider=None, run_worker=True):
 
     @app.get('/api/config')
     def config():
-        return {'demo_enabled': cfg.demo, 'max_enabled': bool(cfg.bot_token), 'assessment': cfg.openrouter_model if cfg.openrouter_model else 'approved_adapter' if cfg.ai_url else 'local_rules', 'version': '0.1.0'}
+        return {'demo_enabled': cfg.demo, 'max_enabled': bool(cfg.bot_token), 'assessment': engine.model if isinstance(engine, OpenRouterAdapter) else 'approved_adapter' if isinstance(engine, RemoteAdapter) else 'local_rules', 'version': '0.1.0'}
+
+    @app.post('/api/max/webhook')
+    async def max_webhook(request: Request):
+        if not cfg.max_bot_enabled:
+            fail(404,'MAX_DISABLED','Бот не подключён')
+        if not verify_webhook(request.headers,cfg):
+            fail(401,'MAX_WEBHOOK_SECRET','Недопустимый запрос')
+        try:
+            result=await asyncio.to_thread(accept_event,cfg,await request.json())
+        except (ValueError,TypeError,AttributeError):
+            fail(422,'MAX_UPDATE','Некорректное событие')
+        except RuntimeError:
+            fail(503,'MAX_QUEUE','Повторите доставку позже')
+        return {'ok':True,'status':result}
 
     @app.post('/api/auth/demo/{persona}')
     def demo_login(persona: str, request: Request, c=Depends(db)):

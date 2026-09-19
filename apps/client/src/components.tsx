@@ -1,3 +1,4 @@
+import { closingConfirmation } from "./max";
 import React, { useEffect } from "react";
 import { BookOpen } from "lucide-react";
 import { labels } from "./api";
@@ -30,6 +31,7 @@ export function mayLeave() {
 }
 export function useUnsaved(dirty: boolean) {
   useEffect(() => {
+    closingConfirmation(dirty);
     const leave = (e: Event) => {
       if (
         dirty &&
@@ -46,6 +48,7 @@ export function useUnsaved(dirty: boolean) {
     window.addEventListener("reprep:navigate", leave);
     window.addEventListener("beforeunload", unload);
     return () => {
+      closingConfirmation(false);
       window.removeEventListener("reprep:navigate", leave);
       window.removeEventListener("beforeunload", unload);
     };

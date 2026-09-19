@@ -53,3 +53,6 @@ This is a compact project-level log. Material engineering decisions should also 
 - D-N04 [CONFIRMED constraint / ASSUMPTION choice]: owner cap $1/M both directions. Qwen 3.8 Flash selected provisionally after live comparison and Gemini regression (2/6 on follow-up, including a Russian decimal-comma error); hard provider price cap, 50 external attempts/day. See AI report. Luna excluded for output price $1.20/M.
 - D-N05 [CONFIRMED]: no push, merge, main changes, public deploy or outbound messages overnight. Live OpenRouter calls on synthetic fixtures explicitly authorized.
 - D-N06 [CONFIRMED fact]: official PDF establishes bot or bot+MiniApp, Docker, 40/60 evaluation. External launch, final submission and human pilot remain unverified.
+
+- D-N07 [CONFIRMED scope / ASSUMPTION implementation]: owner requested offline MAX integration. ADR-002: secret-checked webhook, bounded durable bot replies, Bridge, guarded external setup scripts. Real token/API/domain not used overnight; TLS/partner setup remain owner gates.
+- D-N08 [ASSUMPTION]: 60KB UTF-8 AI context ceiling; longer work stays intact for manual review. No silent truncation; no automatic model-cost escalation.

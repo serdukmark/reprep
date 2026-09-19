@@ -1716,3 +1716,14 @@ footer span:last-child {
     transition: none !important;
   }
 }
+
+.max-embedded .topbar {
+  padding-top: env(safe-area-inset-top, 0px);
+  height: calc(76px + env(safe-area-inset-top, 0px));
+}
+.max-embedded .content {
+  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+}
+.max-embedded .form-actions.sticky {
+  bottom: env(safe-area-inset-bottom, 0px);
+}

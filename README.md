@@ -7,7 +7,10 @@
 - [Утренний отчёт](docs/22_MORNING_REPORT_RU.md) — что проверено, запуск, ограничения.
 - [Вопросы владельцу](docs/15_OPEN_QUESTIONS.md) — приоритет, варианты, временные решения.
 - [Выбор AI и реальные ответы](docs/23_AI_MODEL_COMPARISON_RU.md).
+- [MAX: подключение утром в три этапа](docs/26_MAX_START_RU.md), [сценарий демо 3–5 минут](docs/27_DEMO_SCRIPT_RU.md).
 - [Официальный кейс и MAX](docs/24_CASE_AND_MAX_RU.md).
+
+Для уже настроенной локальной машины: `bash scripts/demo.sh` — одна команда сборки/запуска с ожиданием healthcheck.
 
 ## Быстрый локальный запуск
 
@@ -116,3 +119,25 @@ npm run test:e2e
 | `docs/17_GLOSSARY.md` | Shared vocabulary |
 | `docs/assets/roadmap-cards/` | Team roadmap cards in PNG format |
 | `docs/templates/` | Templates for ADRs, features, test reports and pilot notes |
+
+## Дополнительные локальные MAX-проверки
+
+```sh
+.venv/bin/python scripts/test_max_mutations.py
+# Отдельный сервер, синтетический токен, без платного AI:
+MAX_BOT_TOKEN=synthetic-max-test-token DATABASE_PATH=artifacts/max-browser.sqlite3 APP_ENV=test DEMO_ENABLED=true OPENROUTER_MODEL='' .venv/bin/python -m uvicorn apps.server.main:app --port 8002
+# В другом терминале:
+E2E_URL=http://127.0.0.1:8002 E2E_MAX_SIM=true npm run test:e2e
+```
+
+Bridge подменяется локальным fixture только в соответствующем тесте. Настоящие MAX API не вызываются. В обычном browser suite MAX-симуляции пропускаются без E2E_MAX_SIM=true. Schema v2 добавляет max_outbox без удаления существующих учебных данных.
+
+Для дополнительной проверки настоящего публичного JS Bridge (не API бота):
+
+```sh
+mkdir -p artifacts
+curl --fail --silent --show-error https://st.max.ru/js/max-web-app.js -o artifacts/max-web-app.js
+E2E_URL=http://127.0.0.1:8002 E2E_MAX_SDK_PATH=artifacts/max-web-app.js npm run test:e2e -- --grep 'official Bridge'
+```
+
+Библиотека в этом тесте подаётся из локального файла, родитель MAX симулируется. Снимок не включается в Git и не заменяет реальную проверку устройства.

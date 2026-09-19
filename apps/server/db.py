@@ -4,6 +4,7 @@ from pathlib import Path
 from contextlib import contextmanager
 
 SCHEMA = '''
+CREATE TABLE IF NOT EXISTS max_outbox(id TEXT PRIMARY KEY, recipient INTEGER NOT NULL, body TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'queued', attempts INTEGER NOT NULL DEFAULT 0, available_at REAL NOT NULL DEFAULT 0, created REAL NOT NULL);
 CREATE TABLE IF NOT EXISTS schema_migrations(version INTEGER PRIMARY KEY);
 CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY, external_id TEXT UNIQUE, role TEXT NOT NULL CHECK(role IN ('tutor','learner')), alias TEXT NOT NULL, demo INTEGER NOT NULL DEFAULT 0);
 CREATE TABLE IF NOT EXISTS sessions(token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), expires REAL NOT NULL);
@@ -22,6 +23,7 @@ CREATE INDEX IF NOT EXISTS assignments_tutor ON assignments(tutor_id);
 CREATE INDEX IF NOT EXISTS submissions_status ON submissions(status,lease_until);
 CREATE INDEX IF NOT EXISTS relationships_learner ON relationships(learner_id);
 INSERT OR IGNORE INTO schema_migrations VALUES(1);
+INSERT OR IGNORE INTO schema_migrations VALUES(2);
 '''
 
 

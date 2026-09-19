@@ -7,6 +7,7 @@ from apps.server.config import Settings
 from apps.server.main import create_app
 from scripts.benchmark_ai import fixture
 from concurrent.futures import ThreadPoolExecutor
+import pytest
 
 
 def test_openrouter_hard_price_and_data_routing():
@@ -53,3 +54,20 @@ def test_background_worker_does_not_block_parallel_dashboard_reads(tmp_path):
         with ThreadPoolExecutor(max_workers=4) as pool:
             results=list(pool.map(lambda path:c.get('/api/'+path,headers=h),endpoints))
         assert all(r.status_code==200 for r in results)
+
+
+@pytest.mark.parametrize('content',['',None,'   ','not json','x'*100001])
+def test_empty_or_invalid_ai_response_is_not_a_grade(content):
+    context,_=fixture()
+    with patch('apps.server.ai.httpx.Client') as cls:
+        response=cls.return_value.__enter__.return_value.post.return_value
+        response.status_code=200
+        response.json.return_value={'choices':[{'finish_reason':'stop','message':{'content':content}}]}
+        with pytest.raises(ValueError):
+            OpenRouterAdapter('synthetic-test-credential','test-model').analyze(context)
+
+
+def test_config_does_not_claim_live_ai_when_key_missing(tmp_path):
+    cfg=Settings(database=str(tmp_path/'config.sqlite'),openrouter_model='qwen/qwen3.8-flash',openrouter_key='')
+    with TestClient(create_app(cfg,run_worker=False)) as c:
+        assert c.get('/api/config').json()['assessment']=='local_rules'

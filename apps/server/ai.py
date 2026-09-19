@@ -9,6 +9,10 @@ from .models import Analysis, TaskAssessment
 PROMPT_VERSION = 'assessment-v2'
 
 
+class ContextTooLarge(ValueError):
+    pass
+
+
 def context_for(assignment, answers, history):
     skills = {t['skill'] for t in assignment['tasks']}
     return {'schema_version': '1', 'prompt_version': PROMPT_VERSION,
@@ -115,7 +119,10 @@ class OpenRouterAdapter:
         self.last_usage['latency_seconds'] = round(time.monotonic()-start, 3)
         if choice.get('finish_reason') not in ('stop', None):
             raise ValueError('Incomplete assessment')
-        output = json.loads(choice['message']['content'])
+        content=choice['message'].get('content')
+        if not isinstance(content,str) or not content.strip() or len(content.encode())>100000:
+            raise ValueError('Empty or oversized assessment')
+        output = json.loads(content)
         output['engine'] = self.model
         output['prompt_version'] = PROMPT_VERSION
         result = validate_analysis(output, context)

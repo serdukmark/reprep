@@ -45,6 +45,7 @@ export type Submission = {
   analysis: {
     engine: string;
     assessment_status: string;
+    failure_reason?: string;
     tasks: Assessment[];
   } | null;
   review: { action: string; tasks: ReviewTask[]; note: string } | null;
@@ -102,12 +103,20 @@ export type Material = {
   url: string;
   note: string;
 };
-let token = sessionStorage.getItem("reprep.session") || "";
+let token = "";
+try {
+  token = sessionStorage.getItem("reprep.session") || "";
+} catch {
+  /* Embedded storage may be denied. Keep this session in memory. */
+}
 export function setToken(value: string) {
   token = value;
-  value
-    ? sessionStorage.setItem("reprep.session", value)
-    : sessionStorage.removeItem("reprep.session");
+  try {
+    if (value) sessionStorage.setItem("reprep.session", value);
+    else sessionStorage.removeItem("reprep.session");
+  } catch {
+    /* Reload requires a new login, saved answers remain on server. */
+  }
 }
 export async function api<T>(
   path: string,

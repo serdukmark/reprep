@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { initializeMax, launchData, bindMaxBack } from "./max";
 import { createRoot } from "react-dom/client";
 import {
   ArrowUpRight,
@@ -225,6 +226,22 @@ function App() {
       setToast(publish ? "Работа назначена ученику" : "Черновик сохранён");
     });
   }
+  useEffect(
+    () =>
+      bindMaxBack(
+        active
+          ? () => {
+              if (!mayLeave()) return;
+              setActive(null);
+              setEditing(false);
+              action(refresh);
+            }
+          : page !== "today"
+            ? () => navigate("today")
+            : null,
+      ),
+    [active?.id, page],
+  );
   const pending = assignments.filter(
     (a) =>
       a.submission &&
@@ -324,14 +341,11 @@ function App() {
               onSubmit={(e) => {
                 e.preventDefault();
                 action(async () => {
-                  const values = new URLSearchParams(location.hash.slice(1));
-                  if (values.getAll("WebAppData").length !== 1)
-                    throw Error("Откройте мини-приложение из MAX");
                   const data = await api<{ token: string; user: User }>(
                     "/auth/max",
                     "POST",
                     {
-                      init_data: values.get("WebAppData"),
+                      init_data: launchData(),
                       role,
                       alias: alias || "Участник",
                     },
@@ -1044,4 +1058,6 @@ function App() {
     </div>
   );
 }
-createRoot(document.getElementById("root")!).render(<App />);
+initializeMax().finally(() =>
+  createRoot(document.getElementById("root")!).render(<App />),
+);

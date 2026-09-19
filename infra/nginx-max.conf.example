@@ -1,0 +1,19 @@
+# Install only on the approved host, after DNS and certificate provisioning.
+server {
+    listen 443 ssl;
+    server_name YOUR_DOMAIN;
+    ssl_certificate /etc/ssl/reprep/fullchain.pem;
+    ssl_certificate_key /etc/ssl/reprep/privkey.pem;
+    client_max_body_size 150k;
+    # No query strings, request bodies or credential headers in access logs.
+    access_log off;
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_read_timeout 20s;
+        # Do not set X-Frame-Options DENY/SAMEORIGIN: MAX web embeds the app.
+        # Do not inject wildcard CORS: browser API requests remain same-origin.
+    }
+}

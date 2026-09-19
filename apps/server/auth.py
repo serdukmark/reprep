@@ -2,6 +2,7 @@ import hashlib
 import hmac
 import json
 import time
+import re
 from urllib.parse import parse_qsl
 
 
@@ -13,7 +14,9 @@ def verify_max(init_data: str, bot_token: str, now=None):
     """Official MAX double HMAC; fresh launch only, duplicate keys rejected."""
     if not bot_token:
         raise ValueError('MAX authentication is not configured')
-    pairs = parse_qsl(init_data, keep_blank_values=True, strict_parsing=True)
+    if len(init_data)>20000 or re.search(r'%(?![0-9a-fA-F]{2})',init_data):
+        raise ValueError('Malformed launch data')
+    pairs = parse_qsl(init_data, keep_blank_values=True, strict_parsing=True, errors='strict', max_num_fields=50)
     if len({k for k, _ in pairs}) != len(pairs):
         raise ValueError('Duplicate launch parameter')
     data = dict(pairs)
@@ -27,6 +30,8 @@ def verify_max(init_data: str, bot_token: str, now=None):
     if age < -30 or age > 300:
         raise ValueError('Expired launch data')
     user = json.loads(data['user'])
+    if not isinstance(user,dict):
+        raise ValueError('Invalid user')
     if type(user.get('id')) is not int or user['id'] <= 0:
         raise ValueError('Invalid user')
     return str(user['id'])

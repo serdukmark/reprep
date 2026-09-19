@@ -455,13 +455,19 @@ export function AssignmentDetail({
             : s.status === "reviewed"
               ? "Преподаватель проверил работу. Обратная связь — под каждым ответом."
               : isTutor
-                ? s.analysis?.engine === "local_rules_v1"
-                  ? "Предварительная проверка по эталонам, без нейросети. Проверьте выводы и добавьте обратную связь."
-                  : s.analysis
-                    ? "Предварительный AI-разбор · " +
-                      s.analysis.engine +
-                      ". Решение остаётся за вами."
-                    : "Ответы сохранены. AI готовит разбор, но вы уже можете проверить вручную."
+                ? s.analysis?.failure_reason === "context_too_large"
+                  ? "Работа слишком длинная для одной AI-проверки. Все ответы сохранены; проверьте её вручную или назначьте меньшие части отдельными работами."
+                  : ["provider_unavailable", "output_invalid"].includes(
+                        s.analysis?.assessment_status || "",
+                      )
+                    ? "AI не смог подготовить надёжный разбор. Ответы сохранены: проверьте работу вручную или повторите попытку позже."
+                    : s.analysis?.engine === "local_rules_v1"
+                      ? "Предварительная проверка по эталонам, без нейросети. Проверьте выводы и добавьте обратную связь."
+                      : s.analysis
+                        ? "Предварительный AI-разбор · " +
+                          s.analysis.engine +
+                          ". Решение остаётся за вами."
+                        : "Ответы сохранены. AI готовит разбор, но вы уже можете проверить вручную."
                 : "Ответы сохранены и отправлены. Преподаватель проверит результат и даст обратную связь."}
         </div>
       )}
@@ -694,22 +700,23 @@ export function AssignmentDetail({
             >
               Отклонить без прогресса
             </button>
-            {["output_invalid", "provider_unavailable"].includes(
-              s.analysis?.assessment_status || "",
-            ) && (
-              <button
-                className="secondary"
-                disabled={busy}
-                onClick={() =>
-                  action(async () => {
-                    await api("/submissions/" + s.id + "/retry", "POST");
-                    await update();
-                  })
-                }
-              >
-                Повторить AI-проверку
-              </button>
-            )}
+            {s.analysis?.failure_reason !== "context_too_large" &&
+              ["output_invalid", "provider_unavailable"].includes(
+                s.analysis?.assessment_status || "",
+              ) && (
+                <button
+                  className="secondary"
+                  disabled={busy}
+                  onClick={() =>
+                    action(async () => {
+                      await api("/submissions/" + s.id + "/retry", "POST");
+                      await update();
+                    })
+                  }
+                >
+                  Повторить AI-проверку
+                </button>
+              )}
           </div>
         </section>
       )}
