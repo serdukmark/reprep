@@ -123,19 +123,44 @@ export async function api<T>(
   method = "GET",
   body?: unknown,
 ): Promise<T> {
-  const res = await fetch("/api" + path, {
-    method,
-    headers: {
-      ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
-      ...(token ? { Authorization: "Bearer " + token } : {}),
-    },
-    body: body !== undefined ? JSON.stringify(body) : undefined,
-  });
-  const data = await res.json();
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  let res: Response;
+  let data;
+  try {
+    res = await fetch("/api" + path, {
+      signal: controller.signal,
+      method,
+      headers: {
+        ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+        ...(token ? { Authorization: "Bearer " + token } : {}),
+      },
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    });
+    try {
+      data = await res.json();
+    } catch {
+      throw new Error(
+        "Сервер вернул непонятный ответ. Обновите данные и повторите действие.",
+      );
+    }
+  } catch (e) {
+    if (controller.signal.aborted)
+      throw new Error(
+        "Сервер не ответил вовремя. Обновите данные перед повтором: действие могло сохраниться.",
+      );
+    if (e instanceof TypeError)
+      throw new Error(
+        "Не удалось связаться с сервером. Проверьте соединение и повторите действие.",
+      );
+    throw e;
+  } finally {
+    clearTimeout(timeout);
+  }
   if (!res.ok)
     throw new Error(
-      (data.error?.message || "Не удалось выполнить действие") +
-        (data.error?.reference_id
+      (data?.error?.message || "Не удалось выполнить действие") +
+        (data?.error?.reference_id
           ? " · " + data.error.reference_id.slice(0, 8)
           : ""),
     );

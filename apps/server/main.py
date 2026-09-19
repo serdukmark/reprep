@@ -391,7 +391,7 @@ def create_app(settings=None, provider=None, run_worker=True):
     def get_assignment(id_: str, u=Depends(user), c=Depends(db)):
         a = assignment(c, id_, u)
         s = one(c, 'SELECT * FROM submissions WHERE assignment_id=? ORDER BY attempt DESC LIMIT 1', (id_,))
-        d = one(c, 'SELECT * FROM drafts WHERE assignment_id=?', (id_,))
+        d = one(c, 'SELECT * FROM drafts WHERE assignment_id=? AND learner_id=?', (id_, u['id'])) if u['role']=='learner' else None
         return {**assignment_view(a, u['role']), 'submission': submission_view(c, s, a, u),
                 'draft': {'answers': json.loads(d['answers']), 'revision': d['revision']} if d else {'answers': {}, 'revision': 0}}
 

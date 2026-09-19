@@ -110,11 +110,17 @@ class OpenRouterAdapter:
                 # Never include raw upstream bodies or authorization headers in errors.
                 raise RuntimeError(f'OpenRouter HTTP {response.status_code}')
             raw = response.json()
+        if not isinstance(raw, dict):
+            raise ValueError('Invalid response envelope')
         if raw.get('error') or not raw.get('choices'):
             raise RuntimeError('OpenRouter returned no assessment')
+        if not isinstance(raw['choices'], list):
+            raise ValueError('Invalid response choices')
         choice = raw['choices'][0]
+        if not isinstance(choice, dict) or not isinstance(choice.get('message'), dict):
+            raise ValueError('Invalid response message')
         self.last_output = choice['message'].get('content', '')
-        usage = raw.get('usage', {})
+        usage = raw.get('usage') if isinstance(raw.get('usage'), dict) else {}
         self.last_usage = {k: usage.get(k) for k in ('prompt_tokens','completion_tokens','total_tokens','cost')}
         self.last_usage['latency_seconds'] = round(time.monotonic()-start, 3)
         if choice.get('finish_reason') not in ('stop', None):
@@ -123,10 +129,12 @@ class OpenRouterAdapter:
         if not isinstance(content,str) or not content.strip() or len(content.encode())>100000:
             raise ValueError('Empty or oversized assessment')
         output = json.loads(content)
+        if not isinstance(output, dict):
+            raise ValueError('Invalid assessment object')
         output['engine'] = self.model
         output['prompt_version'] = PROMPT_VERSION
         result = validate_analysis(output, context)
-        usage = raw.get('usage', {})
+        usage = raw.get('usage') if isinstance(raw.get('usage'), dict) else {}
         self.last_usage = {k: usage.get(k) for k in ('prompt_tokens','completion_tokens','total_tokens','cost')}
         self.last_usage['latency_seconds'] = round(time.monotonic()-start, 3)
         return result

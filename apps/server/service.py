@@ -22,12 +22,10 @@ def content_hash(value):
 
 
 def seed(conn):
-    if one(conn, 'SELECT id FROM users WHERE id=?', ('demo-tutor',)):
-        return
-    conn.executemany('INSERT INTO users(id,role,alias,demo) VALUES(?,?,?,1)', [
+    conn.executemany('INSERT OR IGNORE INTO users(id,role,alias,demo) VALUES(?,?,?,1)', [
         ('demo-tutor', 'tutor', 'Алекс • демо'), ('demo-learner', 'learner', 'Саша • демо'),
         ('demo-learner-2', 'learner', 'Женя • демо'), ('demo-outsider', 'tutor', 'Другой репетитор • демо')])
-    conn.executemany('INSERT INTO relationships VALUES(?,?,?,?)', [
+    conn.executemany('INSERT OR IGNORE INTO relationships VALUES(?,?,?,?)', [
         ('demo-link', 'demo-tutor', 'demo-learner', 'Математика · ЕГЭ'),
         ('demo-link-2', 'demo-tutor', 'demo-learner-2', 'Математика · ЕГЭ')])
     data = {'relationship_id': 'demo-link', 'title': 'Линейные уравнения: от шага к решению',
@@ -43,12 +41,15 @@ def seed(conn):
             {'id': 'reason', 'type': 'short_text', 'prompt': 'Почему при решении уравнения можно вычесть одно число из обеих частей?',
              'answer': '', 'rubric': 'Ученик объясняет сохранение равенства при одинаковой операции с обеими частями.',
              'skill': 'Обоснование решения', 'options': [], 'hint': 'Представьте две чаши весов в равновесии.'}]}
-    conn.execute('INSERT INTO assignments(id,tutor_id,relationship_id,status,data,created) VALUES(?,?,?,?,?,?)',
+    conn.execute('INSERT OR IGNORE INTO assignments(id,tutor_id,relationship_id,status,data,created) VALUES(?,?,?,?,?,?)',
                  ('demo-assignment', 'demo-tutor', 'demo-link', 'published', dumps(data), now()))
+    second = {**data, 'relationship_id':'demo-link-2', 'title':'Дроби и уравнения: самостоятельная работа'}
+    conn.execute('INSERT OR IGNORE INTO assignments(id,tutor_id,relationship_id,status,data,created) VALUES(?,?,?,?,?,?)',
+                 ('demo-assignment-2', 'demo-tutor', 'demo-link-2', 'published', dumps(second), now()))
     lesson = {'relationship_id': 'demo-link', 'title': 'Разбираем уравнения',
               'starts_at': (datetime.now(timezone.utc) + timedelta(days=1)).replace(hour=15, minute=0).isoformat(),
               'duration': 60, 'payment_status': 'unknown'}
-    conn.execute('INSERT INTO lessons VALUES(?,?,?)', ('demo-lesson', 'demo-link', dumps(lesson)))
+    conn.execute('INSERT OR IGNORE INTO lessons VALUES(?,?,?)', ('demo-lesson', 'demo-link', dumps(lesson)))
 
 
 def assignment_view(row, role):

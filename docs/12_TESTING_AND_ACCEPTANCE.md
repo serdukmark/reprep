@@ -217,3 +217,7 @@ Known test limitations: no real tutor pilot, no real learner data, no MAX app/de
 MAX continuation: 34 server tests pass; full isolated browser suite 5/5 (including official JS Bridge snapshot) passes with synthetic MAX token and no external AI. Frozen HMAC fixture was generated independently using Node crypto. Mutation control actually runs the signature test against disabled-signature and wrong-HMAC-constant implementations; both are detected. MAX CDN is intercepted in the browser simulation. Real messenger/client and token-backed API remain untested.
 
 History continuation: the resubmission API test now verifies both attempts through public endpoints, authorizes each reader and excludes old AI analysis from learner responses. Browser tests cover history retrieval plus return → prefilled new attempt → save → resubmit → tutor confirmation without reload. No paid AI calls were made during this continuation.
+
+## Resilience continuation — 20 September 2026
+
+47 server tests passed, including OpenRouter HTTP fault injection, simultaneous learner submissions, partial/idempotent demo seeding and private unsent drafts. Thirteen intentional queue/context/original mutations were detected. Browser outage + request timeout + recovery/manual review passed separately; see `28_FAILURE_TESTS_RU.md`. These are controlled faults, not external provider incidents or a load test.
