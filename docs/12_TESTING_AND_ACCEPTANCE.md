@@ -205,7 +205,7 @@ This is local verification, not a completed shared-environment release gate. Det
 | FR-AUTH-001–004 | Demo sessions, MAX HMAC, server role/relationship checks, expiring single-use invitations; pytest | Real MAX/webview test pending |
 | FR-PROFILE-001–003 | Minimal alias/role/subject relationship | One role; no account management UI |
 | FR-ASG-001–007 | Draft editor, three task types, private references, skill tags, learner preview, immutable publication/copy; API and browser tests | No bulk assignment |
-| FR-SUB-001–005 | Assignment list, explicit save/reload, optimistic revision, immutable submission, return/new attempt; network failure browser test | No attempt archive UI |
+| FR-SUB-001–005 | Assignment list, explicit save/reload, optimistic revision, immutable submission, return/new attempt; network failure browser test | Read-only attempt archive now available |
 | FR-AI-001–008 | Bounded context, schema, uncertainty, gated feedback, teacher edits/approval, provider error/manual continuation; live OpenRouter API and browser | Small synthetic eval, no expert-approved accuracy threshold |
 | FR-PROG-001–004 | Evidence only after review; review source, tutor/learner view and JSON export | No calibrated skill mastery model; FR-PROG-005 recommendations not implemented |
 | FR-SCHED-001 / FR-MAT-001 / FR-PAY-001 | Schedule, HTTPS material links, tutor-private manual payment; browser test | No bot reminders, uploads, automatic payments |
@@ -215,3 +215,5 @@ This is local verification, not a completed shared-environment release gate. Det
 Known test limitations: no real tutor pilot, no real learner data, no MAX app/device test, no broad load test. Swagger OpenAPI is 3.1.0. The AI evaluation scripts make explicit paid requests; the default pytest suite uses local rules or mocks and never calls paid AI.
 
 MAX continuation: 34 server tests pass; full isolated browser suite 5/5 (including official JS Bridge snapshot) passes with synthetic MAX token and no external AI. Frozen HMAC fixture was generated independently using Node crypto. Mutation control actually runs the signature test against disabled-signature and wrong-HMAC-constant implementations; both are detected. MAX CDN is intercepted in the browser simulation. Real messenger/client and token-backed API remain untested.
+
+History continuation: the resubmission API test now verifies both attempts through public endpoints, authorizes each reader and excludes old AI analysis from learner responses. Browser tests cover history retrieval plus return → prefilled new attempt → save → resubmit → tutor confirmation without reload. No paid AI calls were made during this continuation.

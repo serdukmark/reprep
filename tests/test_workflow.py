@@ -125,10 +125,21 @@ def test_draft_conflict_and_repeat_submission(env):
 def test_return_creates_new_attempt_preserves_old(env):
     c,app,cfg,h=env
     sid=submit(c,h['learner']).json()['id']
+    asyncio.run(app.state.process_one())
     assert review(c,h['tutor'],sid,'returned').status_code==200
     newer=submit(c,h['learner'],answers={'linear':'5','fraction':'0,75','reason':'Сохраняется равенство.'})
     assert newer.status_code==200
     assert newer.json()['id']!=sid
+    history=c.get('/api/assignments/demo-assignment/attempts',headers=h['learner']).json()
+    assert [entry['attempt'] for entry in history['items']]==[2,1]
+    old=c.get('/api/submissions/'+sid,headers=h['learner']).json()
+    assert old['answers']['linear']=='4' and old['analysis'] is None
+    assert old['review']['action']=='returned'
+    assert c.get('/api/submissions/'+sid,headers=h['tutor']).json()['analysis']['engine']=='local_rules_v1'
+    for who in ('outsider','learner-2'):
+        assert c.get('/api/submissions/'+sid,headers=h[who]).status_code==404
+        assert c.get('/api/assignments/demo-assignment/attempts',headers=h[who]).status_code==404
+    assert c.get('/api/assignments/demo-assignment/attempts?offset=-1',headers=h['learner']).status_code==422
     with connect(cfg.database) as db:
         assert one(db,'SELECT answers FROM submissions WHERE id=?',(sid,))['answers'].find('"4"')>=0
     assert c.get('/api/relationships/demo-link/progress',headers=h['tutor']).json()==[]

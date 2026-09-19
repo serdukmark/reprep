@@ -395,6 +395,14 @@ def create_app(settings=None, provider=None, run_worker=True):
         return {**assignment_view(a, u['role']), 'submission': submission_view(c, s, a, u),
                 'draft': {'answers': json.loads(d['answers']), 'revision': d['revision']} if d else {'answers': {}, 'revision': 0}}
 
+    @app.get('/api/assignments/{id_}/attempts')
+    def attempts(id_: str, offset: int = 0, u=Depends(user), c=Depends(db)):
+        assignment(c,id_,u)
+        if offset<0:
+            fail(422,'OFFSET','Некорректная страница истории')
+        found=rows(c,'SELECT id,attempt,status,submitted FROM submissions WHERE assignment_id=? ORDER BY attempt DESC LIMIT 21 OFFSET ?',(id_,offset))
+        return {'items':found[:20],'next_offset':offset+20 if len(found)>20 else None}
+
     def check_answers(a, answers):
         tasks = {t['id']: t for t in json.loads(a['data'])['tasks']}
         if not set(answers) <= set(tasks):
@@ -454,6 +462,11 @@ def create_app(settings=None, provider=None, run_worker=True):
             fail(404, 'NOT_FOUND', 'Работа не найдена')
         a = assignment(c, s['assignment_id'], u)
         return s, a
+
+    @app.get('/api/submissions/{id_}')
+    def submission_detail(id_: str, u=Depends(user), c=Depends(db)):
+        s,a=get_submission(c,id_,u)
+        return submission_view(c,s,a,u)
 
     @app.post('/api/submissions/{id_}/retry')
     def retry(id_: str, u=Depends(user), c=Depends(db)):

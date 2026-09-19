@@ -22,6 +22,8 @@ operations:
   - POST /api/assignments/{id}/publish
   - PUT /api/assignments/{id}/draft
   - POST /api/assignments/{id}/submit
+  - GET /api/assignments/{id}/attempts
+  - GET /api/submissions/{id}
   - POST /api/submissions/{id}/review
   - GET /api/relationships/{id}/progress
 release_gates:

@@ -19,6 +19,7 @@ import {
   ReviewTask,
   Correctness,
 } from "./api";
+import { AttemptHistory } from "./AttemptHistory";
 import { Badge, useUnsaved } from "./components";
 export const blankTask = (): Task => ({
   id: crypto.randomUUID().replaceAll("-", ""),
@@ -348,7 +349,11 @@ export function AssignmentDetail({
   duplicate: () => void;
 }) {
   const [answers, setAnswers] = useState<Record<string, string>>(
-      a.draft.answers,
+      a.draft.revision
+        ? a.draft.answers
+        : a.submission?.status === "returned"
+          ? a.submission.answers
+          : a.draft.answers,
     ),
     [revision, setRevision] = useState(a.draft.revision),
     [dirty, setDirty] = useState(false),
@@ -359,9 +364,31 @@ export function AssignmentDetail({
     [showHints, setShowHints] = useState<Record<string, boolean>>({});
   const s = a.submission;
   const writable = !isTutor && (!s || s.status === "returned");
+  const priorStatus = useRef(s?.status);
+  useEffect(() => {
+    if (
+      !isTutor &&
+      s?.status === "returned" &&
+      priorStatus.current !== "returned"
+    ) {
+      setAnswers(a.draft.revision ? a.draft.answers : s.answers);
+      setRevision(a.draft.revision);
+      setDirty(false);
+      setSaveError("");
+      setSaved("");
+    }
+    priorStatus.current = s?.status;
+  }, [s?.status, s?.id]);
+
   const [reviewTasks, setReviewTasks] = useState<ReviewTask[]>([]);
   const savingRef = useRef(false),
     reviewDirty = useRef(false);
+  useEffect(() => {
+    if (isTutor) {
+      setNote("");
+      reviewDirty.current = false;
+    }
+  }, [s?.id]);
   useUnsaved(dirty || reviewDirty.current);
   useEffect(() => {
     if (reviewDirty.current) return;
@@ -720,6 +747,7 @@ export function AssignmentDetail({
           </div>
         </section>
       )}
+      {s && <AttemptHistory assignment={a} tutor={isTutor} />}
       {!isTutor && s && (
         <button
           className="text-button"

@@ -147,16 +147,29 @@ function App() {
   useEffect(() => {
     if (
       !active?.submission ||
-      !["queued", "processing"].includes(active.submission.status)
+      ![
+        "queued",
+        "processing",
+        ...(!isTutor ? ["awaiting_review"] : ["returned"]),
+      ].includes(active.submission.status)
     )
       return;
     const id = active.id;
     const interval = setInterval(
       () =>
         api<Assignment>("/assignments/" + id)
-          .then((a) => setActive((old) => (old?.id === id ? a : old)))
+          .then((a) => {
+            setActive((old) => (old?.id === id ? a : old));
+            if (
+              a.submission?.status !== active.submission?.status &&
+              ["reviewed", "returned"].includes(a.submission?.status || "")
+            )
+              return refresh();
+          })
           .catch((e) => setError(e.message)),
-      2000,
+      ["awaiting_review", "returned"].includes(active.submission.status)
+        ? 5000
+        : 2000,
     );
     return () => clearInterval(interval);
   }, [active?.id, active?.submission?.status]);

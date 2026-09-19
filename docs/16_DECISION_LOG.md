@@ -56,3 +56,5 @@ This is a compact project-level log. Material engineering decisions should also 
 
 - D-N07 [CONFIRMED scope / ASSUMPTION implementation]: owner requested offline MAX integration. ADR-002: secret-checked webhook, bounded durable bot replies, Bridge, guarded external setup scripts. Real token/API/domain not used overnight; TLS/partner setup remain owner gates.
 - D-N08 [ASSUMPTION]: 60KB UTF-8 AI context ceiling; longer work stays intact for manual review. No silent truncation; no automatic model-cost escalation.
+
+- D-N09 [ASSUMPTION]: returned work prefills the last submitted answers into a new attempt, without changing that original. Read-only history exposes only role-authorized data; learner waiting/review and tutor waiting/resubmission refresh automatically. This implements FR-SUB-004/005 and evidence inspectability, not editable historical grades.

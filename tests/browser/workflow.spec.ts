@@ -81,6 +81,19 @@ test("tutor assigns, learner saves/submits, real worker analyzes, tutor approves
     learner.getByText("Проверено преподавателем", { exact: true }),
   ).toBeVisible();
   await learner
+    .getByRole("button", { name: "История попыток", exact: true })
+    .click();
+  await learner
+    .locator(".attempt-history")
+    .getByRole("button", { name: /Попытка 1/ })
+    .click();
+  await expect(learner.locator(".attempt-detail .original p")).toHaveText("5");
+  await expect(
+    learner
+      .locator(".attempt-detail")
+      .getByText("Предварительный AI-разбор этой попытки"),
+  ).toHaveCount(0);
+  await learner
     .getByRole("button", { name: "Мой прогресс", exact: true })
     .click();
   await expect(
