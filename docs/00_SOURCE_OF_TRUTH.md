@@ -96,3 +96,7 @@ Use these evidence levels in product claims:
 5. **Hypothesis:** plausible but not yet demonstrated.
 
 Claims in presentations, README and UI must not be presented at a stronger evidence level than the supporting material.
+
+## Implementation update — 20 September 2026
+
+The official education case is now available at `official/education-case.pdf`. Current verified implementation and remaining gates are in `22_MORNING_REPORT_RU.md`; case reconciliation in `24_CASE_AND_MAX_RU.md`. The historical open-question rows are superseded where explicitly resolved by the current section of `15_OPEN_QUESTIONS.md`. Owner authorized reversible overnight implementation, local commits only, no publication or real learner data.

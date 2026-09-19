@@ -1,0 +1,739 @@
+import React, { useState, useEffect, useRef, FormEvent } from "react";
+import {
+  ArrowRight,
+  Plus,
+  Trash2,
+  ShieldCheck,
+  Clock,
+  Sparkles,
+  Check,
+  CheckCheck,
+} from "lucide-react";
+import {
+  api,
+  date,
+  labels,
+  Assignment,
+  Task,
+  Relation,
+  ReviewTask,
+  Correctness,
+} from "./api";
+import { Badge, useUnsaved } from "./components";
+export const blankTask = (): Task => ({
+  id: crypto.randomUUID().replaceAll("-", ""),
+  type: "numeric",
+  prompt: "",
+  options: [],
+  answer: "",
+  rubric: "",
+  skill: "",
+  hint: "",
+});
+export const blankAssignment = (r: string): Assignment => ({
+  id: "",
+  title: "",
+  instructions: "",
+  relationship_id: r,
+  status: "draft",
+  revision: 1,
+  due_at: null,
+  feedback_policy: "after_review",
+  tasks: [blankTask()],
+  draft: { answers: {}, revision: 0 },
+  submission: null,
+});
+export function Builder({
+  initial,
+  relations,
+  busy,
+  save,
+}: {
+  initial: Assignment;
+  relations: Relation[];
+  busy: boolean;
+  save: (a: Assignment, p: boolean) => void;
+}) {
+  const [a, setA] = useState(initial),
+    [preview, setPreview] = useState(false);
+  useUnsaved(JSON.stringify(a) !== JSON.stringify(initial));
+  const update = (i: number, patch: Partial<Task>) =>
+    setA((old) => ({
+      ...old,
+      tasks: old.tasks.map((t, j) => (i === j ? { ...t, ...patch } : t)),
+    }));
+  function submit(e: FormEvent) {
+    e.preventDefault();
+    save(a, false);
+  }
+  return (
+    <form onSubmit={submit}>
+      <div className="page-heading">
+        <div>
+          <div className="eyebrow">СНАЧАЛА ХОРОШИЙ ВОПРОС</div>
+          <h1>{initial.id ? "Редактирование работы" : "Новое задание"}</h1>
+          <p>Эталоны и критерии останутся видны только вам.</p>
+        </div>
+        <button
+          type="button"
+          className="secondary"
+          onClick={() => setPreview(!preview)}
+        >
+          {preview ? "Вернуться к редактору" : "Глазами ученика"}
+        </button>
+      </div>
+      <section className="card builder">
+        <label>
+          Название работы
+          <input
+            required
+            minLength={3}
+            maxLength={160}
+            placeholder="Например, линейные уравнения"
+            value={a.title}
+            onChange={(e) => setA({ ...a, title: e.target.value })}
+          />
+        </label>
+        <div className="form-grid">
+          <label>
+            Ученик
+            <select
+              aria-label="Ученик"
+              value={a.relationship_id}
+              onChange={(e) => setA({ ...a, relationship_id: e.target.value })}
+            >
+              {relations.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.learner_alias} · {r.subject}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Дедлайн (ваш часовой пояс)
+            <input
+              type="datetime-local"
+              value={
+                a.due_at
+                  ? new Date(
+                      new Date(a.due_at).getTime() -
+                        new Date().getTimezoneOffset() * 60000,
+                    )
+                      .toISOString()
+                      .slice(0, 16)
+                  : ""
+              }
+              onChange={(e) =>
+                setA({
+                  ...a,
+                  due_at: e.target.value
+                    ? new Date(e.target.value).toISOString()
+                    : null,
+                })
+              }
+            />
+          </label>
+        </div>
+        <label>
+          Инструкция ученику
+          <textarea
+            maxLength={3000}
+            placeholder="Что важно помнить при выполнении?"
+            value={a.instructions}
+            onChange={(e) => setA({ ...a, instructions: e.target.value })}
+          />
+        </label>
+        {!preview && (
+          <label>
+            Когда показывать обратную связь
+            <select
+              value={a.feedback_policy}
+              onChange={(e) =>
+                setA({
+                  ...a,
+                  feedback_policy: e.target.value as typeof a.feedback_policy,
+                })
+              }
+            >
+              <option value="after_review">После моей проверки</option>
+              <option value="hints_first">
+                Мои подсказки сразу, результат после проверки
+              </option>
+            </select>
+          </label>
+        )}
+      </section>
+      {a.tasks.map((t, i) => (
+        <section className="card task-editor" key={t.id}>
+          <div className="section-head">
+            <span className="eyebrow">
+              ЗАДАНИЕ {String(i + 1).padStart(2, "0")}
+            </span>
+            {!preview && a.tasks.length > 1 && (
+              <button
+                type="button"
+                className="icon-button"
+                aria-label={"Удалить задание " + (i + 1)}
+                onClick={() =>
+                  setA({ ...a, tasks: a.tasks.filter((_, j) => j !== i) })
+                }
+              >
+                <Trash2 size={17} />
+              </button>
+            )}
+          </div>
+          {preview ? (
+            <>
+              <h3>{t.prompt || "Текст задания"}</h3>
+              {t.type === "single_choice" ? (
+                t.options.map((o) => (
+                  <div className="option" key={o}>
+                    {o}
+                  </div>
+                ))
+              ) : (
+                <div className="answer-placeholder">
+                  Место для ответа ученика
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <label>
+                Формат ответа
+                <select
+                  value={t.type}
+                  onChange={(e) =>
+                    update(i, {
+                      type: e.target.value as Task["type"],
+                      answer: "",
+                      options:
+                        e.target.value === "single_choice"
+                          ? ["Вариант 1", "Вариант 2"]
+                          : [],
+                    })
+                  }
+                >
+                  <option value="numeric">Число</option>
+                  <option value="single_choice">Один вариант</option>
+                  <option value="short_text">
+                    Короткий ответ с объяснением
+                  </option>
+                </select>
+              </label>
+              <label>
+                Условие
+                <textarea
+                  required
+                  minLength={3}
+                  maxLength={3000}
+                  value={t.prompt}
+                  onChange={(e) => update(i, { prompt: e.target.value })}
+                />
+              </label>
+              {t.type === "single_choice" && (
+                <label>
+                  Варианты (каждый с новой строки)
+                  <textarea
+                    value={t.options.join("\n")}
+                    onChange={(e) =>
+                      update(i, { options: e.target.value.split("\n") })
+                    }
+                  />
+                </label>
+              )}
+              <div className="private-fields">
+                <span>
+                  <ShieldCheck size={15} /> Только преподавателю и проверяющей
+                  модели
+                </span>
+                <div className="form-grid">
+                  <label>
+                    Эталонный ответ
+                    {t.type === "single_choice" ? (
+                      <select
+                        value={t.answer}
+                        onChange={(e) => update(i, { answer: e.target.value })}
+                      >
+                        <option value="">Выберите правильный</option>
+                        {t.options.map((o, j) => (
+                          <option key={j}>{o}</option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        maxLength={1000}
+                        value={t.answer}
+                        required={t.type === "numeric"}
+                        onChange={(e) => update(i, { answer: e.target.value })}
+                      />
+                    )}
+                  </label>
+                  <label>
+                    Навык
+                    <input
+                      required
+                      maxLength={100}
+                      placeholder="Например, раскрытие скобок"
+                      value={t.skill}
+                      onChange={(e) => update(i, { skill: e.target.value })}
+                    />
+                  </label>
+                </div>
+                <label>
+                  Критерии проверки
+                  <textarea
+                    maxLength={2000}
+                    placeholder="Что считать верным, частично верным, на что обратить внимание"
+                    value={t.rubric}
+                    onChange={(e) => update(i, { rubric: e.target.value })}
+                  />
+                </label>
+              </div>
+              <label>
+                Подсказка ученику (без готового ответа)
+                <input
+                  maxLength={1000}
+                  value={t.hint}
+                  onChange={(e) => update(i, { hint: e.target.value })}
+                />
+              </label>
+            </>
+          )}
+        </section>
+      ))}
+      {!preview && a.tasks.length < 20 && (
+        <button
+          className="add-task"
+          type="button"
+          onClick={() => setA({ ...a, tasks: [...a.tasks, blankTask()] })}
+        >
+          <Plus size={18} /> Добавить задание
+        </button>
+      )}
+      <div className="form-actions">
+        <span>После назначения содержание работы фиксируется.</span>
+        <button className="secondary" disabled={busy}>
+          Сохранить черновик
+        </button>
+        <button
+          className="primary"
+          disabled={busy || !relations.length}
+          type="button"
+          onClick={(e) => {
+            if (e.currentTarget.form?.reportValidity()) save(a, true);
+          }}
+        >
+          Назначить ученику <ArrowRight size={16} />
+        </button>
+      </div>
+    </form>
+  );
+}
+export function AssignmentDetail({
+  assignment: a,
+  isTutor,
+  busy,
+  action,
+  update,
+  edit,
+  duplicate,
+}: {
+  assignment: Assignment;
+  isTutor: boolean;
+  busy: boolean;
+  action: (fn: () => Promise<void>) => Promise<void>;
+  update: () => Promise<void>;
+  edit: () => void;
+  duplicate: () => void;
+}) {
+  const [answers, setAnswers] = useState<Record<string, string>>(
+      a.draft.answers,
+    ),
+    [revision, setRevision] = useState(a.draft.revision),
+    [dirty, setDirty] = useState(false),
+    [saving, setSaving] = useState(false),
+    [saveError, setSaveError] = useState(""),
+    [saved, setSaved] = useState(""),
+    [note, setNote] = useState(""),
+    [showHints, setShowHints] = useState<Record<string, boolean>>({});
+  const s = a.submission;
+  const writable = !isTutor && (!s || s.status === "returned");
+  const [reviewTasks, setReviewTasks] = useState<ReviewTask[]>([]);
+  const savingRef = useRef(false),
+    reviewDirty = useRef(false);
+  useUnsaved(dirty || reviewDirty.current);
+  useEffect(() => {
+    if (reviewDirty.current) return;
+    setReviewTasks(
+      a.tasks.map((t) => {
+        const r = s?.analysis?.tasks.find((x) => x.task_id === t.id);
+        return {
+          task_id: t.id,
+          correctness: r?.correctness || "unknown",
+          feedback: r?.feedback_for_learner || "",
+        };
+      }),
+    );
+  }, [s?.analysis]);
+  async function save() {
+    if (savingRef.current) return;
+    setSaving(true);
+    savingRef.current = true;
+    setSaveError("");
+    try {
+      const r = await api<{ revision: number }>(
+        "/assignments/" + a.id + "/draft",
+        "PUT",
+        { answers, revision },
+      );
+      setRevision(r.revision);
+      setDirty(false);
+      setSaved("Сохранено");
+    } catch (e) {
+      setSaveError((e as Error).message);
+    } finally {
+      setSaving(false);
+      savingRef.current = false;
+    }
+  }
+  async function send() {
+    if (
+      !confirm(
+        "Отправить работу преподавателю? Сохранённые ответы останутся в истории.",
+      )
+    )
+      return;
+    await action(async () => {
+      await api("/assignments/" + a.id + "/submit", "POST", {
+        answers,
+        revision,
+      });
+      setDirty(false);
+      await update();
+    });
+  }
+  async function review(kind: string) {
+    await action(async () => {
+      await api("/submissions/" + s!.id + "/review", "POST", {
+        action: kind,
+        tasks: kind === "returned" || kind === "rejected" ? [] : reviewTasks,
+        note,
+      });
+      reviewDirty.current = false;
+      await update();
+    });
+  }
+  return (
+    <>
+      <div className="page-heading">
+        <div>
+          <Badge state={s?.status || a.status} />
+          <h1 className="assignment-title">{a.title}</h1>
+          <p>
+            <Clock size={15} /> {date(a.due_at)} · {a.tasks.length} задания
+            {s && " · Попытка " + s.attempt}
+          </p>
+        </div>
+        {isTutor && (
+          <button
+            className="secondary"
+            disabled={busy}
+            onClick={a.status === "draft" ? edit : duplicate}
+          >
+            {a.status === "draft" ? "Редактировать" : "Создать копию"}
+          </button>
+        )}
+      </div>
+      {a.instructions && <div className="instructions">{a.instructions}</div>}
+      {s && (
+        <div className="notice">
+          {s.status === "returned"
+            ? "Преподаватель вернул работу: " +
+              s.review?.note +
+              ". Можно отправить новую попытку."
+            : s.status === "reviewed"
+              ? "Преподаватель проверил работу. Обратная связь — под каждым ответом."
+              : isTutor
+                ? s.analysis?.engine === "local_rules_v1"
+                  ? "Предварительная проверка по эталонам, без нейросети. Проверьте выводы и добавьте обратную связь."
+                  : s.analysis
+                    ? "Предварительный AI-разбор · " +
+                      s.analysis.engine +
+                      ". Решение остаётся за вами."
+                    : "Ответы сохранены. AI готовит разбор, но вы уже можете проверить вручную."
+                : "Ответы сохранены и отправлены. Преподаватель проверит результат и даст обратную связь."}
+        </div>
+      )}
+      {a.tasks.map((t, i) => {
+        const assessed = s?.analysis?.tasks.find((x) => x.task_id === t.id);
+        const reviewed = s?.review?.tasks.find((x) => x.task_id === t.id);
+        return (
+          <section className="card work-task" key={t.id}>
+            <div className="section-head">
+              <span className="eyebrow">
+                ЗАДАНИЕ {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="skill-tag">{t.skill}</span>
+            </div>
+            <h2>{t.prompt}</h2>
+            {writable ? (
+              <label>
+                Ваш ответ
+                {t.type === "single_choice" ? (
+                  <div className="options">
+                    {t.options.map((o) => (
+                      <label
+                        className={
+                          "option " + (answers[t.id] === o ? "chosen" : "")
+                        }
+                        key={o}
+                      >
+                        <input
+                          type="radio"
+                          disabled={saving || busy}
+                          name={t.id}
+                          checked={answers[t.id] === o}
+                          onChange={() => {
+                            setAnswers({ ...answers, [t.id]: o });
+                            setDirty(true);
+                            setSaved("");
+                          }}
+                        />
+                        {o}
+                      </label>
+                    ))}
+                  </div>
+                ) : (
+                  <textarea
+                    aria-label={"Ответ на задание " + (i + 1)}
+                    disabled={saving || busy}
+                    rows={t.type === "numeric" ? 2 : 4}
+                    maxLength={5000}
+                    value={answers[t.id] || ""}
+                    placeholder={
+                      t.type === "numeric"
+                        ? "Введите число"
+                        : "Напишите ответ и ход рассуждений"
+                    }
+                    onChange={(e) => {
+                      setAnswers({ ...answers, [t.id]: e.target.value });
+                      setDirty(true);
+                      setSaved("");
+                    }}
+                  />
+                )}
+              </label>
+            ) : (
+              s && (
+                <div className="original">
+                  <span>ОРИГИНАЛЬНЫЙ ОТВЕТ УЧЕНИКА</span>
+                  <p>{s.answers[t.id]}</p>
+                </div>
+              )
+            )}
+            {isTutor && (
+              <div className="reference">
+                <strong>Эталон и критерии</strong>
+                <p>{t.answer || t.rubric}</p>
+                {t.answer && t.rubric && <p>{t.rubric}</p>}
+              </div>
+            )}
+            {isTutor && s && !s.review && (
+              <div className="assessment">
+                <div className="section-head">
+                  <strong>
+                    <Sparkles size={17} />{" "}
+                    {assessed ? "Предварительный разбор" : "Ручная проверка"}
+                  </strong>
+                  {assessed && <Badge state={assessed.correctness} />}
+                </div>
+                {assessed && <p>{assessed.summary_for_tutor}</p>}
+                <div className="form-grid">
+                  <label>
+                    Результат
+                    <select
+                      value={reviewTasks[i]?.correctness || "unknown"}
+                      onChange={(e) => {
+                        reviewDirty.current = true;
+                        setReviewTasks((old) =>
+                          old.map((r, j) =>
+                            j === i
+                              ? {
+                                  ...r,
+                                  correctness: e.target.value as Correctness,
+                                }
+                              : r,
+                          ),
+                        );
+                      }}
+                    >
+                      {[
+                        "correct",
+                        "partially_correct",
+                        "incorrect",
+                        "unknown",
+                      ].map((k) => (
+                        <option key={k} value={k}>
+                          {labels[k]}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Обратная связь ученику
+                    <textarea
+                      value={reviewTasks[i]?.feedback || ""}
+                      maxLength={3000}
+                      onChange={(e) => {
+                        reviewDirty.current = true;
+                        setReviewTasks((old) =>
+                          old.map((r, j) =>
+                            j === i ? { ...r, feedback: e.target.value } : r,
+                          ),
+                        );
+                      }}
+                    />
+                  </label>
+                </div>
+              </div>
+            )}
+            {reviewed && (
+              <div className="reviewed-feedback">
+                <strong>
+                  <CheckCheck size={18} /> Проверено преподавателем
+                </strong>
+                <Badge state={reviewed.correctness} />
+                <p>{reviewed.feedback}</p>
+              </div>
+            )}
+            {!isTutor && s?.hints?.[t.id] && (
+              <div className="hint">
+                <button
+                  className="text-button"
+                  onClick={() =>
+                    setShowHints({ ...showHints, [t.id]: !showHints[t.id] })
+                  }
+                >
+                  <Sparkles size={16} /> Подсказка преподавателя
+                </button>
+                {showHints[t.id] && <p>{s.hints[t.id]}</p>}
+              </div>
+            )}
+          </section>
+        );
+      })}
+      {writable && (
+        <div className="form-actions sticky">
+          <div role="status">
+            {saving
+              ? "Сохраняем…"
+              : dirty
+                ? "Есть несохранённые ответы"
+                : saved || "Ответы можно сохранить и продолжить позже"}
+            {saveError && <p className="save-error">{saveError}</p>}
+          </div>
+          <button
+            className="secondary"
+            disabled={saving || busy || !dirty}
+            onClick={save}
+          >
+            Сохранить ответы
+          </button>
+          <button className="primary" disabled={saving || busy} onClick={send}>
+            Отправить работу <ArrowRight size={16} />
+          </button>
+        </div>
+      )}
+      {isTutor && s && !s.review && (
+        <section className="card">
+          <h2>Ваше решение</h2>
+          <p>
+            Прогресс обновится только после вашей проверки. Неуверенный вывод
+            можно оставить без оценки.
+          </p>
+          <label>
+            Комментарий к работе
+            <textarea
+              value={note}
+              maxLength={2000}
+              onChange={(e) => {
+                reviewDirty.current = true;
+                setNote(e.target.value);
+              }}
+            />
+          </label>
+          <div className="review-actions">
+            <button
+              className="primary"
+              disabled={busy || reviewTasks.some((t) => !t.feedback)}
+              onClick={() => review("corrected")}
+            >
+              <Check size={17} /> Сохранить мою проверку
+            </button>
+            {s.analysis && s.analysis.tasks.length === a.tasks.length && (
+              <button
+                className="secondary"
+                disabled={busy}
+                onClick={() => review("confirmed")}
+              >
+                Подтвердить разбор
+              </button>
+            )}
+            <button
+              className="secondary"
+              disabled={busy || !note}
+              onClick={() => review("returned")}
+            >
+              Вернуть на доработку
+            </button>
+            <button
+              className="text-button"
+              disabled={busy || !note}
+              onClick={() => review("rejected")}
+            >
+              Отклонить без прогресса
+            </button>
+            {["output_invalid", "provider_unavailable"].includes(
+              s.analysis?.assessment_status || "",
+            ) && (
+              <button
+                className="secondary"
+                disabled={busy}
+                onClick={() =>
+                  action(async () => {
+                    await api("/submissions/" + s.id + "/retry", "POST");
+                    await update();
+                  })
+                }
+              >
+                Повторить AI-проверку
+              </button>
+            )}
+          </div>
+        </section>
+      )}
+      {!isTutor && s && (
+        <button
+          className="text-button"
+          disabled={busy}
+          onClick={() =>
+            action(async () => {
+              const text = prompt("Опишите, что не так с обратной связью");
+              if (text !== null) {
+                await api("/reports", "POST", {
+                  context_id: a.id,
+                  category: "incorrect_feedback",
+                  text,
+                });
+                alert("Сообщение сохранено для разбора командой");
+              }
+            })
+          }
+        >
+          Сообщить об ошибке в обратной связи
+        </button>
+      )}
+    </>
+  );
+}

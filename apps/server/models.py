@@ -1,0 +1,145 @@
+from typing import Literal
+from datetime import datetime
+from decimal import Decimal, InvalidOperation
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+
+
+class Model(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+
+
+class Task(Model):
+    id: str = Field(min_length=1, max_length=80, pattern=r'^[a-zA-Z0-9_-]+$')
+    type: Literal['numeric', 'single_choice', 'short_text']
+    prompt: str = Field(min_length=3, max_length=3000)
+    options: list[str] = Field(default_factory=list, max_length=8)
+    answer: str = Field(default='', max_length=1000)
+    rubric: str = Field(default='', max_length=2000)
+    skill: str = Field(min_length=1, max_length=100)
+    hint: str = Field(default='', max_length=1000)
+
+    @model_validator(mode='after')
+    def reference(self):
+        if not self.answer and not self.rubric:
+            raise ValueError('Укажите эталонный ответ или критерии проверки')
+        if self.type == 'numeric':
+            try:
+                value = Decimal(self.answer.replace(',', '.'))
+                if not value.is_finite():
+                    raise ValueError('Требуется конечное число')
+            except InvalidOperation:
+                raise ValueError('Эталон должен быть числом')
+        if self.type == 'single_choice':
+            if len(self.options) < 2 or len(set(self.options)) != len(self.options) or self.answer not in self.options:
+                raise ValueError('Нужны разные варианты и один эталон из списка')
+        return self
+
+
+class AssignmentInput(Model):
+    relationship_id: str
+    title: str = Field(min_length=3, max_length=160)
+    instructions: str = Field(default='', max_length=3000)
+    due_at: datetime | None = None
+    feedback_policy: Literal['after_review', 'hints_first'] = 'after_review'
+    tasks: list[Task] = Field(min_length=1, max_length=20)
+
+    @field_validator('due_at')
+    @classmethod
+    def timezone(cls, value):
+        if value and not value.tzinfo:
+            raise ValueError('Дедлайн должен включать часовой пояс')
+        return value
+
+    @model_validator(mode='after')
+    def unique_tasks(self):
+        if len({t.id for t in self.tasks}) != len(self.tasks):
+            raise ValueError('Идентификаторы заданий должны быть уникальны')
+        return self
+
+
+class DraftInput(Model):
+    revision: int = Field(ge=0)
+    answers: dict[str, str]
+
+    @field_validator('answers')
+    @classmethod
+    def bounds(cls, value):
+        if len(value) > 20 or any(len(k) > 80 or len(v) > 5000 for k, v in value.items()):
+            raise ValueError('Ответ слишком длинный')
+        return value
+
+
+Correctness = Literal['correct', 'incorrect', 'partially_correct', 'unknown']
+
+
+class TaskAssessment(Model):
+    task_id: str
+    correctness: Correctness
+    confidence: float = Field(ge=0, le=1)
+    summary_for_tutor: str = Field(max_length=3000)
+    feedback_for_learner: str = Field(max_length=2000)
+    hint: str = Field(default='', max_length=1000)
+    skill: str = Field(max_length=100)
+
+
+class Analysis(Model):
+    schema_version: Literal['1'] = '1'
+    assessment_status: Literal['assessed', 'partially_assessed', 'cannot_assess', 'provider_unavailable', 'output_invalid']
+    engine: str = Field(max_length=80)
+    prompt_version: str = 'assessment-v1'
+    requires_tutor_review: Literal[True] = True
+    tasks: list[TaskAssessment] = Field(max_length=20)
+
+
+class ReviewedTask(Model):
+    task_id: str
+    correctness: Correctness
+    feedback: str = Field(min_length=1, max_length=3000)
+
+
+class ReviewInput(Model):
+    action: Literal['confirmed', 'corrected', 'rejected', 'returned']
+    tasks: list[ReviewedTask] = Field(default_factory=list, max_length=20)
+    note: str = Field(default='', max_length=2000)
+
+
+class InviteInput(Model):
+    subject: str = Field(min_length=2, max_length=100)
+
+
+class TokenInput(Model):
+    token: str = Field(min_length=10, max_length=200)
+
+
+class MaxLogin(Model):
+    init_data: str = Field(max_length=16000)
+    role: Literal['tutor', 'learner']
+    alias: str = Field(default='Участник', min_length=1, max_length=60)
+
+
+class LessonInput(Model):
+    relationship_id: str
+    title: str = Field(min_length=2, max_length=160)
+    starts_at: datetime
+    duration: int = Field(default=60, ge=15, le=240)
+    payment_status: Literal['unknown', 'paid', 'unpaid', 'waived'] = 'unknown'
+
+    @field_validator('starts_at')
+    @classmethod
+    def timezone(cls, value):
+        if not value.tzinfo:
+            raise ValueError('Укажите часовой пояс')
+        return value
+
+
+class MaterialInput(Model):
+    relationship_id: str
+    title: str = Field(min_length=2, max_length=160)
+    url: str = Field(max_length=2000, pattern=r'^https://[^\s]+$')
+    note: str = Field(default='', max_length=500)
+
+
+class ReportInput(Model):
+    context_id: str = Field(max_length=100)
+    category: Literal['incorrect_feedback', 'harmful_feedback', 'bug', 'useful']
+    text: str = Field(default='', max_length=2000)

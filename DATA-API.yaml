@@ -1,0 +1,30 @@
+name: reprep
+version: 0.1.0
+status: local-demo
+base_url: http://127.0.0.1:8000
+openapi: /api/openapi.json
+documentation: /api/docs
+authentication:
+  type: bearer
+  production: POST /api/auth/max with server-verified MAX init_data
+  synthetic_demo:
+    tutor: POST /api/auth/demo/tutor
+    learner: POST /api/auth/demo/learner
+    note: Enabled only by DEMO_ENABLED in development/test/demo. No passwords.
+data:
+  source: synthetic fixtures in apps/server/service.py
+  assignment: demo-assignment
+  relationship: demo-link
+  storage: SQLite in persistent volume
+  ai: qwen/qwen3.8-flash via OpenRouter, synthetic content only by default
+operations:
+  - POST /api/assignments
+  - POST /api/assignments/{id}/publish
+  - PUT /api/assignments/{id}/draft
+  - POST /api/assignments/{id}/submit
+  - POST /api/submissions/{id}/review
+  - GET /api/relationships/{id}/progress
+release_gates:
+  - Approved HTTPS base URL required before external submission
+  - MAX bot and real webview integration test
+  - Engineer review and pilot data approval

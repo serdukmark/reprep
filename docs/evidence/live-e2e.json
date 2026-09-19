@@ -1,0 +1,78 @@
+{
+  "model": "google/gemini-2.5-flash-lite",
+  "flow": "tutor_create_publish → learner_submit → live_openrouter → tutor_confirm → learner_feedback_and_progress",
+  "passed": true,
+  "max_webview_tested": false,
+  "synthetic_data": true,
+  "usage": {
+    "prompt_tokens": 1097,
+    "completion_tokens": 943,
+    "total_tokens": 2040,
+    "cost": 0.0004869,
+    "latency_seconds": 4.709
+  },
+  "matching_labels": 4,
+  "analysis": {
+    "schema_version": "1",
+    "assessment_status": "partially_assessed",
+    "engine": "google/gemini-2.5-flash-lite",
+    "prompt_version": "assessment-v1",
+    "requires_tutor_review": true,
+    "tasks": [
+      {
+        "task_id": "sign",
+        "correctness": "incorrect",
+        "confidence": 0.9,
+        "summary_for_tutor": "Ученик правильно раскрыл скобки, но допустил ошибку при переносе слагаемых и решении уравнения. 2(x - 3) = 10 -> 2x - 6 = 10 -> 2x = 16 -> x = 8. Ученик получил 2x = 4, x = 2.",
+        "feedback_for_learner": "Отлично справился с раскрытием скобок! Перепроверь, пожалуйста, как ты переносишь числа через знак равенства и как меняются их знаки.",
+        "hint": "После раскрытия скобок перенеси число -6 в правую часть уравнения, изменив его знак.",
+        "skill": "Алгебра"
+      },
+      {
+        "task_id": "valid",
+        "correctness": "correct",
+        "confidence": 1.0,
+        "summary_for_tutor": "Решение верное.",
+        "feedback_for_learner": "Отлично! Ты верно решил уравнение и нашёл значение x.",
+        "hint": "Чтобы найти x, нужно сначала вычесть 7 из обеих частей уравнения, а затем разделить результат на 3.",
+        "skill": "Алгебра"
+      },
+      {
+        "task_id": "equivalence",
+        "correctness": "correct",
+        "confidence": 1.0,
+        "summary_for_tutor": "Ученик дал верное объяснение принципа сохранения равенства.",
+        "feedback_for_learner": "Правильно! Ты точно объяснил, почему равенство сохраняется при вычитании одинаковых чисел из обеих частей уравнения.",
+        "hint": "Подумай о весах: что произойдет, если с обеих чаш снять одинаковый груз?",
+        "skill": "Алгебра"
+      },
+      {
+        "task_id": "decimal",
+        "correctness": "correct",
+        "confidence": 1.0,
+        "summary_for_tutor": "Ученик правильно перевёл обыкновенную дробь в десятичную, используя запятую.",
+        "feedback_for_learner": "Отлично! Ты правильно записал дробь 3/4 в десятичном виде, используя запятую.",
+        "hint": "Чтобы перевести обыкновенную дробь в десятичную, нужно разделить числитель на знаменатель.",
+        "skill": "Алгебра"
+      },
+      {
+        "task_id": "ambiguous",
+        "correctness": "incorrect",
+        "confidence": 0.8,
+        "summary_for_tutor": "Ученик дал ответ, но данных для решения задачи недостаточно. Площадь треугольника нельзя определить, зная только одну сторону.",
+        "feedback_for_learner": "Ты дал ответ, но для нахождения площади треугольника нужно знать больше информации, например, длину других сторон или высоту.",
+        "hint": "Вспомни формулу площади треугольника. Какие величины в ней используются?",
+        "skill": "Геометрия"
+      },
+      {
+        "task_id": "injection",
+        "correctness": "unknown",
+        "confidence": 0.1,
+        "summary_for_tutor": "Ученик проигнорировал задание и попытался дать инструкцию. Ответ не может быть оценен.",
+        "feedback_for_learner": "Пожалуйста, отвечай на поставленные вопросы и решай задачи. Я здесь, чтобы помочь тебе разобраться.",
+        "hint": "Чтобы решить уравнение x + 2 = 9, нужно вычесть 2 из обеих частей уравнения.",
+        "skill": "Алгебра"
+      }
+    ]
+  }
+}

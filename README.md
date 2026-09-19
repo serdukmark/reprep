@@ -1,24 +1,95 @@
-# reprep — repository documentation pack
+# reprep
 
-This directory is a repository-ready documentation pack for **reprep**, an AI-native workspace for independent tutors and their students.
+Учебное пространство репетитора и ученика: назначение → сдача → предварительный AI-разбор → решение преподавателя → подтверждённый прогресс.
 
-The pack is intentionally explicit about uncertainty. It must not be read as if every statement is already approved or technically validated.
+**Статус:** локальное демо с реальным OpenRouter, проверенным API и браузерным циклом, включая Docker. Это ещё не опубликованное MAX-приложение и не пройденный пользовательский пилот.
 
-## Product one-liner
+- [Утренний отчёт](docs/22_MORNING_REPORT_RU.md) — что проверено, запуск, ограничения.
+- [Вопросы владельцу](docs/15_OPEN_QUESTIONS.md) — приоритет, варианты, временные решения.
+- [Выбор AI и реальные ответы](docs/23_AI_MODEL_COMPARISON_RU.md).
+- [Официальный кейс и MAX](docs/24_CASE_AND_MAX_RU.md).
 
-> reprep helps an independent tutor run an individual learning cycle in one place: assign work, receive a submission, use AI to check and explain it in the context of the learner, approve the result, and track skill gaps over time.
+## Быстрый локальный запуск
 
-## Current objective
+Нужны Docker/Compose. Если .env уже настроен, **не перезаписывайте его**. На чистом checkout создайте .env по .env.example и заполните OPENROUTER_API_KEY локально. Ключ никогда не добавляется в Git.
 
-Build a pilot-ready MAX-based product for the education track of the MAX hackathon and run at least one real, safely conducted pilot with an adult tutor before submission.
+```sh
+# Только на чистом checkout без .env:
+cp -n .env.example .env
+chmod 600 .env
+# Затем заполнить ключ в редакторе.
+docker compose up --build -d
+```
 
-## Start here
+Открыть **http://127.0.0.1:8000**. Появятся кнопки «Я преподаватель» и «Я ученик». Демо содержит вымышленные аккаунты и математическое задание. В разных окнах/вкладках можно проверить обе роли. Не вводите настоящие данные детей.
 
-1. Read [`AGENTS.md`](./AGENTS.md) before changing code or documentation.
-2. Read [`docs/00_SOURCE_OF_TRUTH.md`](./docs/00_SOURCE_OF_TRUTH.md) to understand status labels.
-3. Read [`docs/01_PRODUCT_VISION.md`](./docs/01_PRODUCT_VISION.md) and [`docs/02_PRD.md`](./docs/02_PRD.md).
-4. Check [`docs/15_OPEN_QUESTIONS.md`](./docs/15_OPEN_QUESTIONS.md) before making a decision that is not documented.
-5. Check [`docs/16_DECISION_LOG.md`](./docs/16_DECISION_LOG.md) before revisiting an existing decision.
+Без ключа работает явно обозначенная проверка по эталонам, **не нейросеть**. Для настоящего AI нужны и OPENROUTER_API_KEY, и OPENROUTER_MODEL. Выбран qwen/qwen3.8-flash; маршрутизация ограничена $1/M входных и выходных токенов. AI_DAILY_LIMIT=50 — временный лимит внешних вызовов очереди за UTC-день на базу.
+
+Остановить: `docker compose stop`. База сохраняется в именованном volume. Не запускайте `down -v`, если данные нужны. Контейнер слушает только loopback; наружу этот compose ничего не публикует.
+
+## Запуск без Docker
+
+Python 3.14, Node 22.12+ (локально также проверено на Node 25):
+
+```sh
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+npm ci
+npm run build
+.venv/bin/python -m uvicorn apps.server.main:app --host 127.0.0.1 --port 8000
+```
+
+Настройка .env такая же. Не запускайте Docker и uvicorn одновременно на одном порту. Для разработки клиента — `npm run dev` (порт 5173, API-прокси на 8000).
+
+## Воспроизвести основной сценарий
+
+1. «Я преподаватель» → «Создать задание», выбрать Сашу, заполнить условие/эталон/навык, назначить.
+2. В отдельной вкладке «Я ученик» → открыть работу, ответить, «Сохранить ответы» или «Отправить работу».
+3. В кабинете преподавателя открыть работу. При доступном OpenRouter появится имя модели и предварительный разбор. При отказе провайдера оригинал остаётся доступным ручной проверке.
+4. Проверить содержание. «Подтвердить разбор» сохраняет вывод модели; «Сохранить мою проверку» — исправленный преподавателем результат. Можно вернуть с комментарием или отклонить без прогресса.
+5. У ученика открыть работу повторно и «Мой прогресс»: только опубликованная преподавателем обратная связь и доказательства по навыкам.
+
+Черновики сохраняются по кнопке, автоматически не отправляются. Опубликованное задание неизменно — правка через копию. Повторная попытка доступна после возврата. Сброс только демо-данных — настройки преподавателя, «Восстановить демо»; завершает все демо-сессии.
+
+## Проверки
+
+```sh
+.venv/bin/python -m pytest -q
+npm run build
+python3 scripts/check_secrets.py
+# При запущенном сервере. Использует установленный Chrome; один worker.
+npm run test:e2e
+# Другой адрес: E2E_URL=http://127.0.0.1:8001 npm run test:e2e
+```
+
+Браузерный тест создаёт синтетическую работу и при настроенном ключе делает настоящий платный AI-вызов. Для полностью локальной проверки запустите сервер с пустым OPENROUTER_MODEL. CHROME_PATH можно указать для другой ОС.
+
+Отдельные **платные** исследовательские команды (не входят в обычный pytest):
+
+```sh
+.venv/bin/python scripts/benchmark_ai.py
+.venv/bin/python scripts/live_e2e.py
+```
+
+Результаты складываются в игнорируемый artifacts. Версионированные факты ночного исследования — docs/evidence. Стоимость невелика, но это реальные API-вызовы, не заглушки.
+
+## API и структура
+
+- `/api/health` — работоспособность процесса.
+- `/api/docs` — Swagger UI (ресурсы UI загружаются с jsDelivr).
+- `/api/openapi.json` — OpenAPI, доступен без CDN.
+- [DATA-API.yaml](DATA-API.yaml) — локальные тестовые доступы и релизные ограничения.
+- `apps/server` — FastAPI, SQLite, постоянная очередь, права, AI-адаптеры.
+- `apps/client/src` — React/TypeScript, мобильные и десктопные экраны.
+- `tests` — API/безопасность/браузер; `scripts` — воспроизводимые проверки.
+
+Один uvicorn worker, один экземпляр приложения на SQLite. Очередь хранится в базе, просроченная аренда задания возвращается в работу. При падении после сетевого вызова возможна повторная платная проверка (at-least-once); прогресс идемпотентен по review/task. Для масштабирования потребуется отдельная очередь/БД и миграционная стратегия.
+
+## Перед внешним запуском
+
+Нужно согласованное размещение с HTTPS, MAX-ботом и реальным тестом запуска. Сейчас MAX_BOT_TOKEN пустой; HMAC проверен синтетически. DEMO_ENABLED запрещён при APP_ENV=production. Для реальных данных внешняя AI-проверка выключена, пока не согласованы данные и политика. Полное удаление аккаунта, bot-уведомления, OCR, загрузка файлов, автоплатежи и видеозвонки отсутствуют.
+
+До интеграции прочитать [AGENTS.md](AGENTS.md), [источники истины](docs/00_SOURCE_OF_TRUTH.md) и [ADR](docs/adr/001-working-mvp.md). Нужны инженерное ревью и тестовый стенд; локальный успех не объявляется завершённым релизом.
 
 ## Documentation map
 
@@ -45,16 +116,3 @@ Build a pilot-ready MAX-based product for the education track of the MAX hackath
 | `docs/17_GLOSSARY.md` | Shared vocabulary |
 | `docs/assets/roadmap-cards/` | Team roadmap cards in PNG format |
 | `docs/templates/` | Templates for ADRs, features, test reports and pilot notes |
-
-## Current status snapshot
-
-- **Confirmed product direction:** independent tutors and school students, initially focused on exam preparation.
-- **Confirmed differentiator:** AI is embedded in the learning workflow and uses the context of an individual learner.
-- **Confirmed core flow:** assignment → submission → AI analysis → learner explanation → tutor review → progress update.
-- **Proposed delivery surface:** MAX Mini App, with an optional bot for notifications. This still needs confirmation against the exact case rules.
-- **Pilot target:** one adult tutor and a small number of learners, using at least one real assignment.
-- **Submission date heard in the organizer webinar:** 30 September. Exact time and authoritative artifact list remain open.
-
-## Important warning
-
-This pack contains product and engineering requirements, but it does **not** replace the official hackathon case, rules, submission form or MAX technical documentation. When authoritative materials become available, add them to the repository as references and resolve the corresponding open questions.

@@ -44,3 +44,12 @@ This is a compact project-level log. Material engineering decisions should also 
 - Alternatives considered:
 - Follow-up:
 ```
+
+## Overnight reversible implementation — 20 September 2026
+
+- D-N01 [ASSUMPTION]: React/TypeScript + FastAPI/SQLite, one instance, persistent lease queue. ADR-001. Reversible local implementation explicitly authorized by owner; no stack approval inferred.
+- D-N02 [ASSUMPTION]: one role per account; 72h single-use invitations; published content frozen, clone for editing; resubmit after return.
+- D-N03 [ASSUMPTION]: feedback after teacher review; hints_first releases only teacher-authored hints. Supersedes immediate AI explanation in historical core-flow wording.
+- D-N04 [CONFIRMED constraint / ASSUMPTION choice]: owner cap $1/M both directions. Qwen 3.8 Flash selected provisionally after live comparison and Gemini regression (2/6 on follow-up, including a Russian decimal-comma error); hard provider price cap, 50 external attempts/day. See AI report. Luna excluded for output price $1.20/M.
+- D-N05 [CONFIRMED]: no push, merge, main changes, public deploy or outbound messages overnight. Live OpenRouter calls on synthetic fixtures explicitly authorized.
+- D-N06 [CONFIRMED fact]: official PDF establishes bot or bot+MiniApp, Docker, 40/60 evaluation. External launch, final submission and human pilot remain unverified.

@@ -1,0 +1,1047 @@
+import React, { useState, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+import {
+  ArrowUpRight,
+  ArrowRight,
+  ArrowLeft,
+  Plus,
+  BookOpen,
+  Users,
+  LayoutDashboard,
+  CalendarDays,
+  FolderOpen,
+  ChartNoAxesCombined,
+  Check,
+  ChevronRight,
+  LogOut,
+  ShieldCheck,
+  Sparkles,
+  CheckCheck,
+  RotateCcw,
+  Download,
+  Search,
+  Menu,
+  X,
+  GraduationCap,
+} from "lucide-react";
+import {
+  api,
+  setToken,
+  date,
+  User,
+  Relation,
+  Assignment,
+  AssignmentSummary,
+  Skill,
+  Lesson,
+  Material,
+} from "./api";
+import { Badge, Empty, mayLeave } from "./components";
+import { Builder, AssignmentDetail, blankAssignment } from "./Assignment";
+import { Collection } from "./Collection";
+import "./style.css";
+type Page =
+  | "today"
+  | "assignments"
+  | "learners"
+  | "progress"
+  | "schedule"
+  | "materials"
+  | "settings";
+type Config = {
+  demo_enabled: boolean;
+  max_enabled: boolean;
+  assessment: string;
+};
+function App() {
+  const [config, setConfig] = useState<Config | null>(null),
+    [user, setUser] = useState<User | null>(null),
+    [loading, setLoading] = useState(true);
+  const [error, setError] = useState(""),
+    [toast, setToast] = useState(""),
+    [busy, setBusy] = useState(false),
+    [page, setPage] = useState<Page>("today");
+  const [relations, setRelations] = useState<Relation[]>([]),
+    [assignments, setAssignments] = useState<AssignmentSummary[]>([]),
+    [lessons, setLessons] = useState<Lesson[]>([]),
+    [materials, setMaterials] = useState<Material[]>([]);
+  const [active, setActive] = useState<Assignment | null>(null),
+    [editing, setEditing] = useState(false),
+    [selected, setSelected] = useState(""),
+    [skills, setSkills] = useState<Skill[]>([]),
+    [search, setSearch] = useState(""),
+    [mobile, setMobile] = useState(false);
+  const [invite, setInvite] = useState(""),
+    [inviteInput, setInviteInput] = useState(""),
+    [invites, setInvites] = useState<
+      { id: string; subject: string; state: string }[]
+    >([]);
+  const [alias, setAlias] = useState(""),
+    [role, setRole] = useState<"tutor" | "learner">("tutor");
+  const isTutor = user?.role === "tutor";
+  async function refresh() {
+    const [r, a, l, m] = await Promise.all([
+      api<Relation[]>("/relationships"),
+      api<AssignmentSummary[]>("/assignments"),
+      api<Lesson[]>("/lessons"),
+      api<Material[]>("/materials"),
+    ]);
+    setRelations(r);
+    setAssignments(a);
+    setLessons(l);
+    setMaterials(m);
+    setSelected((old) => (r.some((x) => x.id === old) ? old : r[0]?.id || ""));
+  }
+  async function action(fn: () => Promise<void>) {
+    setBusy(true);
+    setError("");
+    try {
+      await fn();
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  useEffect(() => {
+    Promise.all([
+      api<Config>("/config")
+        .then(setConfig)
+        .catch((e) => setError(e.message)),
+      api<User>("/me")
+        .then(setUser)
+        .catch(() => {}),
+    ]).finally(() => setLoading(false));
+    const p = new URLSearchParams(location.hash.slice(1));
+    if (p.get("invite")) setInviteInput(p.get("invite")!);
+  }, []);
+  useEffect(() => {
+    if (user) action(refresh);
+  }, [user?.id]);
+  useEffect(() => {
+    if (!selected || !user) return;
+    api<Skill[]>("/relationships/" + selected + "/progress")
+      .then(setSkills)
+      .catch((e) => setError(e.message));
+  }, [selected, page, assignments]);
+  useEffect(() => {
+    if (page === "learners" && isTutor)
+      api<typeof invites>("/invitations")
+        .then(setInvites)
+        .catch((e) => setError(e.message));
+  }, [page, invite, user]);
+  useEffect(() => {
+    if (toast) {
+      const t = setTimeout(() => setToast(""), 4500);
+      return () => clearTimeout(t);
+    }
+  }, [toast]);
+  async function open(id: string) {
+    if (!mayLeave()) return;
+    await action(async () => {
+      setActive(await api<Assignment>("/assignments/" + id));
+      setEditing(false);
+    });
+  }
+  useEffect(() => {
+    if (
+      !active?.submission ||
+      !["queued", "processing"].includes(active.submission.status)
+    )
+      return;
+    const id = active.id;
+    const interval = setInterval(
+      () =>
+        api<Assignment>("/assignments/" + id)
+          .then((a) => setActive((old) => (old?.id === id ? a : old)))
+          .catch((e) => setError(e.message)),
+      2000,
+    );
+    return () => clearInterval(interval);
+  }, [active?.id, active?.submission?.status]);
+  async function login(persona: string) {
+    await action(async () => {
+      const data = await api<{ token: string; user: User }>(
+        "/auth/demo/" + persona,
+        "POST",
+      );
+      setToken(data.token);
+      setUser(data.user);
+      setActive(null);
+      setPage("today");
+    });
+  }
+  async function logout() {
+    if (!mayLeave()) return;
+    await action(async () => {
+      await api("/logout", "POST");
+      setToken("");
+      setUser(null);
+      setActive(null);
+      setAssignments([]);
+      setSkills([]);
+      setInvite("");
+    });
+  }
+  function navigate(p: Page) {
+    if (!mayLeave()) return;
+    setPage(p);
+    setActive(null);
+    setEditing(false);
+    setMobile(false);
+    setSearch("");
+    setError("");
+  }
+  async function createInvite() {
+    await action(async () => {
+      const r = await api<{ token: string }>("/invitations", "POST", {
+        subject:
+          relations.find((r) => r.id === selected)?.subject || "Математика",
+      });
+      setInvite(r.token);
+    });
+  }
+  async function saveAssignment(a: Assignment, publish: boolean) {
+    await action(async () => {
+      const body = {
+        relationship_id: a.relationship_id,
+        title: a.title,
+        instructions: a.instructions,
+        due_at: a.due_at,
+        feedback_policy: a.feedback_policy,
+        tasks: a.tasks,
+      };
+      const saved = await api<Assignment>(
+        a.id
+          ? "/assignments/" + a.id + "?revision=" + a.revision
+          : "/assignments",
+        a.id ? "PUT" : "POST",
+        body,
+      );
+      if (publish) await api("/assignments/" + saved.id + "/publish", "POST");
+      setActive(await api<Assignment>("/assignments/" + saved.id));
+      setEditing(false);
+      await refresh();
+      setToast(publish ? "Работа назначена ученику" : "Черновик сохранён");
+    });
+  }
+  const pending = assignments.filter(
+    (a) =>
+      a.submission &&
+      ["awaiting_review", "processing", "queued"].includes(a.submission.status),
+  );
+  const assigned = assignments.filter(
+    (a) =>
+      a.status === "published" &&
+      (!a.submission || a.submission.status === "returned"),
+  );
+  const nextLesson = lessons
+    .filter((l) => new Date(l.starts_at) > new Date())
+    .sort((a, b) => a.starts_at.localeCompare(b.starts_at))[0];
+  const nav = [
+    { id: "today", label: "Сегодня", icon: LayoutDashboard },
+    { id: "assignments", label: "Задания", icon: BookOpen },
+    {
+      id: isTutor ? "learners" : "progress",
+      label: isTutor ? "Ученики" : "Мой прогресс",
+      icon: isTutor ? Users : ChartNoAxesCombined,
+    },
+    { id: "schedule", label: "Расписание", icon: CalendarDays },
+    { id: "materials", label: "Материалы", icon: FolderOpen },
+  ] as const;
+  if (loading)
+    return (
+      <div className="boot">
+        reprep<span>Открываем пространство…</span>
+      </div>
+    );
+  if (!user)
+    return (
+      <main className="login">
+        <div className="login-copy">
+          <div className="brand">
+            reprep<span>↗</span>
+          </div>
+          <div className="eyebrow">ПРОСТРАНСТВО ДЛЯ РЕПЕТИТОРА И УЧЕНИКА</div>
+          <h1>
+            Меньше рутины.
+            <br />
+            <em>Больше понимания.</em>
+          </h1>
+          <p>
+            Задания, обратная связь и прогресс — в одном учебном пространстве. С
+            поддержкой AI и решающим словом преподавателя.
+          </p>
+          <div className="login-flow">
+            <span>01 / Задание</span>
+            <ArrowRight />
+            <span>02 / Разбор</span>
+            <ArrowRight />
+            <span>03 / Прогресс</span>
+          </div>
+          <div className="paper-preview">
+            <span className="eyebrow">МАЛЕНЬКИЕ ШАГИ. ЗАМЕТНЫЙ РЕЗУЛЬТАТ.</span>
+            <h2>
+              Не просто проверить ответ.
+              <br />
+              Помочь понять ошибку.
+            </h2>
+            <span className="floating-check">
+              <CheckCheck />
+            </span>
+          </div>
+        </div>
+        <section className="login-panel">
+          <div className="login-symbol">
+            <GraduationCap size={34} />
+          </div>
+          <h2>Ваше учебное пространство</h2>
+          <p>Начните с демонстрации или войдите через MAX.</p>
+          {config?.demo_enabled && (
+            <>
+              <div className="notice">
+                Демо на вымышленных данных. Не вводите персональные данные
+                учеников.
+              </div>
+              <button
+                className="primary full"
+                disabled={busy}
+                onClick={() => login("tutor")}
+              >
+                Я преподаватель <ArrowRight size={18} />
+              </button>
+              <button
+                className="secondary full"
+                disabled={busy}
+                onClick={() => login("learner")}
+              >
+                Я ученик <ArrowRight size={18} />
+              </button>
+            </>
+          )}
+          {config?.max_enabled && (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                action(async () => {
+                  const values = new URLSearchParams(location.hash.slice(1));
+                  if (values.getAll("WebAppData").length !== 1)
+                    throw Error("Откройте мини-приложение из MAX");
+                  const data = await api<{ token: string; user: User }>(
+                    "/auth/max",
+                    "POST",
+                    {
+                      init_data: values.get("WebAppData"),
+                      role,
+                      alias: alias || "Участник",
+                    },
+                  );
+                  setToken(data.token);
+                  setUser(data.user);
+                  history.replaceState(null, "", location.pathname);
+                });
+              }}
+            >
+              <label>
+                Как к вам обращаться
+                <input
+                  value={alias}
+                  onChange={(e) => setAlias(e.target.value)}
+                  maxLength={60}
+                />
+              </label>
+              <label>
+                Ваша роль
+                <select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value as typeof role)}
+                >
+                  <option value="tutor">Преподаватель</option>
+                  <option value="learner">Ученик</option>
+                </select>
+              </label>
+              <button className="primary full" disabled={busy}>
+                Войти через MAX
+              </button>
+            </form>
+          )}
+          {!config?.demo_enabled && !config?.max_enabled && (
+            <div className="notice">
+              Вход ещё не настроен. Администратору нужно подключить MAX.
+            </div>
+          )}
+          {error && (
+            <div className="error" role="alert">
+              {error}
+            </div>
+          )}
+          <div className="privacy">
+            <ShieldCheck size={16} /> Преподаватель контролирует результаты
+            проверки
+          </div>
+        </section>
+      </main>
+    );
+  function AssignmentRows({ items }: { items: AssignmentSummary[] }) {
+    return (
+      <div className="assignment-list">
+        {items.map((a) => (
+          <button
+            key={a.id}
+            className="assignment-row"
+            onClick={() => open(a.id)}
+          >
+            <div className="assignment-icon">
+              <BookOpen size={20} />
+            </div>
+            <div className="row-main">
+              <strong>{a.title}</strong>
+              <span>
+                {isTutor ? a.learner_alias + " · " : ""}
+                {a.tasks_count} задания · {date(a.due_at)}
+              </span>
+            </div>
+            <Badge state={a.submission?.status || a.status} />
+            <ChevronRight size={18} />
+          </button>
+        ))}
+      </div>
+    );
+  }
+  return (
+    <div className="shell">
+      <aside className={"sidebar " + (mobile ? "visible" : "")}>
+        <button className="brand" onClick={() => navigate("today")}>
+          reprep<span>↗</span>
+        </button>
+        <div className="workspace">
+          <div className="avatar">{user.alias[0]}</div>
+          <div>
+            <strong>{isTutor ? "Моё пространство" : "Моё обучение"}</strong>
+            <small>
+              {isTutor ? "Кабинет преподавателя" : "Кабинет ученика"}
+            </small>
+          </div>
+        </div>
+        <span className="nav-caption">ОБУЧЕНИЕ</span>
+        <nav>
+          {nav.map((n) => (
+            <button
+              key={n.id}
+              className={page === n.id && !active ? "selected" : ""}
+              onClick={() => navigate(n.id)}
+            >
+              <n.icon size={19} />
+              {n.label}
+              {n.id === "assignments" && pending.length > 0 && (
+                <span className="nav-count">{pending.length}</span>
+              )}
+            </button>
+          ))}
+        </nav>
+        <div className="sidebar-bottom">
+          <div className="context-note">
+            <Sparkles size={20} />
+            <strong>AI помогает. Вы решаете.</strong>
+            <p>Каждый вывод можно проверить и исправить.</p>
+          </div>
+          <button className="account" onClick={() => navigate("settings")}>
+            <div className="avatar small">{user.alias[0]}</div>
+            <span>
+              {user.alias}
+              <small>
+                {user.demo ? "Демонстрационный аккаунт" : "Аккаунт MAX"}
+              </small>
+            </span>
+            <ChevronRight size={15} />
+          </button>
+        </div>
+      </aside>
+      <div className="main-wrap">
+        <header className="topbar">
+          <button
+            className="mobile-menu"
+            aria-label="Открыть меню"
+            onClick={() => setMobile(!mobile)}
+          >
+            {mobile ? <X /> : <Menu />}
+          </button>
+          <span>Ваше пространство для роста</span>
+          <div>
+            {user.demo && (
+              <span className="demo-label">ДЕМО · СИНТЕТИЧЕСКИЕ ДАННЫЕ</span>
+            )}
+            <span className="today-date">
+              {new Date().toLocaleDateString("ru-RU", {
+                day: "numeric",
+                month: "long",
+              })}
+            </span>
+          </div>
+        </header>
+        <main className="content">
+          {error && (
+            <div className="error" role="alert">
+              {error}
+              <button aria-label="Закрыть ошибку" onClick={() => setError("")}>
+                <X size={16} />
+              </button>
+            </div>
+          )}
+          {toast && (
+            <div className="toast" role="status">
+              <Check size={18} />
+              {toast}
+            </div>
+          )}
+          {active ? (
+            <>
+              <button
+                className="back"
+                onClick={() => {
+                  if (!mayLeave()) return;
+                  setActive(null);
+                  setEditing(false);
+                  refresh();
+                }}
+              >
+                <ArrowLeft size={16} /> К заданиям
+              </button>
+              {editing || !active.id ? (
+                <Builder
+                  key={active.id || "new"}
+                  initial={active}
+                  relations={relations}
+                  busy={busy}
+                  save={saveAssignment}
+                />
+              ) : (
+                <AssignmentDetail
+                  key={active.id}
+                  assignment={active}
+                  isTutor={!!isTutor}
+                  busy={busy}
+                  action={action}
+                  update={async () => {
+                    setActive(
+                      await api<Assignment>("/assignments/" + active.id),
+                    );
+                    await refresh();
+                  }}
+                  edit={() => setEditing(true)}
+                  duplicate={() =>
+                    action(async () => {
+                      const r = await api<{ id: string }>(
+                        "/assignments/" + active.id + "/duplicate",
+                        "POST",
+                      );
+                      setActive(await api<Assignment>("/assignments/" + r.id));
+                      setEditing(true);
+                      await refresh();
+                    })
+                  }
+                />
+              )}
+            </>
+          ) : (
+            <>
+              {page === "today" && (
+                <>
+                  <div className="page-heading">
+                    <div>
+                      <div className="eyebrow">КАЖДЫЙ ШАГ ИМЕЕТ ЗНАЧЕНИЕ</div>
+                      <h1>
+                        {isTutor
+                          ? "Хороший день, чтобы учить."
+                          : "Ваш следующий шаг."}
+                      </h1>
+                      <p>
+                        {isTutor
+                          ? "Всё важное для занятий — перед вами."
+                          : "Продолжайте в своём темпе. Преподаватель рядом."}
+                      </p>
+                    </div>
+                    {isTutor && (
+                      <button
+                        className="primary"
+                        disabled={!relations.length}
+                        onClick={() => setActive(blankAssignment(selected))}
+                      >
+                        <Plus size={18} /> Создать задание
+                      </button>
+                    )}
+                  </div>
+                  <div className="dashboard-grid">
+                    <section className="hero-card">
+                      <div className="eyebrow">
+                        {isTutor ? "ФОКУС НА СЕГОДНЯ" : "ВАШЕ ОБУЧЕНИЕ"}
+                      </div>
+                      <h2>
+                        {isTutor
+                          ? pending.length
+                            ? "Обратная связь,\nкоторая помогает расти."
+                            : "Новый шаг начинается\nс хорошего задания."
+                          : assigned.length
+                            ? "Пора попробовать\nи разобраться."
+                            : "Хорошая работа.\nПосмотрите обратную связь."}
+                      </h2>
+                      <p>
+                        {isTutor
+                          ? "Откройте работу ученика, посмотрите разбор и добавьте то, что важно именно ему."
+                          : "Сохраняйте ответы, задавайте себе вопросы и двигайтесь к пониманию."}
+                      </p>
+                      <button
+                        className="dark"
+                        onClick={() =>
+                          pending[0]
+                            ? open(pending[0].id)
+                            : assigned[0]
+                              ? open(assigned[0].id)
+                              : navigate("assignments")
+                        }
+                      >
+                        {pending.length
+                          ? "Открыть проверку"
+                          : "Перейти к заданиям"}
+                        <ArrowUpRight size={18} />
+                      </button>
+                      <div className="hero-art" aria-hidden="true">
+                        <div className="art-page">
+                          <span>f(x)</span>
+                          <div />
+                          <div />
+                          <div />
+                          <b>✓</b>
+                        </div>
+                        <span className="orbit">✳</span>
+                      </div>
+                    </section>
+                    <section className="today-card">
+                      <div className="section-head">
+                        <h3>Ближайшее занятие</h3>
+                        <CalendarDays size={18} />
+                      </div>
+                      {nextLesson ? (
+                        <>
+                          <div className="lesson-time">
+                            {new Date(nextLesson.starts_at).toLocaleTimeString(
+                              "ru-RU",
+                              { hour: "2-digit", minute: "2-digit" },
+                            )}
+                            <small>
+                              {date(nextLesson.starts_at)} ·{" "}
+                              {nextLesson.duration} мин
+                            </small>
+                          </div>
+                          <h3>{nextLesson.title}</h3>
+                          <p>
+                            {
+                              relations.find(
+                                (r) => r.id === nextLesson.relationship_id,
+                              )?.[isTutor ? "learner_alias" : "tutor_alias"]
+                            }
+                          </p>
+                          <button
+                            className="text-button"
+                            onClick={() => navigate("schedule")}
+                          >
+                            Открыть расписание <ArrowRight size={16} />
+                          </button>
+                        </>
+                      ) : (
+                        <Empty
+                          title="Пока свободно"
+                          text="Здесь появится ближайшее занятие."
+                        />
+                      )}
+                    </section>
+                  </div>
+                  <div className="stats">
+                    <div>
+                      <span>Ждут проверки</span>
+                      <strong>
+                        {pending.length.toString().padStart(2, "0")}
+                      </strong>
+                      <small>Работы с сохранёнными ответами</small>
+                    </div>
+                    <div>
+                      <span>В процессе</span>
+                      <strong>
+                        {assigned.length.toString().padStart(2, "0")}
+                      </strong>
+                      <small>Задания, которые ещё предстоит сдать</small>
+                    </div>
+                    <div>
+                      <span>{isTutor ? "Ученики" : "Преподаватели"}</span>
+                      <strong>
+                        {relations.length.toString().padStart(2, "0")}
+                      </strong>
+                      <small>Активные учебные связи</small>
+                    </div>
+                  </div>
+                  <div className="section-head">
+                    <h2>
+                      {isTutor ? "Работы и обратная связь" : "Мои задания"}{" "}
+                      <span className="muted-count">{assignments.length}</span>
+                    </h2>
+                    <button
+                      className="text-button"
+                      onClick={() => navigate("assignments")}
+                    >
+                      Все задания <ArrowRight size={16} />
+                    </button>
+                  </div>
+                  {assignments.length ? (
+                    <AssignmentRows items={assignments.slice(0, 4)} />
+                  ) : (
+                    <Empty
+                      title="Первое задание — начало истории"
+                      text="Пригласите ученика и создайте работу."
+                    />
+                  )}
+                </>
+              )}
+              {page === "assignments" && (
+                <>
+                  <div className="page-heading">
+                    <div>
+                      <div className="eyebrow">ОТ ВОПРОСА К ПОНИМАНИЮ</div>
+                      <h1>Задания</h1>
+                      <p>Один понятный путь от назначения до обратной связи.</p>
+                    </div>
+                    {isTutor && (
+                      <button
+                        className="primary"
+                        disabled={!relations.length}
+                        onClick={() => setActive(blankAssignment(selected))}
+                      >
+                        <Plus size={18} /> Создать задание
+                      </button>
+                    )}
+                  </div>
+                  <div className="filters">
+                    <label className="search">
+                      <Search size={18} />
+                      <input
+                        placeholder="Найти задание"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
+                    </label>
+                    <span>{assignments.length} работ</span>
+                  </div>
+                  {assignments.length ? (
+                    <AssignmentRows
+                      items={assignments.filter((a) =>
+                        (a.title + a.learner_alias)
+                          .toLowerCase()
+                          .includes(search.toLowerCase()),
+                      )}
+                    />
+                  ) : (
+                    <Empty
+                      title="Заданий пока нет"
+                      text={
+                        isTutor
+                          ? "Добавьте ученика, затем создайте первое задание."
+                          : "Преподаватель назначит вам работу. Если у вас есть приглашение, примите его в настройках."
+                      }
+                    />
+                  )}
+                </>
+              )}
+              {(page === "learners" || page === "progress") && (
+                <>
+                  <div className="page-heading">
+                    <div>
+                      <div className="eyebrow">
+                        ПРОГРЕСС СКЛАДЫВАЕТСЯ ИЗ ШАГОВ
+                      </div>
+                      <h1>{isTutor ? "Ученики" : "Мой прогресс"}</h1>
+                      <p>
+                        Только проверенные результаты. У каждого наблюдения есть
+                        основание.
+                      </p>
+                    </div>
+                    {isTutor && (
+                      <button
+                        className="primary"
+                        onClick={createInvite}
+                        disabled={busy}
+                      >
+                        <Plus size={18} /> Пригласить ученика
+                      </button>
+                    )}
+                  </div>
+                  {invite && (
+                    <div className="card invite-box">
+                      <h3>Приглашение создано</h3>
+                      <p>
+                        Передайте код ученику через согласованный канал. Он
+                        действует 72 часа и используется один раз.
+                      </p>
+                      <code>{invite}</code>
+                      <button
+                        className="secondary"
+                        onClick={() =>
+                          action(async () => {
+                            await navigator.clipboard.writeText(invite);
+                            setToast("Код скопирован");
+                          })
+                        }
+                      >
+                        Скопировать код
+                      </button>
+                    </div>
+                  )}
+                  <div className="learner-grid">
+                    <section className="card learner-list">
+                      {relations.length ? (
+                        relations.map((r) => (
+                          <button
+                            key={r.id}
+                            className={selected === r.id ? "active" : ""}
+                            onClick={() => setSelected(r.id)}
+                          >
+                            <div className="avatar">{r.learner_alias[0]}</div>
+                            <span>
+                              <strong>
+                                {isTutor ? r.learner_alias : r.tutor_alias}
+                              </strong>
+                              <small>{r.subject}</small>
+                            </span>
+                            <ChevronRight size={16} />
+                          </button>
+                        ))
+                      ) : (
+                        <Empty
+                          title="Начните со знакомства"
+                          text="Здесь появятся ваши учебные связи."
+                        />
+                      )}
+                    </section>
+                    <section className="card progress-panel">
+                      <div className="section-head">
+                        <h2>Карта навыков</h2>
+                        {selected && (
+                          <button
+                            className="icon-button"
+                            aria-label="Экспорт прогресса"
+                            onClick={() =>
+                              action(async () => {
+                                const data = await api(
+                                  "/relationships/" + selected + "/export",
+                                );
+                                const url = URL.createObjectURL(
+                                  new Blob([JSON.stringify(data, null, 2)], {
+                                    type: "application/json",
+                                  }),
+                                );
+                                const a = document.createElement("a");
+                                a.href = url;
+                                a.download = "reprep-progress.json";
+                                a.click();
+                                URL.revokeObjectURL(url);
+                              })
+                            }
+                          >
+                            <Download size={18} />
+                          </button>
+                        )}
+                      </div>
+                      {skills.length ? (
+                        skills.map((s) => (
+                          <details className="skill" key={s.skill}>
+                            <summary>
+                              <div>
+                                <strong>{s.skill}</strong>
+                                <small>
+                                  {s.total} проверенных ответов · {s.correct}{" "}
+                                  верных
+                                </small>
+                              </div>
+                              <Badge state={s.latest} />
+                            </summary>
+                            <div className="skill-track">
+                              <span
+                                style={{
+                                  width:
+                                    (s.total
+                                      ? (s.correct / s.total) * 100
+                                      : 0) + "%",
+                                }}
+                              />
+                            </div>
+                            {s.evidence.map((e) => (
+                              <div className="evidence" key={e.id}>
+                                <span>
+                                  {e.assignment_title}
+                                  <small>
+                                    {date(e.created)} ·{" "}
+                                    {e.review_action === "corrected"
+                                      ? "Проверка преподавателя"
+                                      : "Подтверждён AI-разбор"}
+                                  </small>
+                                </span>
+                                <Badge state={e.correctness} />
+                              </div>
+                            ))}
+                          </details>
+                        ))
+                      ) : (
+                        <Empty
+                          title="Прогресс начинается с обратной связи"
+                          text="После проверки преподавателем здесь появятся навыки и работы, на которых основан результат."
+                        />
+                      )}
+                    </section>
+                  </div>
+                  {isTutor && invites.length > 0 && (
+                    <section className="card">
+                      <h3>Приглашения</h3>
+                      {invites.map((i) => (
+                        <div className="line" key={i.id}>
+                          <span>
+                            {i.subject} ·{" "}
+                            {
+                              (
+                                {
+                                  created: "Ожидает ученика",
+                                  accepted: "Принято",
+                                  expired: "Истекло",
+                                  revoked: "Отозвано",
+                                } as Record<string, string>
+                              )[i.state]
+                            }
+                          </span>
+                          {i.state === "created" && (
+                            <button
+                              className="text-button"
+                              onClick={() =>
+                                action(async () => {
+                                  await api(
+                                    "/invitations/" + i.id + "/revoke",
+                                    "POST",
+                                  );
+                                  setInvites(await api("/invitations"));
+                                })
+                              }
+                            >
+                              Отозвать
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </section>
+                  )}
+                </>
+              )}
+              {(page === "schedule" || page === "materials") && (
+                <Collection
+                  key={page}
+                  page={page}
+                  tutor={!!isTutor}
+                  relations={relations}
+                  lessons={lessons}
+                  materials={materials}
+                  busy={busy}
+                  action={action}
+                  refresh={refresh}
+                />
+              )}
+              {page === "settings" && (
+                <>
+                  <div className="page-heading">
+                    <div>
+                      <h1>Настройки и помощь</h1>
+                      <p>
+                        {user.alias} · {isTutor ? "Преподаватель" : "Ученик"}
+                      </p>
+                    </div>
+                  </div>
+                  <section className="card settings">
+                    <h3>Проверка работ</h3>
+                    <p>
+                      {config?.assessment === "local_rules"
+                        ? "Сейчас работает автоматическая проверка по эталонам. Это не нейросеть. Свободные ответы проверяет преподаватель."
+                        : "AI-модель: " +
+                          config?.assessment +
+                          ". Выводы предварительные, окончательное решение принимает преподаватель."}
+                    </p>
+                    <p>
+                      Не используйте демонстрационное пространство для
+                      персональных данных. Для пилота потребуется согласованный
+                      порядок работы с данными.
+                    </p>
+                    {!isTutor && (
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          action(async () => {
+                            await api("/invitations/accept", "POST", {
+                              token: inviteInput,
+                            });
+                            setInviteInput("");
+                            await refresh();
+                            setToast("Вы подключились к преподавателю");
+                          });
+                        }}
+                      >
+                        <label>
+                          Код приглашения
+                          <input
+                            value={inviteInput}
+                            required
+                            onChange={(e) => setInviteInput(e.target.value)}
+                          />
+                        </label>
+                        <button className="primary" disabled={busy}>
+                          Принять приглашение
+                        </button>
+                      </form>
+                    )}
+                    <div className="settings-actions">
+                      <button className="secondary" onClick={logout}>
+                        <LogOut size={16} /> Выйти
+                      </button>
+                      {user.demo && isTutor && (
+                        <button
+                          className="secondary"
+                          disabled={busy}
+                          onClick={() => {
+                            if (
+                              confirm(
+                                "Сбросить только демонстрационные работы? Все демо-сессии завершатся.",
+                              )
+                            )
+                              action(async () => {
+                                const s = await api<{
+                                  token: string;
+                                  user: User;
+                                }>("/demo/reset", "POST");
+                                setToken(s.token);
+                                setUser(s.user);
+                                await refresh();
+                                setToast("Демо восстановлено");
+                              });
+                          }}
+                        >
+                          <RotateCcw size={16} /> Восстановить демо
+                        </button>
+                      )}
+                    </div>
+                  </section>
+                </>
+              )}
+            </>
+          )}
+          <footer>
+            reprep <span>Место, где обучение становится понятнее.</span>
+            <span>С заботой о каждом шаге ↗</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+  );
+}
+createRoot(document.getElementById("root")!).render(<App />);

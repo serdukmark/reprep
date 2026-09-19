@@ -1,0 +1,15 @@
+services:
+  reprep:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    env_file: .env
+    environment:
+      DATABASE_PATH: /app/data/reprep.sqlite3
+    volumes:
+      - reprep-data:/app/data
+    mem_limit: 384m
+    cpus: 1
+    restart: unless-stopped
+volumes:
+  reprep-data:
