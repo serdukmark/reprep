@@ -7,12 +7,17 @@ ROOT=Path(__file__).resolve().parents[1]
 def git(*args):
     return subprocess.check_output(['git',*args],cwd=ROOT)
 
-for name in ('.env','.env.local'):
+for name in ('.env','.env.local','token.txt'):
     if subprocess.run(['git','check-ignore','-q',name],cwd=ROOT).returncode:
         raise SystemExit('FAIL: local environment configuration is not ignored')
 if any(x.startswith(b'.env') and x!=b'.env.example' for x in git('ls-files').splitlines()):
     raise SystemExit('FAIL: local environment configuration is tracked')
+if git('ls-files','--','token.txt').strip() or git('log','--all','--format=%H','--','token.txt').strip():
+    raise SystemExit('FAIL: token.txt entered Git; notify owner and revoke credential')
 secrets=[]
+if (ROOT/'token.txt').is_file():
+    raw=(ROOT/'token.txt').read_bytes().strip()
+    if raw: secrets.append(raw)
 if (ROOT/'.env').exists():
     for line in (ROOT/'.env').read_text().splitlines():
         if '=' in line:
@@ -35,4 +40,4 @@ for line in git('rev-list','--objects','--all').splitlines():
     obj=line.split(b' ',1)[0].decode()
     if git('cat-file','-t',obj).strip()==b'blob' and unsafe(git('cat-file','blob',obj)):
         raise SystemExit('FAIL: secret in Git history; notify owner and revoke credential')
-print('PASS: .env/.env.local ignored; Git-visible files, diffs and history contain no configured secrets or OpenRouter keys.')
+print('PASS: .env/.env.local/token.txt ignored; Git-visible files, diffs and history contain no configured secrets or OpenRouter keys.')

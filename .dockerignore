@@ -12,3 +12,4 @@ docs
 tests
 **/__pycache__
 **/*.sqlite*
+token.txt
