@@ -62,3 +62,5 @@ This is a compact project-level log. Material engineering decisions should also 
 - D-N10 [ASSUMPTION, reversible, owner overnight instruction]: несданные ответы приватны ученику; преподаватель получает только отправленную попытку. Сетевой запрос клиента ограничен 15 с с сообщением о возможном сохранении действия. Seed дополняет отсутствующие fixtures без перезаписи работ. API/model/schema migrations не требуются.
 
 - D-N11: owner 21.09 broadened feature implementation to all team proposals; checklist 30 tracks unfinished work. Reversible additions: autosave after 2 s, deterministic recommendations from confirmed evidence, private aggregate analytics, TXT-only material storage in SQLite with explicit AI permission, lesson status. No external notifications, tunnel or paid calls.
+
+- D-N12 (21.09): AI-USE-006 реализован как очередь вопроса с обязательным подтверждением преподавателя, общий бюджет и отдельный prompt question-v3; ADR-004. Живые синтетические v1/v2 недостатки сохранены, v3 даёт уместную подсказку.

@@ -131,8 +131,15 @@ test("schedule, private payment note, material link and revocable invite", async
   const lesson = tutor
     .locator(".lesson-row")
     .filter({ has: tutor.getByRole("heading", { name: title }) });
-  await lesson.locator("select").selectOption("paid");
-  await expect(lesson.locator("select")).toHaveValue("paid");
+  await lesson
+    .getByRole("combobox", { name: "Ваша отметка об оплате", exact: true })
+    .selectOption("paid");
+  await expect(
+    lesson.getByRole("combobox", {
+      name: "Ваша отметка об оплате",
+      exact: true,
+    }),
+  ).toHaveValue("paid");
   await tutor.getByRole("button", { name: "Материалы", exact: true }).click();
   await tutor.getByRole("button", { name: "Добавить материал" }).click();
   await tutor.getByLabel("Название", { exact: true }).fill(title);

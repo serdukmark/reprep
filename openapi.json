@@ -1541,6 +1541,193 @@
         ]
       }
     },
+    "/api/assignments/{id_}/questions": {
+      "get": {
+        "summary": "Questions",
+        "operationId": "questions_api_assignments__id___questions_get",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Before"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or expired authorization"
+          },
+          "403": {
+            "description": "Role or origin forbidden"
+          },
+          "404": {
+            "description": "Resource not visible to this account"
+          }
+        },
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Ask Question",
+        "operationId": "ask_question_api_assignments__id___questions_post",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or expired authorization"
+          },
+          "403": {
+            "description": "Role or origin forbidden"
+          },
+          "404": {
+            "description": "Resource not visible to this account"
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/questions/{id_}/review": {
+      "post": {
+        "summary": "Review Question",
+        "operationId": "review_question_api_questions__id___review_post",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionReview"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or expired authorization"
+          },
+          "403": {
+            "description": "Role or origin forbidden"
+          },
+          "404": {
+            "description": "Resource not visible to this account"
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
     "/api/assignments/{id_}/messages": {
       "get": {
         "summary": "Messages",
@@ -2541,6 +2728,53 @@
           "alias"
         ],
         "title": "ProfileInput"
+      },
+      "QuestionInput": {
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 10,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "title": "Client Id"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 3000,
+            "minLength": 1,
+            "title": "Text"
+          },
+          "task_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Task Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "client_id",
+          "text",
+          "task_id"
+        ],
+        "title": "QuestionInput"
+      },
+      "QuestionReview": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 3000,
+            "minLength": 1,
+            "title": "Text"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "QuestionReview"
       },
       "ReportInput": {
         "properties": {

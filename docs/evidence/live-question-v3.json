@@ -1,0 +1,26 @@
+{
+  "synthetic": true,
+  "model": "qwen/qwen3.8-flash",
+  "prompt_version": "question-v3",
+  "draft_hidden_before_review": true,
+  "response": {
+    "status": "answered",
+    "text": "Посмотри на число без икса в левой части (это +7). Чтобы оставить только слагаемое с x, нужно от него избавиться. Какое действие ты можешь выполнить с обеими частями уравнения, чтобы убрать +7 слева?",
+    "confidence": 0.95,
+    "engine": "qwen/qwen3.8-flash",
+    "prompt_version": "question-v3"
+  },
+  "teacher_confirmation": "API test role; not an independent pedagogical review",
+  "learner_received_confirmed_response": true,
+  "inside_MAX": false,
+  "price_cap_per_million": {
+    "input_usd": 1,
+    "output_usd": 1
+  },
+  "usage": {
+    "prompt_tokens": 496,
+    "completion_tokens": 78,
+    "total_tokens": 574,
+    "cost": 7.6756e-05
+  }
+}

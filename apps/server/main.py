@@ -14,7 +14,7 @@ from pydantic import ValidationError
 from .config import Settings
 from .db import initialize, connect, one, rows, dumps
 from .auth import token_hash, verify_max
-from .models import (AssignmentInput, DraftInput, ReviewInput, InviteInput, TokenInput, ProfileInput, PlanInput, MessageInput,
+from .models import (AssignmentInput, DraftInput, ReviewInput, InviteInput, TokenInput, ProfileInput, PlanInput, MessageInput, QuestionInput, QuestionAnswer, QuestionReview,
                      MaxLogin, LessonInput, MaterialInput, ReportInput)
 from .ai import ContextTooLarge, LocalRules, RemoteAdapter, OpenRouterAdapter, context_for, validate_analysis
 from .max_bot import public_origin, verify_webhook, accept_event, process_outbox
@@ -92,10 +92,45 @@ def create_app(settings=None, provider=None, run_worker=True):
         await asyncio.to_thread(finish_job, job['id'], output)
         return True
 
+    def claim_question():
+        with connect(cfg.database) as c:
+            c.execute("UPDATE ai_questions SET status='awaiting_review',draft=? WHERE status='processing' AND lease_until<?",(dumps({'status':'needs_teacher','text':'Проверка вопроса прервалась. Ответит преподаватель.','confidence':0,'engine':'unavailable','prompt_version':'question-v3'}),time.time()))
+            q=one(c,"SELECT * FROM ai_questions WHERE status='queued' ORDER BY created LIMIT 1")
+            if not q:return None
+            c.execute("UPDATE ai_questions SET status='processing',lease_until=? WHERE id=?",(time.time()+90,q['id']))
+            a=one(c,'SELECT * FROM assignments WHERE id=?',(q['assignment_id'],));data=json.loads(a['data'])
+            task=next(t for t in data['tasks'] if t['id']==q['task_id'])
+            materials=[json.loads(m['data']) for m in rows(c,'SELECT data FROM materials WHERE relationship_id=? ORDER BY id LIMIT 100',(a['relationship_id'],))]
+            context={'question':q['question'],'task':{k:task[k] for k in ('prompt','type','skill','options','hint')},
+                'materials':[{'title':m['title'],'text':m['content'][:8000]} for m in materials if m.get('ai_allowed') and m.get('content') and m.get('assignment_id') in ('',None,a['id']) and (not m.get('lesson_id') or m['lesson_id']==data.get('lesson_id'))][:2]}
+            learner=one(c,'SELECT demo FROM users WHERE id=?',(q['learner_id'],))
+            return q,context,learner
+
+    def finish_question(id_,draft):
+        with connect(cfg.database) as c:
+            c.execute("UPDATE ai_questions SET draft=?,status='awaiting_review',lease_until=0 WHERE id=? AND status='processing'",(dumps(draft),id_))
+            audit(c,None,'question_analyzed',id_)
+
+    async def process_question():
+        claimed=await asyncio.to_thread(claim_question)
+        if not claimed:return False
+        q,context,learner=claimed
+        try:
+            if len(json.dumps(context,ensure_ascii=False).encode())>30000: raise ContextTooLarge()
+            if not isinstance(engine,OpenRouterAdapter): raise RuntimeError('Question AI not configured')
+            if not learner['demo'] and (cfg.synthetic_only or not cfg.ai_data_approved): raise RuntimeError('Data not approved')
+            await asyncio.to_thread(reserve_ai_call,q['id'])
+            answer=await asyncio.wait_for(asyncio.to_thread(engine.answer_question,context),timeout=45)
+            draft={**QuestionAnswer.model_validate(answer.model_dump() if hasattr(answer,'model_dump') else answer).model_dump(),'engine':engine.model,'prompt_version':'question-v3'}
+        except Exception:
+            draft={'status':'needs_teacher','text':'AI не смог надёжно ответить. Вопрос сохранён для преподавателя.','confidence':0,'engine':'unavailable','prompt_version':'question-v3'}
+        await asyncio.to_thread(finish_question,q['id'],draft)
+        return True
+
     async def worker():
         while True:
             try:
-                if not await process_one():
+                if not await process_one() and not await process_question():
                     await asyncio.sleep(.3)
             except asyncio.CancelledError:
                 raise
@@ -133,6 +168,7 @@ def create_app(settings=None, provider=None, run_worker=True):
 
     app = FastAPI(title='reprep API', version='0.1.0', lifespan=lifespan, docs_url='/api/docs', openapi_url='/api/openapi.json')
     app.state.process_one = process_one
+    app.state.process_question = process_question
     app.state.settings = cfg
     login_limits = {}
 
@@ -581,6 +617,7 @@ def create_app(settings=None, provider=None, run_worker=True):
         submissions=rows(c,'''SELECT s.id,s.submitted,s.status,s.analysis FROM submissions s JOIN assignments a ON a.id=s.assignment_id WHERE a.tutor_id=?''',(u['id'],))
         reviews=rows(c,'''SELECT r.action,r.created,s.submitted FROM reviews r JOIN submissions s ON s.id=r.submission_id JOIN assignments a ON a.id=s.assignment_id WHERE a.tutor_id=?''',(u['id'],))
         calls=one(c,'''SELECT count(*) n FROM audit e JOIN submissions s ON s.id=e.resource_id JOIN assignments a ON a.id=s.assignment_id WHERE e.event='external_ai_attempt' AND substr(e.created,1,10)=? AND a.tutor_id=?''',(now()[:10],u['id']))['n']
+        calls+=one(c,"SELECT count(*) n FROM audit e JOIN ai_questions q ON q.id=e.resource_id JOIN assignments a ON a.id=q.assignment_id WHERE e.event='external_ai_attempt' AND substr(e.created,1,10)=? AND a.tutor_id=?",(now()[:10],u['id']))['n']
         return {'assignments':counts['total'],'published':counts['published'] or 0,'submissions':len(submissions),
             'review_actions':{action:sum(r['action']==action for r in reviews) for action in ('confirmed','corrected','returned','rejected')},
             'ai_failures':sum(bool(s['analysis']) and json.loads(s['analysis']).get('assessment_status') in ('provider_unavailable','output_invalid') for s in submissions),
@@ -616,6 +653,43 @@ def create_app(settings=None, provider=None, run_worker=True):
         c.execute('INSERT INTO learning_plans VALUES(?,?,?) ON CONFLICT(relationship_id) DO UPDATE SET revision=excluded.revision,data=excluded.data',(id_,revision+1,dumps(data)))
         audit(c,u['id'],'plan_updated',id_)
         return {**data,'revision':revision+1}
+
+    @app.get('/api/assignments/{id_}/questions')
+    def questions(id_:str,before:int=0,u=Depends(user),c=Depends(db)):
+        a=assignment(c,id_,u)
+        if before<0:fail(422,'CURSOR','Неверная страница')
+        result=rows(c,'SELECT rowid AS cursor,* FROM ai_questions WHERE assignment_id=? AND (?=0 OR rowid<?) ORDER BY rowid DESC LIMIT 50',(id_,before,before))
+        return [{'id':q['id'],'cursor':q['cursor'],'task_id':q['task_id'],'question':q['question'],'status':q['status'],'created':q['created'],
+                 'response':q['response'],'needs_teacher':bool(q['draft'] and json.loads(q['draft']).get('status')=='needs_teacher'),
+                 'draft':json.loads(q['draft']) if q['draft'] and u['role']=='tutor' else None} for q in result]
+
+    @app.post('/api/assignments/{id_}/questions',status_code=201)
+    def ask_question(id_:str,body:QuestionInput,u=Depends(user),c=Depends(db)):
+        if u['role']!='learner':fail(403,'ROLE','Вопрос задаёт ученик')
+        a=assignment(c,id_,u)
+        if body.task_id not in {t['id'] for t in json.loads(a['data'])['tasks']}:fail(422,'TASK','Вопрос должен относиться к заданию')
+        old=one(c,'SELECT * FROM ai_questions WHERE learner_id=? AND client_id=?',(u['id'],body.client_id))
+        if old:
+            if old['assignment_id']!=id_ or old['task_id']!=body.task_id or old['question']!=body.text:fail(409,'REPLAY','Код отправки уже использован')
+            return {'id':old['id']}
+        count=one(c,'SELECT count(*) n FROM ai_questions WHERE learner_id=? AND substr(created,1,10)=?',(u['id'],now()[:10]))['n']
+        if count>=20:fail(429,'QUESTION_LIMIT','Не более 20 вопросов в день. Напишите преподавателю в обсуждении.')
+        qid=uid();c.execute('INSERT INTO ai_questions(id,assignment_id,learner_id,client_id,task_id,question,created) VALUES(?,?,?,?,?,?,?)',(qid,id_,u['id'],body.client_id,body.task_id,body.text,now()))
+        audit(c,u['id'],'question_queued',qid)
+        return {'id':qid}
+
+    @app.post('/api/questions/{id_}/review')
+    def review_question(id_:str,body:QuestionReview,u=Depends(user),c=Depends(db)):
+        tutor(u)
+        q=one(c,'SELECT * FROM ai_questions WHERE id=?',(id_,))
+        if not q:fail(404,'QUESTION','Вопрос недоступен')
+        assignment(c,q['assignment_id'],u)
+        if q['status']=='published':
+            if q['response']!=body.text:fail(409,'QUESTION_FINAL','Ответ уже отправлен')
+            return {'ok':True}
+        c.execute("UPDATE ai_questions SET status='published',response=?,lease_until=0 WHERE id=?",(body.text,id_))
+        audit(c,u['id'],'question_reviewed',id_)
+        return {'ok':True}
 
     @app.get('/api/assignments/{id_}/messages')
     def messages(id_:str,before:int=0,u=Depends(user),c=Depends(db)):
@@ -748,6 +822,7 @@ def create_app(settings=None, provider=None, run_worker=True):
         c.execute(f'DELETE FROM reviews WHERE submission_id IN ({subs})')
         c.execute(f'DELETE FROM submissions WHERE assignment_id IN ({cond})')
         c.execute(f'DELETE FROM drafts WHERE assignment_id IN ({cond})')
+        c.execute(f'DELETE FROM ai_questions WHERE assignment_id IN ({cond})')
         c.execute(f'DELETE FROM messages WHERE assignment_id IN ({cond})')
         c.execute(f'DELETE FROM assignments WHERE id IN ({cond})')
         c.execute('DELETE FROM learning_plans WHERE relationship_id IN (SELECT id FROM relationships WHERE tutor_id IN (SELECT id FROM users WHERE demo=1))')

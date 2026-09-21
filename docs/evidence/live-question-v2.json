@@ -1,0 +1,26 @@
+{
+  "synthetic": true,
+  "model": "qwen/qwen3.8-flash",
+  "prompt_version": "question-v2",
+  "draft_hidden_before_review": true,
+  "response": {
+    "status": "needs_teacher",
+    "text": "Привет! Чтобы решить уравнение, нужно изолировать переменную x. Подсказка говорит: «Сначала оставьте слагаемое с x в одной части уравнения». Сейчас слева есть и 3x, и +7. Что нужно сделать с числом 7, чтобы оно исчезло из левой части? Вспомни обратное действие к сложению.",
+    "confidence": 0.95,
+    "engine": "qwen/qwen3.8-flash",
+    "prompt_version": "question-v2"
+  },
+  "teacher_confirmation": "API test role; not an independent pedagogical review",
+  "learner_received_confirmed_response": true,
+  "inside_MAX": false,
+  "price_cap_per_million": {
+    "input_usd": 1,
+    "output_usd": 1
+  },
+  "usage": {
+    "prompt_tokens": 413,
+    "completion_tokens": 106,
+    "total_tokens": 519,
+    "cost": 0.00011177
+  }
+}

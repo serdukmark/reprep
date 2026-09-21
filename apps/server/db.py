@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS evidence(id TEXT PRIMARY KEY, relationship_id TEXT NO
 CREATE TABLE IF NOT EXISTS lessons(id TEXT PRIMARY KEY, relationship_id TEXT NOT NULL REFERENCES relationships(id), data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS materials(id TEXT PRIMARY KEY, relationship_id TEXT NOT NULL REFERENCES relationships(id), data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS learning_plans(relationship_id TEXT PRIMARY KEY REFERENCES relationships(id), revision INTEGER NOT NULL, data TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS ai_questions(id TEXT PRIMARY KEY, assignment_id TEXT NOT NULL REFERENCES assignments(id), learner_id TEXT NOT NULL REFERENCES users(id), client_id TEXT NOT NULL, task_id TEXT NOT NULL, question TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'queued', draft TEXT, response TEXT, lease_until REAL NOT NULL DEFAULT 0, created TEXT NOT NULL, UNIQUE(learner_id,client_id));
 CREATE TABLE IF NOT EXISTS messages(id TEXT PRIMARY KEY, assignment_id TEXT NOT NULL REFERENCES assignments(id), user_id TEXT NOT NULL REFERENCES users(id), client_id TEXT NOT NULL, text TEXT NOT NULL, created TEXT NOT NULL, UNIQUE(user_id,client_id));
 CREATE TABLE IF NOT EXISTS reports(id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), context_id TEXT NOT NULL, category TEXT NOT NULL, text TEXT NOT NULL, created TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS audit(id TEXT PRIMARY KEY, actor_id TEXT, event TEXT NOT NULL, resource_id TEXT, created TEXT NOT NULL);

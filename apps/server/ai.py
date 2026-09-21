@@ -4,7 +4,7 @@ import json
 import time
 from pathlib import Path
 import httpx
-from .models import Analysis, TaskAssessment
+from .models import Analysis, TaskAssessment, QuestionAnswer
 
 PROMPT_VERSION = 'assessment-v2'
 
@@ -83,6 +83,28 @@ class OpenRouterAdapter:
         self.key, self.model = key, model
         self.last_usage = {}
         self.last_output = ''
+
+    def answer_question(self,context):
+        if len(json.dumps(context,ensure_ascii=False).encode())>30000: raise ContextTooLarge()
+        schema=QuestionAnswer.model_json_schema()
+        prompt=(Path(__file__).parent/'prompts'/'question-v3.txt').read_text()
+        payload={'model':self.model,'messages':[{'role':'system','content':prompt},{'role':'user','content':json.dumps(context,ensure_ascii=False)}],
+            'temperature':0.1,'max_tokens':1200,'reasoning':{'enabled':False},
+            'provider':{'require_parameters':True,'max_price':{'prompt':1,'completion':1},'data_collection':'deny'},
+            'response_format':{'type':'json_schema','json_schema':{'name':'question_answer','strict':True,'schema':schema}}}
+        with httpx.Client(timeout=40,follow_redirects=False) as client:
+            response=client.post('https://openrouter.ai/api/v1/chat/completions',headers={'Authorization':'Bearer '+self.key,'X-OpenRouter-Title':'reprep'},json=payload)
+            if response.status_code!=200: raise RuntimeError('Question provider unavailable')
+            raw=response.json()
+        if not isinstance(raw,dict) or raw.get('error') or not isinstance(raw.get('choices'),list) or not raw['choices']: raise ValueError('Invalid question envelope')
+        choice=raw['choices'][0]
+        if not isinstance(choice,dict) or choice.get('finish_reason') not in ('stop',None) or not isinstance(choice.get('message'),dict): raise ValueError('Incomplete question answer')
+        content=choice['message'].get('content')
+        if not isinstance(content,str) or not content.strip() or len(content.encode())>30000: raise ValueError('Invalid question answer')
+        result=QuestionAnswer.model_validate(json.loads(content))
+        usage=raw.get('usage') if isinstance(raw.get('usage'),dict) else {}
+        self.last_question_usage={k:v for k in ('prompt_tokens','completion_tokens','total_tokens','cost') if isinstance((v:=usage.get(k)),(int,float))}
+        return result
 
     def analyze(self, context):
         schema = Analysis.model_json_schema()

@@ -1,0 +1,21 @@
+{
+  "synthetic": true,
+  "model": "qwen/qwen3.8-flash",
+  "prompt_version": "question-v1",
+  "draft_hidden_before_review": true,
+  "response": {
+    "status": "needs_teacher",
+    "text": "Ученик просит подсказку к первому шагу решения линейного уравнения (3x + 7 = 22). В текущих материалах нет методических указаний или примеров, которые помогли бы сформулировать наводящий вопрос в соответствии с принятой в классе последовательностью действий. Прошу уточнить: какой именно первый шаг считается основным в данной теме (например, перенос свободного члена или деление на коэффициент)?",
+    "confidence": 0.95,
+    "engine": "qwen/qwen3.8-flash",
+    "prompt_version": "question-v1"
+  },
+  "teacher_confirmation": "API test role; not an independent pedagogical review",
+  "learner_received_confirmed_response": true,
+  "inside_MAX": false,
+  "price_cap_per_million": {
+    "input_usd": 1,
+    "output_usd": 1
+  },
+  "actual_cost": "not collected by this adapter"
+}

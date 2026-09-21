@@ -20,6 +20,7 @@ import {
   ReviewTask,
   Correctness,
 } from "./api";
+import { Questions } from "./Questions";
 import { Discussion } from "./Discussion";
 import { AttemptHistory } from "./AttemptHistory";
 import { Badge, useUnsaved } from "./components";
@@ -790,7 +791,15 @@ export function AssignmentDetail({
           </div>
         </section>
       )}
-      {a.status !== "draft" && <Discussion key={a.id} assignment={a.id} />}
+      {a.status !== "draft" && (
+        <Questions
+          key={"questions-" + a.id}
+          assignment={a.id}
+          tasks={a.tasks}
+          tutor={isTutor}
+        />
+      )}
+      {a.status !== "draft" && <Discussion key={"discussion-" + a.id} assignment={a.id} />}
       {s && <AttemptHistory assignment={a} tutor={isTutor} />}
       {!isTutor && s && (
         <button

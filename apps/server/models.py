@@ -132,6 +132,20 @@ class MessageInput(Model):
     text: str = Field(min_length=1,max_length=3000)
 
 
+class QuestionInput(MessageInput):
+    task_id: str = Field(min_length=1,max_length=80)
+
+
+class QuestionAnswer(Model):
+    status: Literal['answered','off_topic','needs_teacher']
+    text: str = Field(min_length=1,max_length=3000)
+    confidence: float = Field(ge=0,le=1)
+
+
+class QuestionReview(Model):
+    text: str = Field(min_length=1,max_length=3000)
+
+
 class TokenInput(Model):
     token: str = Field(min_length=10, max_length=200)
 
