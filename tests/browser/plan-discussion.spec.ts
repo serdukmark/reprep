@@ -25,7 +25,7 @@ test("teacher plan is readable by pupil, and assignment discussion survives relo
   await expect(tutor.getByText("Программа сохранена")).toBeVisible();
   await learner.goto("/");
   await learner.getByRole("button", { name: "Я ученик" }).click();
-  await learner.getByRole("button", { name: "Прогресс", exact: true }).click();
+  await learner.getByRole("button", { name: "Мой прогресс", exact: true }).click();
   await expect(learner.getByText("Научиться решать уравнения")).toBeVisible();
   await expect(
     learner.getByRole("button", { name: "Сохранить программу" }),

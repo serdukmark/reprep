@@ -42,6 +42,7 @@ import { Builder, AssignmentDetail, blankAssignment } from "./Assignment";
 import { Collection } from "./Collection";
 import "./style.css";
 import { Reminders, CalendarDownload } from "./Reminders";
+import { Groups } from "./Groups";
 import { LearningPlan } from "./LearningPlan";
 import { Analytics, Recommendations } from "./Insights";
 type Page =
@@ -944,6 +945,13 @@ function App() {
                       open={open}
                     />
                   )}
+                  {isTutor && (
+                    <Groups
+                      relations={relations}
+                      assignments={assignments}
+                      refresh={refresh}
+                    />
+                  )}
                   {isTutor && selected && (
                     <Recommendations
                       relationship={selected}
@@ -1006,6 +1014,14 @@ function App() {
                   busy={busy}
                   action={action}
                   refresh={refresh}
+                  openDraft={(id) =>
+                    action(async () => {
+                      if (!mayLeave()) return;
+                      setActive(await api<Assignment>("/assignments/" + id));
+                      setEditing(true);
+                      await refresh();
+                    })
+                  }
                 />
               )}
               {page === "settings" && (

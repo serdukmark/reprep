@@ -20,6 +20,7 @@ import {
   ReviewTask,
   Correctness,
 } from "./api";
+import { WorkMaterials } from "./WorkMaterials";
 import { Questions } from "./Questions";
 import { Discussion } from "./Discussion";
 import { AttemptHistory } from "./AttemptHistory";
@@ -791,6 +792,7 @@ export function AssignmentDetail({
           </div>
         </section>
       )}
+      <WorkMaterials key={"materials-" + a.id} assignment={a} />
       {a.status !== "draft" && (
         <Questions
           key={"questions-" + a.id}
@@ -799,7 +801,9 @@ export function AssignmentDetail({
           tutor={isTutor}
         />
       )}
-      {a.status !== "draft" && <Discussion key={"discussion-" + a.id} assignment={a.id} />}
+      {a.status !== "draft" && (
+        <Discussion key={"discussion-" + a.id} assignment={a.id} />
+      )}
       {s && <AttemptHistory assignment={a} tutor={isTutor} />}
       {!isTutor && s && (
         <button

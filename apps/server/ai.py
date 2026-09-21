@@ -4,7 +4,7 @@ import json
 import time
 from pathlib import Path
 import httpx
-from .models import Analysis, TaskAssessment, QuestionAnswer
+from .models import Analysis, TaskAssessment, QuestionAnswer, GeneratedWork
 
 PROMPT_VERSION = 'assessment-v2'
 
@@ -83,6 +83,36 @@ class OpenRouterAdapter:
         self.key, self.model = key, model
         self.last_usage = {}
         self.last_output = ''
+
+    def generate_assignment(self,context):
+        if len(json.dumps(context,ensure_ascii=False).encode())>60000:raise ContextTooLarge()
+        schema=GeneratedWork.model_json_schema()
+        def strict(node):
+            if isinstance(node,dict):
+                node.pop('default',None)
+                if node.get('type')=='object':node['additionalProperties']=False;node['required']=list(node.get('properties',{}))
+                for v in node.values():strict(v)
+            elif isinstance(node,list):
+                for v in node:strict(v)
+        strict(schema)
+        payload={'model':self.model,'messages':[{'role':'system','content':(Path(__file__).parent/'prompts'/'generation-v2.txt').read_text()},{'role':'user','content':json.dumps(context,ensure_ascii=False)}],
+            'temperature':0.1,'max_tokens':4000,'reasoning':{'enabled':False},
+            'provider':{'require_parameters':True,'max_price':{'prompt':1,'completion':1},'data_collection':'deny'},
+            'response_format':{'type':'json_schema','json_schema':{'name':'generated_work','strict':True,'schema':schema}}}
+        with httpx.Client(timeout=45,follow_redirects=False) as client:
+            response=client.post('https://openrouter.ai/api/v1/chat/completions',headers={'Authorization':'Bearer '+self.key,'X-OpenRouter-Title':'reprep'},json=payload)
+            if response.status_code!=200:raise RuntimeError('Generation provider unavailable')
+            raw=response.json()
+        if not isinstance(raw,dict) or raw.get('error') or not isinstance(raw.get('choices'),list) or not raw['choices']:raise ValueError('Invalid generation envelope')
+        choice=raw['choices'][0]
+        if not isinstance(choice,dict) or choice.get('finish_reason') not in ('stop',None) or not isinstance(choice.get('message'),dict):raise ValueError('Incomplete generation')
+        content=choice['message'].get('content')
+        if not isinstance(content,str) or not content.strip() or len(content.encode())>60000:raise ValueError('Invalid generation')
+        result=GeneratedWork.model_validate(json.loads(content))
+        if len(result.tasks)!=context['count'] or len({t.id for t in result.tasks})!=len(result.tasks):raise ValueError('Wrong generated task count')
+        usage=raw.get('usage') if isinstance(raw.get('usage'),dict) else {}
+        self.last_generation_usage={k:v for k in ('prompt_tokens','completion_tokens','total_tokens','cost') if isinstance((v:=usage.get(k)),(int,float))}
+        return result
 
     def answer_question(self,context):
         if len(json.dumps(context,ensure_ascii=False).encode())>30000: raise ContextTooLarge()

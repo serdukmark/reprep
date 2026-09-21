@@ -64,3 +64,7 @@ This is a compact project-level log. Material engineering decisions should also 
 - D-N11: owner 21.09 broadened feature implementation to all team proposals; checklist 30 tracks unfinished work. Reversible additions: autosave after 2 s, deterministic recommendations from confirmed evidence, private aggregate analytics, TXT-only material storage in SQLite with explicit AI permission, lesson status. No external notifications, tunnel or paid calls.
 
 - D-N12 (21.09): AI-USE-006 реализован как очередь вопроса с обязательным подтверждением преподавателя, общий бюджет и отдельный prompt question-v3; ADR-004. Живые синтетические v1/v2 недостатки сохранены, v3 даёт уместную подсказку.
+
+- D-N13 (21.09): небольшие группы преподавателя с отдельными копиями работ/занятий, без раскрытия состава ученикам; ADR-005.
+
+- D-N14 (21.09): TEAM-096 - генерация 1–5 заданий по разрешённому TXT в отдельной очереди; только приватный черновик, снимок исходного материала приложен; ADR-006.

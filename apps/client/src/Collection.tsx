@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import { Plus, FolderOpen, ArrowUpRight } from "lucide-react";
 import { api, Relation, Lesson, Material, AssignmentSummary } from "./api";
+import { Generation } from "./Generation";
 import { Empty } from "./components";
 export function Collection({
   page,
@@ -11,6 +12,7 @@ export function Collection({
   busy,
   action,
   refresh,
+  openDraft,
 }: {
   page: "schedule" | "materials";
   tutor: boolean;
@@ -20,6 +22,7 @@ export function Collection({
   busy: boolean;
   action: (fn: () => Promise<void>) => Promise<void>;
   refresh: () => Promise<void>;
+  openDraft: (id: string) => void;
 }) {
   const [adding, setAdding] = useState(false);
   const [file, setFile] = useState<{
@@ -309,6 +312,9 @@ export function Collection({
               </div>
               <h3>{m.title}</h3>
               <p>{m.note}</p>
+              {tutor && m.file_name && m.ai_allowed && (
+                <Generation material={m.id} open={openDraft} />
+              )}
               {m.file_name ? (
                 <button
                   className="text-button"

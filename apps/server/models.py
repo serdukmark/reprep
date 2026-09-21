@@ -146,6 +146,49 @@ class QuestionReview(Model):
     text: str = Field(min_length=1,max_length=3000)
 
 
+class GroupInput(Model):
+    revision: int = Field(default=0,ge=0)
+    title: str = Field(min_length=2,max_length=100)
+    relationship_ids: list[str] = Field(min_length=1,max_length=20)
+
+    @field_validator('relationship_ids')
+    @classmethod
+    def unique_members(cls,value):
+        if len(set(value))!=len(value) or any(len(x)>100 for x in value):raise ValueError('Участники не должны повторяться')
+        return value
+
+
+class GroupAssignment(Model):
+    revision: int = Field(ge=1)
+    client_id: str = Field(min_length=10,max_length=80,pattern=r'^[a-zA-Z0-9_-]+$')
+    assignment_id: str = Field(min_length=1,max_length=100)
+
+
+class GroupSchedule(Model):
+    revision: int = Field(ge=1)
+    client_id: str = Field(min_length=10,max_length=80,pattern=r'^[a-zA-Z0-9_-]+$')
+    title: str = Field(min_length=2,max_length=160)
+    starts_at: datetime
+    duration: int = Field(default=60,ge=15,le=240)
+
+    @field_validator('starts_at')
+    @classmethod
+    def zoned(cls,value):
+        if not value.tzinfo:raise ValueError('Укажите часовой пояс')
+        return value
+
+
+class GenerationRequest(Model):
+    client_id: str = Field(min_length=10,max_length=80,pattern=r'^[a-zA-Z0-9_-]+$')
+    count: int = Field(default=3,ge=1,le=5)
+
+
+class GeneratedWork(Model):
+    title: str = Field(min_length=3,max_length=160)
+    instructions: str = Field(max_length=3000)
+    tasks: list[Task] = Field(min_length=1,max_length=5)
+
+
 class TokenInput(Model):
     token: str = Field(min_length=10, max_length=200)
 

@@ -14,11 +14,64 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "boolean"
+                    },
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "external_services": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "ready",
+                    "checks",
+                    "external_services"
+                  ]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Database unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ready": {
+                      "type": "boolean"
+                    },
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "external_services": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "ready",
+                    "checks",
+                    "external_services"
+                  ]
+                }
               }
             }
           }
-        }
+        },
+        "x-roles": [
+          "public"
+        ]
       }
     },
     "/api/health": {
@@ -30,11 +83,24 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
               }
             }
           }
-        }
+        },
+        "x-roles": [
+          "public"
+        ]
       }
     },
     "/api/config": {
@@ -46,11 +112,36 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "demo_enabled": {
+                      "type": "boolean"
+                    },
+                    "max_enabled": {
+                      "type": "boolean"
+                    },
+                    "assessment": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "demo_enabled",
+                    "max_enabled",
+                    "assessment",
+                    "version"
+                  ]
+                }
               }
             }
           }
-        }
+        },
+        "x-roles": [
+          "public"
+        ]
       }
     },
     "/api/max/webhook": {
@@ -62,7 +153,21 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "ok",
+                    "status"
+                  ]
+                }
               }
             }
           },
@@ -79,6 +184,9 @@
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "MAX webhook"
+        ],
         "security": [
           {
             "MaxWebhookSecret": []
@@ -106,7 +214,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
               }
             }
           },
@@ -115,7 +225,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
@@ -123,7 +233,10 @@
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
-        }
+        },
+        "x-roles": [
+          "public"
+        ]
       }
     },
     "/api/auth/max": {
@@ -145,7 +258,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
               }
             }
           },
@@ -154,7 +269,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
@@ -162,7 +277,10 @@
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
-        }
+        },
+        "x-roles": [
+          "public"
+        ]
       }
     },
     "/api/me": {
@@ -174,20 +292,47 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -204,23 +349,58 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -237,20 +417,50 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudyRelation"
+                  }
+                }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -277,7 +487,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
               }
             }
           },
@@ -286,24 +498,49 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -320,20 +557,69 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "subject": {
+                        "type": "string"
+                      },
+                      "expires": {
+                        "type": "number"
+                      },
+                      "state": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "subject",
+                      "expires",
+                      "state"
+                    ]
+                  }
+                }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -358,7 +644,25 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "token": {
+                      "type": "string"
+                    },
+                    "expires": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "token",
+                    "expires"
+                  ]
+                }
               }
             }
           },
@@ -367,24 +671,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -412,7 +740,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
               }
             }
           },
@@ -421,24 +759,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -465,7 +827,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
               }
             }
           },
@@ -474,24 +846,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -518,7 +914,25 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tutor_alias": {
+                      "type": "string"
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "expires": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "tutor_alias",
+                    "subject",
+                    "expires"
+                  ]
+                }
               }
             }
           },
@@ -527,24 +941,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -571,7 +1009,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
               }
             }
           },
@@ -580,24 +1028,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -626,7 +1098,12 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AssignmentSummary"
+                  }
+                }
               }
             }
           },
@@ -635,21 +1112,46 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -674,7 +1176,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/StoredAssignment"
+                }
               }
             }
           },
@@ -683,24 +1187,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -747,7 +1275,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/StoredAssignment"
+                }
               }
             }
           },
@@ -756,24 +1286,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -799,7 +1353,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/StoredAssignment"
+                }
               }
             }
           },
@@ -808,21 +1364,46 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -850,7 +1431,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
               }
             }
           },
@@ -859,24 +1450,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -904,7 +1519,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
               }
             }
           },
@@ -913,24 +1538,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -968,7 +1617,51 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "attempt": {
+                            "type": "integer"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "submitted": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "attempt",
+                          "status",
+                          "submitted"
+                        ]
+                      }
+                    },
+                    "next_offset": {
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "next_offset"
+                  ]
+                }
               }
             }
           },
@@ -977,21 +1670,46 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1029,7 +1747,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "revision": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "revision"
+                  ]
+                }
               }
             }
           },
@@ -1038,24 +1766,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1093,7 +1845,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
               }
             }
           },
@@ -1102,24 +1864,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1147,7 +1933,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/StoredSubmission"
+                }
               }
             }
           },
@@ -1156,21 +1944,46 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1198,7 +2011,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
               }
             }
           },
@@ -1207,24 +2030,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1262,7 +2109,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
               }
             }
           },
@@ -1271,24 +2128,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1316,7 +2197,12 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProgressEntry"
+                  }
+                }
               }
             }
           },
@@ -1325,21 +2211,46 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1367,7 +2278,44 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "skill": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "action": {
+                        "type": "string"
+                      },
+                      "evidence_id": {
+                        "type": "string"
+                      },
+                      "source_assignment_id": {
+                        "type": "string"
+                      },
+                      "basis": {
+                        "type": "string"
+                      },
+                      "automatic_assignment": {
+                        "const": false
+                      }
+                    },
+                    "required": [
+                      "skill",
+                      "reason",
+                      "action",
+                      "evidence_id",
+                      "source_assignment_id",
+                      "basis",
+                      "automatic_assignment"
+                    ]
+                  }
+                }
               }
             }
           },
@@ -1376,21 +2324,45 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1407,20 +2379,525 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "assignments": {
+                      "type": "integer"
+                    },
+                    "published": {
+                      "type": "integer"
+                    },
+                    "submissions": {
+                      "type": "integer"
+                    },
+                    "review_actions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "integer"
+                      }
+                    },
+                    "ai_failures": {
+                      "type": "integer"
+                    },
+                    "external_ai_attempts_today": {
+                      "type": "integer"
+                    },
+                    "daily_limit": {
+                      "type": "integer"
+                    },
+                    "limit_scope": {
+                      "type": "string"
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "assignments",
+                    "published",
+                    "submissions",
+                    "review_actions",
+                    "ai_failures",
+                    "external_ai_attempts_today",
+                    "daily_limit",
+                    "limit_scope",
+                    "note"
+                  ]
+                }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/groups": {
+      "get": {
+        "summary": "Groups",
+        "operationId": "groups_api_groups_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StoredGroup"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Group",
+        "operationId": "create_group_api_groups_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StoredGroup"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/groups/{id_}": {
+      "put": {
+        "summary": "Edit Group",
+        "operationId": "edit_group_api_groups__id___put",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StoredGroup"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/groups/{id_}/assign": {
+      "post": {
+        "summary": "Assign Group",
+        "operationId": "assign_group_api_groups__id___assign_post",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupAssignment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "assignment_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "count": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "assignment_ids",
+                    "count"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/groups/{id_}/lessons": {
+      "post": {
+        "summary": "Schedule Group",
+        "operationId": "schedule_group_api_groups__id___lessons_post",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupSchedule"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "lesson_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "count": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "lesson_ids",
+                    "count"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1448,7 +2925,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/PlanView"
+                }
               }
             }
           },
@@ -1457,21 +2936,46 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1507,7 +3011,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/PlanView"
+                }
               }
             }
           },
@@ -1516,24 +3022,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1571,7 +3101,12 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudyQuestion"
+                  }
+                }
               }
             }
           },
@@ -1580,21 +3115,46 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1630,7 +3190,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
               }
             }
           },
@@ -1639,24 +3209,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1694,7 +3288,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
               }
             }
           },
@@ -1703,24 +3307,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1758,7 +3386,12 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudyMessage"
+                  }
+                }
               }
             }
           },
@@ -1767,21 +3400,46 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1817,7 +3475,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
               }
             }
           },
@@ -1826,24 +3494,49 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1871,7 +3564,28 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subject": {
+                      "type": "string"
+                    },
+                    "exported_at": {
+                      "type": "string"
+                    },
+                    "progress": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ProgressEntry"
+                      }
+                    }
+                  },
+                  "required": [
+                    "subject",
+                    "exported_at",
+                    "progress"
+                  ]
+                }
               }
             }
           },
@@ -1880,21 +3594,46 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1911,20 +3650,65 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file_name": {
+                      "type": "string"
+                    },
+                    "content": {
+                      "type": "string"
+                    },
+                    "content_type": {
+                      "type": "string"
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "file_name",
+                    "content"
+                  ]
+                }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1941,20 +3725,90 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "channel": {
+                      "type": "string"
+                    },
+                    "note": {
+                      "type": "string"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "at": {
+                            "type": "string"
+                          },
+                          "resource_id": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "kind",
+                          "title",
+                          "at",
+                          "resource_id"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "channel",
+                    "note",
+                    "items"
+                  ]
+                }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -1971,20 +3825,50 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StoredLesson"
+                  }
+                }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -2009,7 +3893,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
               }
             }
           },
@@ -2018,24 +3912,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -2073,7 +3991,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
               }
             }
           },
@@ -2082,24 +4010,48 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -2116,20 +4068,50 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StoredMaterial"
+                  }
+                }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -2154,7 +4136,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
               }
             }
           },
@@ -2163,24 +4155,255 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/materials/{id_}/generations": {
+      "get": {
+        "summary": "Generations",
+        "operationId": "generations_api_materials__id___generations_get",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "count": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "assignment_id": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "created": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "count",
+                      "status",
+                      "assignment_id",
+                      "created"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Generate Material",
+        "operationId": "generate_material_api_materials__id___generations_post",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -2208,7 +4431,27 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file_name": {
+                      "type": "string"
+                    },
+                    "content": {
+                      "type": "string"
+                    },
+                    "content_type": {
+                      "type": "string"
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "file_name",
+                    "content"
+                  ]
+                }
               }
             }
           },
@@ -2217,21 +4460,46 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -2258,7 +4526,17 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
               }
             }
           },
@@ -2267,24 +4545,49 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -2301,23 +4604,49 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
               }
             }
           },
           "401": {
-            "description": "Invalid or expired authorization"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Role or origin forbidden"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Resource not visible to this account"
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           },
           "409": {
             "description": "Version, state or replay conflict when applicable"
           }
         },
+        "x-roles": [
+          "tutor"
+        ],
         "security": [
           {
             "SessionBearer": []
@@ -2430,6 +4759,135 @@
           "answers"
         ],
         "title": "DraftInput"
+      },
+      "GenerationRequest": {
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 10,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "title": "Client Id"
+          },
+          "count": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Count",
+            "default": 3
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "client_id"
+        ],
+        "title": "GenerationRequest"
+      },
+      "GroupAssignment": {
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "client_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 10,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "title": "Client Id"
+          },
+          "assignment_id": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Assignment Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "revision",
+          "client_id",
+          "assignment_id"
+        ],
+        "title": "GroupAssignment"
+      },
+      "GroupInput": {
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Revision",
+            "default": 0
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 2,
+            "title": "Title"
+          },
+          "relationship_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Relationship Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "relationship_ids"
+        ],
+        "title": "GroupInput"
+      },
+      "GroupSchedule": {
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "client_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 10,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "title": "Client Id"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 2,
+            "title": "Title"
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Starts At"
+          },
+          "duration": {
+            "type": "integer",
+            "maximum": 240.0,
+            "minimum": 15.0,
+            "title": "Duration",
+            "default": 60
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "revision",
+          "client_id",
+          "title",
+          "starts_at"
+        ],
+        "title": "GroupSchedule"
       },
       "HTTPValidationError": {
         "properties": {
@@ -2996,6 +5454,744 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "ApiError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "reference_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message",
+              "reference_id"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "Account": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "tutor",
+              "learner"
+            ]
+          },
+          "alias": {
+            "type": "string"
+          },
+          "demo": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "role",
+          "alias",
+          "demo"
+        ]
+      },
+      "Session": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/Account"
+          }
+        },
+        "required": [
+          "token",
+          "user"
+        ]
+      },
+      "StoredReview": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "corrected",
+              "rejected",
+              "returned"
+            ],
+            "title": "Action"
+          },
+          "tasks": {
+            "items": {
+              "$ref": "#/components/schemas/ReviewedTask"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Tasks"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Note",
+            "default": ""
+          },
+          "created": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "action",
+          "created"
+        ]
+      },
+      "VisibleTask": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "title": "Id"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "numeric",
+              "single_choice",
+              "short_text"
+            ],
+            "title": "Type"
+          },
+          "prompt": {
+            "type": "string",
+            "maxLength": 3000,
+            "minLength": 3,
+            "title": "Prompt"
+          },
+          "options": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 8,
+            "title": "Options"
+          },
+          "answer": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Answer",
+            "default": ""
+          },
+          "rubric": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Rubric",
+            "default": ""
+          },
+          "skill": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Skill"
+          },
+          "hint": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Hint",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "prompt",
+          "skill"
+        ]
+      },
+      "StoredLesson": {
+        "properties": {
+          "relationship_id": {
+            "type": "string",
+            "title": "Relationship Id"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 2,
+            "title": "Title"
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Starts At"
+          },
+          "duration": {
+            "type": "integer",
+            "maximum": 240.0,
+            "minimum": 15.0,
+            "title": "Duration",
+            "default": 60
+          },
+          "payment_status": {
+            "type": "string",
+            "enum": [
+              "unknown",
+              "paid",
+              "unpaid",
+              "waived"
+            ],
+            "title": "Payment Status",
+            "default": "unknown"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "scheduled",
+              "completed",
+              "cancelled"
+            ],
+            "title": "Status",
+            "default": "scheduled"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "relationship_id",
+          "title",
+          "starts_at",
+          "id"
+        ]
+      },
+      "StoredMaterial": {
+        "properties": {
+          "relationship_id": {
+            "type": "string",
+            "title": "Relationship Id"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 2,
+            "title": "Title"
+          },
+          "url": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Url",
+            "default": ""
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 500,
+            "title": "Note",
+            "default": ""
+          },
+          "file_name": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "File Name",
+            "default": ""
+          },
+          "assignment_id": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Assignment Id",
+            "default": ""
+          },
+          "lesson_id": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Lesson Id",
+            "default": ""
+          },
+          "ai_allowed": {
+            "type": "boolean",
+            "title": "Ai Allowed",
+            "default": false
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "relationship_id",
+          "title",
+          "id"
+        ]
+      },
+      "StoredSubmission": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "attempt": {
+            "type": "integer"
+          },
+          "answers": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "submitted": {
+            "type": "string"
+          },
+          "analysis": {
+            "anyOf": [
+              {
+                "type": "object",
+                "description": "Preliminary assessment; returned only to owning tutor"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "review": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StoredReview"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "hints": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "attempt",
+          "answers",
+          "submitted",
+          "analysis",
+          "review"
+        ]
+      },
+      "StoredAssignment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "instructions": {
+            "type": "string"
+          },
+          "relationship_id": {
+            "type": "string"
+          },
+          "lesson_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "published"
+            ]
+          },
+          "revision": {
+            "type": "integer"
+          },
+          "due_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "feedback_policy": {
+            "type": "string"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VisibleTask"
+            }
+          },
+          "created": {
+            "type": "string"
+          },
+          "draft": {
+            "type": "object",
+            "properties": {
+              "revision": {
+                "type": "integer"
+              },
+              "answers": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "revision",
+              "answers"
+            ]
+          },
+          "submission": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StoredSubmission"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "relationship_id",
+          "status",
+          "revision",
+          "tasks"
+        ]
+      },
+      "AssignmentSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "due_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "relationship_id": {
+            "type": "string"
+          },
+          "learner_alias": {
+            "type": "string"
+          },
+          "tasks_count": {
+            "type": "integer"
+          },
+          "submission": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "attempt": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "id",
+                  "status"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "due_at",
+          "status",
+          "relationship_id",
+          "learner_alias",
+          "tasks_count",
+          "submission"
+        ]
+      },
+      "StudyRelation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "tutor_id": {
+            "type": "string"
+          },
+          "learner_id": {
+            "type": "string"
+          },
+          "tutor_alias": {
+            "type": "string"
+          },
+          "learner_alias": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "tutor_id",
+          "learner_id",
+          "tutor_alias",
+          "learner_alias",
+          "subject"
+        ]
+      },
+      "ProgressEntry": {
+        "type": "object",
+        "properties": {
+          "skill": {
+            "type": "string"
+          },
+          "correct": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "latest": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "submission_id": {
+                  "type": "string"
+                },
+                "review_id": {
+                  "type": "string"
+                },
+                "task_id": {
+                  "type": "string"
+                },
+                "correctness": {
+                  "type": "string"
+                },
+                "assignment_title": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "submission_id",
+                "review_id",
+                "task_id",
+                "correctness",
+                "assignment_title"
+              ]
+            }
+          }
+        },
+        "required": [
+          "skill",
+          "correct",
+          "total",
+          "latest",
+          "evidence"
+        ]
+      },
+      "PlanView": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer"
+          },
+          "goal": {
+            "type": "string"
+          },
+          "level": {
+            "type": "string"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlanStep"
+            }
+          }
+        },
+        "required": [
+          "revision",
+          "goal",
+          "level",
+          "steps"
+        ]
+      },
+      "StoredGroup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer"
+          },
+          "relationship_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "revision",
+          "relationship_ids"
+        ]
+      },
+      "StudyMessage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "cursor": {
+            "type": "integer"
+          },
+          "text": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "alias": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "cursor",
+          "text",
+          "created",
+          "alias",
+          "role"
+        ]
+      },
+      "StudyQuestion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "cursor": {
+            "type": "integer"
+          },
+          "task_id": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "response": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "needs_teacher": {
+            "type": "boolean"
+          },
+          "draft": {
+            "anyOf": [
+              {
+                "type": "object",
+                "description": "Hidden from learner; contains text/status/confidence/engine/prompt_version for tutor"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "cursor",
+          "task_id",
+          "question",
+          "status",
+          "created",
+          "response",
+          "needs_teacher",
+          "draft"
+        ]
       }
     },
     "securitySchemes": {

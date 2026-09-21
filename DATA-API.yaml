@@ -21,7 +21,9 @@
     {
       "method": "GET",
       "path": "/api/ready",
-      "role": "public",
+      "role": [
+        "public"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -29,17 +31,69 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ready": {
+                    "type": "boolean"
+                  },
+                  "checks": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "external_services": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ready",
+                  "checks",
+                  "external_services"
+                ]
+              }
+            }
+          }
+        },
+        "503": {
+          "description": "Database unavailable",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ready": {
+                    "type": "boolean"
+                  },
+                  "checks": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "external_services": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ready",
+                  "checks",
+                  "external_services"
+                ]
+              }
             }
           }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/health",
-      "role": "public",
+      "role": [
+        "public"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -47,17 +101,29 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              }
             }
           }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/config",
-      "role": "public",
+      "role": [
+        "public"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -65,17 +131,41 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "demo_enabled": {
+                    "type": "boolean"
+                  },
+                  "max_enabled": {
+                    "type": "boolean"
+                  },
+                  "assessment": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "demo_enabled",
+                  "max_enabled",
+                  "assessment",
+                  "version"
+                ]
+              }
             }
           }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/max/webhook",
-      "role": "MAX webhook",
+      "role": [
+        "MAX webhook"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -83,7 +173,21 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ok",
+                  "status"
+                ]
+              }
             }
           }
         },
@@ -100,12 +204,14 @@
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/auth/demo/{persona}",
-      "role": "public",
+      "role": [
+        "public"
+      ],
       "parameters": [
         {
           "name": "persona",
@@ -123,7 +229,9 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/Session"
+              }
             }
           }
         },
@@ -132,7 +240,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
@@ -141,12 +249,14 @@
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/auth/max",
-      "role": "public",
+      "role": [
+        "public"
+      ],
       "parameters": [],
       "request_body": {
         "content": {
@@ -163,7 +273,9 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/Session"
+              }
             }
           }
         },
@@ -172,7 +284,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
@@ -181,12 +293,15 @@
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/me",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -194,26 +309,52 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/Account"
+              }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/logout",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -221,29 +362,63 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
+                ]
+              }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/relationships",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -251,26 +426,55 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/StudyRelation"
+                }
+              }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "PUT",
       "path": "/api/profile",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [],
       "request_body": {
         "content": {
@@ -287,7 +491,9 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/Account"
+              }
             }
           }
         },
@@ -296,30 +502,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/invitations",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -327,26 +556,74 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "expires": {
+                      "type": "number"
+                    },
+                    "state": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "subject",
+                    "expires",
+                    "state"
+                  ]
+                }
+              }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/invitations",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [],
       "request_body": {
         "content": {
@@ -363,7 +640,25 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "token": {
+                    "type": "string"
+                  },
+                  "expires": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "id",
+                  "token",
+                  "expires"
+                ]
+              }
             }
           }
         },
@@ -372,30 +667,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/invitations/{id_}/revoke",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -413,7 +731,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
+                ]
+              }
             }
           }
         },
@@ -422,30 +750,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/invitations/accept",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "learner"
+      ],
       "parameters": [],
       "request_body": {
         "content": {
@@ -462,7 +813,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
+                ]
+              }
             }
           }
         },
@@ -471,30 +832,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/invitations/preview",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "learner"
+      ],
       "parameters": [],
       "request_body": {
         "content": {
@@ -511,7 +895,25 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tutor_alias": {
+                    "type": "string"
+                  },
+                  "subject": {
+                    "type": "string"
+                  },
+                  "expires": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "tutor_alias",
+                  "subject",
+                  "expires"
+                ]
+              }
             }
           }
         },
@@ -520,30 +922,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/invitations/decline",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "learner"
+      ],
       "parameters": [],
       "request_body": {
         "content": {
@@ -560,7 +985,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
+                ]
+              }
             }
           }
         },
@@ -569,30 +1004,54 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/assignments",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [
         {
           "name": "offset",
@@ -611,7 +1070,12 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AssignmentSummary"
+                }
+              }
             }
           }
         },
@@ -620,27 +1084,50 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/assignments",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [],
       "request_body": {
         "required": true,
@@ -657,7 +1144,9 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/StoredAssignment"
+              }
             }
           }
         },
@@ -666,30 +1155,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "PUT",
       "path": "/api/assignments/{id_}",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -725,7 +1237,9 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/StoredAssignment"
+              }
             }
           }
         },
@@ -734,30 +1248,54 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/assignments/{id_}",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -775,7 +1313,9 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/StoredAssignment"
+              }
             }
           }
         },
@@ -784,27 +1324,50 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/assignments/{id_}/publish",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -822,7 +1385,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
+                ]
+              }
             }
           }
         },
@@ -831,30 +1404,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/assignments/{id_}/duplicate",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -872,7 +1468,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
             }
           }
         },
@@ -881,30 +1487,54 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/assignments/{id_}/attempts",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -932,7 +1562,51 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "attempt": {
+                          "type": "integer"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "submitted": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "attempt",
+                        "status",
+                        "submitted"
+                      ]
+                    }
+                  },
+                  "next_offset": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "items",
+                  "next_offset"
+                ]
+              }
             }
           }
         },
@@ -941,27 +1615,50 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "PUT",
       "path": "/api/assignments/{id_}/draft",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "learner"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -988,7 +1685,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "revision": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "revision"
+                ]
+              }
             }
           }
         },
@@ -997,30 +1704,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/assignments/{id_}/submit",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "learner"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1047,7 +1777,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
             }
           }
         },
@@ -1056,30 +1796,54 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/submissions/{id_}",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1097,7 +1861,9 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/StoredSubmission"
+              }
             }
           }
         },
@@ -1106,27 +1872,50 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/submissions/{id_}/retry",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1144,7 +1933,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
+                ]
+              }
             }
           }
         },
@@ -1153,30 +1952,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/submissions/{id_}/review",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1203,7 +2025,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
             }
           }
         },
@@ -1212,30 +2044,54 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/relationships/{id_}/progress",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1253,7 +2109,12 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ProgressEntry"
+                }
+              }
             }
           }
         },
@@ -1262,27 +2123,50 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/relationships/{id_}/recommendations",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1300,7 +2184,44 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "skill": {
+                      "type": "string"
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "action": {
+                      "type": "string"
+                    },
+                    "evidence_id": {
+                      "type": "string"
+                    },
+                    "source_assignment_id": {
+                      "type": "string"
+                    },
+                    "basis": {
+                      "type": "string"
+                    },
+                    "automatic_assignment": {
+                      "const": false
+                    }
+                  },
+                  "required": [
+                    "skill",
+                    "reason",
+                    "action",
+                    "evidence_id",
+                    "source_assignment_id",
+                    "basis",
+                    "automatic_assignment"
+                  ]
+                }
+              }
             }
           }
         },
@@ -1309,27 +2230,50 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/analytics",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -1337,26 +2281,506 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "assignments": {
+                    "type": "integer"
+                  },
+                  "published": {
+                    "type": "integer"
+                  },
+                  "submissions": {
+                    "type": "integer"
+                  },
+                  "review_actions": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "integer"
+                    }
+                  },
+                  "ai_failures": {
+                    "type": "integer"
+                  },
+                  "external_ai_attempts_today": {
+                    "type": "integer"
+                  },
+                  "daily_limit": {
+                    "type": "integer"
+                  },
+                  "limit_scope": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "assignments",
+                  "published",
+                  "submissions",
+                  "review_actions",
+                  "ai_failures",
+                  "external_ai_attempts_today",
+                  "daily_limit",
+                  "limit_scope",
+                  "note"
+                ]
+              }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "GET",
+      "path": "/api/groups",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/StoredGroup"
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/groups",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GroupInput"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "201": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StoredGroup"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "PUT",
+      "path": "/api/groups/{id_}",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GroupInput"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StoredGroup"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/groups/{id_}/assign",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GroupAssignment"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "assignment_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "count": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "assignment_ids",
+                  "count"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/groups/{id_}/lessons",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GroupSchedule"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lesson_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "count": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "lesson_ids",
+                  "count"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/relationships/{id_}/plan",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1374,7 +2798,9 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/PlanView"
+              }
             }
           }
         },
@@ -1383,27 +2809,50 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "PUT",
       "path": "/api/relationships/{id_}/plan",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1430,7 +2879,9 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/PlanView"
+              }
             }
           }
         },
@@ -1439,30 +2890,54 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/assignments/{id_}/questions",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1490,7 +2965,12 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/StudyQuestion"
+                }
+              }
             }
           }
         },
@@ -1499,27 +2979,50 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/assignments/{id_}/questions",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "learner"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1546,7 +3049,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
             }
           }
         },
@@ -1555,30 +3068,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/questions/{id_}/review",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1605,7 +3141,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
+                ]
+              }
             }
           }
         },
@@ -1614,30 +3160,54 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/assignments/{id_}/messages",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1665,7 +3235,12 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/StudyMessage"
+                }
+              }
             }
           }
         },
@@ -1674,27 +3249,51 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/assignments/{id_}/messages",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1721,7 +3320,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
             }
           }
         },
@@ -1730,30 +3339,54 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/relationships/{id_}/export",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1771,7 +3404,28 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subject": {
+                    "type": "string"
+                  },
+                  "exported_at": {
+                    "type": "string"
+                  },
+                  "progress": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ProgressEntry"
+                    }
+                  }
+                },
+                "required": [
+                  "subject",
+                  "exported_at",
+                  "progress"
+                ]
+              }
             }
           }
         },
@@ -1780,27 +3434,51 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/calendar",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -1808,26 +3486,70 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file_name": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "content_type": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file_name",
+                  "content"
+                ]
+              }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/reminders",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -1835,26 +3557,95 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "channel": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "at": {
+                          "type": "string"
+                        },
+                        "resource_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "kind",
+                        "title",
+                        "at",
+                        "resource_id"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "channel",
+                  "note",
+                  "items"
+                ]
+              }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/lessons",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -1862,26 +3653,54 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/StoredLesson"
+                }
+              }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/lessons",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [],
       "request_body": {
         "content": {
@@ -1898,7 +3717,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
             }
           }
         },
@@ -1907,30 +3736,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "PUT",
       "path": "/api/lessons/{id_}",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -1957,7 +3809,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
+                ]
+              }
             }
           }
         },
@@ -1966,30 +3828,54 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
       "path": "/api/materials",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -1997,26 +3883,54 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/StoredMaterial"
+                }
+              }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/materials",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [],
       "request_body": {
         "content": {
@@ -2033,7 +3947,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
             }
           }
         },
@@ -2042,30 +3966,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "GET",
-      "path": "/api/materials/{id_}/file",
-      "role": "authenticated, resource ownership checked",
+      "path": "/api/materials/{id_}/generations",
+      "role": [
+        "tutor"
+      ],
       "parameters": [
         {
           "name": "id_",
@@ -2083,7 +4030,43 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "assignment_id": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "created": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "count",
+                    "status",
+                    "assignment_id",
+                    "created"
+                  ]
+                }
+              }
             }
           }
         },
@@ -2092,27 +4075,234 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/materials/{id_}/generations",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GenerationRequest"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "201": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "GET",
+      "path": "/api/materials/{id_}/file",
+      "role": [
+        "tutor",
+        "learner"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file_name": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "content_type": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file_name",
+                  "content"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/reports",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor",
+        "learner"
+      ],
       "parameters": [],
       "request_body": {
         "content": {
@@ -2129,7 +4319,17 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
             }
           }
         },
@@ -2138,30 +4338,53 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HTTPValidationError"
+                "$ref": "#/components/schemas/ApiError"
               }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
       "method": "POST",
       "path": "/api/demo/reset",
-      "role": "authenticated, resource ownership checked",
+      "role": [
+        "tutor"
+      ],
       "parameters": [],
       "request_body": null,
       "expected_responses": {
@@ -2169,24 +4392,47 @@
           "description": "Successful Response",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/Session"
+              }
             }
           }
         },
         "401": {
-          "description": "Invalid or expired authorization"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "403": {
-          "description": "Role or origin forbidden"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "404": {
-          "description": "Resource not visible to this account"
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
         }
       },
-      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     }
   ],
   "executable_checks": [
@@ -2198,6 +4444,6 @@
   "release_gates": [
     "Owner-provided stable HTTPS",
     "Real MAX flow",
-    "Complete response schemas and organizer DATA-API schema confirmation"
+    "Organizer DATA-API schema confirmation"
   ]
 }

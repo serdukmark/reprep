@@ -14,8 +14,8 @@ from pydantic import ValidationError
 from .config import Settings
 from .db import initialize, connect, one, rows, dumps
 from .auth import token_hash, verify_max
-from .models import (AssignmentInput, DraftInput, ReviewInput, InviteInput, TokenInput, ProfileInput, PlanInput, MessageInput, QuestionInput, QuestionAnswer, QuestionReview,
-                     MaxLogin, LessonInput, MaterialInput, ReportInput)
+from .models import (AssignmentInput, DraftInput, ReviewInput, InviteInput, TokenInput, ProfileInput, PlanInput, MessageInput, QuestionInput, QuestionAnswer, QuestionReview, GroupInput, GroupAssignment, GroupSchedule,
+                     MaxLogin, LessonInput, MaterialInput, ReportInput, GenerationRequest, GeneratedWork)
 from .ai import ContextTooLarge, LocalRules, RemoteAdapter, OpenRouterAdapter, context_for, validate_analysis
 from .max_bot import public_origin, verify_webhook, accept_event, process_outbox
 from .service import uid, now, audit, seed, assignment_view, content_hash, progress
@@ -127,11 +127,56 @@ def create_app(settings=None, provider=None, run_worker=True):
         await asyncio.to_thread(finish_question,q['id'],draft)
         return True
 
+    def claim_generation():
+        with connect(cfg.database) as c:
+            c.execute("UPDATE generations SET status='failed' WHERE status='processing' AND lease_until<?",(time.time(),))
+            job=one(c,"SELECT * FROM generations WHERE status='queued' ORDER BY created LIMIT 1")
+            if not job:return None
+            c.execute("UPDATE generations SET status='processing',lease_until=? WHERE id=?",(time.time()+90,job['id']))
+            material=one(c,'SELECT * FROM materials WHERE id=?',(job['material_id'],))
+            actor=one(c,'SELECT demo FROM users WHERE id=?',(job['tutor_id'],))
+            return job,material,actor
+
+    def finish_generation(job,material,work):
+        with connect(cfg.database) as c:
+            active=one(c,"SELECT id FROM generations WHERE id=? AND status='processing'",(job['id'],))
+            if not active:return
+            aid=None
+            if work:
+                body=AssignmentInput(relationship_id=material['relationship_id'],**work.model_dump())
+                aid=uid();c.execute('INSERT INTO assignments(id,tutor_id,relationship_id,data,created) VALUES(?,?,?,?,?)',(aid,job['tutor_id'],material['relationship_id'],body.model_dump_json(),now()))
+                snapshot={**json.loads(material['data']),'assignment_id':aid,'lesson_id':''}
+                c.execute('INSERT INTO materials VALUES(?,?,?)',(uid(),material['relationship_id'],MaterialInput.model_validate(snapshot).model_dump_json()))
+                audit(c,job['tutor_id'],'generated_assignment_draft',aid)
+            c.execute('UPDATE generations SET status=?,assignment_id=?,lease_until=0 WHERE id=?',('completed' if aid else 'failed',aid,job['id']))
+
+    async def process_generation():
+        claimed=await asyncio.to_thread(claim_generation)
+        if not claimed:return False
+        job,material,actor=claimed;work=None
+        try:
+            data=json.loads(material['data'])
+            if not data.get('content') or not data.get('ai_allowed'):raise RuntimeError('Material not approved')
+            if not isinstance(engine,OpenRouterAdapter):raise RuntimeError('Generation not configured')
+            if not actor['demo'] and (cfg.synthetic_only or not cfg.ai_data_approved):raise RuntimeError('Data not approved')
+            context={'count':job['count'],'material':{'title':data['title'],'text':data['content'][:16000]}}
+            if len(json.dumps(context,ensure_ascii=False).encode())>60000:raise ContextTooLarge()
+            await asyncio.to_thread(reserve_ai_call,job['id'])
+            result=await asyncio.wait_for(asyncio.to_thread(engine.generate_assignment,context),timeout=50)
+            work=GeneratedWork.model_validate(result.model_dump() if hasattr(result,'model_dump') else result)
+            if len(work.tasks)!=job['count']:raise ValueError('Task count')
+            AssignmentInput(relationship_id=material['relationship_id'],**work.model_dump())
+        except Exception:work=None
+        await asyncio.to_thread(finish_generation,job,material,work)
+        return True
+
     async def worker():
         while True:
             try:
-                if not await process_one() and not await process_question():
-                    await asyncio.sleep(.3)
+                handled=await process_one()
+                handled=await process_question() or handled
+                handled=await process_generation() or handled
+                if not handled:await asyncio.sleep(.3)
             except asyncio.CancelledError:
                 raise
             except Exception:
@@ -169,6 +214,7 @@ def create_app(settings=None, provider=None, run_worker=True):
     app = FastAPI(title='reprep API', version='0.1.0', lifespan=lifespan, docs_url='/api/docs', openapi_url='/api/openapi.json')
     app.state.process_one = process_one
     app.state.process_question = process_question
+    app.state.process_generation = process_generation
     app.state.settings = cfg
     login_limits = {}
 
@@ -618,11 +664,77 @@ def create_app(settings=None, provider=None, run_worker=True):
         reviews=rows(c,'''SELECT r.action,r.created,s.submitted FROM reviews r JOIN submissions s ON s.id=r.submission_id JOIN assignments a ON a.id=s.assignment_id WHERE a.tutor_id=?''',(u['id'],))
         calls=one(c,'''SELECT count(*) n FROM audit e JOIN submissions s ON s.id=e.resource_id JOIN assignments a ON a.id=s.assignment_id WHERE e.event='external_ai_attempt' AND substr(e.created,1,10)=? AND a.tutor_id=?''',(now()[:10],u['id']))['n']
         calls+=one(c,"SELECT count(*) n FROM audit e JOIN ai_questions q ON q.id=e.resource_id JOIN assignments a ON a.id=q.assignment_id WHERE e.event='external_ai_attempt' AND substr(e.created,1,10)=? AND a.tutor_id=?",(now()[:10],u['id']))['n']
+        calls+=one(c,"SELECT count(*) n FROM audit e JOIN generations g ON g.id=e.resource_id WHERE e.event='external_ai_attempt' AND substr(e.created,1,10)=? AND g.tutor_id=?",(now()[:10],u['id']))['n']
+        question_failures=one(c,"SELECT count(*) n FROM ai_questions q JOIN assignments a ON a.id=q.assignment_id WHERE a.tutor_id=? AND json_extract(q.draft,'$.engine')='unavailable'",(u['id'],))['n']
+        generation_failures=one(c,"SELECT count(*) n FROM generations WHERE tutor_id=? AND status='failed'",(u['id'],))['n']
         return {'assignments':counts['total'],'published':counts['published'] or 0,'submissions':len(submissions),
             'review_actions':{action:sum(r['action']==action for r in reviews) for action in ('confirmed','corrected','returned','rejected')},
-            'ai_failures':sum(bool(s['analysis']) and json.loads(s['analysis']).get('assessment_status') in ('provider_unavailable','output_invalid') for s in submissions),
+            'ai_failures':question_failures+generation_failures+sum(bool(s['analysis']) and json.loads(s['analysis']).get('assessment_status') in ('provider_unavailable','output_invalid') for s in submissions),
             'external_ai_attempts_today':calls,'daily_limit':cfg.ai_daily_limit,'limit_scope':'whole_instance_UTC_day',
             'note':'Счётчики действий, не измеренная экономия времени и не качество обучения. Лимит общий для сервера; показаны только ваши вызовы.'}
+
+    def owned_group(c,id_,u):
+        tutor(u);g=one(c,'SELECT * FROM learning_groups WHERE id=? AND tutor_id=?',(id_,u['id']))
+        if not g:fail(404,'GROUP','Группа недоступна')
+        return {**json.loads(g['data']),'id':g['id'],'revision':g['revision']}
+
+    @app.get('/api/groups')
+    def groups(u=Depends(user),c=Depends(db)):
+        tutor(u)
+        return [{**json.loads(g['data']),'id':g['id'],'revision':g['revision']} for g in rows(c,'SELECT * FROM learning_groups WHERE tutor_id=? ORDER BY id LIMIT 100',(u['id'],))]
+
+    @app.post('/api/groups',status_code=201)
+    def create_group(body:GroupInput,u=Depends(user),c=Depends(db)):
+        tutor(u)
+        for rid in body.relationship_ids:relation(c,rid,u)
+        id_=uid();c.execute('INSERT INTO learning_groups VALUES(?,?,?,?)',(id_,u['id'],1,dumps(body.model_dump(exclude={'revision'}))))
+        audit(c,u['id'],'group_created',id_)
+        return owned_group(c,id_,u)
+
+    @app.put('/api/groups/{id_}')
+    def edit_group(id_:str,body:GroupInput,u=Depends(user),c=Depends(db)):
+        g=owned_group(c,id_,u)
+        if body.revision!=g['revision']:fail(409,'VERSION_CONFLICT','Состав группы изменён. Обновите список.')
+        for rid in body.relationship_ids:relation(c,rid,u)
+        c.execute('UPDATE learning_groups SET revision=revision+1,data=? WHERE id=?',(dumps(body.model_dump(exclude={'revision'})),id_))
+        audit(c,u['id'],'group_updated',id_)
+        return owned_group(c,id_,u)
+
+    def group_action(c,id_,u,body,kind):
+        g=owned_group(c,id_,u);request=dumps({'kind':kind,**body.model_dump(mode='json')})
+        existing=one(c,'SELECT * FROM group_actions WHERE group_id=? AND client_id=?',(id_,body.client_id))
+        if existing:
+            if request!=existing['request']:fail(409,'REPLAY','Код операции уже использован')
+            return g,request,json.loads(existing['result'])
+        if body.revision!=g['revision']:fail(409,'VERSION_CONFLICT','Состав группы изменён. Обновите список.')
+        for rid in g['relationship_ids']:relation(c,rid,u)
+        return g,request,None
+
+    @app.post('/api/groups/{id_}/assign')
+    def assign_group(id_:str,body:GroupAssignment,u=Depends(user),c=Depends(db)):
+        g,request,previous=group_action(c,id_,u,body,'assignment')
+        if previous:return previous
+        source=assignment(c,body.assignment_id,u);data=json.loads(source['data']);ids=[]
+        for rid in g['relationship_ids']:
+            copied={**data,'relationship_id':rid,'lesson_id':''};aid=uid()
+            c.execute("INSERT INTO assignments(id,tutor_id,relationship_id,status,data,created) VALUES(?,?,?,'published',?,?)",(aid,u['id'],rid,dumps(copied),now()))
+            ids.append(aid);audit(c,u['id'],'assignment_published',aid)
+        result={'assignment_ids':ids,'count':len(ids)}
+        c.execute('INSERT INTO group_actions VALUES(?,?,?,?)',(id_,body.client_id,request,dumps(result)))
+        return result
+
+    @app.post('/api/groups/{id_}/lessons')
+    def schedule_group(id_:str,body:GroupSchedule,u=Depends(user),c=Depends(db)):
+        g,request,previous=group_action(c,id_,u,body,'lesson')
+        if previous:return previous
+        ids=[]
+        for rid in g['relationship_ids']:
+            lesson=LessonInput(relationship_id=rid,title=body.title,starts_at=body.starts_at,duration=body.duration)
+            lid=uid();c.execute('INSERT INTO lessons VALUES(?,?,?)',(lid,rid,lesson.model_dump_json()));ids.append(lid)
+        result={'lesson_ids':ids,'count':len(ids)}
+        c.execute('INSERT INTO group_actions VALUES(?,?,?,?)',(id_,body.client_id,request,dumps(result)))
+        audit(c,u['id'],'group_lesson_created',id_)
+        return result
 
     @app.get('/api/relationships/{id_}/plan')
     def learning_plan(id_:str,u=Depends(user),c=Depends(db)):
@@ -794,6 +906,32 @@ def create_app(settings=None, provider=None, run_worker=True):
         c.execute('INSERT INTO materials VALUES(?,?,?)', (id_, body.relationship_id, body.model_dump_json()))
         return {'id': id_}
 
+    def owned_material(c,id_,u):
+        tutor(u);material=one(c,'SELECT * FROM materials WHERE id=?',(id_,))
+        if not material:fail(404,'MATERIAL','Материал недоступен')
+        relation(c,material['relationship_id'],u)
+        return material
+
+    @app.get('/api/materials/{id_}/generations')
+    def generations(id_:str,u=Depends(user),c=Depends(db)):
+        owned_material(c,id_,u)
+        return rows(c,'SELECT id,count,status,assignment_id,created FROM generations WHERE material_id=? AND tutor_id=? ORDER BY created DESC LIMIT 20',(id_,u['id']))
+
+    @app.post('/api/materials/{id_}/generations',status_code=201)
+    def generate_material(id_:str,body:GenerationRequest,u=Depends(user),c=Depends(db)):
+        material=owned_material(c,id_,u);data=json.loads(material['data'])
+        if not data.get('content') or not data.get('ai_allowed'):fail(422,'AI_MATERIAL','Нужен TXT с явно разрешённым использованием в AI')
+        if not u['demo'] and (cfg.synthetic_only or not cfg.ai_data_approved):fail(403,'DATA_POLICY','Внешний AI для реальных данных пока не разрешён')
+        old=one(c,'SELECT * FROM generations WHERE tutor_id=? AND client_id=?',(u['id'],body.client_id))
+        if old:
+            if old['material_id']!=id_ or old['count']!=body.count:fail(409,'REPLAY','Код запроса уже использован')
+            return {'id':old['id']}
+        count=one(c,'SELECT count(*) n FROM generations WHERE tutor_id=? AND substr(created,1,10)=?',(u['id'],now()[:10]))['n']
+        if count>=10:fail(429,'GENERATION_LIMIT','Не более 10 запросов генерации в день')
+        gid=uid();c.execute('INSERT INTO generations(id,material_id,tutor_id,client_id,count,created) VALUES(?,?,?,?,?,?)',(gid,id_,u['id'],body.client_id,body.count,now()))
+        audit(c,u['id'],'generation_queued',gid)
+        return {'id':gid}
+
     @app.get('/api/materials/{id_}/file')
     def material_file(id_: str,u=Depends(user),c=Depends(db)):
         item=one(c,'SELECT * FROM materials WHERE id=?',(id_,))
@@ -816,6 +954,7 @@ def create_app(settings=None, provider=None, run_worker=True):
         if not cfg.demo or u['id'] != 'demo-tutor':
             fail(403, 'DEMO_ONLY', 'Действие доступно только в демо преподавателя')
         # Delete only demo-owned records; never reset a database wholesale.
+        c.execute('DELETE FROM generations WHERE tutor_id IN (SELECT id FROM users WHERE demo=1)')
         cond = "SELECT id FROM assignments WHERE tutor_id IN (SELECT id FROM users WHERE demo=1)"
         subs = f'SELECT id FROM submissions WHERE assignment_id IN ({cond})'
         c.execute(f'DELETE FROM evidence WHERE submission_id IN ({subs})')
@@ -831,6 +970,8 @@ def create_app(settings=None, provider=None, run_worker=True):
         c.execute('DELETE FROM relationships WHERE tutor_id IN (SELECT id FROM users WHERE demo=1)')
         for table, field in [('invitations', 'tutor_id'), ('reports', 'user_id'), ('sessions', 'user_id')]:
             c.execute(f'DELETE FROM {table} WHERE {field} IN (SELECT id FROM users WHERE demo=1)')
+        c.execute('DELETE FROM group_actions WHERE group_id IN (SELECT id FROM learning_groups WHERE tutor_id IN (SELECT id FROM users WHERE demo=1))')
+        c.execute('DELETE FROM learning_groups WHERE tutor_id IN (SELECT id FROM users WHERE demo=1)')
         c.execute('DELETE FROM users WHERE demo=1')
         seed(c)
         return session(c, one(c, "SELECT * FROM users WHERE id='demo-tutor'"))
@@ -844,6 +985,13 @@ def create_app(settings=None, provider=None, run_worker=True):
             return {'message': 'Run npm run dev, or npm run build to serve the client here.'}
         return FileResponse(dist/'index.html')
 
+    def openapi():
+        if app.openapi_schema is None:
+            from fastapi.openapi.utils import get_openapi
+            from .openapi_contract import enrich
+            app.openapi_schema=enrich(get_openapi(title=app.title,version=app.version,routes=app.routes),app.routes,cfg.public_base_url)
+        return app.openapi_schema
+    app.openapi=openapi
     return app
 
 
