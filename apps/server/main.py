@@ -52,6 +52,10 @@ def create_app(settings=None, provider=None, run_worker=True):
             for task_id,file in attachments.items():
                 answers[task_id]=answers.get(task_id,'')+'\n[Приложенный текст решения]\n'+file['content']
             context = context_for(json.loads(a['data']), answers, history)
+            rel=one(c,'SELECT subject FROM relationships WHERE id=?',(a['relationship_id'],))
+            plan=one(c,'SELECT data FROM learning_plans WHERE relationship_id=?',(a['relationship_id'],))
+            context['learning_context']={'subject':rel['subject'],'level':json.loads(plan['data']).get('level','') if plan else ''}
+            context['context_version']='assessment-context-v3'
             material_data=[json.loads(m['data']) for m in rows(c,'SELECT data FROM materials WHERE relationship_id=? ORDER BY id LIMIT 100',(a['relationship_id'],))]
             context['materials']=[{'title':m['title'],'text':m['content'][:12000]} for m in material_data
                 if (not m.get('lesson_id') or m['lesson_id']==json.loads(a['data']).get('lesson_id')) and m.get('ai_allowed') and m.get('content') and m.get('assignment_id') in ('',None,a['id'])][:2]
@@ -93,6 +97,7 @@ def create_app(settings=None, provider=None, run_worker=True):
             output = {'assessment_status': 'output_invalid', 'engine': 'unavailable', 'tasks': [], 'requires_tutor_review': True}
         except Exception:
             output = {'assessment_status': 'provider_unavailable', 'engine': 'unavailable', 'tasks': [], 'requires_tutor_review': True}
+        output['context_version']=context['context_version']
         await asyncio.to_thread(finish_job, job['id'], output)
         return True
 
@@ -188,8 +193,13 @@ def create_app(settings=None, provider=None, run_worker=True):
                 await asyncio.sleep(1)
 
     async def bot_worker():
+        last_reminders=0
         while True:
             try:
+                if time.time()-last_reminders>=30:
+                    from .notifications import queue_due_reminders
+                    await asyncio.to_thread(queue_due_reminders,cfg)
+                    last_reminders=time.time()
                 await asyncio.to_thread(process_outbox,cfg)
             except asyncio.CancelledError:
                 raise
@@ -1075,6 +1085,8 @@ def create_app(settings=None, provider=None, run_worker=True):
     install_skill_graph(app,user,db,tutor,relation,fail)
     from .account_data import install as install_account_data
     install_account_data(app,cfg,user,db,submission_view,file_data,learning_plan,fail)
+    from .notifications import install as install_notifications
+    install_notifications(app,cfg,user,db,fail)
 
     dist = Path(__file__).resolve().parents[2] / 'dist'
     if (dist / 'assets').exists():

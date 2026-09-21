@@ -43,6 +43,7 @@ import { Collection } from "./Collection";
 import "./style.css";
 import { Reminders, CalendarDownload } from "./Reminders";
 import { Groups } from "./Groups";
+import { Notifications } from "./Notifications";
 import { AccountData } from "./AccountData";
 import { SkillGraph } from "./SkillGraph";
 import { Catalog } from "./Catalog";
@@ -1119,6 +1120,7 @@ function App() {
                       Сохранить имя
                     </button>
                   </form>
+                  <Notifications user={user} />
                   <AccountData user={user} />
                   {isTutor && <Analytics />}
                   <section className="card settings">

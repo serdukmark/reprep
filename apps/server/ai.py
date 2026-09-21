@@ -17,6 +17,7 @@ def context_for(assignment, answers, history):
     skills = {t['skill'] for t in assignment['tasks']}
     return {'schema_version': '1', 'prompt_version': PROMPT_VERSION,
             'tasks': assignment['tasks'], 'answers': answers,
+            'instructions':assignment.get('instructions',''),
             'confirmed_history': [{'skill': h['skill'], 'correctness': h['correctness']}
                                   for h in history if h['skill'] in skills][:12]}
 

@@ -87,6 +87,8 @@ def enrich(schema,routes,base_url):
         'guardian_links':array(obj({'id':string,'subject':string,'learner_alias':string,'tutor_alias':string})),
         'guardian_summary':obj({'progress':array(obj({'skill':string,'correct':integer,'total':integer,'latest':string})),
             'lessons':array(obj({'id':string,'title':string,'starts_at':string,'duration':integer,'status':string})),'note':string}),
+        'notification_settings':obj({'lessons':{'type':'boolean'},'assignments':{'type':'boolean'},'bot_started':{'type':'boolean'},'delivery_enabled':{'type':'boolean'},'deliveries':{'type':'object','additionalProperties':integer},'note':string}),
+        'save_notifications':ok_result,
         'health':obj({'status':string}),
         'ready':obj({'ready':{'type':'boolean'},'checks':array(string),'external_services':string}),
         'config':obj({'demo_enabled':{'type':'boolean'},'max_enabled':{'type':'boolean'},'assessment':string,'version':string}),

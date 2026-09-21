@@ -72,6 +72,8 @@ def install(app,cfg,user,db,submission_view,file_data,learning_plan,fail):
                 collection('shared_templates','SELECT id,workspace_id,data,created FROM workspace_templates WHERE author_id=?',(u['id'],),lambda row:{'id':row['id'],'workspace_id':row['workspace_id'],'created':row['created'],**json.loads(row['data'])})
                 collection('reports','SELECT id,context_id,category,text,created FROM reports WHERE user_id=?',(u['id'],))
                 collection('audit','SELECT event,resource_id,created FROM audit WHERE actor_id=?',(u['id'],))
+                collection('notification_settings','SELECT lessons,assignments FROM notification_settings WHERE user_id=?',(u['id'],))
+                collection('reminder_deliveries','SELECT r.kind,r.due_at,o.status FROM reminder_deliveries r JOIN max_outbox o ON o.id=r.id WHERE r.user_id=?',(u['id'],))
                 collection('deletion_requests','SELECT id,status,created FROM deletion_requests WHERE user_id=?',(u['id'],))
                 out.write('}')
         except Exception:

@@ -55,7 +55,9 @@ def erase_requested(c,user_id):
     c.execute('DELETE FROM invitations WHERE tutor_id=? OR accepted_by=?',args)
     c.execute('DELETE FROM sessions WHERE user_id=?',(user_id,))
     c.execute('DELETE FROM audit WHERE actor_id=?',(user_id,))
-    if user['external_id']:c.execute('DELETE FROM max_outbox WHERE recipient=?',(user['external_id'],))
+    if user['external_id']:
+        c.execute('DELETE FROM max_outbox WHERE recipient=?',(user['external_id'],))
+        c.execute('DELETE FROM bot_contacts WHERE external_id=?',(user['external_id'],))
     c.execute('DELETE FROM users WHERE id=?',(user_id,))
     if c.execute('PRAGMA foreign_key_check').fetchone():raise ValueError('Erasure would violate database integrity')
     return summary

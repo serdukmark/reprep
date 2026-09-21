@@ -1,3 +1,4 @@
+import { LearnerFeedback } from "./LearnerFeedback";
 import React, { useState, useEffect, useRef, FormEvent } from "react";
 import {
   ArrowRight,
@@ -909,27 +910,7 @@ export function AssignmentDetail({
         <Discussion key={"discussion-" + a.id} assignment={a.id} />
       )}
       {s && <AttemptHistory assignment={a} tutor={isTutor} />}
-      {!isTutor && s && (
-        <button
-          className="text-button"
-          disabled={busy}
-          onClick={() =>
-            action(async () => {
-              const text = prompt("Опишите, что не так с обратной связью");
-              if (text !== null) {
-                await api("/reports", "POST", {
-                  context_id: a.id,
-                  category: "incorrect_feedback",
-                  text,
-                });
-                alert("Сообщение сохранено для разбора командой");
-              }
-            })
-          }
-        >
-          Сообщить об ошибке в обратной связи
-        </button>
-      )}
+      {!isTutor && s && <LearnerFeedback key={a.id} assignment={a.id} />}
     </>
   );
 }

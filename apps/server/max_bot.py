@@ -74,6 +74,7 @@ def accept_event(cfg, event):
     event_id = hashlib.sha256(json.dumps(event,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()).hexdigest()
     # A raw event is never persisted; it may contain names, chat text and attachments.
     with connect(cfg.database) as c:
+        c.execute('INSERT INTO bot_contacts VALUES(?,?) ON CONFLICT(external_id) DO UPDATE SET started=excluded.started',(str(recipient),time.time()))
         if one(c,'SELECT id FROM max_outbox WHERE id=?',(event_id,)): return 'duplicate'
         count = one(c,'SELECT count(*) AS n FROM max_outbox WHERE recipient=? AND created>?',(recipient,time.time()-60))['n']
         if count>=10: return 'rate_limited'
@@ -112,6 +113,11 @@ def process_outbox(cfg, transport=None):
     with connect(cfg.database) as c:
         item=one(c,"SELECT * FROM max_outbox WHERE status IN ('queued','sending') AND available_at<=? ORDER BY created LIMIT 1",(time.time(),))
         if not item: return False
+        if item['id'].startswith('reminder:'):
+            from .notifications import valid_reminder
+            if not valid_reminder(c,item['id'],time.time()):
+                c.execute("UPDATE max_outbox SET status='cancelled' WHERE id=?",(item['id'],))
+                return True
         c.execute("UPDATE max_outbox SET status='sending',attempts=attempts+1,available_at=? WHERE id=?",(time.time()+30,item['id']))
     try:
         (transport or MaxAPI(cfg)).send(item['recipient'],json.loads(item['body']))
