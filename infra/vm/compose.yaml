@@ -2,6 +2,7 @@
 name: reprep
 services:
   app:
+    image: reprep:${REPREP_RELEASE:?Set unique release ID}
     build:
       context: ../..
     env_file: ../../.env
@@ -14,6 +15,7 @@ services:
       - '127.0.0.1:${REPREP_BIND_PORT:?Verify a free VM port and set REPREP_BIND_PORT}:8000'
     volumes:
       - data:/app/data
+      - ../../max-ca.pem:/run/reprep-max-ca.pem:ro
     restart: unless-stopped
     mem_limit: 384m
     cpus: 1

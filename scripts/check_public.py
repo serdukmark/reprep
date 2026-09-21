@@ -4,6 +4,8 @@ Does NOT prove real MAX login, webhook delivery or the AI learning scenario.
 """
 import argparse
 import json
+import re
+from html.parser import HTMLParser
 from urllib.parse import urlsplit
 import httpx
 
@@ -35,10 +37,38 @@ def check(origin, client=None):
         and r.json().get('ready') is True and 'database' in r.json().get('checks', []))
     run('client_html', 'GET', '/', lambda r: r.status_code == 200
         and 'text/html' in r.headers.get('content-type', '') and 'id="root"' in r.text)
-    run('max_embedding_headers', 'GET', '/', lambda r: r.status_code == 200
-        and not r.headers.get('x-frame-options')
-        and any(d.strip().startswith('frame-ancestors ') and 'https://max.ru' in d.split()
-                for d in r.headers.get('content-security-policy', '').split(';')))
+    class Scripts(HTMLParser):
+        def __init__(self):
+            super().__init__(); self.sources = []
+        def handle_starttag(self, tag, attrs):
+            if tag == 'script':
+                source = dict(attrs).get('src', '')
+                if source: self.sources.append(source)
+
+    def assets_ready(response):
+        if response.status_code != 200: return False
+        parser = Scripts(); parser.feed(response.text)
+        if not parser.sources: return False
+        for source in parser.sources:
+            if not re.fullmatch(r'/assets/[A-Za-z0-9_.-]+\.js', source): return False
+            asset = client.request('GET', origin + source)
+            if asset.status_code != 200 or not asset.content or 'javascript' not in asset.headers.get('content-type', ''):
+                return False
+        return True
+    run('client_assets', 'GET', '/', assets_ready)
+    def embedding_allowed(response):
+        if response.status_code != 200 or response.headers.get('x-frame-options'): return False
+        seen = False
+        # Browsers enforce every CSP policy, not the union of their permissions.
+        for value in response.headers.get_list('content-security-policy'):
+            for policy in value.split(','):
+                for directive in policy.split(';'):
+                    tokens = directive.split()
+                    if tokens and tokens[0] == 'frame-ancestors':
+                        seen = True
+                        if 'https://max.ru' not in tokens or "'none'" in tokens: return False
+        return seen
+    run('max_embedding_headers', 'GET', '/', embedding_allowed)
     run('anonymous_access_denied', 'GET', '/api/me', lambda r: r.status_code == 401)
     run('demo_disabled', 'POST', '/api/auth/demo/tutor', lambda r: r.status_code == 404)
     run('forged_max_login_denied', 'POST', '/api/auth/max', lambda r: r.status_code == 401,
@@ -56,12 +86,20 @@ def check(origin, client=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--url', required=True)
+    parser.add_argument('--human', action='store_true')
     args = parser.parse_args()
     try:
         result = check(args.url)
     except ValueError:
         parser.error('Use an HTTPS origin on port 443 without credentials, path or query')
-    print(json.dumps(result, ensure_ascii=False))
+    if args.human:
+        print('Техническая проверка публикации пройдена' if result['passed'] else 'К публикации НЕ ГОТОВО')
+        for item in result['checks']:
+            if not item['passed']:
+                print('- ' + item['check'] + ': ' + str(item.get('status', item.get('reason'))))
+        print('Реальный вход MAX, регистрация webhook и AI-сценарий этой командой не подтверждаются.')
+    else:
+        print(json.dumps(result, ensure_ascii=False))
     return 0 if result['passed'] else 1
 
 

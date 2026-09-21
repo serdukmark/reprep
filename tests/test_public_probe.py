@@ -9,8 +9,10 @@ def response(request):
     path = request.url.path
     if path == '/api/ready':
         return httpx.Response(200, json={'ready': True, 'checks': ['database']})
+    if path == '/assets/app.js':
+        return httpx.Response(200, text='console.log(1)', headers={'content-type':'text/javascript'})
     if path == '/':
-        return httpx.Response(200, text='<html><div id="root"></div></html>', headers={
+        return httpx.Response(200, text='<html><div id="root"></div><script src="/assets/app.js"></script></html>', headers={
             'content-type': 'text/html', 'content-security-policy': "default-src 'self'; frame-ancestors 'self' https://max.ru"})
     return httpx.Response(404 if path in ('/.env', '/api/auth/demo/tutor') else 401)
 
@@ -55,7 +57,7 @@ def test_network_error_never_leaks_details():
     result = probe(handler)
     assert not result['passed']
     assert 'sensitive-error-marker' not in str(result)
-    assert len(result['checks']) == 8
+    assert len(result['checks']) == 9
 
 
 @pytest.mark.parametrize('origin', ['http://class.example.org', 'https://u:secret@example.org',
@@ -78,3 +80,19 @@ def test_real_application_auth_boundaries(tmp_path):
     with TestClient(create_app(cfg, run_worker=False), base_url=ORIGIN) as client:
         result = check(ORIGIN, client)
     assert result['passed'], result
+
+
+def test_missing_javascript_cannot_pass_with_good_html():
+    result = probe(lambda req: httpx.Response(404) if req.url.path == '/assets/app.js' else response(req))
+    assert not result['passed']
+    assert any(c['check'] == 'client_assets' and not c['passed'] for c in result['checks'])
+
+
+def test_second_csp_policy_cannot_silently_block_max():
+    def handler(req):
+        r = response(req)
+        if req.url.path == '/':
+            r.headers = httpx.Headers([*r.headers.multi_items(),
+                ('content-security-policy', "frame-ancestors 'none'")])
+        return r
+    assert not probe(handler)['passed']
