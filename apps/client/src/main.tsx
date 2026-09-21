@@ -43,6 +43,7 @@ import { Collection } from "./Collection";
 import "./style.css";
 import { Reminders, CalendarDownload } from "./Reminders";
 import { Groups } from "./Groups";
+import { Catalog } from "./Catalog";
 import { Workspaces } from "./Workspaces";
 import { GuardianInvites, GuardianPortal } from "./Guardian";
 import { LearningPlan } from "./LearningPlan";
@@ -54,6 +55,7 @@ type Page =
   | "progress"
   | "schedule"
   | "materials"
+  | "catalog"
   | "settings";
 type Config = {
   demo_enabled: boolean;
@@ -290,6 +292,7 @@ function App() {
     },
     { id: "schedule", label: "Расписание", icon: CalendarDays },
     { id: "materials", label: "Материалы", icon: FolderOpen },
+    { id: "catalog", label: "Репетиторы", icon: Users },
   ] as const;
   if (loading)
     return (
@@ -806,6 +809,9 @@ function App() {
                     />
                   )}
                 </>
+              )}
+              {page === "catalog" && (
+                <Catalog user={user} onChanged={refresh} />
               )}
               {page === "schedule" && <CalendarDownload />}
               {(page === "learners" || page === "progress") && (

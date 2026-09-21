@@ -6291,6 +6291,672 @@
         ]
       }
     },
+    "/api/catalog/profile": {
+      "get": {
+        "summary": "Catalog Profile",
+        "operationId": "catalog_profile_api_catalog_profile_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "revision": {
+                      "type": "integer"
+                    },
+                    "offer": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "visible": {
+                              "type": "boolean",
+                              "title": "Visible",
+                              "default": false
+                            },
+                            "headline": {
+                              "type": "string",
+                              "maxLength": 120,
+                              "minLength": 3,
+                              "title": "Headline"
+                            },
+                            "description": {
+                              "type": "string",
+                              "maxLength": 1200,
+                              "minLength": 10,
+                              "title": "Description"
+                            },
+                            "subjects": {
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array",
+                              "maxItems": 10,
+                              "minItems": 1,
+                              "title": "Subjects"
+                            },
+                            "price_rub": {
+                              "type": "integer",
+                              "maximum": 100000.0,
+                              "minimum": 0.0,
+                              "title": "Price Rub"
+                            },
+                            "duration": {
+                              "type": "integer",
+                              "maximum": 240.0,
+                              "minimum": 15.0,
+                              "title": "Duration"
+                            }
+                          }
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "revision",
+                    "offer"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Save Catalog Profile",
+        "operationId": "save_catalog_profile_api_catalog_profile_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TutorOffer"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "revision": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "revision"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/catalog": {
+      "get": {
+        "summary": "Catalog",
+        "operationId": "catalog_api_catalog_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "max_price",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100000,
+              "title": "Max Price"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "alias": {
+                            "type": "string"
+                          },
+                          "revision": {
+                            "type": "integer"
+                          },
+                          "visible": {
+                            "type": "boolean"
+                          },
+                          "headline": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "subjects": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "price_rub": {
+                            "type": "integer"
+                          },
+                          "duration": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "alias",
+                          "revision",
+                          "visible",
+                          "headline",
+                          "description",
+                          "subjects",
+                          "price_rub",
+                          "duration"
+                        ]
+                      }
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "note"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-roles": [
+          "tutor",
+          "learner",
+          "guardian"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/catalog/{id_}/requests": {
+      "post": {
+        "summary": "Request Tutor",
+        "operationId": "request_tutor_api_catalog__id___requests_post",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TutorRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "x-roles": [
+          "learner"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/catalog/requests": {
+      "get": {
+        "summary": "Tutor Requests",
+        "operationId": "tutor_requests_api_catalog_requests_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "subject": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      },
+                      "price_rub": {
+                        "type": "integer"
+                      },
+                      "duration": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "reply": {
+                        "type": "string"
+                      },
+                      "relationship_id": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "created": {
+                        "type": "string"
+                      },
+                      "learner_alias": {
+                        "type": "string"
+                      },
+                      "tutor_alias": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "subject",
+                      "message",
+                      "price_rub",
+                      "duration",
+                      "status",
+                      "reply",
+                      "relationship_id",
+                      "created",
+                      "learner_alias",
+                      "tutor_alias"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/catalog/requests/{id_}/review": {
+      "post": {
+        "summary": "Review Tutor Request",
+        "operationId": "review_tutor_request_api_catalog_requests__id___review_post",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TutorRequestReview"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "relationship_id": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "relationship_id"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
     "/": {
       "get": {
         "summary": "Index",
@@ -7121,6 +7787,124 @@
           "token"
         ],
         "title": "TokenInput"
+      },
+      "TutorOffer": {
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Revision"
+          },
+          "visible": {
+            "type": "boolean",
+            "title": "Visible",
+            "default": false
+          },
+          "headline": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 3,
+            "title": "Headline"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 1200,
+            "minLength": 10,
+            "title": "Description"
+          },
+          "subjects": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "minItems": 1,
+            "title": "Subjects"
+          },
+          "price_rub": {
+            "type": "integer",
+            "maximum": 100000.0,
+            "minimum": 0.0,
+            "title": "Price Rub"
+          },
+          "duration": {
+            "type": "integer",
+            "maximum": 240.0,
+            "minimum": 15.0,
+            "title": "Duration"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "revision",
+          "headline",
+          "description",
+          "subjects",
+          "price_rub",
+          "duration"
+        ],
+        "title": "TutorOffer"
+      },
+      "TutorRequest": {
+        "properties": {
+          "offer_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Offer Revision"
+          },
+          "subject": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 2,
+            "title": "Subject"
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 3,
+            "title": "Message"
+          },
+          "client_id": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 8,
+            "title": "Client Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "offer_revision",
+          "subject",
+          "message",
+          "client_id"
+        ],
+        "title": "TutorRequest"
+      },
+      "TutorRequestReview": {
+        "properties": {
+          "decision": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "declined"
+            ],
+            "title": "Decision"
+          },
+          "reply": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Reply",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "decision"
+        ],
+        "title": "TutorRequestReview"
       },
       "ValidationError": {
         "properties": {

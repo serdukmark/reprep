@@ -1046,6 +1046,8 @@ def create_app(settings=None, provider=None, run_worker=True):
             c.execute(f'DELETE FROM {table} WHERE {field} IN (SELECT id FROM users WHERE demo=1)')
         c.execute('DELETE FROM group_actions WHERE group_id IN (SELECT id FROM learning_groups WHERE tutor_id IN (SELECT id FROM users WHERE demo=1))')
         c.execute('DELETE FROM learning_groups WHERE tutor_id IN (SELECT id FROM users WHERE demo=1)')
+        c.execute('DELETE FROM tutor_requests WHERE tutor_id IN (SELECT id FROM users WHERE demo=1) OR learner_id IN (SELECT id FROM users WHERE demo=1)')
+        c.execute('DELETE FROM tutor_offers WHERE tutor_id IN (SELECT id FROM users WHERE demo=1)')
         c.execute('DELETE FROM workspace_copies WHERE user_id IN (SELECT id FROM users WHERE demo=1)')
         c.execute('DELETE FROM workspaces WHERE owner_id IN (SELECT id FROM users WHERE demo=1)')
         c.execute('DELETE FROM users WHERE demo=1')
@@ -1054,6 +1056,8 @@ def create_app(settings=None, provider=None, run_worker=True):
 
     from .workspaces import install as install_workspaces
     install_workspaces(app,user,db,tutor,relation,assignment,fail)
+    from .marketplace import install as install_marketplace
+    install_marketplace(app,user,db,tutor,learner_only,fail)
 
     dist = Path(__file__).resolve().parents[2] / 'dist'
     if (dist / 'assets').exists():

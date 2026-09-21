@@ -233,3 +233,7 @@ TEAM-112: tutor-issued invitation scoped to one learner relationship, immutable 
 ## Shared tutor workspace — 21 September 2026
 
 TEAM-099: membership invitations, removal/leave, shared immutable template snapshots and private copies to own learners. ADR-009. Shared learner ownership and simultaneous co-review remain unimplemented and explicitly separated from library membership.
+
+## Tutor catalog extension — 21 September 2026
+
+TEAM-101/105: opt-in profiles, subject/price search, revision-checked requests, tutor acceptance creates a study relationship. Price is a quote snapshot; no acquiring, paid ranking or commission settlement. ADR-010.

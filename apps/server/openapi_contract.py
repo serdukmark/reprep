@@ -61,6 +61,12 @@ def enrich(schema,routes,base_url):
         'invitations':array(obj({'id':string,'subject':string,'expires':{'type':'number'},'state':string})),
     }
     outputs.update({
+        'catalog_profile':obj({'revision':integer,'offer':nullable({'type':'object','properties':{key:value for key,value in schemas['TutorOffer']['properties'].items() if key!='revision'}})}),
+        'save_catalog_profile':obj({'revision':integer}),
+        'catalog':obj({'items':array(obj({'id':string,'alias':string,'revision':integer,'visible':{'type':'boolean'},'headline':string,'description':string,'subjects':array(string),'price_rub':integer,'duration':integer})),'note':string}),
+        'request_tutor':id_result,
+        'review_tutor_request':obj({'relationship_id':nullable(string)}),
+        'tutor_requests':array(obj({'id':string,'subject':string,'message':string,'price_rub':integer,'duration':integer,'status':string,'reply':string,'relationship_id':nullable(string),'created':string,'learner_alias':string,'tutor_alias':string})),
         'workspaces':array(obj({'id':string,'title':string,'owner_id':string})),
         'create_workspace':id_result,'workspace_accept':id_result,'share_workspace_template':id_result,'copy_workspace_template':id_result,
         'workspace_invite':obj({'id':string,'token':string,'expires':{'type':'number'}}),
@@ -87,8 +93,8 @@ def enrich(schema,routes,base_url):
     })
     for name in ('duplicate','submit','review','create_lesson','create_material','report','ask_question','send_message','generate_material'):outputs[name]=id_result
     for name in ('publish','accept','decline_invite','revoke','logout','retry','edit_lesson','review_question'):outputs[name]=ok_result
-    tutors={'workspaces','create_workspace','workspace_accept','share_workspace_template','copy_workspace_template','workspace_invite','workspace_invitations','workspace_members','workspace_templates','workspace_remove','workspace_revoke_invite','invite_guardian','guardian_invitations','revoke_guardian','invite','invitations','revoke','create_assignment','edit_assignment','publish','duplicate','retry','review','recommendations','analytics','groups','create_group','edit_group','assign_group','schedule_group','save_plan','review_question','create_lesson','edit_lesson','create_material','generations','generate_material','reset'}
-    learners={'preview_invite','accept','decline_invite','save_draft','submit','ask_question'}
+    tutors={'catalog_profile','save_catalog_profile','review_tutor_request','workspaces','create_workspace','workspace_accept','share_workspace_template','copy_workspace_template','workspace_invite','workspace_invitations','workspace_members','workspace_templates','workspace_remove','workspace_revoke_invite','invite_guardian','guardian_invitations','revoke_guardian','invite','invitations','revoke','create_assignment','edit_assignment','publish','duplicate','retry','review','recommendations','analytics','groups','create_group','edit_group','assign_group','schedule_group','save_plan','review_question','create_lesson','edit_lesson','create_material','generations','generate_material','reset'}
+    learners={'request_tutor','preview_invite','accept','decline_invite','save_draft','submit','ask_question'}
     schema['components']['securitySchemes']={'SessionBearer':{'type':'http','scheme':'bearer'},'MaxWebhookSecret':{'type':'apiKey','in':'header','name':'X-Max-Bot-Api-Secret'}}
     schema['servers']=[{'url':base_url or 'http://127.0.0.1:8000','description':'Configured origin; localhost is not a public judging endpoint'}]
     for route in routes:
@@ -99,7 +105,7 @@ def enrich(schema,routes,base_url):
         for method in route.methods:
             op=schema.get('paths',{}).get(route.path,{}).get(method.lower())
             if not op:continue
-            roles=['guardian'] if name in {'accept_guardian','guardian_links','guardian_summary'} else ['tutor'] if name in tutors else ['learner'] if name in learners else ['tutor','learner','guardian'] if authenticated else ['MAX webhook'] if webhook else ['public']
+            roles=['tutor','learner'] if name=='tutor_requests' else ['guardian'] if name in {'accept_guardian','guardian_links','guardian_summary'} else ['tutor'] if name in tutors else ['learner'] if name in learners else ['tutor','learner','guardian'] if authenticated else ['MAX webhook'] if webhook else ['public']
             op['x-roles']=roles
             if authenticated or webhook:op['security']=[{'MaxWebhookSecret' if webhook else 'SessionBearer':[]}]
             if authenticated:
