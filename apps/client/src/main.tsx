@@ -82,6 +82,7 @@ function App() {
     [selected, setSelected] = useState(""),
     [skills, setSkills] = useState<Skill[]>([]),
     [search, setSearch] = useState(""),
+    [workFilter, setWorkFilter] = useState("all"),
     [mobile, setMobile] = useState(false);
   const [invite, setInvite] = useState(""),
     [inviteInput, setInviteInput] = useState(""),
@@ -209,6 +210,8 @@ function App() {
       setUser(null);
       setActive(null);
       setAssignments([]);
+      setWorkFilter("all");
+      setSearch("");
       setSkills([]);
       setInvite("");
     });
@@ -283,7 +286,9 @@ function App() {
       (!a.submission || a.submission.status === "returned"),
   );
   const nextLesson = lessons
-    .filter((l) => new Date(l.starts_at) > new Date())
+    .filter(
+      (l) => l.status === "scheduled" && new Date(l.starts_at) > new Date(),
+    )
     .sort((a, b) => a.starts_at.localeCompare(b.starts_at))[0];
   const nav = [
     { id: "today", label: "Сегодня", icon: LayoutDashboard },
@@ -444,9 +449,21 @@ function App() {
     );
   if (user.role === "guardian")
     return <GuardianPortal user={user} logout={logout} />;
+  function workState(a: AssignmentSummary) {
+    if (a.status === "draft") return "draft";
+    if (a.submission?.status === "reviewed") return "completed";
+    if (
+      (!a.submission || a.submission.status === "returned") &&
+      a.due_at &&
+      new Date(a.due_at).getTime() < Date.now()
+    )
+      return "overdue";
+    return "active";
+  }
   function AssignmentRows({ items }: { items: AssignmentSummary[] }) {
     return (
       <div className="assignment-list">
+        {!items.length && <p>По выбранным условиям работ нет.</p>}
         {items.map((a) => (
           <button
             key={a.id}
@@ -463,7 +480,13 @@ function App() {
                 {a.tasks_count} задания · {date(a.due_at)}
               </span>
             </div>
-            <Badge state={a.submission?.status || a.status} />
+            <Badge
+              state={
+                workState(a) === "overdue"
+                  ? "overdue"
+                  : a.submission?.status || a.status
+              }
+            />
             <ChevronRight size={18} />
           </button>
         ))}
@@ -791,14 +814,30 @@ function App() {
                         onChange={(e) => setSearch(e.target.value)}
                       />
                     </label>
-                    <span>{assignments.length} работ</span>
+                    <label>
+                      Статус работ
+                      <select
+                        value={workFilter}
+                        onChange={(e) => setWorkFilter(e.target.value)}
+                      >
+                        <option value="all">Все</option>
+                        <option value="active">Активные</option>
+                        <option value="overdue">Просроченные</option>
+                        <option value="completed">Завершённые</option>
+                        {isTutor && <option value="draft">Черновики</option>}
+                      </select>
+                    </label>
+                    <span>{assignments.length} работ всего</span>
                   </div>
                   {assignments.length ? (
                     <AssignmentRows
-                      items={assignments.filter((a) =>
-                        (a.title + a.learner_alias)
-                          .toLowerCase()
-                          .includes(search.toLowerCase()),
+                      items={assignments.filter(
+                        (a) =>
+                          (workFilter === "all" ||
+                            workState(a) === workFilter) &&
+                          (a.title + a.learner_alias)
+                            .toLowerCase()
+                            .includes(search.toLowerCase()),
                       )}
                     />
                   ) : (

@@ -179,6 +179,7 @@ export async function api<T>(
   return data;
 }
 export const labels: Record<string, string> = {
+  overdue: "Просрочено",
   draft: "Черновик",
   published: "Назначено",
   queued: "В очереди проверки",

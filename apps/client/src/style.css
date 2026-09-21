@@ -1727,3 +1727,8 @@ footer span:last-child {
 .max-embedded .form-actions.sticky {
   bottom: env(safe-area-inset-bottom, 0px);
 }
+
+.badge.overdue {
+  background: #fff1de;
+  color: #854a0c;
+}
