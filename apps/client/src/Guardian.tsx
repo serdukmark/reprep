@@ -1,3 +1,4 @@
+import { AccountData } from "./AccountData";
 import { useEffect, useState } from "react";
 import { api, date, labels, Relation, User } from "./api";
 
@@ -249,6 +250,7 @@ export function GuardianPortal({
           </section>
         </>
       )}
+      <AccountData user={user} />
     </main>
   );
 }

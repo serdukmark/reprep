@@ -64,6 +64,9 @@ def enrich(schema,routes,base_url):
         'invitations':array(obj({'id':string,'subject':string,'expires':{'type':'number'},'state':string})),
     }
     outputs.update({
+        'export_account':obj({'schema_version':string,'exported_at':string,'account':{'type':'object','description':'Own profile, including own MAX ID. No sessions, credentials or invitation hashes.'}},['schema_version','exported_at','account']),
+        'deletion_status':obj({'request':nullable(obj({'id':string,'status':string,'created':string})),'note':string}),
+        'request_deletion':obj({'id':string,'status':string}),'cancel_deletion':ok_result,
         'skill_graph':ref('SkillGraphView'),'save_skill_graph':ref('SkillGraphView'),
         'catalog_profile':obj({'revision':integer,'offer':nullable({'type':'object','properties':{key:value for key,value in schemas['TutorOffer']['properties'].items() if key!='revision'}})}),
         'save_catalog_profile':obj({'revision':integer}),

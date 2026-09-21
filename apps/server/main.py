@@ -799,6 +799,7 @@ def create_app(settings=None, provider=None, run_worker=True):
     def assign_group(id_:str,body:GroupAssignment,u=Depends(user),c=Depends(db)):
         g,request,previous=group_action(c,id_,u,body,'assignment')
         if previous:return previous
+        if not g['relationship_ids']:fail(422,'EMPTY_GROUP','В группе нет учеников. Сначала обновите состав')
         source=assignment(c,body.assignment_id,u);data=json.loads(source['data']);ids=[]
         for rid in g['relationship_ids']:
             copied={**data,'relationship_id':rid,'lesson_id':''};aid=uid()
@@ -812,6 +813,7 @@ def create_app(settings=None, provider=None, run_worker=True):
     def schedule_group(id_:str,body:GroupSchedule,u=Depends(user),c=Depends(db)):
         g,request,previous=group_action(c,id_,u,body,'lesson')
         if previous:return previous
+        if not g['relationship_ids']:fail(422,'EMPTY_GROUP','В группе нет учеников. Сначала обновите состав')
         ids=[]
         for rid in g['relationship_ids']:
             lesson=LessonInput(relationship_id=rid,title=body.title,starts_at=body.starts_at,duration=body.duration)
@@ -1071,6 +1073,8 @@ def create_app(settings=None, provider=None, run_worker=True):
     install_marketplace(app,user,db,tutor,learner_only,fail)
     from .skill_graph import install as install_skill_graph
     install_skill_graph(app,user,db,tutor,relation,fail)
+    from .account_data import install as install_account_data
+    install_account_data(app,cfg,user,db,submission_view,file_data,learning_plan,fail)
 
     dist = Path(__file__).resolve().parents[2] / 'dist'
     if (dist / 'assets').exists():

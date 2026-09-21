@@ -43,6 +43,7 @@ import { Collection } from "./Collection";
 import "./style.css";
 import { Reminders, CalendarDownload } from "./Reminders";
 import { Groups } from "./Groups";
+import { AccountData } from "./AccountData";
 import { SkillGraph } from "./SkillGraph";
 import { Catalog } from "./Catalog";
 import { Workspaces } from "./Workspaces";
@@ -1118,6 +1119,7 @@ function App() {
                       Сохранить имя
                     </button>
                   </form>
+                  <AccountData user={user} />
                   {isTutor && <Analytics />}
                   <section className="card settings">
                     <h3>Проверка работ</h3>

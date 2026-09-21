@@ -241,3 +241,7 @@ TEAM-101/105: opt-in profiles, subject/price search, revision-checked requests, 
 ## Skill graph and deeper analytics — 21 September 2026
 
 TEAM-104: tutor-defined acyclic prerequisites linked to confirmed evidence; read-only learner graph; median review wait and preliminary-vs-reviewed result disagreement. No universal subject ontology or autonomous mastery judgment. ADR-011.
+
+## Account data — 21 September 2026
+
+TEAM-094: own-data export preserves role privacy and all submission attempts; explicit cancellable deletion request; operator erasure guarded by approved policy, confirmation and new backup. Real retention and erasure of backups/shared copies remain open. ADR-012.
