@@ -1,0 +1,374 @@
+{
+  "passed": true,
+  "duration_seconds": 21.768,
+  "live_ai": true,
+  "model": "qwen/qwen3.8-flash",
+  "gui_input": false,
+  "background_worker": true,
+  "manual_rehearsal": false,
+  "MAX": false,
+  "steps": [
+    {
+      "step": "GET ready",
+      "role": "tutor",
+      "seconds": 0.001,
+      "status": 200
+    },
+    {
+      "step": "GET relationships",
+      "role": "tutor",
+      "seconds": 0.001,
+      "status": 200
+    },
+    {
+      "step": "POST groups",
+      "role": "tutor",
+      "seconds": 0.002,
+      "status": 201
+    },
+    {
+      "step": "POST groups/665ebc334b299d0cc8122c9f/lessons",
+      "role": "tutor",
+      "seconds": 0.002,
+      "status": 200
+    },
+    {
+      "step": "PUT relationships/demo-link/plan",
+      "role": "tutor",
+      "seconds": 0.002,
+      "status": 200
+    },
+    {
+      "step": "POST materials",
+      "role": "tutor",
+      "seconds": 0.002,
+      "status": 200
+    },
+    {
+      "step": "POST materials/ad96a2d7092ea9b85eb1d5a9/generations",
+      "role": "tutor",
+      "seconds": 0.003,
+      "status": 201
+    },
+    {
+      "step": "POST materials/ad96a2d7092ea9b85eb1d5a9/generations",
+      "role": "tutor",
+      "seconds": 0.002,
+      "status": 201
+    },
+    {
+      "step": "generation worker",
+      "seconds": 12.772,
+      "live_ai": true
+    },
+    {
+      "step": "GET materials/ad96a2d7092ea9b85eb1d5a9/generations",
+      "role": "tutor",
+      "seconds": 0.004,
+      "status": 200
+    },
+    {
+      "step": "GET assignments/af13e58cefd5ac92f4f7758f",
+      "role": "tutor",
+      "seconds": 0.005,
+      "status": 200
+    },
+    {
+      "step": "GET assignments/af13e58cefd5ac92f4f7758f",
+      "role": "learner",
+      "seconds": 0.003,
+      "status": 404
+    },
+    {
+      "step": "POST assignments/af13e58cefd5ac92f4f7758f/publish",
+      "role": "tutor",
+      "seconds": 0.003,
+      "status": 200
+    },
+    {
+      "step": "POST groups/665ebc334b299d0cc8122c9f/assign",
+      "role": "tutor",
+      "seconds": 0.005,
+      "status": 200
+    },
+    {
+      "step": "GET assignments/af13e58cefd5ac92f4f7758f",
+      "role": "learner-2",
+      "seconds": 0.004,
+      "status": 404
+    },
+    {
+      "step": "PUT assignments/af13e58cefd5ac92f4f7758f/draft",
+      "role": "learner",
+      "seconds": 0.004,
+      "status": 200
+    },
+    {
+      "step": "PUT assignments/af13e58cefd5ac92f4f7758f/draft",
+      "role": "learner",
+      "seconds": 0.003,
+      "status": 409
+    },
+    {
+      "step": "GET assignments/af13e58cefd5ac92f4f7758f",
+      "role": "learner",
+      "seconds": 0.003,
+      "status": 200
+    },
+    {
+      "step": "POST assignments/af13e58cefd5ac92f4f7758f/submit",
+      "role": "learner",
+      "seconds": 0.003,
+      "status": 200
+    },
+    {
+      "step": "POST assignments/af13e58cefd5ac92f4f7758f/submit",
+      "role": "learner",
+      "seconds": 0.004,
+      "status": 200
+    },
+    {
+      "step": "assessment worker",
+      "seconds": 8.762,
+      "live_ai": true
+    },
+    {
+      "step": "GET assignments/af13e58cefd5ac92f4f7758f",
+      "role": "tutor",
+      "seconds": 0.003,
+      "status": 200
+    },
+    {
+      "step": "GET assignments/af13e58cefd5ac92f4f7758f",
+      "role": "learner",
+      "seconds": 0.002,
+      "status": 200
+    },
+    {
+      "step": "POST submissions/81973e37c86768fcec3f2692/review",
+      "role": "tutor",
+      "seconds": 0.004,
+      "status": 200
+    },
+    {
+      "step": "POST submissions/81973e37c86768fcec3f2692/review",
+      "role": "tutor",
+      "seconds": 0.004,
+      "status": 200
+    },
+    {
+      "step": "GET assignments/af13e58cefd5ac92f4f7758f",
+      "role": "learner",
+      "seconds": 0.004,
+      "status": 200
+    },
+    {
+      "step": "GET relationships/demo-link/progress",
+      "role": "learner",
+      "seconds": 0.003,
+      "status": 200
+    },
+    {
+      "step": "PUT relationships/demo-link/skill-graph",
+      "role": "tutor",
+      "seconds": 0.005,
+      "status": 200
+    },
+    {
+      "step": "GET relationships/demo-link/skill-graph",
+      "role": "learner",
+      "seconds": 0.003,
+      "status": 200
+    },
+    {
+      "step": "POST relationships/demo-link/guardians",
+      "role": "tutor",
+      "seconds": 0.003,
+      "status": 201
+    },
+    {
+      "step": "POST guardian/accept",
+      "role": "guardian",
+      "seconds": 0.003,
+      "status": 200
+    },
+    {
+      "step": "GET guardian/links/demo-link",
+      "role": "guardian",
+      "seconds": 0.004,
+      "status": 200
+    },
+    {
+      "step": "GET assignments/af13e58cefd5ac92f4f7758f",
+      "role": "guardian",
+      "seconds": 0.002,
+      "status": 404
+    },
+    {
+      "step": "GET account/export",
+      "role": "guardian",
+      "seconds": 0.011,
+      "status": 200
+    },
+    {
+      "step": "POST guardian/invitations/8072cc31e79d896772a8475c/revoke",
+      "role": "tutor",
+      "seconds": 0.004,
+      "status": 200
+    },
+    {
+      "step": "GET guardian/links/demo-link",
+      "role": "guardian",
+      "seconds": 0.003,
+      "status": 404
+    },
+    {
+      "step": "POST workspaces",
+      "role": "tutor",
+      "seconds": 0.004,
+      "status": 201
+    },
+    {
+      "step": "POST workspaces/96fc61f846c98e09eff949ac/invite",
+      "role": "tutor",
+      "seconds": 0.004,
+      "status": 200
+    },
+    {
+      "step": "POST workspaces/accept",
+      "role": "outsider",
+      "seconds": 0.003,
+      "status": 200
+    },
+    {
+      "step": "POST workspaces/96fc61f846c98e09eff949ac/templates",
+      "role": "tutor",
+      "seconds": 0.004,
+      "status": 201
+    },
+    {
+      "step": "GET workspaces/96fc61f846c98e09eff949ac/templates",
+      "role": "outsider",
+      "seconds": 0.003,
+      "status": 200
+    },
+    {
+      "step": "GET assignments/af13e58cefd5ac92f4f7758f",
+      "role": "outsider",
+      "seconds": 0.003,
+      "status": 404
+    },
+    {
+      "step": "POST workspaces/96fc61f846c98e09eff949ac/members/demo-outsider/remove",
+      "role": "tutor",
+      "seconds": 0.004,
+      "status": 200
+    },
+    {
+      "step": "GET workspaces/96fc61f846c98e09eff949ac/templates",
+      "role": "outsider",
+      "seconds": 0.003,
+      "status": 404
+    },
+    {
+      "step": "PUT catalog/profile",
+      "role": "outsider",
+      "seconds": 0.004,
+      "status": 200
+    },
+    {
+      "step": "GET catalog",
+      "role": "learner",
+      "seconds": 0.002,
+      "status": 200
+    },
+    {
+      "step": "POST catalog/demo-outsider/requests",
+      "role": "learner",
+      "seconds": 0.004,
+      "status": 201
+    },
+    {
+      "step": "POST catalog/requests/a821a3197aaed665e7cc5af2/review",
+      "role": "outsider",
+      "seconds": 0.004,
+      "status": 200
+    },
+    {
+      "step": "GET account/export",
+      "role": "learner",
+      "seconds": 0.006,
+      "status": 200
+    },
+    {
+      "step": "GET notifications",
+      "role": "learner",
+      "seconds": 0.005,
+      "status": 200
+    },
+    {
+      "step": "GET calendar",
+      "role": "learner",
+      "seconds": 0.005,
+      "status": 200
+    },
+    {
+      "step": "GET reminders",
+      "role": "learner",
+      "seconds": 0.003,
+      "status": 200
+    }
+  ],
+  "generated": {
+    "title": "Домашняя работа: Правило сложения",
+    "tasks": [
+      {
+        "id": "t1",
+        "type": "numeric",
+        "prompt": "Согласно тексту «Правило сложения», чему равна сумма двух и трёх?",
+        "options": [],
+        "answer": "5",
+        "rubric": "Ответ должен быть числом 5. Допускается запись 'пять'.",
+        "skill": "Извлечение фактов из текста",
+        "hint": "Найдите в тексте предложение, начинающееся со слов «Сумма двух и трёх...»."
+      }
+    ]
+  },
+  "analysis": {
+    "schema_version": "1",
+    "assessment_status": "assessed",
+    "engine": "qwen/qwen3.8-flash",
+    "prompt_version": "assessment-v2",
+    "requires_tutor_review": true,
+    "tasks": [
+      {
+        "task_id": "t1",
+        "correctness": "correct",
+        "confidence": 0.95,
+        "summary_for_tutor": "Ученик верно извлёк факт из текста: сумма двух и трёх равна пяти. Ответ соответствует эталону.",
+        "feedback_for_learner": "Отлично! Вы правильно нашли ответ в тексте. Продолжайте внимательно читать условия заданий.",
+        "hint": "",
+        "skill": "Извлечение фактов из текста"
+      }
+    ],
+    "context_version": "assessment-context-v3"
+  },
+  "generation_usage": {
+    "prompt_tokens": 441,
+    "completion_tokens": 181,
+    "total_tokens": 622,
+    "cost": 0.000116916
+  },
+  "assessment_usage": {
+    "prompt_tokens": 823,
+    "completion_tokens": 178,
+    "total_tokens": 1001,
+    "cost": 0.000138502,
+    "latency_seconds": 8.478
+  },
+  "limitations": [
+    "API sequence, not human click timing",
+    "synthetic learner uses reference answer",
+    "UI and MAX require separate verification"
+  ]
+}

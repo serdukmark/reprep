@@ -73,7 +73,7 @@ def main():
     with connect(cfg.database) as c:summary=plan(c,args.user_id)
     if not args.apply:
         print(json.dumps({'dry_run':True,**summary}));return
-    if os.getenv('ACCOUNT_DELETION_APPROVED','false').lower()!='true' or args.confirm_user_id!=args.user_id or not args.backup:
+    if os.getenv('ACCOUNT_DELETION_APPROVED',str(cfg.account_deletion_approved)).lower()!='true' or args.confirm_user_id!=args.user_id or not args.backup:
         parser.error('Apply requires approved policy, exact --confirm-user-id and a NEW --backup path')
     snapshot(cfg.database,args.backup)
     with connect(cfg.database) as c:erase_requested(c,args.user_id)

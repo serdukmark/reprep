@@ -19,6 +19,7 @@ jobs:
       - run: pip install -r requirements.txt
       - run: npm ci
       - run: python -m pytest -q
+      - run: python scripts/rehearsal.py
       - run: python scripts/test_failure_mutations.py
       - run: python scripts/test_question_mutations.py
       - run: python scripts/test_generation_mutations.py
