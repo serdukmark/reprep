@@ -36,11 +36,13 @@ export type ReviewTask = {
   correctness: Correctness;
   feedback: string;
 };
+export type AnswerFile = { file_name: string; content: string };
 export type Submission = {
   id: string;
   status: string;
   attempt: number;
   answers: Record<string, string>;
+  attachments?: Record<string, AnswerFile>;
   submitted: string;
   analysis: {
     engine: string;
@@ -62,7 +64,11 @@ export type Assignment = {
   due_at: string | null;
   feedback_policy: "after_review" | "hints_first";
   tasks: Task[];
-  draft: { answers: Record<string, string>; revision: number };
+  draft: {
+    answers: Record<string, string>;
+    revision: number;
+    attachments?: Record<string, AnswerFile>;
+  };
   submission: Submission | null;
 };
 export type AssignmentSummary = {

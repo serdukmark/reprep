@@ -135,7 +135,7 @@ def test_unsent_draft_is_private_until_submission(tmp_path):
         assert c.put('/api/assignments/'+aid+'/draft',headers=learner,json={'revision':0,'answers':answers}).status_code==200
         assert c.get('/api/assignments/'+aid,headers=learner).json()['draft']['answers']==answers
         view=c.get('/api/assignments/'+aid,headers=tutor).json()
-        assert view['draft']=={'answers':{},'revision':0} and view['submission'] is None
+        assert view['draft']=={'answers':{},'revision':0,'attachments':{}} and view['submission'] is None
         r=c.post('/api/assignments/'+aid+'/submit',headers=learner,json={'revision':1,'answers':answers})
         assert r.status_code==200
         assert c.get('/api/assignments/'+aid,headers=tutor).json()['submission']['answers']==answers

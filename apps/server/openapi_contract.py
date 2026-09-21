@@ -26,11 +26,12 @@ def enrich(schema,routes,base_url):
     output_copy('LessonInput','StoredLesson',{'id':string})
     output_copy('MaterialInput','StoredMaterial',{'id':string},('content',))
     schemas['StoredSubmission']=obj({'id':string,'status':string,'attempt':integer,'answers':{'type':'object','additionalProperties':string},
+        'attachments':{'type':'object','additionalProperties':ref('AnswerFile')},
         'submitted':string,'analysis':nullable({'type':'object','description':'Preliminary assessment; returned only to owning tutor'}),
         'review':nullable(ref('StoredReview')),'hints':{'type':'object','additionalProperties':string}},['id','status','attempt','answers','submitted','analysis','review'])
     schemas['StoredAssignment']=obj({'id':string,'title':string,'instructions':string,'relationship_id':string,'lesson_id':string,
         'status':{'type':'string','enum':['draft','published']},'revision':integer,'due_at':nullable(string),'feedback_policy':string,
-        'tasks':array(ref('VisibleTask')),'created':string,'draft':obj({'revision':integer,'answers':{'type':'object','additionalProperties':string}}),
+        'tasks':array(ref('VisibleTask')),'created':string,'draft':obj({'revision':integer,'answers':{'type':'object','additionalProperties':string},'attachments':{'type':'object','additionalProperties':ref('AnswerFile')}}),
         'submission':nullable(ref('StoredSubmission'))},['id','title','relationship_id','status','revision','tasks'])
     schemas['AssignmentSummary']=obj({'id':string,'title':string,'due_at':nullable(string),'status':string,'relationship_id':string,
         'learner_alias':string,'tasks_count':integer,'submission':nullable(obj({'id':string,'status':string,'attempt':integer},['id','status']))})

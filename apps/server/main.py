@@ -47,7 +47,11 @@ def create_app(settings=None, provider=None, run_worker=True):
             c.execute("UPDATE submissions SET status='processing',lease_until=? WHERE id=?", (time.time()+90, job['id']))
             a = one(c, 'SELECT * FROM assignments WHERE id=?', (job['assignment_id'],))
             history = rows(c, 'SELECT skill,correctness FROM evidence WHERE relationship_id=? ORDER BY created DESC LIMIT 100', (a['relationship_id'],))
-            context = context_for(json.loads(a['data']), json.loads(job['answers']), history)
+            answers=json.loads(job['answers'])
+            attachments=file_data(c,'submission_files','submission_id',job['id'])
+            for task_id,file in attachments.items():
+                answers[task_id]=answers.get(task_id,'')+'\n[Приложенный текст решения]\n'+file['content']
+            context = context_for(json.loads(a['data']), answers, history)
             material_data=[json.loads(m['data']) for m in rows(c,'SELECT data FROM materials WHERE relationship_id=? ORDER BY id LIMIT 100',(a['relationship_id'],))]
             context['materials']=[{'title':m['title'],'text':m['content'][:12000]} for m in material_data
                 if (not m.get('lesson_id') or m['lesson_id']==json.loads(a['data']).get('lesson_id')) and m.get('ai_allowed') and m.get('content') and m.get('assignment_id') in ('',None,a['id'])][:2]
@@ -503,11 +507,15 @@ def create_app(settings=None, provider=None, run_worker=True):
         c.execute('INSERT INTO assignments(id,tutor_id,relationship_id,data,created) VALUES(?,?,?,?,?)', (new_id, u['id'], a['relationship_id'], dumps(data), now()))
         return {'id': new_id}
 
+    def file_data(c,table,column,id_):
+        record=one(c,f'SELECT data FROM {table} WHERE {column}=?',(id_,))
+        return json.loads(record['data']) if record else {}
+
     def submission_view(c, s, a, u):
         if not s:
             return None
         review = one(c, 'SELECT * FROM reviews WHERE submission_id=? ORDER BY created DESC LIMIT 1', (s['id'],))
-        data = {'id': s['id'], 'attempt': s['attempt'], 'status': s['status'], 'answers': json.loads(s['answers']), 'submitted': s['submitted'], 'review': None, 'analysis': None}
+        data = {'id': s['id'], 'attempt': s['attempt'], 'status': s['status'], 'answers': json.loads(s['answers']), 'submitted': s['submitted'], 'review': None, 'analysis': None, 'attachments':file_data(c,'submission_files','submission_id',s['id'])}
         if review:
             data['review'] = {**json.loads(review['data']), 'action': review['action'], 'created': review['created']}
         if u['role'] == 'tutor':
@@ -523,7 +531,7 @@ def create_app(settings=None, provider=None, run_worker=True):
         s = one(c, 'SELECT * FROM submissions WHERE assignment_id=? ORDER BY attempt DESC LIMIT 1', (id_,))
         d = one(c, 'SELECT * FROM drafts WHERE assignment_id=? AND learner_id=?', (id_, u['id'])) if u['role']=='learner' else None
         return {**assignment_view(a, u['role']), 'submission': submission_view(c, s, a, u),
-                'draft': {'answers': json.loads(d['answers']), 'revision': d['revision']} if d else {'answers': {}, 'revision': 0}}
+                'draft': {'answers': json.loads(d['answers']), 'revision': d['revision'], 'attachments':file_data(c,'draft_files','assignment_id',id_)} if d else {'answers': {}, 'revision': 0, 'attachments':{}}}
 
     @app.get('/api/assignments/{id_}/attempts')
     def attempts(id_: str, offset: int = 0, u=Depends(user), c=Depends(db)):
@@ -541,6 +549,11 @@ def create_app(settings=None, provider=None, run_worker=True):
             if tasks[k]['type'] == 'single_choice' and value and value not in tasks[k]['options']:
                 fail(422, 'ANSWERS', 'Выберите один из вариантов ответа')
 
+    def check_attachments(a,files):
+        tasks={t['id']:t for t in json.loads(a['data'])['tasks']}
+        if any(key not in tasks or tasks[key]['type']=='single_choice' for key in files):
+            fail(422,'FILES','Файл можно приложить к числовому или текстовому заданию этой работы')
+
     def latest(c, id_):
         return one(c, 'SELECT * FROM submissions WHERE assignment_id=? ORDER BY attempt DESC LIMIT 1', (id_,))
 
@@ -553,6 +566,8 @@ def create_app(settings=None, provider=None, run_worker=True):
         learner_only(u)
         a = assignment(c, id_, u)
         check_answers(a, body.answers)
+        check_attachments(a,body.attachments)
+        files={key:value.model_dump() for key,value in body.attachments.items()}
         s = latest(c, id_)
         if s and s['status'] != 'returned':
             fail(409, 'ALREADY_SUBMITTED', 'Работа уже отправлена')
@@ -561,6 +576,7 @@ def create_app(settings=None, provider=None, run_worker=True):
         if body.revision != revision:
             fail(409, 'VERSION_CONFLICT', 'Ответы изменились в другом окне. Обновите работу перед сохранением')
         c.execute('INSERT INTO drafts VALUES(?,?,?,?) ON CONFLICT(assignment_id,learner_id) DO UPDATE SET revision=excluded.revision,answers=excluded.answers', (id_, u['id'], revision+1, dumps(body.answers)))
+        c.execute('INSERT INTO draft_files VALUES(?,?) ON CONFLICT(assignment_id) DO UPDATE SET data=excluded.data',(id_,dumps(files)))
         return {'revision': revision+1, 'saved_at': now()}
 
     @app.post('/api/assignments/{id_}/submit')
@@ -568,20 +584,24 @@ def create_app(settings=None, provider=None, run_worker=True):
         learner_only(u)
         a = assignment(c, id_, u)
         check_answers(a, body.answers)
+        check_attachments(a,body.attachments)
+        files={key:value.model_dump() for key,value in body.attachments.items()}
         s = latest(c, id_)
         if s and s['status'] != 'returned':
-            if s['checksum'] != content_hash(body.answers):
+            if s['checksum'] != content_hash(body.answers) or file_data(c,'submission_files','submission_id',s['id'])!=files:
                 fail(409, 'ALREADY_SUBMITTED', 'Уже отправлена другая версия ответов')
             return {'id': s['id'], 'status': s['status']}
         d = one(c, 'SELECT * FROM drafts WHERE assignment_id=?', (id_,))
         if body.revision != (d['revision'] if d else 0):
             fail(409, 'VERSION_CONFLICT', 'Ответы изменились в другом окне. Сначала обновите работу')
         tasks = json.loads(a['data'])['tasks']
-        if any(not body.answers.get(t['id'], '').strip() for t in tasks):
+        if any(not body.answers.get(t['id'], '').strip() and not files.get(t['id']) for t in tasks):
             fail(422, 'INCOMPLETE', 'Ответьте на все задания перед отправкой')
         id_s = uid()
         c.execute('INSERT INTO submissions(id,assignment_id,learner_id,attempt,answers,checksum,submitted) VALUES(?,?,?,?,?,?,?)',
                   (id_s, id_, u['id'], s['attempt']+1 if s else 1, dumps(body.answers), content_hash(body.answers), now()))
+        c.execute('INSERT INTO submission_files VALUES(?,?)',(id_s,dumps(files)))
+        c.execute('DELETE FROM draft_files WHERE assignment_id=?',(id_,))
         c.execute('DELETE FROM drafts WHERE assignment_id=?', (id_,))
         audit(c, u['id'], 'submission_completed', id_s)
         return {'id': id_s, 'status': 'queued'}

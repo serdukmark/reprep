@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS invitations(id TEXT PRIMARY KEY, tutor_id TEXT NOT NU
 CREATE TABLE IF NOT EXISTS assignments(id TEXT PRIMARY KEY, tutor_id TEXT NOT NULL REFERENCES users(id), relationship_id TEXT NOT NULL REFERENCES relationships(id), status TEXT NOT NULL DEFAULT 'draft', revision INTEGER NOT NULL DEFAULT 1, data TEXT NOT NULL, created TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS drafts(assignment_id TEXT NOT NULL REFERENCES assignments(id), learner_id TEXT NOT NULL REFERENCES users(id), revision INTEGER NOT NULL DEFAULT 0, answers TEXT NOT NULL, PRIMARY KEY(assignment_id,learner_id));
 CREATE TABLE IF NOT EXISTS submissions(id TEXT PRIMARY KEY, assignment_id TEXT NOT NULL REFERENCES assignments(id), learner_id TEXT NOT NULL REFERENCES users(id), attempt INTEGER NOT NULL, answers TEXT NOT NULL, checksum TEXT NOT NULL, submitted TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'queued', analysis TEXT, lease_until REAL NOT NULL DEFAULT 0, retries INTEGER NOT NULL DEFAULT 0, UNIQUE(assignment_id,learner_id,attempt));
+CREATE TABLE IF NOT EXISTS draft_files(assignment_id TEXT PRIMARY KEY REFERENCES assignments(id) ON DELETE CASCADE,data TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS submission_files(submission_id TEXT PRIMARY KEY REFERENCES submissions(id) ON DELETE CASCADE,data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS reviews(id TEXT PRIMARY KEY, submission_id TEXT NOT NULL REFERENCES submissions(id), tutor_id TEXT NOT NULL REFERENCES users(id), action TEXT NOT NULL, data TEXT NOT NULL, created TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS evidence(id TEXT PRIMARY KEY, relationship_id TEXT NOT NULL REFERENCES relationships(id), task_id TEXT NOT NULL, skill TEXT NOT NULL, correctness TEXT NOT NULL, review_id TEXT NOT NULL REFERENCES reviews(id), submission_id TEXT NOT NULL REFERENCES submissions(id), created TEXT NOT NULL, UNIQUE(review_id,task_id));
 CREATE TABLE IF NOT EXISTS lessons(id TEXT PRIMARY KEY, relationship_id TEXT NOT NULL REFERENCES relationships(id), data TEXT NOT NULL);
@@ -31,6 +33,7 @@ CREATE INDEX IF NOT EXISTS relationships_learner ON relationships(learner_id);
 INSERT OR IGNORE INTO schema_migrations VALUES(1);
 INSERT OR IGNORE INTO schema_migrations VALUES(2);
 INSERT OR IGNORE INTO schema_migrations VALUES(3);
+INSERT OR IGNORE INTO schema_migrations VALUES(4);
 '''
 
 

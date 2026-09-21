@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api, date, Assignment, Submission } from "./api";
+import { AnswerAttachment } from "./AnswerAttachment";
 import { Badge } from "./components";
 
 type Entry = { id: string; attempt: number; status: string; submitted: string };
@@ -115,6 +116,7 @@ export function AttemptHistory({
                     <div className="original">
                       <p>{selected.answers[task.id]}</p>
                     </div>
+                    <AnswerAttachment file={selected.attachments?.[task.id]} />
                     {reviewed && (
                       <div className="reviewed-feedback">
                         <Badge state={reviewed.correctness} />

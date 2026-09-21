@@ -4673,6 +4673,29 @@
   },
   "components": {
     "schemas": {
+      "AnswerFile": {
+        "properties": {
+          "file_name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 5,
+            "title": "File Name"
+          },
+          "content": {
+            "type": "string",
+            "maxLength": 60000,
+            "minLength": 1,
+            "title": "Content"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "file_name",
+          "content"
+        ],
+        "title": "AnswerFile"
+      },
       "AssignmentInput": {
         "properties": {
           "relationship_id": {
@@ -4750,6 +4773,13 @@
             },
             "type": "object",
             "title": "Answers"
+          },
+          "attachments": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AnswerFile"
+            },
+            "type": "object",
+            "title": "Attachments"
           }
         },
         "additionalProperties": false,
@@ -5766,6 +5796,12 @@
               "type": "string"
             }
           },
+          "attachments": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AnswerFile"
+            }
+          },
           "submitted": {
             "type": "string"
           },
@@ -5868,11 +5904,18 @@
                 "additionalProperties": {
                   "type": "string"
                 }
+              },
+              "attachments": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/AnswerFile"
+                }
               }
             },
             "required": [
               "revision",
-              "answers"
+              "answers",
+              "attachments"
             ]
           },
           "submission": {

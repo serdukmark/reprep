@@ -221,3 +221,7 @@ The team shall maintain synthetic demonstration data and a reliable way to resto
 ### FR-OPS-001 — traceable errors `[P0]`
 
 User-visible errors shall provide a non-sensitive reference ID that can be located in logs.
+
+## Owner-approved file extension — 21 September 2026
+
+TEAM-032: learner TXT attachments are implemented per ADR-007: three files, total 60 KB, versioned private drafts, immutable submission snapshots and history. Text participates in bounded AI assessment. Other formats and OCR remain open.

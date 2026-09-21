@@ -58,9 +58,30 @@ class AssignmentInput(Model):
         return self
 
 
+class AnswerFile(Model):
+    file_name: str = Field(min_length=5,max_length=100)
+    content: Annotated[str, StringConstraints(strip_whitespace=False)] = Field(min_length=1,max_length=60000)
+
+    @model_validator(mode='after')
+    def valid_txt(self):
+        if not self.file_name.endswith('.txt') or any(ch in self.file_name for ch in ('/',chr(92),chr(0))):
+            raise ValueError('Нужен TXT-файл без пути в имени')
+        if chr(0) in self.content or len(self.content.encode())>60000:
+            raise ValueError('Нужен текст UTF-8 до 60 KB без нулевых байтов')
+        return self
+
+
 class DraftInput(Model):
     revision: int = Field(ge=0)
     answers: dict[str, str]
+    attachments: dict[str, AnswerFile] = Field(default_factory=dict)
+
+    @field_validator('attachments')
+    @classmethod
+    def attachment_bounds(cls,value):
+        if len(value)>3 or any(len(k)>80 for k in value) or sum(len(f.content.encode()) for f in value.values())>60000:
+            raise ValueError('Не более трёх TXT-файлов, суммарно до 60 KB')
+        return value
 
     @field_validator('answers')
     @classmethod

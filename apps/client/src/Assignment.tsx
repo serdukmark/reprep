@@ -14,12 +14,14 @@ import {
   date,
   labels,
   Assignment,
+  AnswerFile,
   Task,
   Relation,
   Lesson,
   ReviewTask,
   Correctness,
 } from "./api";
+import { AnswerAttachment } from "./AnswerAttachment";
 import { WorkMaterials } from "./WorkMaterials";
 import { Questions } from "./Questions";
 import { Discussion } from "./Discussion";
@@ -393,6 +395,15 @@ export function AssignmentDetail({
           ? a.submission.answers
           : a.draft.answers,
     ),
+    [attachments, setAttachments] = useState<Record<string, AnswerFile>>(
+      (a.draft.revision
+        ? a.draft.attachments
+        : a.submission?.status === "returned"
+          ? a.submission.attachments
+          : a.draft.attachments) || {},
+    ),
+    [fileError, setFileError] = useState(""),
+    [fileLoading, setFileLoading] = useState(false),
     [revision, setRevision] = useState(a.draft.revision),
     [dirty, setDirty] = useState(false),
     [saving, setSaving] = useState(false),
@@ -410,6 +421,9 @@ export function AssignmentDetail({
       priorStatus.current !== "returned"
     ) {
       setAnswers(a.draft.revision ? a.draft.answers : s.answers);
+      setAttachments(
+        (a.draft.revision ? a.draft.attachments : s.attachments) || {},
+      );
       setRevision(a.draft.revision);
       setDirty(false);
       setSaveError("");
@@ -450,7 +464,7 @@ export function AssignmentDetail({
       const r = await api<{ revision: number }>(
         "/assignments/" + a.id + "/draft",
         "PUT",
-        { answers, revision },
+        { answers, revision, attachments },
       );
       setRevision(r.revision);
       setDirty(false);
@@ -472,6 +486,7 @@ export function AssignmentDetail({
     await action(async () => {
       await api("/assignments/" + a.id + "/submit", "POST", {
         answers,
+        attachments,
         revision,
       });
       setDirty(false);
@@ -479,12 +494,54 @@ export function AssignmentDetail({
     });
   }
   useEffect(() => {
-    if (!writable || !dirty || saving || busy || saveError) return;
+    if (!writable || !dirty || saving || busy || fileLoading || saveError)
+      return;
     const timer = setTimeout(() => {
       void save();
     }, 2000);
     return () => clearTimeout(timer);
-  }, [answers, dirty, saving, busy, writable, saveError]);
+  }, [
+    answers,
+    attachments,
+    dirty,
+    saving,
+    busy,
+    fileLoading,
+    writable,
+    saveError,
+  ]);
+  async function attach(task: string, file?: File) {
+    if (!file) return;
+    setFileLoading(true);
+    setFileError("");
+    try {
+      if (!file.name.endsWith(".txt") || file.size > 60000 || file.size === 0)
+        throw Error("Нужен непустой TXT до 60 KB");
+      const content = new TextDecoder("utf-8", { fatal: true }).decode(
+        await file.arrayBuffer(),
+      );
+      if (content.includes("\0")) throw Error("Нулевые байты не допускаются");
+      const next = {
+        ...attachments,
+        [task]: { file_name: file.name, content },
+      };
+      if (
+        Object.keys(next).length > 3 ||
+        Object.values(next).reduce(
+          (n, f) => n + new TextEncoder().encode(f.content).length,
+          0,
+        ) > 60000
+      )
+        throw Error("Не более трёх файлов, суммарно до 60 KB");
+      setAttachments(next);
+      setDirty(true);
+      setSaved("");
+    } catch (e) {
+      setFileError((e as Error).message);
+    } finally {
+      setFileLoading(false);
+    }
+  }
   async function review(kind: string) {
     await action(async () => {
       await api("/submissions/" + s!.id + "/review", "POST", {
@@ -610,6 +667,41 @@ export function AssignmentDetail({
                 </div>
               )
             )}
+            <AnswerAttachment
+              file={writable ? attachments[t.id] : s?.attachments?.[t.id]}
+            />
+            {writable && t.type !== "single_choice" && (
+              <div>
+                <label>
+                  TXT к заданию {i + 1}
+                  <input
+                    type="file"
+                    accept=".txt,text/plain"
+                    disabled={saving || busy || fileLoading}
+                    onChange={(e) => {
+                      void attach(t.id, e.target.files?.[0]);
+                      e.target.value = "";
+                    }}
+                  />
+                </label>
+                {attachments[t.id] && (
+                  <button
+                    type="button"
+                    className="text-button"
+                    disabled={saving || busy || fileLoading}
+                    onClick={() => {
+                      const next = { ...attachments };
+                      delete next[t.id];
+                      setAttachments(next);
+                      setDirty(true);
+                      setSaved("");
+                    }}
+                  >
+                    Убрать файл
+                  </button>
+                )}
+              </div>
+            )}
             {isTutor && (
               <div className="reference">
                 <strong>Эталон и критерии</strong>
@@ -702,6 +794,13 @@ export function AssignmentDetail({
         );
       })}
       {writable && (
+        <p>
+          До трёх TXT-файлов, суммарно 60 KB. Текст файла входит в проверку
+          вместе с ответом; оригинал сохраняется в истории.
+        </p>
+      )}
+      {fileError && <p role="alert">{fileError}</p>}
+      {writable && (
         <div className="form-actions sticky">
           <div role="status">
             {saving
@@ -713,12 +812,16 @@ export function AssignmentDetail({
           </div>
           <button
             className="secondary"
-            disabled={saving || busy || !dirty}
+            disabled={saving || busy || fileLoading || !dirty}
             onClick={save}
           >
             Сохранить ответы
           </button>
-          <button className="primary" disabled={saving || busy} onClick={send}>
+          <button
+            className="primary"
+            disabled={saving || busy || fileLoading}
+            onClick={send}
+          >
             Отправить работу <ArrowRight size={16} />
           </button>
         </div>

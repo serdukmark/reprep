@@ -22,5 +22,6 @@ jobs:
       - run: python scripts/test_failure_mutations.py
       - run: python scripts/test_question_mutations.py
       - run: python scripts/test_generation_mutations.py
+      - run: python scripts/test_answer_file_mutations.py
       - run: python scripts/check_secrets.py
       - run: npm run build
