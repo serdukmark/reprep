@@ -225,3 +225,7 @@ User-visible errors shall provide a non-sensitive reference ID that can be locat
 ## Owner-approved file extension — 21 September 2026
 
 TEAM-032: learner TXT attachments are implemented per ADR-007: three files, total 60 KB, versioned private drafts, immutable submission snapshots and history. Text participates in bounded AI assessment. Other formats and OCR remain open.
+
+## Read-only guardian extension — 21 September 2026
+
+TEAM-112: tutor-issued invitation scoped to one learner relationship, immutable guardian role, confirmed progress and schedule only, immediate server-side revocation. No raw work, payment or AI draft access. Real sharing is gated by GUARDIAN_DATA_APPROVED. See ADR-008.

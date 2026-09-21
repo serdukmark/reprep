@@ -350,7 +350,7 @@ def create_app(settings=None, provider=None, run_worker=True):
     @app.post('/api/auth/demo/{persona}')
     def demo_login(persona: str, request: Request, c=Depends(db)):
         auth_rate(request)
-        if not cfg.demo or persona not in ('tutor', 'learner', 'learner-2', 'outsider'):
+        if not cfg.demo or persona not in ('tutor', 'learner', 'learner-2', 'outsider', 'guardian'):
             fail(404, 'NOT_FOUND', 'Демо недоступно')
         return session(c, one(c, 'SELECT * FROM users WHERE id=?', ('demo-'+persona,)))
 
@@ -377,6 +377,60 @@ def create_app(settings=None, provider=None, run_worker=True):
     def logout(request: Request, u=Depends(user), c=Depends(db)):
         c.execute('DELETE FROM sessions WHERE token_hash=?', (token_hash(request.headers['authorization'][7:]),))
         return {'ok': True}
+
+    def guardian(u):
+        if u['role']!='guardian':fail(403,'ROLE','Действие доступно родителю')
+        if not u['demo'] and not cfg.guardian_data_approved:fail(403,'DATA_POLICY','Родительский доступ к реальным данным ещё не согласован')
+
+    @app.post('/api/relationships/{id_}/guardians',status_code=201)
+    def invite_guardian(id_:str,u=Depends(user),c=Depends(db)):
+        tutor(u);relation(c,id_,u)
+        if not u['demo'] and not cfg.guardian_data_approved:fail(403,'DATA_POLICY','Родительский доступ к реальным данным ещё не согласован')
+        active=one(c,"SELECT count(*) n FROM guardian_access WHERE relationship_id=? AND state!='revoked'",(id_,))['n']
+        if active>=10:fail(429,'LIMIT','Сначала отзовите неиспользуемые приглашения')
+        token=secrets.token_urlsafe(32);gid=uid();expires=time.time()+cfg.invite_hours*3600
+        c.execute('INSERT INTO guardian_access(id,relationship_id,tutor_id,token_hash,expires,created) VALUES(?,?,?,?,?,?)',(gid,id_,u['id'],token_hash(token),expires,now()))
+        audit(c,u['id'],'guardian_invited',gid)
+        return {'id':gid,'token':token,'expires':expires}
+
+    @app.get('/api/relationships/{id_}/guardians')
+    def guardian_invitations(id_:str,u=Depends(user),c=Depends(db)):
+        tutor(u);relation(c,id_,u)
+        return rows(c,'SELECT g.id,g.state,g.expires,u.alias FROM guardian_access g LEFT JOIN users u ON u.id=g.guardian_id WHERE relationship_id=? ORDER BY g.created DESC',(id_,))
+
+    @app.post('/api/guardian/accept')
+    def accept_guardian(body:TokenInput,u=Depends(user),c=Depends(db)):
+        guardian(u)
+        item=one(c,'SELECT g.*,t.demo FROM guardian_access g JOIN users t ON t.id=g.tutor_id WHERE token_hash=?',(token_hash(body.token),))
+        if not item or item['state']=='revoked' or item['expires']<time.time() or item['demo']!=u['demo']:fail(404,'INVITE','Приглашение недоступно')
+        if item['state']=='accepted':
+            if item['guardian_id']!=u['id']:fail(409,'INVITE','Приглашение уже использовано')
+            return {'ok':True}
+        c.execute("UPDATE guardian_access SET state='accepted',guardian_id=? WHERE id=?",(u['id'],item['id']))
+        audit(c,u['id'],'guardian_accepted',item['id'])
+        return {'ok':True}
+
+    @app.post('/api/guardian/invitations/{id_}/revoke')
+    def revoke_guardian(id_:str,u=Depends(user),c=Depends(db)):
+        tutor(u);item=one(c,'SELECT * FROM guardian_access WHERE id=? AND tutor_id=?',(id_,u['id']))
+        if not item:fail(404,'INVITE','Приглашение недоступно')
+        c.execute("UPDATE guardian_access SET state='revoked' WHERE id=?",(id_,));audit(c,u['id'],'guardian_revoked',id_)
+        return {'ok':True}
+
+    @app.get('/api/guardian/links')
+    def guardian_links(u=Depends(user),c=Depends(db)):
+        guardian(u)
+        return rows(c,"SELECT DISTINCT r.id,r.subject,l.alias learner_alias,t.alias tutor_alias FROM guardian_access g JOIN relationships r ON r.id=g.relationship_id JOIN users l ON l.id=r.learner_id JOIN users t ON t.id=r.tutor_id WHERE g.guardian_id=? AND g.state='accepted'",(u['id'],))
+
+    @app.get('/api/guardian/links/{id_}')
+    def guardian_summary(id_:str,u=Depends(user),c=Depends(db)):
+        guardian(u)
+        if not one(c,"SELECT id FROM guardian_access WHERE guardian_id=? AND relationship_id=? AND state='accepted'",(u['id'],id_)):fail(404,'NOT_FOUND','Доступ отсутствует или отозван')
+        skills=[{k:item[k] for k in ('skill','correct','total','latest')} for item in progress(c,id_)]
+        lessons=[]
+        for item in rows(c,'SELECT id,data FROM lessons WHERE relationship_id=? LIMIT 100',(id_,)):
+            data=json.loads(item['data']);lessons.append({'id':item['id'],**{k:data.get(k,'scheduled') for k in ('title','starts_at','duration','status')}})
+        return {'progress':skills,'lessons':lessons,'note':'Только подтверждённые результаты и расписание. Ответы, переписка, оплата и AI-черновики не раскрываются.'}
 
     @app.get('/api/relationships')
     def relationships(u=Depends(user), c=Depends(db)):

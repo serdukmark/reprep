@@ -21,6 +21,7 @@ class Settings:
     openrouter_model: str = ''
     synthetic_only: bool = True
     ai_daily_limit: int = 50
+    guardian_data_approved: bool = False
     session_hours: int = 12
     invite_hours: int = 72
 
@@ -34,7 +35,7 @@ class Settings:
                 if '=' in line and not line.lstrip().startswith('#'):
                     key, value = line.split('=', 1)
                     os.environ.setdefault(key.strip(), value.strip())
-        value = cls(ai_daily_limit=max(0,int(os.getenv('AI_DAILY_LIMIT','50'))), database=os.getenv('DATABASE_PATH', 'data/reprep.sqlite3'),
+        value = cls(guardian_data_approved=os.getenv('GUARDIAN_DATA_APPROVED','false').lower()=='true', ai_daily_limit=max(0,int(os.getenv('AI_DAILY_LIMIT','50'))), database=os.getenv('DATABASE_PATH', 'data/reprep.sqlite3'),
                     environment=os.getenv('APP_ENV', 'development'),
                     demo=os.getenv('DEMO_ENABLED', 'false').lower() == 'true',
                     bot_token=os.getenv('MAX_BOT_TOKEN', ''),

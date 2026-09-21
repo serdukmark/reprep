@@ -216,7 +216,7 @@ class TokenInput(Model):
 
 class MaxLogin(Model):
     init_data: str = Field(max_length=16000)
-    role: Literal['tutor', 'learner']
+    role: Literal['tutor', 'learner', 'guardian']
     alias: str = Field(default='Участник', min_length=1, max_length=60)
 
 

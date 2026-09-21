@@ -300,7 +300,8 @@
       "path": "/api/me",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [],
       "request_body": null,
@@ -353,7 +354,8 @@
       "path": "/api/logout",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [],
       "request_body": null,
@@ -413,11 +415,583 @@
       "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     },
     {
+      "method": "POST",
+      "path": "/api/relationships/{id_}/guardians",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "201": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "token": {
+                    "type": "string"
+                  },
+                  "expires": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "id",
+                  "token",
+                  "expires"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "GET",
+      "path": "/api/relationships/{id_}/guardians",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "expires": {
+                      "type": "number"
+                    },
+                    "alias": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "state",
+                    "expires",
+                    "alias"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/guardian/accept",
+      "role": [
+        "guardian"
+      ],
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TokenInput"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/guardian/invitations/{id_}/revoke",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "GET",
+      "path": "/api/guardian/links",
+      "role": [
+        "guardian"
+      ],
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "learner_alias": {
+                      "type": "string"
+                    },
+                    "tutor_alias": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "subject",
+                    "learner_alias",
+                    "tutor_alias"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "GET",
+      "path": "/api/guardian/links/{id_}",
+      "role": [
+        "guardian"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "progress": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "skill": {
+                          "type": "string"
+                        },
+                        "correct": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "latest": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "skill",
+                        "correct",
+                        "total",
+                        "latest"
+                      ]
+                    }
+                  },
+                  "lessons": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "starts_at": {
+                          "type": "string"
+                        },
+                        "duration": {
+                          "type": "integer"
+                        },
+                        "status": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "title",
+                        "starts_at",
+                        "duration",
+                        "status"
+                      ]
+                    }
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "progress",
+                  "lessons",
+                  "note"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
       "method": "GET",
       "path": "/api/relationships",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [],
       "request_body": null,
@@ -473,7 +1047,8 @@
       "path": "/api/profile",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [],
       "request_body": {
@@ -1050,7 +1625,8 @@
       "path": "/api/assignments",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [
         {
@@ -1294,7 +1870,8 @@
       "path": "/api/assignments/{id_}",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [
         {
@@ -1533,7 +2110,8 @@
       "path": "/api/assignments/{id_}/attempts",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [
         {
@@ -1842,7 +2420,8 @@
       "path": "/api/submissions/{id_}",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [
         {
@@ -2090,7 +2669,8 @@
       "path": "/api/relationships/{id_}/progress",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [
         {
@@ -2779,7 +3359,8 @@
       "path": "/api/relationships/{id_}/plan",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [
         {
@@ -2936,7 +3517,8 @@
       "path": "/api/assignments/{id_}/questions",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [
         {
@@ -3206,7 +3788,8 @@
       "path": "/api/assignments/{id_}/messages",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [
         {
@@ -3292,7 +3875,8 @@
       "path": "/api/assignments/{id_}/messages",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [
         {
@@ -3385,7 +3969,8 @@
       "path": "/api/relationships/{id_}/export",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [
         {
@@ -3477,7 +4062,8 @@
       "path": "/api/calendar",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [],
       "request_body": null,
@@ -3548,7 +4134,8 @@
       "path": "/api/reminders",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [],
       "request_body": null,
@@ -3644,7 +4231,8 @@
       "path": "/api/lessons",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [],
       "request_body": null,
@@ -3874,7 +4462,8 @@
       "path": "/api/materials",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [],
       "request_body": null,
@@ -4210,7 +4799,8 @@
       "path": "/api/materials/{id_}/file",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [
         {
@@ -4301,7 +4891,8 @@
       "path": "/api/reports",
       "role": [
         "tutor",
-        "learner"
+        "learner",
+        "guardian"
       ],
       "parameters": [],
       "request_body": {

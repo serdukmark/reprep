@@ -517,9 +517,10 @@ export function AssignmentDetail({
     try {
       if (!file.name.endsWith(".txt") || file.size > 60000 || file.size === 0)
         throw Error("Нужен непустой TXT до 60 KB");
-      const content = new TextDecoder("utf-8", { fatal: true }).decode(
-        await file.arrayBuffer(),
-      );
+      const content = new TextDecoder("utf-8", {
+        fatal: true,
+        ignoreBOM: true,
+      }).decode(await file.arrayBuffer());
       if (content.includes("\0")) throw Error("Нулевые байты не допускаются");
       const next = {
         ...attachments,

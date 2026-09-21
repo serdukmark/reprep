@@ -10,7 +10,7 @@ def enrich(schema,routes,base_url):
     def nullable(item):return {'anyOf':[item,{'type':'null'}]}
     schemas=schema.setdefault('components',{}).setdefault('schemas',{})
     schemas['ApiError']=obj({'error':obj({'code':string,'message':string,'reference_id':string})})
-    schemas['Account']=obj({'id':string,'role':{'type':'string','enum':['tutor','learner']},'alias':string,'demo':{'type':'integer','enum':[0,1]}})
+    schemas['Account']=obj({'id':string,'role':{'type':'string','enum':['tutor','learner','guardian']},'alias':string,'demo':{'type':'integer','enum':[0,1]}})
     schemas['Session']=obj({'token':string,'user':ref('Account')})
     def output_copy(source, name, added=None, removed=()):
         result=deepcopy(schemas[source])
@@ -61,6 +61,12 @@ def enrich(schema,routes,base_url):
         'invitations':array(obj({'id':string,'subject':string,'expires':{'type':'number'},'state':string})),
     }
     outputs.update({
+        'invite_guardian':obj({'id':string,'token':string,'expires':{'type':'number'}}),
+        'guardian_invitations':array(obj({'id':string,'state':string,'expires':{'type':'number'},'alias':nullable(string)})),
+        'accept_guardian':ok_result,'revoke_guardian':ok_result,
+        'guardian_links':array(obj({'id':string,'subject':string,'learner_alias':string,'tutor_alias':string})),
+        'guardian_summary':obj({'progress':array(obj({'skill':string,'correct':integer,'total':integer,'latest':string})),
+            'lessons':array(obj({'id':string,'title':string,'starts_at':string,'duration':integer,'status':string})),'note':string}),
         'health':obj({'status':string}),
         'ready':obj({'ready':{'type':'boolean'},'checks':array(string),'external_services':string}),
         'config':obj({'demo_enabled':{'type':'boolean'},'max_enabled':{'type':'boolean'},'assessment':string,'version':string}),
@@ -74,7 +80,7 @@ def enrich(schema,routes,base_url):
     })
     for name in ('duplicate','submit','review','create_lesson','create_material','report','ask_question','send_message','generate_material'):outputs[name]=id_result
     for name in ('publish','accept','decline_invite','revoke','logout','retry','edit_lesson','review_question'):outputs[name]=ok_result
-    tutors={'invite','invitations','revoke','create_assignment','edit_assignment','publish','duplicate','retry','review','recommendations','analytics','groups','create_group','edit_group','assign_group','schedule_group','save_plan','review_question','create_lesson','edit_lesson','create_material','generations','generate_material','reset'}
+    tutors={'invite_guardian','guardian_invitations','revoke_guardian','invite','invitations','revoke','create_assignment','edit_assignment','publish','duplicate','retry','review','recommendations','analytics','groups','create_group','edit_group','assign_group','schedule_group','save_plan','review_question','create_lesson','edit_lesson','create_material','generations','generate_material','reset'}
     learners={'preview_invite','accept','decline_invite','save_draft','submit','ask_question'}
     schema['components']['securitySchemes']={'SessionBearer':{'type':'http','scheme':'bearer'},'MaxWebhookSecret':{'type':'apiKey','in':'header','name':'X-Max-Bot-Api-Secret'}}
     schema['servers']=[{'url':base_url or 'http://127.0.0.1:8000','description':'Configured origin; localhost is not a public judging endpoint'}]
@@ -86,7 +92,7 @@ def enrich(schema,routes,base_url):
         for method in route.methods:
             op=schema.get('paths',{}).get(route.path,{}).get(method.lower())
             if not op:continue
-            roles=['tutor'] if name in tutors else ['learner'] if name in learners else ['tutor','learner'] if authenticated else ['MAX webhook'] if webhook else ['public']
+            roles=['guardian'] if name in {'accept_guardian','guardian_links','guardian_summary'} else ['tutor'] if name in tutors else ['learner'] if name in learners else ['tutor','learner','guardian'] if authenticated else ['MAX webhook'] if webhook else ['public']
             op['x-roles']=roles
             if authenticated or webhook:op['security']=[{'MaxWebhookSecret' if webhook else 'SessionBearer':[]}]
             if authenticated:

@@ -23,7 +23,7 @@ def content_hash(value):
 
 def seed(conn):
     conn.executemany('INSERT OR IGNORE INTO users(id,role,alias,demo) VALUES(?,?,?,1)', [
-        ('demo-tutor', 'tutor', 'Алекс • демо'), ('demo-learner', 'learner', 'Саша • демо'),
+        ('demo-guardian', 'guardian', 'Родитель • демо'), ('demo-tutor', 'tutor', 'Алекс • демо'), ('demo-learner', 'learner', 'Саша • демо'),
         ('demo-learner-2', 'learner', 'Женя • демо'), ('demo-outsider', 'tutor', 'Другой репетитор • демо')])
     conn.executemany('INSERT OR IGNORE INTO relationships VALUES(?,?,?,?)', [
         ('demo-link', 'demo-tutor', 'demo-learner', 'Математика · ЕГЭ'),

@@ -6,7 +6,7 @@ from contextlib import contextmanager
 SCHEMA = '''
 CREATE TABLE IF NOT EXISTS max_outbox(id TEXT PRIMARY KEY, recipient INTEGER NOT NULL, body TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'queued', attempts INTEGER NOT NULL DEFAULT 0, available_at REAL NOT NULL DEFAULT 0, created REAL NOT NULL);
 CREATE TABLE IF NOT EXISTS schema_migrations(version INTEGER PRIMARY KEY);
-CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY, external_id TEXT UNIQUE, role TEXT NOT NULL CHECK(role IN ('tutor','learner')), alias TEXT NOT NULL, demo INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY, external_id TEXT UNIQUE, role TEXT NOT NULL CHECK(role IN ('tutor','learner','guardian')), alias TEXT NOT NULL, demo INTEGER NOT NULL DEFAULT 0);
 CREATE TABLE IF NOT EXISTS sessions(token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), expires REAL NOT NULL);
 CREATE TABLE IF NOT EXISTS relationships(id TEXT PRIMARY KEY, tutor_id TEXT NOT NULL REFERENCES users(id), learner_id TEXT NOT NULL REFERENCES users(id), subject TEXT NOT NULL, UNIQUE(tutor_id,learner_id,subject));
 CREATE TABLE IF NOT EXISTS invitations(id TEXT PRIMARY KEY, tutor_id TEXT NOT NULL REFERENCES users(id), token_hash TEXT UNIQUE NOT NULL, subject TEXT NOT NULL, expires REAL NOT NULL, state TEXT NOT NULL DEFAULT 'created', accepted_by TEXT REFERENCES users(id));
@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS evidence(id TEXT PRIMARY KEY, relationship_id TEXT NO
 CREATE TABLE IF NOT EXISTS lessons(id TEXT PRIMARY KEY, relationship_id TEXT NOT NULL REFERENCES relationships(id), data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS materials(id TEXT PRIMARY KEY, relationship_id TEXT NOT NULL REFERENCES relationships(id), data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS learning_plans(relationship_id TEXT PRIMARY KEY REFERENCES relationships(id), revision INTEGER NOT NULL, data TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS guardian_access(id TEXT PRIMARY KEY,relationship_id TEXT NOT NULL REFERENCES relationships(id) ON DELETE CASCADE,tutor_id TEXT NOT NULL REFERENCES users(id),token_hash TEXT UNIQUE NOT NULL,expires REAL NOT NULL,state TEXT NOT NULL DEFAULT 'created',guardian_id TEXT REFERENCES users(id),created TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS generations(id TEXT PRIMARY KEY,material_id TEXT NOT NULL REFERENCES materials(id),tutor_id TEXT NOT NULL REFERENCES users(id),client_id TEXT NOT NULL,count INTEGER NOT NULL,status TEXT NOT NULL DEFAULT 'queued',assignment_id TEXT,lease_until REAL NOT NULL DEFAULT 0,created TEXT NOT NULL,UNIQUE(tutor_id,client_id));
 CREATE TABLE IF NOT EXISTS learning_groups(id TEXT PRIMARY KEY,tutor_id TEXT NOT NULL REFERENCES users(id),revision INTEGER NOT NULL,data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS group_actions(group_id TEXT NOT NULL REFERENCES learning_groups(id),client_id TEXT NOT NULL,request TEXT NOT NULL,result TEXT NOT NULL,PRIMARY KEY(group_id,client_id));
@@ -42,6 +43,20 @@ def initialize(path):
     with sqlite3.connect(path) as conn:
         conn.executescript(SCHEMA)
         conn.execute('PRAGMA journal_mode=WAL')
+        if not conn.execute('SELECT 1 FROM schema_migrations WHERE version=5').fetchone():
+            # SQLite documented create/copy/drop/rename migration, not writable_schema.
+            conn.execute('PRAGMA foreign_keys=OFF')
+            conn.execute('BEGIN IMMEDIATE')
+            objects=conn.execute("SELECT sql FROM sqlite_schema WHERE tbl_name='users' AND type IN ('index','trigger') AND sql IS NOT NULL").fetchall()
+            definition=next(part.strip() for part in SCHEMA.split(';') if part.strip().startswith('CREATE TABLE IF NOT EXISTS users('))
+            conn.execute(definition.replace('CREATE TABLE IF NOT EXISTS users(', 'CREATE TABLE users_v5('))
+            conn.execute('INSERT INTO users_v5 SELECT * FROM users')
+            conn.execute('DROP TABLE users')
+            conn.execute('ALTER TABLE users_v5 RENAME TO users')
+            for (sql,) in objects:conn.execute(sql)
+            if conn.execute('PRAGMA foreign_key_check').fetchone():raise RuntimeError('Migration failed foreign key validation')
+            conn.execute('INSERT INTO schema_migrations VALUES(5)')
+            conn.commit()
 
 
 @contextmanager

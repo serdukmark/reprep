@@ -43,6 +43,7 @@ import { Collection } from "./Collection";
 import "./style.css";
 import { Reminders, CalendarDownload } from "./Reminders";
 import { Groups } from "./Groups";
+import { GuardianInvites, GuardianPortal } from "./Guardian";
 import { LearningPlan } from "./LearningPlan";
 import { Analytics, Recommendations } from "./Insights";
 type Page =
@@ -87,7 +88,7 @@ function App() {
     expires: number;
   } | null>(null);
   const [alias, setAlias] = useState(""),
-    [role, setRole] = useState<"tutor" | "learner">("tutor");
+    [role, setRole] = useState<"tutor" | "learner" | "guardian">("tutor");
   const isTutor = user?.role === "tutor";
   async function refresh() {
     const [r, a, l, m] = await Promise.all([
@@ -126,10 +127,10 @@ function App() {
     if (p.get("invite")) setInviteInput(p.get("invite")!);
   }, []);
   useEffect(() => {
-    if (user) action(refresh);
+    if (user && user.role !== "guardian") action(refresh);
   }, [user?.id]);
   useEffect(() => {
-    if (!selected || !user) return;
+    if (!selected || !user || user.role === "guardian") return;
     api<Skill[]>("/relationships/" + selected + "/progress")
       .then(setSkills)
       .catch((e) => setError(e.message));
@@ -357,6 +358,13 @@ function App() {
               >
                 Я ученик <ArrowRight size={18} />
               </button>
+              <button
+                className="secondary full"
+                disabled={busy}
+                onClick={() => login("guardian")}
+              >
+                Я родитель <ArrowRight size={18} />
+              </button>
             </>
           )}
           {config?.max_enabled && (
@@ -395,6 +403,7 @@ function App() {
                 >
                   <option value="tutor">Преподаватель</option>
                   <option value="learner">Ученик</option>
+                  <option value="guardian">Родитель</option>
                 </select>
               </label>
               <button className="primary full" disabled={busy}>
@@ -419,6 +428,8 @@ function App() {
         </section>
       </main>
     );
+  if (user.role === "guardian")
+    return <GuardianPortal user={user} logout={logout} />;
   function AssignmentRows({ items }: { items: AssignmentSummary[] }) {
     return (
       <div className="assignment-list">
@@ -943,6 +954,12 @@ function App() {
                       relationship={selected}
                       tutor={isTutor}
                       open={open}
+                    />
+                  )}
+                  {isTutor && selected && (
+                    <GuardianInvites
+                      key={"guardian-" + selected}
+                      relation={selected}
                     />
                   )}
                   {isTutor && (

@@ -331,7 +331,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -399,7 +400,606 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/relationships/{id_}/guardians": {
+      "post": {
+        "summary": "Invite Guardian",
+        "operationId": "invite_guardian_api_relationships__id___guardians_post",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "token": {
+                      "type": "string"
+                    },
+                    "expires": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "token",
+                    "expires"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "Guardian Invitations",
+        "operationId": "guardian_invitations_api_relationships__id___guardians_get",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "expires": {
+                        "type": "number"
+                      },
+                      "alias": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "state",
+                      "expires",
+                      "alias"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/guardian/accept": {
+      "post": {
+        "summary": "Accept Guardian",
+        "operationId": "accept_guardian_api_guardian_accept_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "x-roles": [
+          "guardian"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/guardian/invitations/{id_}/revoke": {
+      "post": {
+        "summary": "Revoke Guardian",
+        "operationId": "revoke_guardian_api_guardian_invitations__id___revoke_post",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/guardian/links": {
+      "get": {
+        "summary": "Guardian Links",
+        "operationId": "guardian_links_api_guardian_links_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "subject": {
+                        "type": "string"
+                      },
+                      "learner_alias": {
+                        "type": "string"
+                      },
+                      "tutor_alias": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "subject",
+                      "learner_alias",
+                      "tutor_alias"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-roles": [
+          "guardian"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/guardian/links/{id_}": {
+      "get": {
+        "summary": "Guardian Summary",
+        "operationId": "guardian_summary_api_guardian_links__id___get",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "progress": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "skill": {
+                            "type": "string"
+                          },
+                          "correct": {
+                            "type": "integer"
+                          },
+                          "total": {
+                            "type": "integer"
+                          },
+                          "latest": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "skill",
+                          "correct",
+                          "total",
+                          "latest"
+                        ]
+                      }
+                    },
+                    "lessons": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "starts_at": {
+                            "type": "string"
+                          },
+                          "duration": {
+                            "type": "integer"
+                          },
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "starts_at",
+                          "duration",
+                          "status"
+                        ]
+                      }
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "progress",
+                    "lessons",
+                    "note"
+                  ]
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-roles": [
+          "guardian"
         ],
         "security": [
           {
@@ -459,7 +1059,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -539,7 +1140,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -1150,7 +1752,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -1402,7 +2005,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -1708,7 +2312,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -1982,7 +2587,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -2249,7 +2855,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -2974,7 +3581,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -3153,7 +3761,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -3438,7 +4047,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -3535,7 +4145,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -3632,7 +4243,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -3707,7 +4319,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -3807,7 +4420,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -3867,7 +4481,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -4110,7 +4725,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -4498,7 +5114,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -4586,7 +5203,8 @@
         },
         "x-roles": [
           "tutor",
-          "learner"
+          "learner",
+          "guardian"
         ],
         "security": [
           {
@@ -5076,7 +5694,8 @@
             "type": "string",
             "enum": [
               "tutor",
-              "learner"
+              "learner",
+              "guardian"
             ],
             "title": "Role"
           },
@@ -5522,7 +6141,8 @@
             "type": "string",
             "enum": [
               "tutor",
-              "learner"
+              "learner",
+              "guardian"
             ]
           },
           "alias": {

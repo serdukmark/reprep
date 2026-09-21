@@ -1,6 +1,6 @@
 export type User = {
   id: string;
-  role: "tutor" | "learner";
+  role: "tutor" | "learner" | "guardian";
   alias: string;
   demo: boolean;
 };
