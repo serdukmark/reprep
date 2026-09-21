@@ -1,0 +1,19 @@
+# Add as a separate site to the existing Caddy configuration after validation.
+# Supply these environment variables to the Caddy service, or substitute verified
+# literal values in the installed snippet. Never replace the existing sites.
+{$REPREP_DOMAIN} {
+    encode zstd gzip
+    request_body {
+        max_size 2MB
+    }
+    @private path_regexp private (^|/)\.
+    respond @private 404
+    header {
+        Strict-Transport-Security "max-age=31536000"
+        X-Content-Type-Options nosniff
+        Referrer-Policy no-referrer
+        -Server
+    }
+    # The application owns frame-ancestors CSP. Do not add X-Frame-Options DENY.
+    reverse_proxy 127.0.0.1:{$REPREP_BIND_PORT}
+}
