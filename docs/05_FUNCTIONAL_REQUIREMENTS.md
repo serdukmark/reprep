@@ -229,3 +229,7 @@ TEAM-032: learner TXT attachments are implemented per ADR-007: three files, tota
 ## Read-only guardian extension — 21 September 2026
 
 TEAM-112: tutor-issued invitation scoped to one learner relationship, immutable guardian role, confirmed progress and schedule only, immediate server-side revocation. No raw work, payment or AI draft access. Real sharing is gated by GUARDIAN_DATA_APPROVED. See ADR-008.
+
+## Shared tutor workspace — 21 September 2026
+
+TEAM-099: membership invitations, removal/leave, shared immutable template snapshots and private copies to own learners. ADR-009. Shared learner ownership and simultaneous co-review remain unimplemented and explicitly separated from library membership.

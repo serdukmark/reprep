@@ -5024,6 +5024,973 @@
         }
       },
       "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "GET",
+      "path": "/api/workspaces",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "owner_id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "owner_id"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/workspaces",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WorkspaceInput"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "201": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "GET",
+      "path": "/api/workspaces/{id_}/members",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "alias": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "alias"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/workspaces/{id_}/invite",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "token": {
+                    "type": "string"
+                  },
+                  "expires": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "id",
+                  "token",
+                  "expires"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "GET",
+      "path": "/api/workspaces/{id_}/invitations",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "expires": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "state",
+                    "expires"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/workspaces/{id_}/invitations/{invite_id}/revoke",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        },
+        {
+          "name": "invite_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Invite Id"
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/workspaces/accept",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TokenInput"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/workspaces/{id_}/members/{member_id}/remove",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        },
+        {
+          "name": "member_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Member Id"
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "GET",
+      "path": "/api/workspaces/{id_}/templates",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "author_alias": {
+                      "type": "string"
+                    },
+                    "tasks_count": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "author_alias",
+                    "tasks_count"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/workspaces/{id_}/templates",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ShareTemplate"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "201": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/workspace-templates/{id_}/copy",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CopyTemplate"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "201": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
     }
   ],
   "executable_checks": [

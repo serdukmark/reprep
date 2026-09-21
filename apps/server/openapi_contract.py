@@ -61,6 +61,13 @@ def enrich(schema,routes,base_url):
         'invitations':array(obj({'id':string,'subject':string,'expires':{'type':'number'},'state':string})),
     }
     outputs.update({
+        'workspaces':array(obj({'id':string,'title':string,'owner_id':string})),
+        'create_workspace':id_result,'workspace_accept':id_result,'share_workspace_template':id_result,'copy_workspace_template':id_result,
+        'workspace_invite':obj({'id':string,'token':string,'expires':{'type':'number'}}),
+        'workspace_invitations':array(obj({'id':string,'state':string,'expires':{'type':'number'}})),
+        'workspace_members':array(obj({'id':string,'alias':string})),
+        'workspace_templates':array(obj({'id':string,'title':string,'author_alias':string,'tasks_count':integer})),
+        'workspace_remove':ok_result,'workspace_revoke_invite':ok_result,
         'invite_guardian':obj({'id':string,'token':string,'expires':{'type':'number'}}),
         'guardian_invitations':array(obj({'id':string,'state':string,'expires':{'type':'number'},'alias':nullable(string)})),
         'accept_guardian':ok_result,'revoke_guardian':ok_result,
@@ -80,7 +87,7 @@ def enrich(schema,routes,base_url):
     })
     for name in ('duplicate','submit','review','create_lesson','create_material','report','ask_question','send_message','generate_material'):outputs[name]=id_result
     for name in ('publish','accept','decline_invite','revoke','logout','retry','edit_lesson','review_question'):outputs[name]=ok_result
-    tutors={'invite_guardian','guardian_invitations','revoke_guardian','invite','invitations','revoke','create_assignment','edit_assignment','publish','duplicate','retry','review','recommendations','analytics','groups','create_group','edit_group','assign_group','schedule_group','save_plan','review_question','create_lesson','edit_lesson','create_material','generations','generate_material','reset'}
+    tutors={'workspaces','create_workspace','workspace_accept','share_workspace_template','copy_workspace_template','workspace_invite','workspace_invitations','workspace_members','workspace_templates','workspace_remove','workspace_revoke_invite','invite_guardian','guardian_invitations','revoke_guardian','invite','invitations','revoke','create_assignment','edit_assignment','publish','duplicate','retry','review','recommendations','analytics','groups','create_group','edit_group','assign_group','schedule_group','save_plan','review_question','create_lesson','edit_lesson','create_material','generations','generate_material','reset'}
     learners={'preview_invite','accept','decline_invite','save_draft','submit','ask_question'}
     schema['components']['securitySchemes']={'SessionBearer':{'type':'http','scheme':'bearer'},'MaxWebhookSecret':{'type':'apiKey','in':'header','name':'X-Max-Bot-Api-Secret'}}
     schema['servers']=[{'url':base_url or 'http://127.0.0.1:8000','description':'Configured origin; localhost is not a public judging endpoint'}]

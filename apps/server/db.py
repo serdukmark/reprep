@@ -20,6 +20,11 @@ CREATE TABLE IF NOT EXISTS evidence(id TEXT PRIMARY KEY, relationship_id TEXT NO
 CREATE TABLE IF NOT EXISTS lessons(id TEXT PRIMARY KEY, relationship_id TEXT NOT NULL REFERENCES relationships(id), data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS materials(id TEXT PRIMARY KEY, relationship_id TEXT NOT NULL REFERENCES relationships(id), data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS learning_plans(relationship_id TEXT PRIMARY KEY REFERENCES relationships(id), revision INTEGER NOT NULL, data TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS workspaces(id TEXT PRIMARY KEY,owner_id TEXT NOT NULL REFERENCES users(id),title TEXT NOT NULL,created TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS workspace_members(workspace_id TEXT NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,user_id TEXT NOT NULL REFERENCES users(id),active INTEGER NOT NULL DEFAULT 1,PRIMARY KEY(workspace_id,user_id));
+CREATE TABLE IF NOT EXISTS workspace_invites(id TEXT PRIMARY KEY,workspace_id TEXT NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,token_hash TEXT NOT NULL UNIQUE,expires REAL NOT NULL,state TEXT NOT NULL DEFAULT 'created',accepted_by TEXT REFERENCES users(id));
+CREATE TABLE IF NOT EXISTS workspace_templates(id TEXT PRIMARY KEY,workspace_id TEXT NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,author_id TEXT NOT NULL REFERENCES users(id),source_id TEXT NOT NULL,source_revision INTEGER NOT NULL,data TEXT NOT NULL,created TEXT NOT NULL,UNIQUE(workspace_id,source_id,source_revision));
+CREATE TABLE IF NOT EXISTS workspace_copies(user_id TEXT NOT NULL REFERENCES users(id),client_id TEXT NOT NULL,template_id TEXT NOT NULL REFERENCES workspace_templates(id),relationship_id TEXT NOT NULL,assignment_id TEXT NOT NULL,PRIMARY KEY(user_id,client_id));
 CREATE TABLE IF NOT EXISTS guardian_access(id TEXT PRIMARY KEY,relationship_id TEXT NOT NULL REFERENCES relationships(id) ON DELETE CASCADE,tutor_id TEXT NOT NULL REFERENCES users(id),token_hash TEXT UNIQUE NOT NULL,expires REAL NOT NULL,state TEXT NOT NULL DEFAULT 'created',guardian_id TEXT REFERENCES users(id),created TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS generations(id TEXT PRIMARY KEY,material_id TEXT NOT NULL REFERENCES materials(id),tutor_id TEXT NOT NULL REFERENCES users(id),client_id TEXT NOT NULL,count INTEGER NOT NULL,status TEXT NOT NULL DEFAULT 'queued',assignment_id TEXT,lease_until REAL NOT NULL DEFAULT 0,created TEXT NOT NULL,UNIQUE(tutor_id,client_id));
 CREATE TABLE IF NOT EXISTS learning_groups(id TEXT PRIMARY KEY,tutor_id TEXT NOT NULL REFERENCES users(id),revision INTEGER NOT NULL,data TEXT NOT NULL);
@@ -35,6 +40,7 @@ INSERT OR IGNORE INTO schema_migrations VALUES(1);
 INSERT OR IGNORE INTO schema_migrations VALUES(2);
 INSERT OR IGNORE INTO schema_migrations VALUES(3);
 INSERT OR IGNORE INTO schema_migrations VALUES(4);
+INSERT OR IGNORE INTO schema_migrations VALUES(6);
 '''
 
 

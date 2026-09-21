@@ -43,6 +43,7 @@ import { Collection } from "./Collection";
 import "./style.css";
 import { Reminders, CalendarDownload } from "./Reminders";
 import { Groups } from "./Groups";
+import { Workspaces } from "./Workspaces";
 import { GuardianInvites, GuardianPortal } from "./Guardian";
 import { LearningPlan } from "./LearningPlan";
 import { Analytics, Recommendations } from "./Insights";
@@ -364,6 +365,13 @@ function App() {
                 onClick={() => login("guardian")}
               >
                 Я родитель <ArrowRight size={18} />
+              </button>
+              <button
+                className="text-button full"
+                disabled={busy}
+                onClick={() => login("outsider")}
+              >
+                Другой преподаватель · демо
               </button>
             </>
           )}
@@ -954,6 +962,23 @@ function App() {
                       relationship={selected}
                       tutor={isTutor}
                       open={open}
+                    />
+                  )}
+                  {isTutor && (
+                    <Workspaces
+                      user={user}
+                      assignments={assignments}
+                      relations={relations}
+                      openDraft={(id) =>
+                        void action(async () => {
+                          if (!mayLeave()) return;
+                          setActive(
+                            await api<Assignment>("/assignments/" + id),
+                          );
+                          setEditing(true);
+                          await refresh();
+                        })
+                      }
                     />
                   )}
                   {isTutor && selected && (

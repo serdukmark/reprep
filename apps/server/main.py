@@ -1046,9 +1046,14 @@ def create_app(settings=None, provider=None, run_worker=True):
             c.execute(f'DELETE FROM {table} WHERE {field} IN (SELECT id FROM users WHERE demo=1)')
         c.execute('DELETE FROM group_actions WHERE group_id IN (SELECT id FROM learning_groups WHERE tutor_id IN (SELECT id FROM users WHERE demo=1))')
         c.execute('DELETE FROM learning_groups WHERE tutor_id IN (SELECT id FROM users WHERE demo=1)')
+        c.execute('DELETE FROM workspace_copies WHERE user_id IN (SELECT id FROM users WHERE demo=1)')
+        c.execute('DELETE FROM workspaces WHERE owner_id IN (SELECT id FROM users WHERE demo=1)')
         c.execute('DELETE FROM users WHERE demo=1')
         seed(c)
         return session(c, one(c, "SELECT * FROM users WHERE id='demo-tutor'"))
+
+    from .workspaces import install as install_workspaces
+    install_workspaces(app,user,db,tutor,relation,assignment,fail)
 
     dist = Path(__file__).resolve().parents[2] / 'dist'
     if (dist / 'assets').exists():
