@@ -735,13 +735,24 @@ def create_app(settings=None, provider=None, run_worker=True):
         tutor(u)
         counts=one(c,"SELECT count(*) total,sum(CASE WHEN status='published' THEN 1 ELSE 0 END) published FROM assignments WHERE tutor_id=?",(u['id'],))
         submissions=rows(c,'''SELECT s.id,s.submitted,s.status,s.analysis FROM submissions s JOIN assignments a ON a.id=s.assignment_id WHERE a.tutor_id=?''',(u['id'],))
-        reviews=rows(c,'''SELECT r.action,r.created,s.submitted FROM reviews r JOIN submissions s ON s.id=r.submission_id JOIN assignments a ON a.id=s.assignment_id WHERE a.tutor_id=?''',(u['id'],))
+        reviews=rows(c,'''SELECT r.action,r.created,r.data,s.submitted,s.analysis FROM reviews r JOIN submissions s ON s.id=r.submission_id JOIN assignments a ON a.id=s.assignment_id WHERE a.tutor_id=?''',(u['id'],))
         calls=one(c,'''SELECT count(*) n FROM audit e JOIN submissions s ON s.id=e.resource_id JOIN assignments a ON a.id=s.assignment_id WHERE e.event='external_ai_attempt' AND substr(e.created,1,10)=? AND a.tutor_id=?''',(now()[:10],u['id']))['n']
         calls+=one(c,"SELECT count(*) n FROM audit e JOIN ai_questions q ON q.id=e.resource_id JOIN assignments a ON a.id=q.assignment_id WHERE e.event='external_ai_attempt' AND substr(e.created,1,10)=? AND a.tutor_id=?",(now()[:10],u['id']))['n']
         calls+=one(c,"SELECT count(*) n FROM audit e JOIN generations g ON g.id=e.resource_id WHERE e.event='external_ai_attempt' AND substr(e.created,1,10)=? AND g.tutor_id=?",(now()[:10],u['id']))['n']
         question_failures=one(c,"SELECT count(*) n FROM ai_questions q JOIN assignments a ON a.id=q.assignment_id WHERE a.tutor_id=? AND json_extract(q.draft,'$.engine')='unavailable'",(u['id'],))['n']
         generation_failures=one(c,"SELECT count(*) n FROM generations WHERE tutor_id=? AND status='failed'",(u['id'],))['n']
-        return {'assignments':counts['total'],'published':counts['published'] or 0,'submissions':len(submissions),
+        from statistics import median
+        durations=[max(0,(datetime.fromisoformat(r['created'])-datetime.fromisoformat(r['submitted'])).total_seconds()) for r in reviews]
+        compared=changed=0
+        for r in reviews:
+            if r['action'] not in ('confirmed','corrected') or not r['analysis']:continue
+            predicted={task['task_id']:task['correctness'] for task in json.loads(r['analysis']).get('tasks',[])}
+            for task in json.loads(r['data']).get('tasks',[]):
+                if task['task_id'] in predicted:
+                    compared+=1;changed+=predicted[task['task_id']]!=task['correctness']
+        return {'reviewed_attempts':len(reviews),'median_review_wait_seconds':round(median(durations),1) if durations else None,
+            'compared_task_results':compared,'changed_task_results':changed,'awaiting_tutor':sum(s['status']=='awaiting_review' for s in submissions),
+            'assignments':counts['total'],'published':counts['published'] or 0,'submissions':len(submissions),
             'review_actions':{action:sum(r['action']==action for r in reviews) for action in ('confirmed','corrected','returned','rejected')},
             'ai_failures':question_failures+generation_failures+sum(bool(s['analysis']) and json.loads(s['analysis']).get('assessment_status') in ('provider_unavailable','output_invalid') for s in submissions),
             'external_ai_attempts_today':calls,'daily_limit':cfg.ai_daily_limit,'limit_scope':'whole_instance_UTC_day',
@@ -1058,6 +1069,8 @@ def create_app(settings=None, provider=None, run_worker=True):
     install_workspaces(app,user,db,tutor,relation,assignment,fail)
     from .marketplace import install as install_marketplace
     install_marketplace(app,user,db,tutor,learner_only,fail)
+    from .skill_graph import install as install_skill_graph
+    install_skill_graph(app,user,db,tutor,relation,fail)
 
     dist = Path(__file__).resolve().parents[2] / 'dist'
     if (dist / 'assets').exists():

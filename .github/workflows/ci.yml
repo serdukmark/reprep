@@ -26,5 +26,6 @@ jobs:
       - run: python scripts/test_guardian_mutations.py
       - run: python scripts/test_workspace_mutations.py
       - run: python scripts/test_marketplace_mutations.py
+      - run: python scripts/test_skill_graph_mutations.py
       - run: python scripts/check_secrets.py
       - run: npm run build

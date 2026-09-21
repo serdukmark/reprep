@@ -43,6 +43,7 @@ import { Collection } from "./Collection";
 import "./style.css";
 import { Reminders, CalendarDownload } from "./Reminders";
 import { Groups } from "./Groups";
+import { SkillGraph } from "./SkillGraph";
 import { Catalog } from "./Catalog";
 import { Workspaces } from "./Workspaces";
 import { GuardianInvites, GuardianPortal } from "./Guardian";
@@ -968,6 +969,13 @@ function App() {
                       relationship={selected}
                       tutor={isTutor}
                       open={open}
+                    />
+                  )}
+                  {selected && (
+                    <SkillGraph
+                      key={"graph-" + selected}
+                      relationship={selected}
+                      tutor={isTutor}
                     />
                   )}
                   {isTutor && (

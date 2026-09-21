@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS reviews(id TEXT PRIMARY KEY, submission_id TEXT NOT N
 CREATE TABLE IF NOT EXISTS evidence(id TEXT PRIMARY KEY, relationship_id TEXT NOT NULL REFERENCES relationships(id), task_id TEXT NOT NULL, skill TEXT NOT NULL, correctness TEXT NOT NULL, review_id TEXT NOT NULL REFERENCES reviews(id), submission_id TEXT NOT NULL REFERENCES submissions(id), created TEXT NOT NULL, UNIQUE(review_id,task_id));
 CREATE TABLE IF NOT EXISTS lessons(id TEXT PRIMARY KEY, relationship_id TEXT NOT NULL REFERENCES relationships(id), data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS materials(id TEXT PRIMARY KEY, relationship_id TEXT NOT NULL REFERENCES relationships(id), data TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS skill_graphs(relationship_id TEXT PRIMARY KEY REFERENCES relationships(id) ON DELETE CASCADE,revision INTEGER NOT NULL,data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS learning_plans(relationship_id TEXT PRIMARY KEY REFERENCES relationships(id), revision INTEGER NOT NULL, data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS tutor_offers(tutor_id TEXT PRIMARY KEY REFERENCES users(id),revision INTEGER NOT NULL,data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS tutor_requests(id TEXT PRIMARY KEY,learner_id TEXT NOT NULL REFERENCES users(id),tutor_id TEXT NOT NULL REFERENCES users(id),client_id TEXT NOT NULL,subject TEXT NOT NULL,message TEXT NOT NULL,offer_revision INTEGER NOT NULL,price_rub INTEGER NOT NULL,duration INTEGER NOT NULL,status TEXT NOT NULL DEFAULT 'pending',reply TEXT NOT NULL DEFAULT '',relationship_id TEXT,created TEXT NOT NULL,UNIQUE(learner_id,client_id));
@@ -44,6 +45,7 @@ INSERT OR IGNORE INTO schema_migrations VALUES(3);
 INSERT OR IGNORE INTO schema_migrations VALUES(4);
 INSERT OR IGNORE INTO schema_migrations VALUES(6);
 INSERT OR IGNORE INTO schema_migrations VALUES(7);
+INSERT OR IGNORE INTO schema_migrations VALUES(8);
 '''
 
 

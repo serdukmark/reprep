@@ -2989,6 +2989,28 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "reviewed_attempts": {
+                      "type": "integer"
+                    },
+                    "median_review_wait_seconds": {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "compared_task_results": {
+                      "type": "integer"
+                    },
+                    "changed_task_results": {
+                      "type": "integer"
+                    },
+                    "awaiting_tutor": {
+                      "type": "integer"
+                    },
                     "assignments": {
                       "type": "integer"
                     },
@@ -3021,6 +3043,11 @@
                     }
                   },
                   "required": [
+                    "reviewed_attempts",
+                    "median_review_wait_seconds",
+                    "compared_task_results",
+                    "changed_task_results",
+                    "awaiting_tutor",
                     "assignments",
                     "published",
                     "submissions",
@@ -6957,6 +6984,173 @@
         ]
       }
     },
+    "/api/relationships/{id_}/skill-graph": {
+      "get": {
+        "summary": "Skill Graph",
+        "operationId": "skill_graph_api_relationships__id___skill_graph_get",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillGraphView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-roles": [
+          "tutor",
+          "learner",
+          "guardian"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Save Skill Graph",
+        "operationId": "save_skill_graph_api_relationships__id___skill_graph_put",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SkillGraphInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillGraphView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Version, state or replay conflict when applicable"
+          }
+        },
+        "x-roles": [
+          "tutor"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
     "/": {
       "get": {
         "summary": "Index",
@@ -7704,6 +7898,60 @@
           "assignment_id"
         ],
         "title": "ShareTemplate"
+      },
+      "SkillEdge": {
+        "properties": {
+          "prerequisite": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Prerequisite"
+          },
+          "skill": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Skill"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "prerequisite",
+          "skill"
+        ],
+        "title": "SkillEdge"
+      },
+      "SkillGraphInput": {
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Revision"
+          },
+          "skills": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Skills"
+          },
+          "edges": {
+            "items": {
+              "$ref": "#/components/schemas/SkillEdge"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Edges"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "revision"
+        ],
+        "title": "SkillGraphInput"
       },
       "Task": {
         "properties": {
@@ -8712,6 +8960,77 @@
           "response",
           "needs_teacher",
           "draft"
+        ]
+      },
+      "SkillGraphView": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer"
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "edges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SkillEdge"
+            }
+          },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "skill": {
+                  "type": "string"
+                },
+                "latest": {
+                  "type": "string"
+                },
+                "correct": {
+                  "type": "integer"
+                },
+                "total": {
+                  "type": "integer"
+                },
+                "evidence_count": {
+                  "type": "integer"
+                },
+                "prerequisites_confirmed": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "skill",
+                "latest",
+                "correct",
+                "total",
+                "evidence_count",
+                "prerequisites_confirmed"
+              ]
+            }
+          },
+          "available_skills": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "revision",
+          "skills",
+          "edges",
+          "nodes",
+          "available_skills",
+          "note"
         ]
       }
     },

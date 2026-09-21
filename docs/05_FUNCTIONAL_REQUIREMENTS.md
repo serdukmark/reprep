@@ -237,3 +237,7 @@ TEAM-099: membership invitations, removal/leave, shared immutable template snaps
 ## Tutor catalog extension — 21 September 2026
 
 TEAM-101/105: opt-in profiles, subject/price search, revision-checked requests, tutor acceptance creates a study relationship. Price is a quote snapshot; no acquiring, paid ranking or commission settlement. ADR-010.
+
+## Skill graph and deeper analytics — 21 September 2026
+
+TEAM-104: tutor-defined acyclic prerequisites linked to confirmed evidence; read-only learner graph; median review wait and preliminary-vs-reviewed result disagreement. No universal subject ontology or autonomous mastery judgment. ADR-011.

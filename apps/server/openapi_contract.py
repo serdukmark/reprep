@@ -42,6 +42,9 @@ def enrich(schema,routes,base_url):
     schemas['StudyMessage']=obj({'id':string,'cursor':integer,'text':string,'created':string,'alias':string,'role':string})
     schemas['StudyQuestion']=obj({'id':string,'cursor':integer,'task_id':string,'question':string,'status':string,'created':string,
         'response':nullable(string),'needs_teacher':{'type':'boolean'},'draft':nullable({'type':'object','description':'Hidden from learner; contains text/status/confidence/engine/prompt_version for tutor'})})
+    schemas['SkillGraphView']=obj({'revision':integer,'skills':array(string),'edges':array(ref('SkillEdge')),
+        'nodes':array(obj({'skill':string,'latest':string,'correct':integer,'total':integer,'evidence_count':integer,'prerequisites_confirmed':{'type':'boolean'}})),
+        'available_skills':array(string),'note':string})
     file_result=obj({'file_name':string,'content':string,'content_type':string,'note':string},['file_name','content'])
     id_result=obj({'id':string})
     ok_result=obj({'ok':{'type':'boolean'}})
@@ -61,6 +64,7 @@ def enrich(schema,routes,base_url):
         'invitations':array(obj({'id':string,'subject':string,'expires':{'type':'number'},'state':string})),
     }
     outputs.update({
+        'skill_graph':ref('SkillGraphView'),'save_skill_graph':ref('SkillGraphView'),
         'catalog_profile':obj({'revision':integer,'offer':nullable({'type':'object','properties':{key:value for key,value in schemas['TutorOffer']['properties'].items() if key!='revision'}})}),
         'save_catalog_profile':obj({'revision':integer}),
         'catalog':obj({'items':array(obj({'id':string,'alias':string,'revision':integer,'visible':{'type':'boolean'},'headline':string,'description':string,'subjects':array(string),'price_rub':integer,'duration':integer})),'note':string}),
@@ -88,12 +92,12 @@ def enrich(schema,routes,base_url):
         'lessons':array(ref('StoredLesson')),
         'materials':array(ref('StoredMaterial')),
         'recommendations':array(obj({'skill':string,'reason':string,'action':string,'evidence_id':string,'source_assignment_id':string,'basis':string,'automatic_assignment':{'const':False}})),
-        'analytics':obj({'assignments':integer,'published':integer,'submissions':integer,'review_actions':{'type':'object','additionalProperties':integer},'ai_failures':integer,'external_ai_attempts_today':integer,'daily_limit':integer,'limit_scope':string,'note':string}),
+        'analytics':obj({'reviewed_attempts':integer,'median_review_wait_seconds':nullable({'type':'number'}),'compared_task_results':integer,'changed_task_results':integer,'awaiting_tutor':integer,'assignments':integer,'published':integer,'submissions':integer,'review_actions':{'type':'object','additionalProperties':integer},'ai_failures':integer,'external_ai_attempts_today':integer,'daily_limit':integer,'limit_scope':string,'note':string}),
         'reminders':obj({'channel':string,'note':string,'items':array(obj({'id':string,'kind':string,'title':string,'at':string,'resource_id':string}))}),
     })
     for name in ('duplicate','submit','review','create_lesson','create_material','report','ask_question','send_message','generate_material'):outputs[name]=id_result
     for name in ('publish','accept','decline_invite','revoke','logout','retry','edit_lesson','review_question'):outputs[name]=ok_result
-    tutors={'catalog_profile','save_catalog_profile','review_tutor_request','workspaces','create_workspace','workspace_accept','share_workspace_template','copy_workspace_template','workspace_invite','workspace_invitations','workspace_members','workspace_templates','workspace_remove','workspace_revoke_invite','invite_guardian','guardian_invitations','revoke_guardian','invite','invitations','revoke','create_assignment','edit_assignment','publish','duplicate','retry','review','recommendations','analytics','groups','create_group','edit_group','assign_group','schedule_group','save_plan','review_question','create_lesson','edit_lesson','create_material','generations','generate_material','reset'}
+    tutors={'save_skill_graph','catalog_profile','save_catalog_profile','review_tutor_request','workspaces','create_workspace','workspace_accept','share_workspace_template','copy_workspace_template','workspace_invite','workspace_invitations','workspace_members','workspace_templates','workspace_remove','workspace_revoke_invite','invite_guardian','guardian_invitations','revoke_guardian','invite','invitations','revoke','create_assignment','edit_assignment','publish','duplicate','retry','review','recommendations','analytics','groups','create_group','edit_group','assign_group','schedule_group','save_plan','review_question','create_lesson','edit_lesson','create_material','generations','generate_material','reset'}
     learners={'request_tutor','preview_invite','accept','decline_invite','save_draft','submit','ask_question'}
     schema['components']['securitySchemes']={'SessionBearer':{'type':'http','scheme':'bearer'},'MaxWebhookSecret':{'type':'apiKey','in':'header','name':'X-Max-Bot-Api-Secret'}}
     schema['servers']=[{'url':base_url or 'http://127.0.0.1:8000','description':'Configured origin; localhost is not a public judging endpoint'}]

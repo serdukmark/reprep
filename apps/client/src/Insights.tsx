@@ -85,6 +85,11 @@ export function Recommendations({
 }
 
 type Stats = {
+  reviewed_attempts: number;
+  median_review_wait_seconds: number | null;
+  compared_task_results: number;
+  changed_task_results: number;
+  awaiting_tutor: number;
   assignments: number;
   published: number;
   submissions: number;
@@ -127,6 +132,20 @@ export function Analytics() {
             Отказов AI: {data.ai_failures}. Ваших внешних AI-вызовов сегодня:{" "}
             {data.external_ai_attempts_today}. Общий дневной лимит сервера:{" "}
             {data.daily_limit}.
+          </p>
+          <p>
+            Ожидают преподавателя: {data.awaiting_tutor}. Медиана ожидания
+            решения:{" "}
+            {data.median_review_wait_seconds === null
+              ? "ещё нет данных"
+              : `${Math.round(data.median_review_wait_seconds / 60)} мин`}{" "}
+            по {data.reviewed_attempts} попыткам.
+          </p>
+          <p>
+            Преподаватель изменил результат в {data.changed_task_results} из{" "}
+            {data.compared_task_results} сопоставленных задач. Это расхождение с
+            предварительным разбором, не независимая оценка качества AI и не
+            измеренное время работы преподавателя.
           </p>
           <small>{data.note}</small>
         </>
