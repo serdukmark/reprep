@@ -52,6 +52,7 @@ export type Submission = {
   hints?: Record<string, string>;
 };
 export type Assignment = {
+  lesson_id?: string;
   id: string;
   title: string;
   instructions: string;
@@ -90,6 +91,7 @@ export type Skill = {
 };
 export type Lesson = {
   id: string;
+  status?: "scheduled" | "completed" | "cancelled";
   relationship_id: string;
   title: string;
   starts_at: string;
@@ -97,6 +99,10 @@ export type Lesson = {
   payment_status?: string;
 };
 export type Material = {
+  file_name?: string;
+  assignment_id?: string;
+  lesson_id?: string;
+  ai_allowed?: boolean;
   id: string;
   relationship_id: string;
   title: string;

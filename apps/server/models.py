@@ -1,7 +1,7 @@
-from typing import Literal
+from typing import Literal, Annotated
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator, StringConstraints
 
 
 class Model(BaseModel):
@@ -37,6 +37,7 @@ class Task(Model):
 
 class AssignmentInput(Model):
     relationship_id: str
+    lesson_id: str = Field(default="",max_length=100)
     title: str = Field(min_length=3, max_length=160)
     instructions: str = Field(default='', max_length=3000)
     due_at: datetime | None = None
@@ -107,6 +108,30 @@ class InviteInput(Model):
     subject: str = Field(min_length=2, max_length=100)
 
 
+class ProfileInput(Model):
+    alias: str = Field(min_length=1,max_length=60)
+
+
+class PlanStep(Model):
+    title: str = Field(min_length=2,max_length=160)
+    skill: str = Field(min_length=1,max_length=100)
+    status: Literal['planned','in_progress','completed'] = 'planned'
+    assignment_id: str = Field(default='',max_length=100)
+    material_id: str = Field(default='',max_length=100)
+
+
+class PlanInput(Model):
+    revision: int = Field(ge=0)
+    goal: str = Field(min_length=2,max_length=1000)
+    level: str = Field(default='',max_length=100)
+    steps: list[PlanStep] = Field(default_factory=list,max_length=50)
+
+
+class MessageInput(Model):
+    client_id: str = Field(min_length=10,max_length=80,pattern=r'^[a-zA-Z0-9_-]+$')
+    text: str = Field(min_length=1,max_length=3000)
+
+
 class TokenInput(Model):
     token: str = Field(min_length=10, max_length=200)
 
@@ -123,6 +148,7 @@ class LessonInput(Model):
     starts_at: datetime
     duration: int = Field(default=60, ge=15, le=240)
     payment_status: Literal['unknown', 'paid', 'unpaid', 'waived'] = 'unknown'
+    status: Literal['scheduled','completed','cancelled'] = 'scheduled'
 
     @field_validator('starts_at')
     @classmethod
@@ -135,8 +161,25 @@ class LessonInput(Model):
 class MaterialInput(Model):
     relationship_id: str
     title: str = Field(min_length=2, max_length=160)
-    url: str = Field(max_length=2000, pattern=r'^https://[^\s]+$')
+    url: str = Field(default='', max_length=2000)
     note: str = Field(default='', max_length=500)
+    file_name: str = Field(default='',max_length=100)
+    content: Annotated[str, StringConstraints(strip_whitespace=False)] = Field(default='',max_length=60000)
+    assignment_id: str = Field(default='',max_length=100)
+    lesson_id: str = Field(default='',max_length=100)
+    ai_allowed: bool = False
+
+    @model_validator(mode='after')
+    def safe_material(self):
+        import re
+        if self.content:
+            if self.url or not self.file_name.endswith('.txt') or any(x in self.file_name for x in ('/','\\','\x00')):
+                raise ValueError('Разрешён только отдельный TXT-файл')
+            if len(self.content.encode())>60000 or '\x00' in self.content:
+                raise ValueError('TXT должен быть UTF-8 до 60 KB без нулевых байтов')
+        elif not re.fullmatch(r'https://[^\s]+',self.url) or self.file_name:
+            raise ValueError('Укажите HTTPS-ссылку или непустой TXT-файл')
+        return self
 
 
 class ReportInput(Model):

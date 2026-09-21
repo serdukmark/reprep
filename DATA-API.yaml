@@ -1,32 +1,2028 @@
-name: reprep
-version: 0.1.0
-status: local-demo
-base_url: http://127.0.0.1:8000
-openapi: /api/openapi.json
-documentation: /api/docs
-authentication:
-  type: bearer
-  production: POST /api/auth/max with server-verified MAX init_data
-  synthetic_demo:
-    tutor: POST /api/auth/demo/tutor
-    learner: POST /api/auth/demo/learner
-    note: Enabled only by DEMO_ENABLED in development/test/demo. No passwords.
-data:
-  source: synthetic fixtures in apps/server/service.py
-  assignment: demo-assignment
-  relationship: demo-link
-  storage: SQLite in persistent volume
-  ai: qwen/qwen3.8-flash via OpenRouter, synthetic content only by default
-operations:
-  - POST /api/assignments
-  - POST /api/assignments/{id}/publish
-  - PUT /api/assignments/{id}/draft
-  - POST /api/assignments/{id}/submit
-  - GET /api/assignments/{id}/attempts
-  - GET /api/submissions/{id}
-  - POST /api/submissions/{id}/review
-  - GET /api/relationships/{id}/progress
-release_gates:
-  - Approved HTTPS base URL required before external submission
-  - MAX bot and real webview integration test
-  - Engineer review and pilot data approval
+{
+  "schema_version": "1.0",
+  "schema_version_note": "Project manifest version; organizer parser schema not supplied",
+  "solution": "reprep",
+  "base_url": "http://127.0.0.1:8000",
+  "status": "local-only, replace base_url with approved HTTPS before submission",
+  "openapi": "openapi.json",
+  "authentication": {
+    "local_tutor": "POST /api/auth/demo/tutor",
+    "local_learner": "POST /api/auth/demo/learner",
+    "production": "POST /api/auth/max; genuine signed init_data required",
+    "header": "Authorization: Bearer <session token>",
+    "credentials": "No keys in this file. Demo login requires DEMO_ENABLED and non-production environment."
+  },
+  "test_data": {
+    "script": "python scripts/seed_demo.py",
+    "source": "apps/server/service.py",
+    "synthetic": true
+  },
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/ready",
+      "role": "public",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "role": "public",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "role": "public",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/max/webhook",
+      "role": "MAX webhook",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/demo/{persona}",
+      "role": "public",
+      "parameters": [
+        {
+          "name": "persona",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Persona"
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/max",
+      "role": "public",
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/MaxLogin"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/me",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/logout",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/relationships",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "PUT",
+      "path": "/api/profile",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProfileInput"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/invitations",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/invitations",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/InviteInput"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/invitations/{id_}/revoke",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/invitations/accept",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TokenInput"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/invitations/preview",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TokenInput"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/invitations/decline",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TokenInput"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/assignments",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "offset",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "default": 0,
+            "title": "Offset"
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/assignments",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AssignmentInput"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "201": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "PUT",
+      "path": "/api/assignments/{id_}",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        },
+        {
+          "name": "revision",
+          "in": "query",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "title": "Revision"
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AssignmentInput"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/assignments/{id_}",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/assignments/{id_}/publish",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/assignments/{id_}/duplicate",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/assignments/{id_}/attempts",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        },
+        {
+          "name": "offset",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "default": 0,
+            "title": "Offset"
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "PUT",
+      "path": "/api/assignments/{id_}/draft",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DraftInput"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/assignments/{id_}/submit",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DraftInput"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/submissions/{id_}",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/submissions/{id_}/retry",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/submissions/{id_}/review",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ReviewInput"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/relationships/{id_}/progress",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/relationships/{id_}/recommendations",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/analytics",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/relationships/{id_}/plan",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "PUT",
+      "path": "/api/relationships/{id_}/plan",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PlanInput"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/assignments/{id_}/messages",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "default": 0,
+            "title": "Before"
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/assignments/{id_}/messages",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/MessageInput"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "201": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/relationships/{id_}/export",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/calendar",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/reminders",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/lessons",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/lessons",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LessonInput"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "PUT",
+      "path": "/api/lessons/{id_}",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LessonInput"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/materials",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/materials",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/MaterialInput"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "GET",
+      "path": "/api/materials/{id_}/file",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/reports",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ReportInput"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HTTPValidationError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    },
+    {
+      "method": "POST",
+      "path": "/api/demo/reset",
+      "role": "authenticated, resource ownership checked",
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json; endpoints without response_model are verified by the named executable tests, not a complete static schema."
+    }
+  ],
+  "executable_checks": [
+    "tests/test_workflow.py",
+    "tests/test_failure_paths.py",
+    "tests/test_plan_discussion.py",
+    "tests/test_max.py"
+  ],
+  "release_gates": [
+    "Owner-provided stable HTTPS",
+    "Real MAX flow",
+    "Complete response schemas and organizer DATA-API schema confirmation"
+  ]
+}

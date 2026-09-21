@@ -60,3 +60,5 @@ This is a compact project-level log. Material engineering decisions should also 
 - D-N09 [ASSUMPTION]: returned work prefills the last submitted answers into a new attempt, without changing that original. Read-only history exposes only role-authorized data; learner waiting/review and tutor waiting/resubmission refresh automatically. This implements FR-SUB-004/005 and evidence inspectability, not editable historical grades.
 
 - D-N10 [ASSUMPTION, reversible, owner overnight instruction]: несданные ответы приватны ученику; преподаватель получает только отправленную попытку. Сетевой запрос клиента ограничен 15 с с сообщением о возможном сохранении действия. Seed дополняет отсутствующие fixtures без перезаписи работ. API/model/schema migrations не требуются.
+
+- D-N11: owner 21.09 broadened feature implementation to all team proposals; checklist 30 tracks unfinished work. Reversible additions: autosave after 2 s, deterministic recommendations from confirmed evidence, private aggregate analytics, TXT-only material storage in SQLite with explicit AI permission, lesson status. No external notifications, tunnel or paid calls.

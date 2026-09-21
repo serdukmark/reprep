@@ -41,6 +41,9 @@ import { Badge, Empty, mayLeave } from "./components";
 import { Builder, AssignmentDetail, blankAssignment } from "./Assignment";
 import { Collection } from "./Collection";
 import "./style.css";
+import { Reminders, CalendarDownload } from "./Reminders";
+import { LearningPlan } from "./LearningPlan";
+import { Analytics, Recommendations } from "./Insights";
 type Page =
   | "today"
   | "assignments"
@@ -77,6 +80,11 @@ function App() {
     [invites, setInvites] = useState<
       { id: string; subject: string; state: string }[]
     >([]);
+  const [invitePreview, setInvitePreview] = useState<{
+    tutor_alias: string;
+    subject: string;
+    expires: number;
+  } | null>(null);
   const [alias, setAlias] = useState(""),
     [role, setRole] = useState<"tutor" | "learner">("tutor");
   const isTutor = user?.role === "tutor";
@@ -221,6 +229,7 @@ function App() {
         relationship_id: a.relationship_id,
         title: a.title,
         instructions: a.instructions,
+        lesson_id: a.lesson_id || "",
         due_at: a.due_at,
         feedback_policy: a.feedback_policy,
         tasks: a.tasks,
@@ -574,6 +583,7 @@ function App() {
             <>
               {page === "today" && (
                 <>
+                  <Reminders open={open} />
                   <div className="page-heading">
                     <div>
                       <div className="eyebrow">КАЖДЫЙ ШАГ ИМЕЕТ ЗНАЧЕНИЕ</div>
@@ -777,6 +787,7 @@ function App() {
                   )}
                 </>
               )}
+              {page === "schedule" && <CalendarDownload />}
               {(page === "learners" || page === "progress") && (
                 <>
                   <div className="page-heading">
@@ -828,7 +839,9 @@ function App() {
                           <button
                             key={r.id}
                             className={selected === r.id ? "active" : ""}
-                            onClick={() => setSelected(r.id)}
+                            onClick={() => {
+                              if (mayLeave()) setSelected(r.id);
+                            }}
                           >
                             <div className="avatar">{r.learner_alias[0]}</div>
                             <span>
@@ -923,6 +936,24 @@ function App() {
                       )}
                     </section>
                   </div>
+                  {selected && (
+                    <LearningPlan
+                      key={selected}
+                      relationship={selected}
+                      tutor={isTutor}
+                      open={open}
+                    />
+                  )}
+                  {isTutor && selected && (
+                    <Recommendations
+                      relationship={selected}
+                      onDraft={async (id) => {
+                        await open(id);
+                        setEditing(true);
+                        await refresh();
+                      }}
+                    />
+                  )}
                   {isTutor && invites.length > 0 && (
                     <section className="card">
                       <h3>Приглашения</h3>
@@ -937,6 +968,7 @@ function App() {
                                   accepted: "Принято",
                                   expired: "Истекло",
                                   revoked: "Отозвано",
+                                  declined: "Отклонено",
                                 } as Record<string, string>
                               )[i.state]
                             }
@@ -986,6 +1018,35 @@ function App() {
                       </p>
                     </div>
                   </div>
+                  <form
+                    className="card"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const name = String(
+                        new FormData(e.currentTarget).get("alias") || "",
+                      );
+                      action(async () => {
+                        setUser(
+                          await api<User>("/profile", "PUT", { alias: name }),
+                        );
+                        setToast("Имя сохранено");
+                      });
+                    }}
+                  >
+                    <label>
+                      Отображаемое имя
+                      <input
+                        name="alias"
+                        defaultValue={user.alias}
+                        required
+                        maxLength={60}
+                      />
+                    </label>
+                    <button className="secondary" disabled={busy}>
+                      Сохранить имя
+                    </button>
+                  </form>
+                  {isTutor && <Analytics />}
                   <section className="card settings">
                     <h3>Проверка работ</h3>
                     <p>
@@ -1005,10 +1066,19 @@ function App() {
                         onSubmit={(e) => {
                           e.preventDefault();
                           action(async () => {
+                            if (!invitePreview) {
+                              setInvitePreview(
+                                await api("/invitations/preview", "POST", {
+                                  token: inviteInput,
+                                }),
+                              );
+                              return;
+                            }
                             await api("/invitations/accept", "POST", {
                               token: inviteInput,
                             });
                             setInviteInput("");
+                            setInvitePreview(null);
                             await refresh();
                             setToast("Вы подключились к преподавателю");
                           });
@@ -1019,12 +1089,42 @@ function App() {
                           <input
                             value={inviteInput}
                             required
-                            onChange={(e) => setInviteInput(e.target.value)}
+                            onChange={(e) => {
+                              setInviteInput(e.target.value);
+                              setInvitePreview(null);
+                            }}
                           />
                         </label>
                         <button className="primary" disabled={busy}>
-                          Принять приглашение
+                          {invitePreview
+                            ? "Принять приглашение"
+                            : "Посмотреть приглашение"}
                         </button>
+                        {invitePreview && (
+                          <>
+                            <p>
+                              Преподаватель: {invitePreview.tutor_alias}.
+                              Предмет: {invitePreview.subject}.
+                            </p>
+                            <button
+                              type="button"
+                              className="secondary"
+                              disabled={busy}
+                              onClick={() =>
+                                action(async () => {
+                                  await api("/invitations/decline", "POST", {
+                                    token: inviteInput,
+                                  });
+                                  setInviteInput("");
+                                  setInvitePreview(null);
+                                  setToast("Приглашение отклонено");
+                                })
+                              }
+                            >
+                              Отклонить приглашение
+                            </button>
+                          </>
+                        )}
                       </form>
                     )}
                     <div className="settings-actions">

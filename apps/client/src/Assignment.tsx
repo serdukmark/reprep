@@ -16,9 +16,11 @@ import {
   Assignment,
   Task,
   Relation,
+  Lesson,
   ReviewTask,
   Correctness,
 } from "./api";
+import { Discussion } from "./Discussion";
 import { AttemptHistory } from "./AttemptHistory";
 import { Badge, useUnsaved } from "./components";
 export const blankTask = (): Task => ({
@@ -57,6 +59,21 @@ export function Builder({
 }) {
   const [a, setA] = useState(initial),
     [preview, setPreview] = useState(false);
+  const [lessonOptions, setLessonOptions] = useState<Lesson[]>([]);
+  const [lessonError, setLessonError] = useState("");
+  useEffect(() => {
+    let live = true;
+    api<Lesson[]>("/lessons")
+      .then((x) => {
+        if (live) setLessonOptions(x);
+      })
+      .catch((e) => {
+        if (live) setLessonError(e.message);
+      });
+    return () => {
+      live = false;
+    };
+  }, []);
   useUnsaved(JSON.stringify(a) !== JSON.stringify(initial));
   const update = (i: number, patch: Partial<Task>) =>
     setA((old) => ({
@@ -101,7 +118,9 @@ export function Builder({
             <select
               aria-label="Ученик"
               value={a.relationship_id}
-              onChange={(e) => setA({ ...a, relationship_id: e.target.value })}
+              onChange={(e) =>
+                setA({ ...a, relationship_id: e.target.value, lesson_id: "" })
+              }
             >
               {relations.map((r) => (
                 <option key={r.id} value={r.id}>
@@ -135,6 +154,23 @@ export function Builder({
             />
           </label>
         </div>
+        <label>
+          Занятие для этой работы
+          <select
+            value={a.lesson_id || ""}
+            onChange={(e) => setA({ ...a, lesson_id: e.target.value })}
+          >
+            <option value="">Без привязки</option>
+            {lessonOptions
+              .filter((l) => l.relationship_id === a.relationship_id)
+              .map((l) => (
+                <option key={l.id} value={l.id}>
+                  {l.title} · {date(l.starts_at)}
+                </option>
+              ))}
+          </select>
+        </label>
+        {lessonError && <p role="alert">{lessonError}</p>}
         <label>
           Инструкция ученику
           <textarea
@@ -440,6 +476,13 @@ export function AssignmentDetail({
       await update();
     });
   }
+  useEffect(() => {
+    if (!writable || !dirty || saving || busy || saveError) return;
+    const timer = setTimeout(() => {
+      void save();
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [answers, dirty, saving, busy, writable, saveError]);
   async function review(kind: string) {
     await action(async () => {
       await api("/submissions/" + s!.id + "/review", "POST", {
@@ -747,6 +790,7 @@ export function AssignmentDetail({
           </div>
         </section>
       )}
+      {a.status !== "draft" && <Discussion key={a.id} assignment={a.id} />}
       {s && <AttemptHistory assignment={a} tutor={isTutor} />}
       {!isTutor && s && (
         <button

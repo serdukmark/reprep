@@ -1,6 +1,6 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import { Plus, FolderOpen, ArrowUpRight } from "lucide-react";
-import { api, Relation, Lesson, Material } from "./api";
+import { api, Relation, Lesson, Material, AssignmentSummary } from "./api";
 import { Empty } from "./components";
 export function Collection({
   page,
@@ -22,6 +22,19 @@ export function Collection({
   refresh: () => Promise<void>;
 }) {
   const [adding, setAdding] = useState(false);
+  const [file, setFile] = useState<{
+    file_name: string;
+    content: string;
+  } | null>(null);
+  const [fileError, setFileError] = useState("");
+  const [target, setTarget] = useState(relations[0]?.id || "");
+  const [works, setWorks] = useState<AssignmentSummary[]>([]);
+  useEffect(() => {
+    if (tutor)
+      api<AssignmentSummary[]>("/assignments")
+        .then(setWorks)
+        .catch((e) => setFileError(e.message));
+  }, [tutor]);
   const schedule = page === "schedule";
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -37,9 +50,10 @@ export function Collection({
               duration: Number(data.duration),
               payment_status: "unknown",
             }
-          : data,
+          : { ...data, ...(file || {}), ai_allowed: data.ai_allowed === "on" },
       );
       setAdding(false);
+      setFile(null);
       await refresh();
     });
   }
@@ -74,7 +88,11 @@ export function Collection({
           </label>
           <label>
             Ученик
-            <select name="relationship_id">
+            <select
+              name="relationship_id"
+              value={target}
+              onChange={(e) => setTarget(e.target.value)}
+            >
               {relations.map((r) => (
                 <option value={r.id} key={r.id}>
                   {r.learner_alias}
@@ -103,7 +121,74 @@ export function Collection({
             <>
               <label>
                 Ссылка HTTPS
-                <input name="url" type="url" pattern="https://.*" required />
+                <input
+                  name="url"
+                  type="url"
+                  pattern="https://.*"
+                  required={!file}
+                  disabled={!!file}
+                />
+              </label>
+              <label>
+                Или файл TXT (UTF-8, до 60 KB)
+                <input
+                  type="file"
+                  accept=".txt,text/plain"
+                  onChange={async (e) => {
+                    setFile(null);
+                    setFileError("");
+                    const chosen = e.target.files?.[0];
+                    if (!chosen) return;
+                    try {
+                      if (!chosen.name.endsWith(".txt") || chosen.size > 60000)
+                        throw new Error("Нужен TXT до 60 KB");
+                      const content = new TextDecoder("utf-8", {
+                        fatal: true,
+                      }).decode(await chosen.arrayBuffer());
+                      if (!content.trim() || content.includes("\0"))
+                        throw new Error("Файл пуст или содержит нулевые байты");
+                      setFile({ file_name: chosen.name, content });
+                    } catch (err) {
+                      setFileError((err as Error).message);
+                    }
+                  }}
+                />
+              </label>
+              {fileError && (
+                <p className="error" role="alert">
+                  {fileError}
+                </p>
+              )}
+              <label>
+                Задание
+                <select name="assignment_id" key={"a" + target}>
+                  <option value="">Для всех заданий ученика</option>
+                  {works
+                    .filter((w) => w.relationship_id === target)
+                    .map((w) => (
+                      <option key={w.id} value={w.id}>
+                        {w.title}
+                      </option>
+                    ))}
+                </select>
+              </label>
+              <label>
+                Занятие
+                <select name="lesson_id" key={"l" + target}>
+                  <option value="">Без привязки</option>
+                  {lessons
+                    .filter((l) => l.relationship_id === target)
+                    .map((l) => (
+                      <option key={l.id} value={l.id}>
+                        {l.title}
+                      </option>
+                    ))}
+                </select>
+              </label>
+              <label>
+                <input type="checkbox" name="ai_allowed" disabled={!file} />{" "}
+                Разрешаю использовать этот TXT в AI-проверке: у меня есть права
+                на материал, персональных данных нет
               </label>
               <label>
                 Пояснение
@@ -111,7 +196,7 @@ export function Collection({
               </label>
             </>
           )}
-          <button className="primary" disabled={busy}>
+          <button className="primary" disabled={busy || !!fileError}>
             Сохранить
           </button>
         </form>
@@ -146,6 +231,37 @@ export function Collection({
                       }
                     </p>
                   </div>
+                  <p>
+                    {
+                      {
+                        scheduled: "Запланировано",
+                        completed: "Проведено",
+                        cancelled: "Отменено",
+                      }[l.status || "scheduled"]
+                    }
+                  </p>
+                  {tutor && (
+                    <label>
+                      Статус занятия
+                      <select
+                        value={l.status || "scheduled"}
+                        onChange={(e) =>
+                          action(async () => {
+                            const { id, ...body } = l;
+                            await api("/lessons/" + id, "PUT", {
+                              ...body,
+                              status: e.target.value,
+                            });
+                            await refresh();
+                          })
+                        }
+                      >
+                        <option value="scheduled">Запланировано</option>
+                        <option value="completed">Проведено</option>
+                        <option value="cancelled">Отменено</option>
+                      </select>
+                    </label>
+                  )}
                   {tutor && (
                     <label className="payment-label">
                       Ваша отметка об оплате
@@ -193,14 +309,40 @@ export function Collection({
               </div>
               <h3>{m.title}</h3>
               <p>{m.note}</p>
-              <a
-                className="text-button"
-                href={m.url}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Открыть материал <ArrowUpRight size={16} />
-              </a>
+              {m.file_name ? (
+                <button
+                  className="text-button"
+                  onClick={() =>
+                    action(async () => {
+                      const data = await api<{
+                        content: string;
+                        file_name: string;
+                      }>("/materials/" + m.id + "/file");
+                      const url = URL.createObjectURL(
+                        new Blob([data.content], {
+                          type: "text/plain;charset=utf-8",
+                        }),
+                      );
+                      const a = document.createElement("a");
+                      a.href = url;
+                      a.download = data.file_name;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    })
+                  }
+                >
+                  Скачать {m.file_name}
+                </button>
+              ) : (
+                <a
+                  className="text-button"
+                  href={m.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Открыть материал <ArrowUpRight size={16} />
+                </a>
+              )}
             </section>
           ))}
         </div>

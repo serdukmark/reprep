@@ -145,3 +145,7 @@ Any addition that consumes more than a small, reversible task must answer:
 5. How will it be tested?
 
 If these answers are missing, the feature stays outside the sprint.
+
+## Owner override — 21 September 2026
+
+Owner explicitly requested implementation of all team proposals, including earlier P1/P2 and future features. Their former priority or out-of-scope label alone no longer blocks reversible local implementation. Real external messaging, publishing, financial actions, MAX live testing and access-dependent work remain restricted. Negative safety constraints (no high-stakes automatic grading or replacement claims) remain constraints, not feature requests. Full inventory: 30_TEAM_CHECKLIST_RU.md.

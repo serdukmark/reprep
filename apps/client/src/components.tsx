@@ -29,28 +29,34 @@ export function mayLeave() {
     new Event("reprep:navigate", { cancelable: true }),
   );
 }
+const dirtyEditors = new Set<symbol>();
+const leaveEditor = (e: Event) => {
+  if (
+    dirtyEditors.size &&
+    !confirm("Есть несохранённые изменения. Уйти и потерять их?")
+  )
+    e.preventDefault();
+};
+const unloadEditor = (e: BeforeUnloadEvent) => {
+  if (dirtyEditors.size) {
+    e.preventDefault();
+    e.returnValue = "";
+  }
+};
 export function useUnsaved(dirty: boolean) {
   useEffect(() => {
-    closingConfirmation(dirty);
-    const leave = (e: Event) => {
-      if (
-        dirty &&
-        !confirm("Есть несохранённые изменения. Уйти и потерять их?")
-      )
-        e.preventDefault();
-    };
-    const unload = (e: BeforeUnloadEvent) => {
-      if (dirty) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-    window.addEventListener("reprep:navigate", leave);
-    window.addEventListener("beforeunload", unload);
+    const id = Symbol();
+    if (dirty) dirtyEditors.add(id);
+    closingConfirmation(dirtyEditors.size > 0);
+    window.addEventListener("reprep:navigate", leaveEditor);
+    window.addEventListener("beforeunload", unloadEditor);
     return () => {
-      closingConfirmation(false);
-      window.removeEventListener("reprep:navigate", leave);
-      window.removeEventListener("beforeunload", unload);
+      dirtyEditors.delete(id);
+      closingConfirmation(dirtyEditors.size > 0);
+      if (!dirtyEditors.size) {
+        window.removeEventListener("reprep:navigate", leaveEditor);
+        window.removeEventListener("beforeunload", unloadEditor);
+      }
     };
   }, [dirty]);
 }

@@ -3,6 +3,7 @@ import json
 import logging
 import secrets
 import time
+from datetime import datetime, timezone
 from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 from fastapi import FastAPI, Depends, Request, HTTPException
@@ -13,7 +14,7 @@ from pydantic import ValidationError
 from .config import Settings
 from .db import initialize, connect, one, rows, dumps
 from .auth import token_hash, verify_max
-from .models import (AssignmentInput, DraftInput, ReviewInput, InviteInput, TokenInput,
+from .models import (AssignmentInput, DraftInput, ReviewInput, InviteInput, TokenInput, ProfileInput, PlanInput, MessageInput,
                      MaxLogin, LessonInput, MaterialInput, ReportInput)
 from .ai import ContextTooLarge, LocalRules, RemoteAdapter, OpenRouterAdapter, context_for, validate_analysis
 from .max_bot import public_origin, verify_webhook, accept_event, process_outbox
@@ -47,6 +48,9 @@ def create_app(settings=None, provider=None, run_worker=True):
             a = one(c, 'SELECT * FROM assignments WHERE id=?', (job['assignment_id'],))
             history = rows(c, 'SELECT skill,correctness FROM evidence WHERE relationship_id=? ORDER BY created DESC LIMIT 100', (a['relationship_id'],))
             context = context_for(json.loads(a['data']), json.loads(job['answers']), history)
+            material_data=[json.loads(m['data']) for m in rows(c,'SELECT data FROM materials WHERE relationship_id=? ORDER BY id LIMIT 100',(a['relationship_id'],))]
+            context['materials']=[{'title':m['title'],'text':m['content'][:12000]} for m in material_data
+                if (not m.get('lesson_id') or m['lesson_id']==json.loads(a['data']).get('lesson_id')) and m.get('ai_allowed') and m.get('content') and m.get('assignment_id') in ('',None,a['id'])][:2]
             learner = one(c, 'SELECT demo FROM users WHERE id=?', (job['learner_id'],))
             return job, context, learner
 
@@ -180,6 +184,15 @@ def create_app(settings=None, provider=None, run_worker=True):
         with connect(cfg.database) as c:
             yield c
 
+    @app.get('/api/ready')
+    def ready():
+        try:
+            with connect(cfg.database) as c:
+                c.execute('SELECT 1 FROM schema_migrations LIMIT 1').fetchone()
+            return {'ready':True,'checks':['database'],'external_services':'not_probed'}
+        except Exception:
+            return JSONResponse({'ready':False,'checks':['database'],'external_services':'not_probed'},status_code=503)
+
     def user(request: Request, c=Depends(db)):
         bearer = request.headers.get('authorization', '')
         if not bearer.startswith('Bearer '):
@@ -285,6 +298,12 @@ def create_app(settings=None, provider=None, run_worker=True):
             JOIN users t ON r.tutor_id=t.id JOIN users l ON r.learner_id=l.id
             WHERE r.tutor_id=? OR r.learner_id=? ORDER BY l.alias LIMIT 500''', (u['id'], u['id']))
 
+    @app.put('/api/profile')
+    def profile(body:ProfileInput,u=Depends(user),c=Depends(db)):
+        c.execute('UPDATE users SET alias=? WHERE id=?',(body.alias,u['id']))
+        audit(c,u['id'],'profile_updated',u['id'])
+        return {k:(body.alias if k=='alias' else u[k]) for k in ('id','role','alias','demo')}
+
     @app.post('/api/invitations')
     def invite(body: InviteInput, u=Depends(user), c=Depends(db)):
         tutor(u)
@@ -322,6 +341,29 @@ def create_app(settings=None, provider=None, run_worker=True):
         audit(c, u['id'], 'invitation_accepted', inv['id'])
         return {'ok': True}
 
+    def available_invitation(c,token,u):
+        inv=one(c,'SELECT * FROM invitations WHERE token_hash=?',(token_hash(token),))
+        if not inv or inv['state']!='created' or inv['expires']<time.time():
+            fail(410,'INVITE_EXPIRED','Приглашение недействительно или уже использовано')
+        owner=one(c,'SELECT demo FROM users WHERE id=?',(inv['tutor_id'],))
+        if owner['demo']!=u['demo']: fail(403,'DEMO_BOUNDARY','Демо и реальные аккаунты разделены')
+        return inv
+
+    @app.post('/api/invitations/preview')
+    def preview_invite(body:TokenInput,u=Depends(user),c=Depends(db)):
+        if u['role']!='learner': fail(403,'ROLE','Приглашение предназначено ученику')
+        inv=available_invitation(c,body.token,u)
+        return {'tutor_alias':one(c,'SELECT alias FROM users WHERE id=?',(inv['tutor_id'],))['alias'],
+                'subject':inv['subject'],'expires':inv['expires']}
+
+    @app.post('/api/invitations/decline')
+    def decline_invite(body:TokenInput,u=Depends(user),c=Depends(db)):
+        if u['role']!='learner': fail(403,'ROLE','Приглашение предназначено ученику')
+        inv=available_invitation(c,body.token,u)
+        c.execute("UPDATE invitations SET state='declined',accepted_by=? WHERE id=?",(u['id'],inv['id']))
+        audit(c,u['id'],'invitation_declined',inv['id'])
+        return {'ok':True}
+
     @app.get('/api/assignments')
     def assignments(u=Depends(user), c=Depends(db), offset: int = 0):
         if offset < 0:
@@ -336,10 +378,15 @@ def create_app(settings=None, provider=None, run_worker=True):
                 'relationship_id': a['relationship_id'], 'learner_alias': a['learner_alias'], 'tasks_count': len(data['tasks']), 'submission': s})
         return output
 
+    def check_assignment_lesson(c,body):
+        if body.lesson_id and not one(c,'SELECT id FROM lessons WHERE id=? AND relationship_id=?',(body.lesson_id,body.relationship_id)):
+            fail(404,'LESSON','Занятие недоступно для этого ученика')
+
     @app.post('/api/assignments', status_code=201)
     def create_assignment(body: AssignmentInput, u=Depends(user), c=Depends(db)):
         tutor(u)
         relation(c, body.relationship_id, u)
+        check_assignment_lesson(c,body)
         id_ = uid()
         c.execute('INSERT INTO assignments(id,tutor_id,relationship_id,data,created) VALUES(?,?,?,?,?)', (id_, u['id'], body.relationship_id, body.model_dump_json(), now()))
         audit(c, u['id'], 'assignment_draft_created', id_)
@@ -352,6 +399,7 @@ def create_app(settings=None, provider=None, run_worker=True):
         if a['status'] != 'draft' or a['revision'] != revision:
             fail(409, 'VERSION_CONFLICT', 'Работа опубликована или изменена в другом окне')
         relation(c, body.relationship_id, u)
+        check_assignment_lesson(c,body)
         c.execute('UPDATE assignments SET data=?,relationship_id=?,revision=revision+1 WHERE id=?', (body.model_dump_json(), body.relationship_id, id_))
         return assignment_view(one(c, 'SELECT * FROM assignments WHERE id=?', (id_,)), 'tutor')
 
@@ -512,6 +560,87 @@ def create_app(settings=None, provider=None, run_worker=True):
         relation(c, id_, u)
         return progress(c, id_)
 
+    @app.get('/api/relationships/{id_}/recommendations')
+    def recommendations(id_: str, u=Depends(user), c=Depends(db)):
+        tutor(u); relation(c,id_,u)
+        result=[]
+        for skill in progress(c,id_):
+            if skill['latest']=='correct': continue
+            evidence=skill['evidence'][0]
+            source=one(c,'SELECT assignment_id FROM submissions WHERE id=?',(evidence['submission_id'],))
+            result.append({'skill':skill['skill'],'reason':'Последний проверенный ответ требует разбора' if skill['latest']=='unknown' else 'В последнем проверенном ответе осталась ошибка',
+                'action':'Разберите затруднение и назначьте тренировку по этому навыку',
+                'evidence_id':evidence['id'],'source_assignment_id':source['assignment_id'],
+                'basis':'tutor_confirmed_history','automatic_assignment':False})
+        return result
+
+    @app.get('/api/analytics')
+    def analytics(u=Depends(user), c=Depends(db)):
+        tutor(u)
+        counts=one(c,"SELECT count(*) total,sum(CASE WHEN status='published' THEN 1 ELSE 0 END) published FROM assignments WHERE tutor_id=?",(u['id'],))
+        submissions=rows(c,'''SELECT s.id,s.submitted,s.status,s.analysis FROM submissions s JOIN assignments a ON a.id=s.assignment_id WHERE a.tutor_id=?''',(u['id'],))
+        reviews=rows(c,'''SELECT r.action,r.created,s.submitted FROM reviews r JOIN submissions s ON s.id=r.submission_id JOIN assignments a ON a.id=s.assignment_id WHERE a.tutor_id=?''',(u['id'],))
+        calls=one(c,'''SELECT count(*) n FROM audit e JOIN submissions s ON s.id=e.resource_id JOIN assignments a ON a.id=s.assignment_id WHERE e.event='external_ai_attempt' AND substr(e.created,1,10)=? AND a.tutor_id=?''',(now()[:10],u['id']))['n']
+        return {'assignments':counts['total'],'published':counts['published'] or 0,'submissions':len(submissions),
+            'review_actions':{action:sum(r['action']==action for r in reviews) for action in ('confirmed','corrected','returned','rejected')},
+            'ai_failures':sum(bool(s['analysis']) and json.loads(s['analysis']).get('assessment_status') in ('provider_unavailable','output_invalid') for s in submissions),
+            'external_ai_attempts_today':calls,'daily_limit':cfg.ai_daily_limit,'limit_scope':'whole_instance_UTC_day',
+            'note':'Счётчики действий, не измеренная экономия времени и не качество обучения. Лимит общий для сервера; показаны только ваши вызовы.'}
+
+    @app.get('/api/relationships/{id_}/plan')
+    def learning_plan(id_:str,u=Depends(user),c=Depends(db)):
+        relation(c,id_,u)
+        plan=one(c,'SELECT * FROM learning_plans WHERE relationship_id=?',(id_,))
+        result={**json.loads(plan['data']),'revision':plan['revision']} if plan else {'revision':0,'goal':'','level':'','steps':[]}
+        if u['role']=='learner':
+            for step in result['steps']:
+                if step.get('assignment_id') and not one(c,"SELECT id FROM assignments WHERE id=? AND status!='draft'",(step['assignment_id'],)):
+                    step['assignment_id']=''
+                if step.get('material_id'):
+                    m=one(c,'SELECT data FROM materials WHERE id=?',(step['material_id'],))
+                    aid=json.loads(m['data']).get('assignment_id') if m else None
+                    if aid and not one(c,"SELECT id FROM assignments WHERE id=? AND status!='draft'",(aid,)): step['material_id']=''
+        return result
+
+    @app.put('/api/relationships/{id_}/plan')
+    def save_plan(id_:str,body:PlanInput,u=Depends(user),c=Depends(db)):
+        tutor(u);relation(c,id_,u)
+        old=one(c,'SELECT revision FROM learning_plans WHERE relationship_id=?',(id_,))
+        revision=old['revision'] if old else 0
+        if body.revision!=revision: fail(409,'VERSION_CONFLICT','План изменён в другом окне. Обновите страницу.')
+        for step in body.steps:
+            for table,linked in [('assignments',step.assignment_id),('materials',step.material_id)]:
+                if linked and not one(c,f'SELECT id FROM {table} WHERE id=? AND relationship_id=?',(linked,id_)):
+                    fail(404,'PLAN_RESOURCE','Материал или задание недоступны этому ученику')
+        data=body.model_dump(exclude={'revision'})
+        c.execute('INSERT INTO learning_plans VALUES(?,?,?) ON CONFLICT(relationship_id) DO UPDATE SET revision=excluded.revision,data=excluded.data',(id_,revision+1,dumps(data)))
+        audit(c,u['id'],'plan_updated',id_)
+        return {**data,'revision':revision+1}
+
+    @app.get('/api/assignments/{id_}/messages')
+    def messages(id_:str,before:int=0,u=Depends(user),c=Depends(db)):
+        a=assignment(c,id_,u)
+        if a['status']=='draft': fail(409,'NOT_PUBLISHED','Обсуждение доступно после назначения')
+        if before<0: fail(422,'CURSOR','Неверная страница')
+        result=rows(c,"""SELECT m.rowid AS cursor,m.id,m.text,m.created,u.alias,u.role FROM messages m
+            JOIN users u ON u.id=m.user_id WHERE m.assignment_id=? AND (?=0 OR m.rowid<?)
+            ORDER BY m.rowid DESC LIMIT 50""",(id_,before,before))
+        return result
+
+    @app.post('/api/assignments/{id_}/messages',status_code=201)
+    def send_message(id_:str,body:MessageInput,u=Depends(user),c=Depends(db)):
+        a=assignment(c,id_,u)
+        if a['status']=='draft': fail(409,'NOT_PUBLISHED','Обсуждение доступно после назначения')
+        old=one(c,'SELECT * FROM messages WHERE user_id=? AND client_id=?',(u['id'],body.client_id))
+        if old:
+            if old['assignment_id']!=id_ or old['text']!=body.text: fail(409,'REPLAY','Код отправки уже использован')
+            return {'id':old['id']}
+        count=c.execute("SELECT COUNT(*) FROM messages WHERE user_id=? AND created>?",(u['id'],datetime.fromtimestamp(time.time()-60,timezone.utc).isoformat())).fetchone()[0]
+        if count>=10: fail(429,'RATE_LIMIT','Не более 10 сообщений в минуту. Подождите.')
+        mid=uid();c.execute('INSERT INTO messages VALUES(?,?,?,?,?,?)',(mid,id_,u['id'],body.client_id,body.text,now()))
+        audit(c,u['id'],'assignment_message',id_)
+        return {'id':mid}
+
     @app.get('/api/relationships/{id_}/export')
     def export(id_: str, u=Depends(user), c=Depends(db)):
         r = relation(c, id_, u)
@@ -520,10 +649,38 @@ def create_app(settings=None, provider=None, run_worker=True):
     def list_linked(c, table, u):
         result = rows(c, f'SELECT x.id,x.data,x.relationship_id FROM {table} x JOIN relationships r ON r.id=x.relationship_id WHERE r.tutor_id=? OR r.learner_id=? LIMIT 500', (u['id'], u['id']))
         output = [{**json.loads(r['data']), 'id': r['id']} for r in result]
+        if table=='materials':
+            if u['role']=='learner':
+                output=[m for m in output if not m.get('assignment_id') or one(c,"SELECT id FROM assignments WHERE id=? AND status!='draft'",(m['assignment_id'],))]
+            for item in output: item.pop('content',None)
         if u['role'] == 'learner':
             for item in output:
                 item.pop('payment_status', None)
         return output
+
+    @app.get('/api/calendar')
+    def export_calendar(u=Depends(user),c=Depends(db)):
+        from .calendar_export import calendar
+        return {'file_name':'reprep-schedule.ics','content':calendar(list_linked(c,'lessons',u)),
+                'note':'Одноразовый экспорт. Изменения здесь не синхронизируются с импортированным календарём автоматически.'}
+
+    @app.get('/api/reminders')
+    def reminders(u=Depends(user),c=Depends(db)):
+        stamp=time.time();items=[]
+        for lesson in list_linked(c,'lessons',u):
+            starts=datetime.fromisoformat(lesson['starts_at']).timestamp()
+            if lesson.get('status','scheduled')=='scheduled' and stamp<=starts<=stamp+86400:
+                items.append({'id':'lesson-'+lesson['id'],'kind':'lesson','title':lesson['title'],'at':lesson['starts_at'],'resource_id':lesson['id']})
+        assigned=rows(c,"SELECT a.* FROM assignments a JOIN relationships r ON r.id=a.relationship_id WHERE (r.tutor_id=? OR r.learner_id=?) AND a.status!='draft'",(u['id'],u['id']))
+        for a in assigned:
+            data=json.loads(a['data']);due=data.get('due_at')
+            if not due or datetime.fromisoformat(due).timestamp()>stamp+86400: continue
+            latest=one(c,'SELECT status FROM submissions WHERE assignment_id=? ORDER BY attempt DESC LIMIT 1',(a['id'],))
+            if latest and latest['status'] not in ('returned',): continue
+            items.append({'id':'assignment-'+a['id'],'kind':'overdue' if datetime.fromisoformat(due).timestamp()<stamp else 'assignment',
+                          'title':data['title'],'at':due,'resource_id':a['id']})
+        return {'channel':'in_app','items':sorted(items,key=lambda i:i['at'])[:100],
+                'note':'В приложении: занятия в ближайшие сутки и несданные работы. Push в MAX пока не отправляется.'}
 
     @app.get('/api/lessons')
     def lessons(u=Depends(user), c=Depends(db)):
@@ -553,9 +710,24 @@ def create_app(settings=None, provider=None, run_worker=True):
     @app.post('/api/materials')
     def create_material(body: MaterialInput, u=Depends(user), c=Depends(db)):
         tutor(u); relation(c, body.relationship_id, u)
+        if body.assignment_id and assignment(c,body.assignment_id,u)['relationship_id']!=body.relationship_id:
+            fail(422,'MATERIAL_SCOPE','Задание относится к другому ученику')
+        if body.lesson_id:
+            lesson=one(c,'SELECT relationship_id FROM lessons WHERE id=?',(body.lesson_id,))
+            if not lesson or lesson['relationship_id']!=body.relationship_id:
+                fail(422,'MATERIAL_SCOPE','Занятие относится к другому ученику')
         id_ = uid()
         c.execute('INSERT INTO materials VALUES(?,?,?)', (id_, body.relationship_id, body.model_dump_json()))
         return {'id': id_}
+
+    @app.get('/api/materials/{id_}/file')
+    def material_file(id_: str,u=Depends(user),c=Depends(db)):
+        item=one(c,'SELECT * FROM materials WHERE id=?',(id_,))
+        if not item: fail(404,'NOT_FOUND','Материал не найден')
+        relation(c,item['relationship_id'],u);data=json.loads(item['data'])
+        if data.get('assignment_id'): assignment(c,data['assignment_id'],u)
+        if not data.get('content'): fail(404,'NOT_FOUND','У материала нет файла')
+        return {'file_name':data['file_name'],'content':data['content'],'content_type':'text/plain; charset=utf-8'}
 
     @app.post('/api/reports')
     def report(body: ReportInput, u=Depends(user), c=Depends(db)):
@@ -576,7 +748,9 @@ def create_app(settings=None, provider=None, run_worker=True):
         c.execute(f'DELETE FROM reviews WHERE submission_id IN ({subs})')
         c.execute(f'DELETE FROM submissions WHERE assignment_id IN ({cond})')
         c.execute(f'DELETE FROM drafts WHERE assignment_id IN ({cond})')
+        c.execute(f'DELETE FROM messages WHERE assignment_id IN ({cond})')
         c.execute(f'DELETE FROM assignments WHERE id IN ({cond})')
+        c.execute('DELETE FROM learning_plans WHERE relationship_id IN (SELECT id FROM relationships WHERE tutor_id IN (SELECT id FROM users WHERE demo=1))')
         for table in ('lessons', 'materials'):
             c.execute(f'DELETE FROM {table} WHERE relationship_id IN (SELECT id FROM relationships WHERE tutor_id IN (SELECT id FROM users WHERE demo=1))')
         c.execute('DELETE FROM relationships WHERE tutor_id IN (SELECT id FROM users WHERE demo=1)')
