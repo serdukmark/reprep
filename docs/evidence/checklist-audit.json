@@ -1,0 +1,1733 @@
+{
+  "checked_rows": 126,
+  "missing_evidence": [],
+  "scope": "reference audit only; no implied fresh test passes or live MAX",
+  "items": [
+    {
+      "id": "TEAM-002",
+      "requirement": "Создание профиля репетитора",
+      "sources": [
+        "tests/browser/settings-calendar.spec.ts",
+        "tests/test_profile_invites.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/settings-calendar.spec.ts",
+        ".venv/bin/python -m pytest tests/test_profile_invites.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-003",
+      "requirement": "Добавление и приглашение учеников",
+      "sources": [
+        "tests/browser/settings-calendar.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_profile_invites.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/settings-calendar.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_profile_invites.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-004",
+      "requirement": "Просмотр карточки каждого ученика",
+      "sources": [
+        "tests/browser/guardian.spec.ts",
+        "tests/browser/plan-discussion.spec.ts",
+        "tests/browser/skill-graph.spec.ts"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/guardian.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/plan-discussion.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/skill-graph.spec.ts"
+      ]
+    },
+    {
+      "id": "TEAM-005",
+      "requirement": "Ведение нескольких учеников и предметов",
+      "sources": [
+        "tests/browser/catalog.spec.ts",
+        "tests/browser/groups.spec.ts",
+        "tests/test_groups.py",
+        "tests/test_marketplace.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/catalog.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/groups.spec.ts",
+        ".venv/bin/python -m pytest tests/test_groups.py -q",
+        ".venv/bin/python -m pytest tests/test_marketplace.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-006",
+      "requirement": "Создание домашних заданий",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-008",
+      "requirement": "Указание правильных ответов и критериев проверки",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-009",
+      "requirement": "Привязка заданий к темам и навыкам",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-010",
+      "requirement": "Предпросмотр задания глазами ученика",
+      "sources": [
+        "tests/browser/recommendation-feedback.spec.ts"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts"
+      ]
+    },
+    {
+      "id": "TEAM-011",
+      "requirement": "Назначение дедлайна",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-012",
+      "requirement": "Просмотр статусов выполнения",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-013",
+      "requirement": "Просмотр оригинальных ответов ученика",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-014",
+      "requirement": "Получение AI-анализа работы",
+      "sources": [
+        "docs/evidence/live-e2e.json",
+        "docs/evidence/qwen-v2-live-e2e.json",
+        "tests/test_ai_boundary.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-e2e.json",
+        "Read recorded evidence and its limitations: docs/evidence/qwen-v2-live-e2e.json",
+        ".venv/bin/python -m pytest tests/test_ai_boundary.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-015",
+      "requirement": "Подтверждение, редактирование или отклонение вывода AI",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-016",
+      "requirement": "Отправка ученику итоговой обратной связи",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-017",
+      "requirement": "Просмотр истории работ",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-018",
+      "requirement": "Карта пробелов ученика",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-019",
+      "requirement": "Динамика прогресса по навыкам",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-020",
+      "requirement": "Рекомендации по следующим темам и заданиям",
+      "sources": [
+        "tests/browser/recommendation-feedback.spec.ts",
+        "tests/test_insights.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        ".venv/bin/python -m pytest tests/test_insights.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-021",
+      "requirement": "Расписание занятий",
+      "sources": [
+        "tests/browser/workflow.spec.ts"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts"
+      ]
+    },
+    {
+      "id": "TEAM-024",
+      "requirement": "Ручной учёт статуса оплаты: оплачено, не оплачено, отменено",
+      "sources": [
+        "tests/browser/workflow.spec.ts"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts"
+      ]
+    },
+    {
+      "id": "TEAM-025",
+      "requirement": "Экспорт результатов ученика",
+      "sources": [
+        "tests/test_insights.py"
+      ],
+      "verification_methods": [
+        ".venv/bin/python -m pytest tests/test_insights.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-026",
+      "requirement": "Получение обратной связи и сообщений об ошибках",
+      "sources": [
+        "tests/browser/recommendation-feedback.spec.ts",
+        "tests/test_feedback_context.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        ".venv/bin/python -m pytest tests/test_feedback_context.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-028",
+      "requirement": "Принятие приглашения репетитора",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_profile_invites.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_profile_invites.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-029",
+      "requirement": "Просмотр предстоящих занятий",
+      "sources": [
+        "tests/browser/workflow.spec.ts"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts"
+      ]
+    },
+    {
+      "id": "TEAM-030",
+      "requirement": "Просмотр активных, просроченных и завершённых заданий",
+      "sources": [
+        "tests/browser/work-status.spec.ts"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/work-status.spec.ts"
+      ]
+    },
+    {
+      "id": "TEAM-031",
+      "requirement": "Выполнение тестовых, числовых и текстовых заданий",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-032",
+      "requirement": "Прикрепление файлов — после подтверждения форматов и хранилища",
+      "sources": [
+        "tests/browser/answer-files.spec.ts",
+        "tests/test_answer_files.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/answer-files.spec.ts",
+        ".venv/bin/python -m pytest tests/test_answer_files.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-033",
+      "requirement": "Автосохранение ответов",
+      "sources": [
+        "tests/browser/autosave.spec.ts"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/autosave.spec.ts"
+      ]
+    },
+    {
+      "id": "TEAM-034",
+      "requirement": "Намеренная финальная отправка работы",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-035",
+      "requirement": "Получение предварительной AI-проверки",
+      "sources": [
+        "tests/browser/questions.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/questions.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-037",
+      "requirement": "Получение подсказок без немедленной выдачи ответа",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-038",
+      "requirement": "Возможность исправить работу или отправить новую попытку — политика пока уточняется",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-039",
+      "requirement": "Вопросы AI в контексте конкретного задания",
+      "sources": [
+        "docs/evidence/live-question-v3.json",
+        "tests/browser/questions.spec.ts",
+        "tests/test_questions.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-question-v3.json",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/questions.spec.ts",
+        ".venv/bin/python -m pytest tests/test_questions.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-040",
+      "requirement": "Просмотр обратной связи преподавателя",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-041",
+      "requirement": "Просмотр истории заданий",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-042",
+      "requirement": "Просмотр прогресса по темам и навыкам",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-044",
+      "requirement": "Оценка полезности AI-объяснения",
+      "sources": [
+        "tests/browser/recommendation-feedback.spec.ts",
+        "tests/test_feedback_context.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        ".venv/bin/python -m pytest tests/test_feedback_context.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-045",
+      "requirement": "Сообщение о неправильном или вредном ответе AI",
+      "sources": [
+        "tests/browser/recommendation-feedback.spec.ts",
+        "tests/test_feedback_context.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        ".venv/bin/python -m pytest tests/test_feedback_context.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-046",
+      "requirement": "Проверка работы по ответам или рубрике преподавателя",
+      "sources": [
+        "docs/evidence/live-e2e.json",
+        "docs/evidence/qwen-v2-live-e2e.json",
+        "tests/test_ai_boundary.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-e2e.json",
+        "Read recorded evidence and its limitations: docs/evidence/qwen-v2-live-e2e.json",
+        ".venv/bin/python -m pytest tests/test_ai_boundary.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-047",
+      "requirement": "Учёт истории конкретного ученика",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_feedback_context.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_feedback_context.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-049",
+      "requirement": "Учёт предыдущих подтверждённых ошибок",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-050",
+      "requirement": "Объяснение причины ошибки",
+      "sources": [
+        "docs/evidence/live-e2e.json",
+        "docs/evidence/qwen-v2-live-e2e.json",
+        "tests/test_ai_boundary.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-e2e.json",
+        "Read recorded evidence and its limitations: docs/evidence/qwen-v2-live-e2e.json",
+        ".venv/bin/python -m pytest tests/test_ai_boundary.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-051",
+      "requirement": "Выдача пошаговой подсказки",
+      "sources": [
+        "docs/evidence/live-e2e.json",
+        "docs/evidence/qwen-v2-live-e2e.json",
+        "tests/test_ai_boundary.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-e2e.json",
+        "Read recorded evidence and its limitations: docs/evidence/qwen-v2-live-e2e.json",
+        ".venv/bin/python -m pytest tests/test_ai_boundary.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-052",
+      "requirement": "Определение частично правильных ответов",
+      "sources": [
+        "docs/evidence/live-e2e.json",
+        "docs/evidence/qwen-v2-live-e2e.json",
+        "tests/test_ai_boundary.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-e2e.json",
+        "Read recorded evidence and its limitations: docs/evidence/qwen-v2-live-e2e.json",
+        ".venv/bin/python -m pytest tests/test_ai_boundary.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-053",
+      "requirement": "Возможность признать, что ответ невозможно проверить",
+      "sources": [
+        "docs/evidence/live-e2e.json",
+        "docs/evidence/qwen-v2-live-e2e.json",
+        "tests/test_ai_boundary.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-e2e.json",
+        "Read recorded evidence and its limitations: docs/evidence/qwen-v2-live-e2e.json",
+        ".venv/bin/python -m pytest tests/test_ai_boundary.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-054",
+      "requirement": "Выявление возможных пробелов в знаниях",
+      "sources": [
+        "docs/evidence/live-e2e.json",
+        "docs/evidence/qwen-v2-live-e2e.json",
+        "tests/test_ai_boundary.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-e2e.json",
+        "Read recorded evidence and its limitations: docs/evidence/qwen-v2-live-e2e.json",
+        ".venv/bin/python -m pytest tests/test_ai_boundary.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-055",
+      "requirement": "Предложение следующего учебного действия",
+      "sources": [
+        "tests/browser/recommendation-feedback.spec.ts",
+        "tests/test_insights.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        ".venv/bin/python -m pytest tests/test_insights.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-056",
+      "requirement": "AI-чат, ограниченный заданием и материалами преподавателя",
+      "sources": [
+        "docs/evidence/live-question-v3.json",
+        "tests/browser/questions.spec.ts",
+        "tests/test_questions.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-question-v3.json",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/questions.spec.ts",
+        ".venv/bin/python -m pytest tests/test_questions.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-057",
+      "requirement": "Структурированный результат с уровнем уверенности",
+      "sources": [
+        "docs/evidence/live-e2e.json",
+        "docs/evidence/qwen-v2-live-e2e.json",
+        "tests/test_ai_boundary.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-e2e.json",
+        "Read recorded evidence and its limitations: docs/evidence/qwen-v2-live-e2e.json",
+        ".venv/bin/python -m pytest tests/test_ai_boundary.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-059",
+      "requirement": "Сохранение исправлений преподавателя",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-060",
+      "requirement": "Безопасный fallback при недоступности AI",
+      "sources": [
+        "scripts/test_failure_mutations.py",
+        "tests/browser/failure.spec.ts",
+        "tests/test_failure_paths.py"
+      ],
+      "verification_methods": [
+        "Inspect artifact / explicit operation (not automatically executed): scripts/test_failure_mutations.py",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-062",
+      "requirement": "Версионирование промптов и моделей",
+      "sources": [
+        "docs/evidence/live-e2e.json",
+        "docs/evidence/qwen-v2-live-e2e.json",
+        "tests/test_ai_boundary.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-e2e.json",
+        "Read recorded evidence and its limitations: docs/evidence/qwen-v2-live-e2e.json",
+        ".venv/bin/python -m pytest tests/test_ai_boundary.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-063",
+      "requirement": "Набор тестов для проверки качества AI",
+      "sources": [
+        "docs/evidence/live-e2e.json",
+        "docs/evidence/qwen-v2-live-e2e.json",
+        "tests/test_ai_boundary.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-e2e.json",
+        "Read recorded evidence and its limitations: docs/evidence/qwen-v2-live-e2e.json",
+        ".venv/bin/python -m pytest tests/test_ai_boundary.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-064",
+      "requirement": "Предметы, темы и навыки",
+      "sources": [
+        "tests/browser/plan-discussion.spec.ts",
+        "tests/test_plan_discussion.py",
+        "tests/test_skill_graph.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/plan-discussion.spec.ts",
+        ".venv/bin/python -m pytest tests/test_plan_discussion.py -q",
+        ".venv/bin/python -m pytest tests/test_skill_graph.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-065",
+      "requirement": "Индивидуальная траектория ученика",
+      "sources": [
+        "tests/browser/plan-discussion.spec.ts",
+        "tests/test_plan_discussion.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/plan-discussion.spec.ts",
+        ".venv/bin/python -m pytest tests/test_plan_discussion.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-066",
+      "requirement": "История выполненных работ",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-067",
+      "requirement": "Подтверждённые и предполагаемые пробелы",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-068",
+      "requirement": "Доказательства прогресса, привязанные к заданиям",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-069",
+      "requirement": "Разделение AI-предположений и подтверждений преподавателя",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-070",
+      "requirement": "Рекомендации по следующему заданию",
+      "sources": [
+        "tests/browser/recommendation-feedback.spec.ts",
+        "tests/test_insights.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        ".venv/bin/python -m pytest tests/test_insights.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-071",
+      "requirement": "Несколько попыток выполнения — правила уточняются",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-076",
+      "requirement": "Календарь занятий",
+      "sources": [
+        "tests/browser/settings-calendar.spec.ts",
+        "tests/test_calendar_reminders.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/settings-calendar.spec.ts",
+        ".venv/bin/python -m pytest tests/test_calendar_reminders.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-077",
+      "requirement": "Статусы занятий",
+      "sources": [
+        "tests/browser/team-features.spec.ts",
+        "tests/test_material_files.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/team-features.spec.ts",
+        ".venv/bin/python -m pytest tests/test_material_files.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-079",
+      "requirement": "Привязка задания к занятию",
+      "sources": [
+        "tests/browser/work-status.spec.ts",
+        "tests/test_material_files.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/work-status.spec.ts",
+        ".venv/bin/python -m pytest tests/test_material_files.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-081",
+      "requirement": "Разделение ролей и прав доступа",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-082",
+      "requirement": "Изоляция данных разных репетиторов",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-083",
+      "requirement": "Демонстрационные аккаунты",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-084",
+      "requirement": "Синтетические демоданные",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-085",
+      "requirement": "Сброс демонстрационного сценария",
+      "sources": [
+        "tests/test_demo_seed.py"
+      ],
+      "verification_methods": [
+        ".venv/bin/python -m pytest tests/test_demo_seed.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-086",
+      "requirement": "Сохранение работы при сбое AI",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-087",
+      "requirement": "Обработка потери сети",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-089",
+      "requirement": "Журнал значимых действий",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-090",
+      "requirement": "Продуктовая аналитика без хранения текстов ответов",
+      "sources": [
+        "tests/browser/skill-graph.spec.ts",
+        "tests/test_insights.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/skill-graph.spec.ts",
+        ".venv/bin/python -m pytest tests/test_insights.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-092",
+      "requirement": "Docker и воспроизводимый запуск",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-093",
+      "requirement": "README и автоматические тесты",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/browser/resubmission.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_failure_paths.py",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-095",
+      "requirement": "Групповые занятия",
+      "sources": [
+        "tests/browser/groups.spec.ts",
+        "tests/test_groups.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/groups.spec.ts",
+        ".venv/bin/python -m pytest tests/test_groups.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-096",
+      "requirement": "Генерация заданий из материалов репетитора",
+      "sources": [
+        "tests/browser/generation-live.spec.ts",
+        "tests/test_generation.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/generation-live.spec.ts",
+        ".venv/bin/python -m pytest tests/test_generation.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-101",
+      "requirement": "Маркетплейс и подбор репетиторов",
+      "sources": [
+        "tests/browser/catalog.spec.ts",
+        "tests/test_marketplace.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/catalog.spec.ts",
+        ".venv/bin/python -m pytest tests/test_marketplace.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-104",
+      "requirement": "Более глубокая аналитика и граф знаний",
+      "sources": [
+        "tests/browser/skill-graph.spec.ts",
+        "tests/test_skill_graph.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/skill-graph.spec.ts",
+        ".venv/bin/python -m pytest tests/test_skill_graph.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-105",
+      "requirement": "Маркетплейс преподавателей",
+      "sources": [
+        "tests/browser/catalog.spec.ts",
+        "tests/test_marketplace.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/catalog.spec.ts",
+        ".venv/bin/python -m pytest tests/test_marketplace.py -q"
+      ]
+    },
+    {
+      "id": "TEAM-112",
+      "requirement": "Родительский кабинет (первая строка сообщения 431)",
+      "sources": [
+        "docs/evidence/public-rehearsal.json",
+        "tests/browser/guardian.spec.ts",
+        "tests/test_guardian.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/public-rehearsal.json",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/guardian.spec.ts",
+        ".venv/bin/python -m pytest tests/test_guardian.py -q"
+      ]
+    },
+    {
+      "id": "FR-AUTH-002",
+      "requirement": "support tutor and learner roles `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-AUTH-003",
+      "requirement": "isolate tutor data `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-AUTH-004",
+      "requirement": "invitation lifecycle `[P0]`",
+      "sources": [
+        "tests/browser/settings-calendar.spec.ts",
+        "tests/browser/workflow.spec.ts",
+        "tests/test_profile_invites.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/settings-calendar.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_profile_invites.py -q"
+      ]
+    },
+    {
+      "id": "FR-PROFILE-001",
+      "requirement": "minimal tutor profile `[P0]`",
+      "sources": [
+        "tests/browser/settings-calendar.spec.ts",
+        "tests/test_profile_invites.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/settings-calendar.spec.ts",
+        ".venv/bin/python -m pytest tests/test_profile_invites.py -q"
+      ]
+    },
+    {
+      "id": "FR-PROFILE-002",
+      "requirement": "minimal learner profile `[P0]`",
+      "sources": [
+        "tests/test_profile_invites.py"
+      ],
+      "verification_methods": [
+        ".venv/bin/python -m pytest tests/test_profile_invites.py -q"
+      ]
+    },
+    {
+      "id": "FR-PROFILE-003",
+      "requirement": "subject context `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-ASG-001",
+      "requirement": "create draft `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-ASG-002",
+      "requirement": "supported task types `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-ASG-003",
+      "requirement": "evaluation reference `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-ASG-004",
+      "requirement": "skill tags `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-ASG-005",
+      "requirement": "preview `[P1]`",
+      "sources": [
+        "tests/browser/recommendation-feedback.spec.ts"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts"
+      ]
+    },
+    {
+      "id": "FR-ASG-006",
+      "requirement": "publish and assign `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-ASG-007",
+      "requirement": "publication changes `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-SUB-001",
+      "requirement": "list assigned work `[P0]`",
+      "sources": [
+        "tests/browser/work-status.spec.ts",
+        "tests/browser/workflow.spec.ts"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/work-status.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts"
+      ]
+    },
+    {
+      "id": "FR-SUB-002",
+      "requirement": "save progress `[P0]`",
+      "sources": [
+        "tests/browser/autosave.spec.ts"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/autosave.spec.ts"
+      ]
+    },
+    {
+      "id": "FR-SUB-003",
+      "requirement": "final submit `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-SUB-004",
+      "requirement": "preserve original `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-SUB-005",
+      "requirement": "resubmission `[OPEN]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-AI-001",
+      "requirement": "create bounded context `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-AI-002",
+      "requirement": "structured output `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-AI-003",
+      "requirement": "assessment states `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-AI-005",
+      "requirement": "hint policy `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-AI-006",
+      "requirement": "tutor review `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-AI-007",
+      "requirement": "feedback release policy `[OPEN]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-AI-008",
+      "requirement": "provider failure `[P0]`",
+      "sources": [
+        "tests/browser/failure.spec.ts",
+        "tests/test_failure_paths.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        ".venv/bin/python -m pytest tests/test_failure_paths.py -q"
+      ]
+    },
+    {
+      "id": "FR-PROG-001",
+      "requirement": "evidence records `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-PROG-002",
+      "requirement": "confirmation state `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-PROG-003",
+      "requirement": "tutor view `[P0]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-PROG-004",
+      "requirement": "learner view `[P1]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-PROG-005",
+      "requirement": "next action `[P1]`",
+      "sources": [
+        "tests/browser/recommendation-feedback.spec.ts",
+        "tests/test_insights.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        ".venv/bin/python -m pytest tests/test_insights.py -q"
+      ]
+    },
+    {
+      "id": "FR-SCHED-001",
+      "requirement": "lesson schedule `[P1]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-MAT-001",
+      "requirement": "material links `[P1]`",
+      "sources": [
+        "tests/browser/team-features.spec.ts",
+        "tests/test_material_files.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/team-features.spec.ts",
+        ".venv/bin/python -m pytest tests/test_material_files.py -q"
+      ]
+    },
+    {
+      "id": "FR-MAT-002",
+      "requirement": "file upload `[P1][OPEN]`",
+      "sources": [
+        "tests/browser/team-features.spec.ts",
+        "tests/test_material_files.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/team-features.spec.ts",
+        ".venv/bin/python -m pytest tests/test_material_files.py -q"
+      ]
+    },
+    {
+      "id": "FR-MAT-003",
+      "requirement": "AI use of materials `[OPEN]`",
+      "sources": [
+        "tests/browser/team-features.spec.ts",
+        "tests/test_material_files.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/team-features.spec.ts",
+        ".venv/bin/python -m pytest tests/test_material_files.py -q"
+      ]
+    },
+    {
+      "id": "FR-PAY-001",
+      "requirement": "manual status `[P1]`",
+      "sources": [
+        "tests/browser/workflow.spec.ts",
+        "tests/test_workflow.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        ".venv/bin/python -m pytest tests/test_workflow.py -q"
+      ]
+    },
+    {
+      "id": "FR-FB-001",
+      "requirement": "user feedback `[P1]`",
+      "sources": [
+        "tests/browser/recommendation-feedback.spec.ts",
+        "tests/test_feedback_context.py"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        ".venv/bin/python -m pytest tests/test_feedback_context.py -q"
+      ]
+    },
+    {
+      "id": "FR-DEMO-001",
+      "requirement": "resettable demo `[P0]`",
+      "sources": [
+        "tests/test_demo_seed.py"
+      ],
+      "verification_methods": [
+        ".venv/bin/python -m pytest tests/test_demo_seed.py -q"
+      ]
+    },
+    {
+      "id": "VOICE-1",
+      "requirement": "Кабинеты ученика и репетитора, расписание и назначение материалов/программ",
+      "sources": [
+        "tests/browser/plan-discussion.spec.ts",
+        "tests/browser/team-features.spec.ts",
+        "tests/browser/workflow.spec.ts"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/plan-discussion.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/team-features.spec.ts",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts"
+      ]
+    },
+    {
+      "id": "CASE-05",
+      "requirement": "Нет секретов в репозитории",
+      "sources": [
+        "scripts/check_secrets.py"
+      ],
+      "verification_methods": [
+        "Inspect artifact / explicit operation (not automatically executed): scripts/check_secrets.py"
+      ]
+    },
+    {
+      "id": "CASE-07",
+      "requirement": "Явное обозначение синтетики/смоделированных интеграций",
+      "sources": [
+        "tests/browser/workflow.spec.ts"
+      ],
+      "verification_methods": [
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts"
+      ]
+    },
+    {
+      "id": "CASE-09",
+      "requirement": "README с воспроизводимым запуском",
+      "sources": [
+        "scripts/demo.sh"
+      ],
+      "verification_methods": [
+        "Inspect artifact / explicit operation (not automatically executed): scripts/demo.sh"
+      ]
+    },
+    {
+      "id": "CASE-11",
+      "requirement": "Фиксированные зависимости",
+      "sources": [
+        "package-lock.json",
+        "requirements.txt"
+      ],
+      "verification_methods": [
+        "Inspect artifact / explicit operation (not automatically executed): package-lock.json",
+        "Inspect artifact / explicit operation (not automatically executed): requirements.txt"
+      ]
+    },
+    {
+      "id": "CASE-12",
+      "requirement": "Исходники и commit hash",
+      "sources": [
+        "README.md"
+      ],
+      "verification_methods": [
+        "Inspect artifact / explicit operation (not automatically executed): README.md"
+      ]
+    },
+    {
+      "id": "CASE-22",
+      "requirement": "Продуктовая аналитика и AI usage/limits",
+      "sources": [
+        "tests/test_insights.py"
+      ],
+      "verification_methods": [
+        ".venv/bin/python -m pytest tests/test_insights.py -q"
+      ]
+    },
+    {
+      "id": "AI-USE-006",
+      "requirement": "Вопрос по заданию",
+      "sources": [
+        "docs/evidence/live-question-v3.json",
+        "tests/browser/questions.spec.ts",
+        "tests/test_questions.py"
+      ],
+      "verification_methods": [
+        "Read recorded evidence and its limitations: docs/evidence/live-question-v3.json",
+        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/questions.spec.ts",
+        ".venv/bin/python -m pytest tests/test_questions.py -q"
+      ]
+    }
+  ]
+}

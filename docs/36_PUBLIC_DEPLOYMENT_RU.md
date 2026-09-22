@@ -32,3 +32,9 @@ Docker и Caddy — enabled. У контейнера restart=unless-stopped. П�
 Остановка только RePrep: `docker stop reprep-app-1`. Не выполнять down -v: там база.
 
 Инструкция и ограничения отката: [35_DEPLOY_ONE_COMMAND_RU.md](35_DEPLOY_ONE_COMMAND_RU.md).
+
+## Повторная проверка по следующему сообщению владельца
+
+SSH, Docker/Compose, healthy, restart policy, enabled Docker/Caddy и сохранённая подписка MAX повторно подтверждены. Общий Caddy сохранил import RePrep. Повторная выкатка неизменённого приложения не выполнялась.
+
+Обычный DNS-запрос с Mac на этот раз завис: curl сообщил Resolving timed out. Публичный DNS 1.1.1.1 вернул 2.26.49.28. Прямой внешний HTTPS с `curl --resolve` сохранил проверку имени/TLS: HTTP 200, ssl_verify_result=0. Все 9 внешних проверок также прошли с подстановкой IP только в resolver диагностического процесса, без изменения Host/SNI и без отключения TLS. Настройки сети/hosts не менялись. Это подтверждает исправность стенда и публичной DNS-записи, но не исправность текущего системного DNS на Mac. Зависший первоначальный probe остановлен.

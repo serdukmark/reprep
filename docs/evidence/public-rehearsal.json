@@ -1,0 +1,395 @@
+{
+  "passed": true,
+  "run_id": "https-test-f0f900181873",
+  "origin": "https://reprep.2-26-49-28.nip.io",
+  "gui": false,
+  "MAX_login": false,
+  "connect_ip_override": "2.26.49.28",
+  "steps": [
+    {
+      "method": "GET",
+      "path": "me",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.301
+    },
+    {
+      "method": "GET",
+      "path": "me",
+      "role": "learner",
+      "status": 200,
+      "seconds": 0.105
+    },
+    {
+      "method": "GET",
+      "path": "me",
+      "role": "learner2",
+      "status": 200,
+      "seconds": 0.106
+    },
+    {
+      "method": "GET",
+      "path": "me",
+      "role": "outsider",
+      "status": 200,
+      "seconds": 0.104
+    },
+    {
+      "method": "GET",
+      "path": "me",
+      "role": "guardian",
+      "status": 200,
+      "seconds": 0.1
+    },
+    {
+      "method": "POST",
+      "path": "assignments",
+      "role": "tutor",
+      "status": 201,
+      "seconds": 0.126
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "learner",
+      "status": 404,
+      "seconds": 0.105
+    },
+    {
+      "method": "POST",
+      "path": "assignments/b82d976f5c434f473e8b11ce/publish",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.1
+    },
+    {
+      "method": "PUT",
+      "path": "assignments/b82d976f5c434f473e8b11ce/draft",
+      "role": "learner",
+      "status": 200,
+      "seconds": 0.108
+    },
+    {
+      "method": "PUT",
+      "path": "assignments/b82d976f5c434f473e8b11ce/draft",
+      "role": "learner",
+      "status": 409,
+      "seconds": 0.102
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "learner",
+      "status": 200,
+      "seconds": 0.152
+    },
+    {
+      "method": "POST",
+      "path": "assignments/b82d976f5c434f473e8b11ce/submit",
+      "role": "learner",
+      "status": 200,
+      "seconds": 0.163
+    },
+    {
+      "method": "POST",
+      "path": "assignments/b82d976f5c434f473e8b11ce/submit",
+      "role": "learner",
+      "status": 200,
+      "seconds": 0.222
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.206
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.159
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.208
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.103
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.222
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.113
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.109
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "learner",
+      "status": 200,
+      "seconds": 0.14
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "outsider",
+      "status": 404,
+      "seconds": 0.104
+    },
+    {
+      "method": "GET",
+      "path": "submissions/49c21ebd2aa18daff2629d9a",
+      "role": "learner2",
+      "status": 404,
+      "seconds": 0.109
+    },
+    {
+      "method": "POST",
+      "path": "submissions/49c21ebd2aa18daff2629d9a/review",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.099
+    },
+    {
+      "method": "POST",
+      "path": "submissions/49c21ebd2aa18daff2629d9a/review",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.098
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "learner",
+      "status": 200,
+      "seconds": 0.106
+    },
+    {
+      "method": "GET",
+      "path": "relationships/https-test-f0f900181873-learner-link/progress",
+      "role": "learner",
+      "status": 200,
+      "seconds": 0.112
+    },
+    {
+      "method": "POST",
+      "path": "relationships/https-test-f0f900181873-learner-link/guardians",
+      "role": "tutor",
+      "status": 201,
+      "seconds": 0.1
+    },
+    {
+      "method": "POST",
+      "path": "guardian/accept",
+      "role": "guardian",
+      "status": 200,
+      "seconds": 0.115
+    },
+    {
+      "method": "GET",
+      "path": "guardian/links/https-test-f0f900181873-learner-link",
+      "role": "guardian",
+      "status": 200,
+      "seconds": 0.102
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "guardian",
+      "status": 404,
+      "seconds": 0.102
+    },
+    {
+      "method": "POST",
+      "path": "guardian/invitations/b54a1e7970e96e1294cf5de0/revoke",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.101
+    },
+    {
+      "method": "GET",
+      "path": "guardian/links/https-test-f0f900181873-learner-link",
+      "role": "guardian",
+      "status": 404,
+      "seconds": 0.098
+    },
+    {
+      "method": "GET",
+      "path": "account/export",
+      "role": "guardian",
+      "status": 200,
+      "seconds": 0.113
+    },
+    {
+      "method": "GET",
+      "path": "guardian/links/https-test-f0f900181873-learner-link",
+      "role": "guardian",
+      "status": 404,
+      "seconds": 0.101
+    },
+    {
+      "method": "GET",
+      "path": "account/export",
+      "role": "guardian",
+      "status": 200,
+      "seconds": 0.106
+    },
+    {
+      "method": "POST",
+      "path": "workspaces",
+      "role": "tutor",
+      "status": 201,
+      "seconds": 0.103
+    },
+    {
+      "method": "POST",
+      "path": "workspaces/9d31704b8313feadbf137bf0/invite",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.097
+    },
+    {
+      "method": "POST",
+      "path": "workspaces/accept",
+      "role": "outsider",
+      "status": 200,
+      "seconds": 0.108
+    },
+    {
+      "method": "POST",
+      "path": "workspaces/9d31704b8313feadbf137bf0/templates",
+      "role": "tutor",
+      "status": 201,
+      "seconds": 0.1
+    },
+    {
+      "method": "GET",
+      "path": "workspaces/9d31704b8313feadbf137bf0/templates",
+      "role": "outsider",
+      "status": 200,
+      "seconds": 0.097
+    },
+    {
+      "method": "GET",
+      "path": "assignments/b82d976f5c434f473e8b11ce",
+      "role": "outsider",
+      "status": 404,
+      "seconds": 0.1
+    },
+    {
+      "method": "POST",
+      "path": "workspaces/9d31704b8313feadbf137bf0/members/https-test-f0f900181873-outsider/remove",
+      "role": "tutor",
+      "status": 200,
+      "seconds": 0.106
+    },
+    {
+      "method": "GET",
+      "path": "workspaces/9d31704b8313feadbf137bf0/templates",
+      "role": "outsider",
+      "status": 404,
+      "seconds": 0.111
+    },
+    {
+      "method": "GET",
+      "path": "workspaces/9d31704b8313feadbf137bf0/members",
+      "role": "outsider",
+      "status": 404,
+      "seconds": 0.106
+    },
+    {
+      "method": "GET",
+      "path": "workspaces/9d31704b8313feadbf137bf0/invitations",
+      "role": "outsider",
+      "status": 404,
+      "seconds": 0.115
+    },
+    {
+      "method": "POST",
+      "path": "workspace-templates/a996988c1c5c155edebdf2be/copy",
+      "role": "outsider",
+      "status": 404,
+      "seconds": 0.166
+    },
+    {
+      "method": "GET",
+      "path": "workspaces/9d31704b8313feadbf137bf0/templates",
+      "role": "outsider",
+      "status": 404,
+      "seconds": 0.197
+    },
+    {
+      "method": "GET",
+      "path": "workspaces/9d31704b8313feadbf137bf0/members",
+      "role": "outsider",
+      "status": 404,
+      "seconds": 0.483
+    },
+    {
+      "method": "GET",
+      "path": "workspaces/9d31704b8313feadbf137bf0/invitations",
+      "role": "outsider",
+      "status": 404,
+      "seconds": 0.111
+    },
+    {
+      "method": "POST",
+      "path": "workspace-templates/a996988c1c5c155edebdf2be/copy",
+      "role": "outsider",
+      "status": 404,
+      "seconds": 0.102
+    }
+  ],
+  "ai_wait_seconds": 7.14,
+  "analysis": {
+    "schema_version": "1",
+    "assessment_status": "assessed",
+    "engine": "qwen/qwen3.8-flash",
+    "prompt_version": "assessment-v2",
+    "requires_tutor_review": true,
+    "tasks": [
+      {
+        "task_id": "linear",
+        "correctness": "incorrect",
+        "confidence": 0.95,
+        "summary_for_tutor": "Ученик допустил арифметическую ошибку при вычитании: вместо 22 - 7 = 15 получил 12. Далее он корректно разделил неверное число на 3 (12 / 3 = 4), но из-за первой ошибки итоговый ответ неверен. Существенных верных шагов решения уравнения (приведение к виду ax=b) не зафиксировано, так как ошибка произошла на этапе изоляции переменной.",
+        "feedback_for_learner": "Вы правильно поняли структуру уравнения и последовательность действий (вычесть, затем разделить). Однако в первом шаге возникла небольшая арифметическая неточность. Проверьте результат вычитания 22 минус 7.",
+        "hint": "Пересчитайте значение выражения 22 - 7.",
+        "skill": "Линейные уравнения"
+      }
+    ],
+    "context_version": "assessment-context-v3"
+  },
+  "duration_seconds": 12.78,
+  "test_sessions_revoked": true,
+  "limitations": [
+    "API sequence, not visual rehearsal",
+    "synthetic accounts provisioned by operator, not MAX authentication",
+    "no provider faults injected into production",
+    "private synthetic records retained; test sessions revoked or expire after 30 minutes"
+  ]
+}
