@@ -56,6 +56,7 @@ def apply(root, domain, port):
     print('Building client and server image', flush=True)
     run(compose + ['build'])
     image = 'reprep:' + release
+    print('Checking MAX bot identity and trusted CA', flush=True)
     bot_id = run(['docker', 'run', '--rm', '--env-file', str(env),
                   '-v', str(root/'max-ca.pem')+':/run/reprep-max-ca.pem:ro',
                   image, 'python', '-m', 'apps.server.deployment', 'identity'])
@@ -98,6 +99,7 @@ def apply(root, domain, port):
         except RuntimeError:
             if attempt == 5: raise RuntimeError('Public HTTPS checks failed; MAX subscription not changed') from None
             time.sleep(5)
+    print('HTTPS checks passed; registering MAX webhook', flush=True)
     run(compose + ['exec', '-T', 'app', 'python', '-m', 'apps.server.deployment', 'register'])
     run(compose + ['exec', '-T', 'app', 'python', '-m', 'apps.server.deployment', 'preflight'])
     current = Path('/opt/reprep/current')

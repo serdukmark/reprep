@@ -47,7 +47,7 @@ def main():
     # No network, image builds, SSH or MAX calls in preparation mode.
     subprocess.run(['python3', 'scripts/check_secrets.py'], cwd=ROOT, check=True)
     subprocess.run(['docker', 'compose', '-f', 'infra/vm/compose.yaml', 'config', '-q'], cwd=ROOT,
-                   env={**os.environ, 'REPREP_RELEASE': release, 'REPREP_BIND_PORT': '8020'}, check=True)
+                   env={**os.environ, 'REPREP_RELEASE': release, 'REPREP_BIND_PORT': '8030'}, check=True)
     with tempfile.TemporaryDirectory(prefix='reprep-deploy-') as tmp:
         folder = Path(tmp)
         package(folder/'release.tgz')
@@ -68,7 +68,7 @@ def main():
                '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=10']
         subprocess.run(scp + [str(folder/'release.tgz'), str(folder/'.env'), str(folder/'max-ca.pem'),
                              HOST+':'+destination+'/'], check=True)
-        command = 'cd ' + shlex.quote(destination) + ' && tar xzf release.tgz && python3 scripts/vm_apply.py ' + shlex.join([DOMAIN, '8020'])
+        command = 'cd ' + shlex.quote(destination) + ' && tar xzf release.tgz && python3 scripts/vm_apply.py ' + shlex.join([DOMAIN, '8030'])
         subprocess.run(ssh + [command], check=True)
         # Independent check from the Mac; a local network failure is not success.
         subprocess.run([str(ROOT/'.venv/bin/python'), 'scripts/check_public.py', '--url', 'https://'+DOMAIN, '--human'], cwd=ROOT, check=True)
