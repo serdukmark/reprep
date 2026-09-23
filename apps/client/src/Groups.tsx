@@ -1,3 +1,4 @@
+import { ChoiceSelect } from "./ChoiceSelect";
 import React, { useEffect, useRef, useState } from "react";
 import { api, Relation, AssignmentSummary } from "./api";
 import { useUnsaved } from "./components";
@@ -194,14 +195,14 @@ export function Groups({
           >
             <label>
               Работа для группы {g.title}
-              <select name="assignment_id" required disabled={busy}>
+              <ChoiceSelect name="assignment_id" required disabled={busy}>
                 <option value="">Выберите проверенный шаблон</option>
                 {assignments.map((a) => (
                   <option key={a.id} value={a.id}>
                     {a.title}
                   </option>
                 ))}
-              </select>
+              </ChoiceSelect>
             </label>
             <p>
               Будут назначены копии условий и критериев. Ответы прежнего ученика

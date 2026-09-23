@@ -1,3 +1,4 @@
+import { ChoiceSelect } from "./ChoiceSelect";
 import React, { useState, useEffect } from "react";
 import { initializeMax, launchData, bindMaxBack, inTelegram, inMax, platformName } from "./max";
 import { createRoot } from "react-dom/client";
@@ -670,7 +671,6 @@ function App() {
                     {isTutor && (
                       <button
                         className="primary"
-                        disabled={!relations.length}
                         onClick={() => setActive(blankAssignment(selected))}
                       >
                         <Plus size={18} /> Создать задание
@@ -818,7 +818,6 @@ function App() {
                     {isTutor && (
                       <button
                         className="primary"
-                        disabled={!relations.length}
                         onClick={() => setActive(blankAssignment(selected))}
                       >
                         <Plus size={18} /> Создать задание
@@ -836,7 +835,7 @@ function App() {
                     </label>
                     <label>
                       Статус работ
-                      <select
+                      <ChoiceSelect
                         value={workFilter}
                         onChange={(e) => setWorkFilter(e.target.value)}
                       >
@@ -845,7 +844,7 @@ function App() {
                         <option value="overdue">Просроченные</option>
                         <option value="completed">Завершённые</option>
                         {isTutor && <option value="draft">Черновики</option>}
-                      </select>
+                      </ChoiceSelect>
                     </label>
                     <span>{assignments.length} работ всего</span>
                   </div>
@@ -865,7 +864,7 @@ function App() {
                       title="Заданий пока нет"
                       text={
                         isTutor
-                          ? "Добавьте ученика, затем создайте первое задание."
+                          ? "Создайте первый черновик. Ученика можно выбрать перед назначением."
                           : "Преподаватель назначит вам работу. Если у вас есть приглашение, примите его в настройках."
                       }
                     />

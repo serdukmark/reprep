@@ -1,3 +1,4 @@
+import { ChoiceSelect } from "./ChoiceSelect";
 import { useState } from "react";
 import { api } from "./api";
 export function LearnerFeedback({ assignment }: { assignment: string }) {
@@ -38,7 +39,7 @@ export function LearnerFeedback({ assignment }: { assignment: string }) {
       >
         <label>
           Тип отзыва
-          <select
+          <ChoiceSelect
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -46,7 +47,7 @@ export function LearnerFeedback({ assignment }: { assignment: string }) {
             <option value="incorrect_feedback">Есть ошибка</option>
             <option value="harmful_feedback">Вредный ответ</option>
             <option value="bug">Техническая проблема</option>
-          </select>
+          </ChoiceSelect>
         </label>
         <label>
           Комментарий к разбору

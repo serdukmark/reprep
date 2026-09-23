@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY, external_id TEXT UNIQUE, r
 CREATE TABLE IF NOT EXISTS sessions(token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), expires REAL NOT NULL);
 CREATE TABLE IF NOT EXISTS relationships(id TEXT PRIMARY KEY, tutor_id TEXT NOT NULL REFERENCES users(id), learner_id TEXT NOT NULL REFERENCES users(id), subject TEXT NOT NULL, UNIQUE(tutor_id,learner_id,subject));
 CREATE TABLE IF NOT EXISTS invitations(id TEXT PRIMARY KEY, tutor_id TEXT NOT NULL REFERENCES users(id), token_hash TEXT UNIQUE NOT NULL, subject TEXT NOT NULL, expires REAL NOT NULL, state TEXT NOT NULL DEFAULT 'created', accepted_by TEXT REFERENCES users(id));
-CREATE TABLE IF NOT EXISTS assignments(id TEXT PRIMARY KEY, tutor_id TEXT NOT NULL REFERENCES users(id), relationship_id TEXT NOT NULL REFERENCES relationships(id), status TEXT NOT NULL DEFAULT 'draft', revision INTEGER NOT NULL DEFAULT 1, data TEXT NOT NULL, created TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS assignments(id TEXT PRIMARY KEY, tutor_id TEXT NOT NULL REFERENCES users(id), relationship_id TEXT REFERENCES relationships(id), status TEXT NOT NULL DEFAULT 'draft', revision INTEGER NOT NULL DEFAULT 1, data TEXT NOT NULL, created TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS drafts(assignment_id TEXT NOT NULL REFERENCES assignments(id), learner_id TEXT NOT NULL REFERENCES users(id), revision INTEGER NOT NULL DEFAULT 0, answers TEXT NOT NULL, PRIMARY KEY(assignment_id,learner_id));
 CREATE TABLE IF NOT EXISTS submissions(id TEXT PRIMARY KEY, assignment_id TEXT NOT NULL REFERENCES assignments(id), learner_id TEXT NOT NULL REFERENCES users(id), attempt INTEGER NOT NULL, answers TEXT NOT NULL, checksum TEXT NOT NULL, submitted TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'queued', analysis TEXT, lease_until REAL NOT NULL DEFAULT 0, retries INTEGER NOT NULL DEFAULT 0, UNIQUE(assignment_id,learner_id,attempt));
 CREATE TABLE IF NOT EXISTS draft_files(assignment_id TEXT PRIMARY KEY REFERENCES assignments(id) ON DELETE CASCADE,data TEXT NOT NULL);
@@ -73,6 +73,21 @@ def initialize(path):
             for (sql,) in objects:conn.execute(sql)
             if conn.execute('PRAGMA foreign_key_check').fetchone():raise RuntimeError('Migration failed foreign key validation')
             conn.execute('INSERT INTO schema_migrations VALUES(5)')
+            conn.commit()
+
+        if not conn.execute('SELECT 1 FROM schema_migrations WHERE version=11').fetchone():
+            conn.commit()
+            conn.execute('PRAGMA foreign_keys=OFF')
+            conn.execute('BEGIN IMMEDIATE')
+            objects=conn.execute("SELECT sql FROM sqlite_schema WHERE tbl_name='assignments' AND type IN ('index','trigger') AND sql IS NOT NULL").fetchall()
+            definition=next(part.strip() for part in SCHEMA.split(';') if part.strip().startswith('CREATE TABLE IF NOT EXISTS assignments('))
+            conn.execute(definition.replace('CREATE TABLE IF NOT EXISTS assignments(', 'CREATE TABLE assignments_v11('))
+            conn.execute('INSERT INTO assignments_v11 SELECT * FROM assignments')
+            conn.execute('DROP TABLE assignments')
+            conn.execute('ALTER TABLE assignments_v11 RENAME TO assignments')
+            for (sql,) in objects:conn.execute(sql)
+            if conn.execute('PRAGMA foreign_key_check').fetchone():raise RuntimeError('Migration failed foreign key validation')
+            conn.execute('INSERT INTO schema_migrations VALUES(11)')
             conn.commit()
 
 

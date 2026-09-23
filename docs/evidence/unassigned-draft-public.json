@@ -1,0 +1,10 @@
+{
+  "https": "https://reprep.ru",
+  "new_tutor_without_learners": true,
+  "create_draft": 201,
+  "read_draft": 200,
+  "draft_in_list": true,
+  "publish_without_learner": 422,
+  "synthetic_only": true,
+  "test_session_revoked": true
+}

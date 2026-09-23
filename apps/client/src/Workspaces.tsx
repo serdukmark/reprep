@@ -1,3 +1,4 @@
+import { ChoiceSelect } from "./ChoiceSelect";
 import { useEffect, useRef, useState } from "react";
 import { api, AssignmentSummary, Relation, User } from "./api";
 
@@ -145,7 +146,7 @@ export function Workspaces({
       {!!spaces.length && (
         <label>
           Текущее пространство
-          <select
+          <ChoiceSelect
             value={selected}
             disabled={busy}
             onChange={(e) => setSelected(e.target.value)}
@@ -155,7 +156,7 @@ export function Workspaces({
                 {item.title}
               </option>
             ))}
-          </select>
+          </ChoiceSelect>
         </label>
       )}
       {selected && (
@@ -241,14 +242,14 @@ export function Workspaces({
           </p>
           <label>
             Моя работа для шаблона
-            <select value={source} onChange={(e) => setSource(e.target.value)}>
+            <ChoiceSelect value={source} onChange={(e) => setSource(e.target.value)}>
               <option value="">Выберите работу</option>
               {assignments.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.title}
                 </option>
               ))}
-            </select>
+            </ChoiceSelect>
           </label>
           <button
             className="secondary"
@@ -266,14 +267,14 @@ export function Workspaces({
           <h3>Общие шаблоны</h3>
           <label>
             Мой ученик для копии
-            <select value={target} onChange={(e) => setTarget(e.target.value)}>
+            <ChoiceSelect value={target} onChange={(e) => setTarget(e.target.value)}>
               <option value="">Выберите ученика</option>
               {relations.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.learner_alias} · {item.subject}
                 </option>
               ))}
-            </select>
+            </ChoiceSelect>
           </label>
           {!templates.length && <p>Шаблонов пока нет.</p>}
           {templates.map((item) => (

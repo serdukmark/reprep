@@ -317,7 +317,8 @@ def create_app(settings=None, provider=None, run_worker=True):
         a = one(c, 'SELECT * FROM assignments WHERE id=?', (assignment_id,))
         if not a:
             fail(404, 'NOT_FOUND', 'Работа не найдена')
-        relation(c, a['relationship_id'], u)
+        if a['tutor_id'] != u['id']:
+            relation(c, a['relationship_id'], u)
         if u['role'] == 'learner' and a['status'] == 'draft':
             fail(404, 'NOT_FOUND', 'Работа не найдена')
         return a
@@ -545,14 +546,14 @@ def create_app(settings=None, provider=None, run_worker=True):
     def assignments(u=Depends(user), c=Depends(db), offset: int = 0):
         if offset < 0:
             fail(422, 'OFFSET', 'Недопустимая страница')
-        result = rows(c, '''SELECT a.*, l.alias AS learner_alias FROM assignments a JOIN relationships r ON r.id=a.relationship_id
-            JOIN users l ON l.id=r.learner_id WHERE (a.tutor_id=? OR (r.learner_id=? AND a.status!='draft')) ORDER BY a.created DESC LIMIT 100 OFFSET ?''', (u['id'], u['id'], offset))
+        result = rows(c, '''SELECT a.*, l.alias AS learner_alias FROM assignments a LEFT JOIN relationships r ON r.id=a.relationship_id
+            LEFT JOIN users l ON l.id=r.learner_id WHERE (a.tutor_id=? OR (r.learner_id=? AND a.status!='draft')) ORDER BY a.created DESC LIMIT 100 OFFSET ?''', (u['id'], u['id'], offset))
         output = []
         for a in result:
             data = json.loads(a['data'])
             s = one(c, 'SELECT id,status,attempt FROM submissions WHERE assignment_id=? ORDER BY attempt DESC LIMIT 1', (a['id'],))
             output.append({'id': a['id'], 'title': data['title'], 'due_at': data['due_at'], 'status': a['status'],
-                'relationship_id': a['relationship_id'], 'learner_alias': a['learner_alias'], 'tasks_count': len(data['tasks']), 'submission': s})
+                'relationship_id': a['relationship_id'] or '', 'learner_alias': a['learner_alias'] or 'Ученик не выбран', 'tasks_count': len(data['tasks']), 'submission': s})
         return output
 
     def check_assignment_lesson(c,body):
@@ -562,10 +563,10 @@ def create_app(settings=None, provider=None, run_worker=True):
     @app.post('/api/assignments', status_code=201)
     def create_assignment(body: AssignmentInput, u=Depends(user), c=Depends(db)):
         tutor(u)
-        relation(c, body.relationship_id, u)
+        if body.relationship_id:relation(c, body.relationship_id, u)
         check_assignment_lesson(c,body)
         id_ = uid()
-        c.execute('INSERT INTO assignments(id,tutor_id,relationship_id,data,created) VALUES(?,?,?,?,?)', (id_, u['id'], body.relationship_id, body.model_dump_json(), now()))
+        c.execute('INSERT INTO assignments(id,tutor_id,relationship_id,data,created) VALUES(?,?,?,?,?)', (id_, u['id'], body.relationship_id or None, body.model_dump_json(), now()))
         audit(c, u['id'], 'assignment_draft_created', id_)
         return assignment_view(one(c, 'SELECT * FROM assignments WHERE id=?', (id_,)), 'tutor')
 
@@ -575,15 +576,16 @@ def create_app(settings=None, provider=None, run_worker=True):
         a = assignment(c, id_, u)
         if a['status'] != 'draft' or a['revision'] != revision:
             fail(409, 'VERSION_CONFLICT', 'Работа опубликована или изменена в другом окне')
-        relation(c, body.relationship_id, u)
+        if body.relationship_id:relation(c, body.relationship_id, u)
         check_assignment_lesson(c,body)
-        c.execute('UPDATE assignments SET data=?,relationship_id=?,revision=revision+1 WHERE id=?', (body.model_dump_json(), body.relationship_id, id_))
+        c.execute('UPDATE assignments SET data=?,relationship_id=?,revision=revision+1 WHERE id=?', (body.model_dump_json(), body.relationship_id or None, id_))
         return assignment_view(one(c, 'SELECT * FROM assignments WHERE id=?', (id_,)), 'tutor')
 
     @app.post('/api/assignments/{id_}/publish')
     def publish(id_: str, u=Depends(user), c=Depends(db)):
         tutor(u)
         a = assignment(c, id_, u)
+        if not a['relationship_id']:fail(422,'LEARNER_REQUIRED','Выберите ученика перед назначением работы')
         if a['status'] == 'draft':
             c.execute("UPDATE assignments SET status='published' WHERE id=?", (id_,))
             audit(c, u['id'], 'assignment_published', id_)

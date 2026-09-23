@@ -1,3 +1,4 @@
+import { ChoiceSelect } from "./ChoiceSelect";
 import { useEffect, useId, useState } from "react";
 import { api, labels } from "./api";
 import { useUnsaved } from "./components";
@@ -247,7 +248,7 @@ export function SkillGraph({
               <div className="form-grid">
                 <label>
                   Сначала навык
-                  <select
+                  <ChoiceSelect
                     disabled={busy}
                     value={from}
                     onChange={(e) => setFrom(e.target.value)}
@@ -256,11 +257,11 @@ export function SkillGraph({
                     {skills.map((s) => (
                       <option key={s}>{s}</option>
                     ))}
-                  </select>
+                  </ChoiceSelect>
                 </label>
                 <label>
                   Затем навык
-                  <select
+                  <ChoiceSelect
                     disabled={busy}
                     value={to}
                     onChange={(e) => setTo(e.target.value)}
@@ -269,7 +270,7 @@ export function SkillGraph({
                     {skills.map((s) => (
                       <option key={s}>{s}</option>
                     ))}
-                  </select>
+                  </ChoiceSelect>
                 </label>
               </div>
               <button

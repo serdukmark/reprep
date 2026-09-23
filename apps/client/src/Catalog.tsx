@@ -1,3 +1,4 @@
+import { ChoiceSelect } from "./ChoiceSelect";
 import { useEffect, useRef, useState } from "react";
 import { api, User } from "./api";
 import { useUnsaved } from "./components";
@@ -305,14 +306,14 @@ export function Catalog({
               >
                 <label>
                   Предмет заявки
-                  <select
+                  <ChoiceSelect
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                   >
                     {item.subjects.map((s) => (
                       <option key={s}>{s}</option>
                     ))}
-                  </select>
+                  </ChoiceSelect>
                 </label>
                 <label>
                   Что хотите изучать

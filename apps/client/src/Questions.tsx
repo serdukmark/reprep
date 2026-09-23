@@ -1,3 +1,4 @@
+import { ChoiceSelect } from "./ChoiceSelect";
 import React, { useEffect, useRef, useState } from "react";
 import { api, Task } from "./api";
 import { useUnsaved } from "./components";
@@ -232,7 +233,7 @@ export function Questions({
         >
           <label>
             Задание для вопроса
-            <select
+            <ChoiceSelect
               disabled={busy}
               value={task}
               onChange={(e) => setTask(e.target.value)}
@@ -242,7 +243,7 @@ export function Questions({
                   Задание {i + 1} · {t.skill}
                 </option>
               ))}
-            </select>
+            </ChoiceSelect>
           </label>
           <label>
             Вопрос к AI

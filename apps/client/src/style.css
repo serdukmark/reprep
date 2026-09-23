@@ -1842,3 +1842,20 @@ footer span:last-child {
 @media (hover: hover) {
   .registration-role:hover .registration-role-card { border-color: #80936e; }
 }
+
+.choice-select { position: relative; min-width: 0; width: 100%; }
+.choice-select .choice-native { position: absolute; width: 1px; height: 1px; padding: 0; border: 0; clip-path: inset(50%); overflow: hidden; pointer-events: none; }
+.choice-trigger { width: 100%; min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; padding: 12px 14px; border: 1px solid #dce3d4; border-radius: 12px; background: #fafbf7; color: #34482d; font-weight: 500; }
+.choice-trigger > span { min-width: 0; overflow-wrap: anywhere; }
+.choice-trigger > svg { color: #6c805b; }
+.choice-trigger[aria-expanded="true"] { border-color: #64834e; box-shadow: 0 0 0 1px #64834e; background: #f0f5e9; }
+.choice-trigger[aria-expanded="true"] > svg { transform: rotate(180deg); }
+.choice-options { position: fixed; z-index: 1000; overflow-y: auto; overscroll-behavior: contain; padding: 6px; border: 1px solid #d9e3cf; border-radius: 16px; background: #fff; box-shadow: 0 12px 36px #273b2426; }
+.choice-options:focus { outline: 2px solid #749d50; outline-offset: 2px; }
+.choice-option { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 14px; padding: 12px; min-height: 48px; border: 1px solid transparent; border-radius: 10px; text-align: left; font-size: 14px; }
+.choice-option > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.choice-option.is-active { background: #f5f7f1; }
+.choice-option[aria-selected="true"] { color: #345327; background: #edf4e4; border-color: #c9daba; font-weight: 600; }
+.choice-mark { display: grid; place-items: center; width: 19px; height: 19px; flex-shrink: 0; border: 1px solid #c6cfbd; border-radius: 50%; }
+.choice-option[aria-selected="true"] .choice-mark { color: white; background: #52713d; border-color: #52713d; }
+@media (hover: hover) { .choice-trigger:hover, .choice-option:not(:disabled):hover { border-color: #80936e; background: #f0f5e9; } }

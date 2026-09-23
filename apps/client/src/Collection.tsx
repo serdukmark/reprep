@@ -1,3 +1,4 @@
+import { ChoiceSelect } from "./ChoiceSelect";
 import React, { useState, useEffect, FormEvent } from "react";
 import { Plus, FolderOpen, ArrowUpRight } from "lucide-react";
 import { api, Relation, Lesson, Material, AssignmentSummary } from "./api";
@@ -91,7 +92,7 @@ export function Collection({
           </label>
           <label>
             Ученик
-            <select
+            <ChoiceSelect
               name="relationship_id"
               value={target}
               onChange={(e) => setTarget(e.target.value)}
@@ -101,7 +102,7 @@ export function Collection({
                   {r.learner_alias}
                 </option>
               ))}
-            </select>
+            </ChoiceSelect>
           </label>
           {schedule ? (
             <div className="form-grid">
@@ -164,7 +165,7 @@ export function Collection({
               )}
               <label>
                 Задание
-                <select name="assignment_id" key={"a" + target}>
+                <ChoiceSelect name="assignment_id" key={"a" + target}>
                   <option value="">Для всех заданий ученика</option>
                   {works
                     .filter((w) => w.relationship_id === target)
@@ -173,11 +174,11 @@ export function Collection({
                         {w.title}
                       </option>
                     ))}
-                </select>
+                </ChoiceSelect>
               </label>
               <label>
                 Занятие
-                <select name="lesson_id" key={"l" + target}>
+                <ChoiceSelect name="lesson_id" key={"l" + target}>
                   <option value="">Без привязки</option>
                   {lessons
                     .filter((l) => l.relationship_id === target)
@@ -186,7 +187,7 @@ export function Collection({
                         {l.title}
                       </option>
                     ))}
-                </select>
+                </ChoiceSelect>
               </label>
               <label>
                 <input type="checkbox" name="ai_allowed" disabled={!file} />{" "}
@@ -246,7 +247,7 @@ export function Collection({
                   {tutor && (
                     <label>
                       Статус занятия
-                      <select
+                      <ChoiceSelect
                         value={l.status || "scheduled"}
                         onChange={(e) =>
                           action(async () => {
@@ -262,13 +263,13 @@ export function Collection({
                         <option value="scheduled">Запланировано</option>
                         <option value="completed">Проведено</option>
                         <option value="cancelled">Отменено</option>
-                      </select>
+                      </ChoiceSelect>
                     </label>
                   )}
                   {tutor && (
                     <label className="payment-label">
                       Ваша отметка об оплате
-                      <select
+                      <ChoiceSelect
                         value={l.payment_status}
                         onChange={(e) =>
                           action(async () => {
@@ -285,7 +286,7 @@ export function Collection({
                         <option value="paid">Оплачено</option>
                         <option value="unpaid">Не оплачено</option>
                         <option value="waived">Без оплаты</option>
-                      </select>
+                      </ChoiceSelect>
                     </label>
                   )}
                 </section>

@@ -1,3 +1,4 @@
+import { ChoiceSelect } from "./ChoiceSelect";
 import React, { useEffect, useState } from "react";
 import { api, AssignmentSummary, Material } from "./api";
 import { useUnsaved } from "./components";
@@ -137,7 +138,7 @@ export function LearningPlan({
               </label>
               <label>
                 Статус этапа {i + 1}
-                <select
+                <ChoiceSelect
                   value={s.status}
                   onChange={(e) =>
                     step(i, { status: e.target.value as Step["status"] })
@@ -146,11 +147,11 @@ export function LearningPlan({
                   <option value="planned">Запланирован</option>
                   <option value="in_progress">В работе</option>
                   <option value="completed">Завершён преподавателем</option>
-                </select>
+                </ChoiceSelect>
               </label>
               <label>
                 Работа этапа {i + 1}
-                <select
+                <ChoiceSelect
                   value={s.assignment_id}
                   onChange={(e) => step(i, { assignment_id: e.target.value })}
                 >
@@ -160,11 +161,11 @@ export function LearningPlan({
                       {a.title}
                     </option>
                   ))}
-                </select>
+                </ChoiceSelect>
               </label>
               <label>
                 Материал этапа {i + 1}
-                <select
+                <ChoiceSelect
                   value={s.material_id}
                   onChange={(e) => step(i, { material_id: e.target.value })}
                 >
@@ -174,7 +175,7 @@ export function LearningPlan({
                       {m.title}
                     </option>
                   ))}
-                </select>
+                </ChoiceSelect>
               </label>
               <button
                 type="button"

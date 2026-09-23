@@ -1,3 +1,4 @@
+import { ChoiceSelect } from "./ChoiceSelect";
 import { LearnerFeedback } from "./LearnerFeedback";
 import React, { useState, useEffect, useRef, FormEvent } from "react";
 import {
@@ -105,6 +106,9 @@ export function Builder({
           {preview ? "Вернуться к редактору" : "Глазами ученика"}
         </button>
       </div>
+      {!a.relationship_id && <div className="notice">
+        Черновик можно сохранить без ученика. Чтобы назначить работу, пригласите ученика в разделе «Ученики», дождитесь принятия приглашения и выберите его здесь.
+      </div>}
       <section className="card builder">
         <label>
           Название работы
@@ -120,19 +124,20 @@ export function Builder({
         <div className="form-grid">
           <label>
             Ученик
-            <select
+            <ChoiceSelect
               aria-label="Ученик"
               value={a.relationship_id}
               onChange={(e) =>
                 setA({ ...a, relationship_id: e.target.value, lesson_id: "" })
               }
             >
+              <option value="">Выбрать позже · черновик</option>
               {relations.map((r) => (
                 <option key={r.id} value={r.id}>
                   {r.learner_alias} · {r.subject}
                 </option>
               ))}
-            </select>
+            </ChoiceSelect>
           </label>
           <label>
             Дедлайн (ваш часовой пояс)
@@ -161,7 +166,7 @@ export function Builder({
         </div>
         <label>
           Занятие для этой работы
-          <select
+          <ChoiceSelect
             value={a.lesson_id || ""}
             onChange={(e) => setA({ ...a, lesson_id: e.target.value })}
           >
@@ -173,7 +178,7 @@ export function Builder({
                   {l.title} · {date(l.starts_at)}
                 </option>
               ))}
-          </select>
+          </ChoiceSelect>
         </label>
         {lessonError && <p role="alert">{lessonError}</p>}
         <label>
@@ -188,7 +193,7 @@ export function Builder({
         {!preview && (
           <label>
             Когда показывать обратную связь
-            <select
+            <ChoiceSelect
               value={a.feedback_policy}
               onChange={(e) =>
                 setA({
@@ -201,7 +206,7 @@ export function Builder({
               <option value="hints_first">
                 Мои подсказки сразу, результат после проверки
               </option>
-            </select>
+            </ChoiceSelect>
           </label>
         )}
       </section>
@@ -243,7 +248,7 @@ export function Builder({
             <>
               <label>
                 Формат ответа
-                <select
+                <ChoiceSelect
                   value={t.type}
                   onChange={(e) =>
                     update(i, {
@@ -261,7 +266,7 @@ export function Builder({
                   <option value="short_text">
                     Короткий ответ с объяснением
                   </option>
-                </select>
+                </ChoiceSelect>
               </label>
               <label>
                 Условие
@@ -293,7 +298,7 @@ export function Builder({
                   <label>
                     Эталонный ответ
                     {t.type === "single_choice" ? (
-                      <select
+                      <ChoiceSelect
                         value={t.answer}
                         onChange={(e) => update(i, { answer: e.target.value })}
                       >
@@ -301,7 +306,7 @@ export function Builder({
                         {t.options.map((o, j) => (
                           <option key={j}>{o}</option>
                         ))}
-                      </select>
+                      </ChoiceSelect>
                     ) : (
                       <input
                         maxLength={1000}
@@ -360,7 +365,7 @@ export function Builder({
         </button>
         <button
           className="primary"
-          disabled={busy || !relations.length}
+          disabled={busy || !a.relationship_id}
           type="button"
           onClick={(e) => {
             if (e.currentTarget.form?.reportValidity()) save(a, true);
@@ -724,7 +729,7 @@ export function AssignmentDetail({
                 <div className="form-grid">
                   <label>
                     Результат
-                    <select
+                    <ChoiceSelect
                       value={reviewTasks[i]?.correctness || "unknown"}
                       onChange={(e) => {
                         reviewDirty.current = true;
@@ -750,7 +755,7 @@ export function AssignmentDetail({
                           {labels[k]}
                         </option>
                       ))}
-                    </select>
+                    </ChoiceSelect>
                   </label>
                   <label>
                     Обратная связь ученику
