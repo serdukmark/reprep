@@ -50,7 +50,8 @@ def apply(root, domain, port):
         lines = [s for s in lines if s.split('=', 1)[0].strip() not in values]
         lines += [k + '=' + str(v) for k, v in values.items()]
         env.write_text('\n'.join(lines) + '\n'); env.chmod(0o600)
-    update({'PUBLIC_BASE_URL': 'https://' + domain, 'APP_ENV': 'production',
+    update({'PUBLIC_BASE_URL': 'https://' + domain,
+            'ALLOWED_WEB_ORIGINS': '', 'APP_ENV': 'production',
             'DEMO_ENABLED': 'false', 'AI_SYNTHETIC_ONLY': 'true',
             'MAX_CA_BUNDLE': '/run/reprep-max-ca.pem' if (root/'max-ca.pem').stat().st_size else ''})
     print('Building client and server image', flush=True)
@@ -76,7 +77,7 @@ def apply(root, domain, port):
         raise ValueError('Hostname already appears in unmanaged Caddy configuration')
     if previous is not None and not previous.startswith('# Managed by reprep deployment\n'):
         raise ValueError('Existing snippet is not managed by reprep')
-    candidate = '# Managed by reprep deployment\n' + (root/'infra/vm/Caddyfile.example').read_text().replace('{$REPREP_DOMAIN}', domain + (', reprep.2-26-49-28.nip.io' if domain != 'reprep.2-26-49-28.nip.io' else '')).replace('{$REPREP_BIND_PORT}', str(port))
+    candidate = '# Managed by reprep deployment\n' + (root/'infra/vm/Caddyfile.example').read_text().replace('{$REPREP_DOMAIN}', domain).replace('{$REPREP_BIND_PORT}', str(port))
     (root/'caddy-before.txt').write_text(original)
     if caddy.read_text() != original:
         raise ValueError('Caddy was modified concurrently; rerun deployment')

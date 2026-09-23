@@ -1,0 +1,17 @@
+{
+  "canonical_ready": 200,
+  "primary_origin": {
+    "status": 401,
+    "code": "TELEGRAM_SIGNATURE"
+  },
+  "legacy_origin": {
+    "status": 403,
+    "code": "ORIGIN"
+  },
+  "foreign_origin": {
+    "status": 403,
+    "code": "ORIGIN"
+  },
+  "legacy_app_absent": true,
+  "telegram_primary_webhook": true
+}

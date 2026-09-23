@@ -13,7 +13,7 @@ import time
 from unittest.mock import patch
 import httpx
 
-ORIGIN='https://reprep.2-26-49-28.nip.io'
+ORIGIN='https://reprep.ru'
 SSH=['ssh','-i',str(Path.home()/'.ssh/jarvis_vm_ed25519'),'-o','IdentityAgent=none','-o','IdentitiesOnly=yes','-o','BatchMode=yes','-o','ConnectTimeout=10','root@2.26.49.28','docker exec -i reprep-app-1 python -']
 
 
@@ -187,7 +187,7 @@ if __name__=='__main__':
     if not args.apply:raise SystemExit('No action; --apply creates private synthetic records and invokes live AI.')
     original=socket.getaddrinfo
     def resolve(host,*rest,**kw):
-        if args.connect_ip and host in ('reprep.2-26-49-28.nip.io',b'reprep.2-26-49-28.nip.io'):host=args.connect_ip
+        if args.connect_ip and host in ('reprep.ru',b'reprep.ru'):host=args.connect_ip
         return original(host,*rest,**kw)
     try:
         with patch('socket.getaddrinfo',side_effect=resolve):run(args.connect_ip,args.network_only)

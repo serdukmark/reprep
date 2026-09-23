@@ -243,9 +243,9 @@ def create_app(settings=None, provider=None, run_worker=True):
         request.state.reference = reference
         # Enforce same-origin writes; non-browser authenticated clients do not send Origin.
         if request.method not in ('GET', 'HEAD', 'OPTIONS'):
-            origin = request.headers.get('origin')
-            allowed = cfg.public_base_url or f"{request.url.scheme}://{request.headers.get('host')}"
-            if origin and origin != allowed:
+            origins = request.headers.getlist('origin')
+            allowed = {cfg.public_base_url} if cfg.public_base_url else {f"{request.url.scheme}://{request.headers.get('host')}"}
+            if origins and (len(origins) != 1 or origins[0] not in allowed):
                 return JSONResponse({'error': {'code': 'ORIGIN', 'message': 'Недопустимый источник запроса', 'reference_id': reference}}, status_code=403)
         length = request.headers.get('content-length', '0')
         if not length.isdigit() or int(length) > 150_000:

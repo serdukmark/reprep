@@ -37,7 +37,7 @@ print('{}')''')
                 account['tokens']=tokens
         return result
     original_resolve=socket.getaddrinfo
-    def resolve(host,*args,**kw):return original_resolve('2.26.49.28' if host in ('reprep.2-26-49-28.nip.io',b'reprep.2-26-49-28.nip.io') else host,*args,**kw)
+    def resolve(host,*args,**kw):return original_resolve('2.26.49.28' if host in ('reprep.ru',b'reprep.ru') else host,*args,**kw)
     try:
         with patch('socket.getaddrinfo',side_effect=resolve),patch.object(rehearsal,'remote',side_effect=remote):
             evidence=rehearsal.run('2.26.49.28')

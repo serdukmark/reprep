@@ -11,7 +11,7 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 HOST = 'root@2.26.49.28'
-DOMAIN = 'reprep.2-26-49-28.nip.io'
+DOMAIN = 'reprep.ru'
 KEY = Path.home()/'.ssh/jarvis_vm_ed25519'
 FILES = ['Dockerfile', '.dockerignore', 'requirements.txt', 'package.json',
          'package-lock.json', 'tsconfig.json', 'vite.config.ts', 'apps',
