@@ -102,6 +102,9 @@ def apply(root, domain, port):
     print('HTTPS checks passed; registering MAX webhook', flush=True)
     run(compose + ['exec', '-T', 'app', 'python', '-m', 'apps.server.deployment', 'register'])
     run(compose + ['exec', '-T', 'app', 'python', '-m', 'apps.server.deployment', 'preflight'])
+    if any(line.strip() == 'TELEGRAM_BOT_ENABLED=true' for line in lines):
+        print('Registering and verifying Telegram webhook', flush=True)
+        run(compose + ['exec', '-T', 'app', 'python', '-m', 'apps.server.telegram_bot', 'setup'])
     current = Path('/opt/reprep/current')
     if current.exists() and not current.is_symlink():
         raise ValueError('Current path is not a managed symlink')

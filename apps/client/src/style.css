@@ -1734,3 +1734,11 @@ footer span:last-child {
   background: #fff1de;
   color: #854a0c;
 }
+
+.telegram-embedded .topbar {
+  padding-top: calc(var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, 0px));
+  height: calc(76px + var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, 0px));
+}
+.telegram-embedded .content {
+  padding-bottom: calc(24px + var(--tg-safe-area-inset-bottom, 0px) + var(--tg-content-safe-area-inset-bottom, 0px));
+}

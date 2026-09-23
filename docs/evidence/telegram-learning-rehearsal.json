@@ -395,8 +395,9 @@
   "test_sessions_revoked": true,
   "limitations": [
     "API sequence, not visual rehearsal",
-    "synthetic accounts provisioned by operator, not MAX authentication",
     "no provider faults injected into production",
-    "private synthetic records retained; test sessions revoked or expire after 30 minutes"
-  ]
+    "private synthetic records retained; test sessions revoked or expire after 30 minutes",
+    "Real Telegram client interaction not tested"
+  ],
+  "authentication": "Real HTTPS Telegram HMAC endpoint; operator-signed synthetic initData, not Telegram-client launch"
 }

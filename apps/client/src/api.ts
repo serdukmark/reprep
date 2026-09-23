@@ -1,3 +1,5 @@
+import { inTelegram } from "./max";
+const sessionKey = inTelegram ? "reprep.telegram.session" : "reprep.session";
 export type User = {
   id: string;
   role: "tutor" | "learner" | "guardian";
@@ -117,15 +119,15 @@ export type Material = {
 };
 let token = "";
 try {
-  token = sessionStorage.getItem("reprep.session") || "";
+  token = sessionStorage.getItem(sessionKey) || "";
 } catch {
   /* Embedded storage may be denied. Keep this session in memory. */
 }
 export function setToken(value: string) {
   token = value;
   try {
-    if (value) sessionStorage.setItem("reprep.session", value);
-    else sessionStorage.removeItem("reprep.session");
+    if (value) sessionStorage.setItem(sessionKey, value);
+    else sessionStorage.removeItem(sessionKey);
   } catch {
     /* Reload requires a new login, saved answers remain on server. */
   }

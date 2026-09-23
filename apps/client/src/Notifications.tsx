@@ -38,7 +38,7 @@ export function Notifications({ user }: { user: User }) {
   }
   return (
     <section className="card">
-      <h2>Напоминания в MAX</h2>
+      <h2>Напоминания в мессенджере</h2>
       {error && <p role="alert">{error}</p>}
       {notice && <p role="status">{notice}</p>}
       {settings && (
@@ -46,11 +46,11 @@ export function Notifications({ user }: { user: User }) {
           <p>
             {settings.bot_started
               ? "Диалог с ботом открыт."
-              : "Чтобы включить напоминания, войдите через MAX и откройте диалог с ботом."}
+              : "Чтобы включить напоминания, войдите через мессенджер и отправьте боту /start."}
           </p>
           {!settings.delivery_enabled && (
             <p>
-              Отправка в MAX сейчас выключена. Напоминания на главном экране
+              Отправка в мессенджер сейчас выключена. Напоминания на главном экране
               доступны.
             </p>
           )}

@@ -91,7 +91,8 @@ def enrich(schema,routes,base_url):
         'save_notifications':ok_result,
         'health':obj({'status':string}),
         'ready':obj({'ready':{'type':'boolean'},'checks':array(string),'external_services':string}),
-        'config':obj({'demo_enabled':{'type':'boolean'},'max_enabled':{'type':'boolean'},'assessment':string,'version':string}),
+        'config':obj({'demo_enabled':{'type':'boolean'},'max_enabled':{'type':'boolean'},'telegram_enabled':{'type':'boolean'},'assessment':string,'version':string}),
+        'telegram_webhook':obj({'ok':{'type':'boolean'},'status':string}),
         'max_webhook':obj({'ok':{'type':'boolean'},'status':string}),
         'attempts':obj({'items':array(obj({'id':string,'attempt':integer,'status':string,'submitted':string})),'next_offset':nullable(integer)}),
         'lessons':array(ref('StoredLesson')),
@@ -116,7 +117,7 @@ def enrich(schema,routes,base_url):
             if not op:continue
             roles=['tutor','learner'] if name=='tutor_requests' else ['guardian'] if name in {'accept_guardian','guardian_links','guardian_summary'} else ['tutor'] if name in tutors else ['learner'] if name in learners else ['tutor','learner','guardian'] if authenticated else ['MAX webhook'] if webhook else ['public']
             op['x-roles']=roles
-            if authenticated or webhook:op['security']=[{'MaxWebhookSecret' if webhook else 'SessionBearer':[]}]
+            if authenticated or webhook:op['security']=[{('TelegramWebhookSecret' if 'telegram' in route.path else 'MaxWebhookSecret') if webhook else 'SessionBearer':[]}]
             if authenticated:
                 for status in ('401','403','404'):op['responses'].setdefault(status,{'description':'Authorization, role or resource visibility error'})
             for status,response in op['responses'].items():
@@ -127,4 +128,5 @@ def enrich(schema,routes,base_url):
             if name=='reset' or route.path.startswith('/api/auth/') and name!='logout':
                 op['responses'].setdefault('200',{'description':'Session created'})['content']={'application/json':{'schema':ref('Session')}}
             if name=='ready':op['responses']['503']={'description':'Database unavailable','content':{'application/json':{'schema':obj({'ready':{'type':'boolean'},'checks':array(string),'external_services':string})}}}
+    schema['components']['securitySchemes']['TelegramWebhookSecret']={'type':'apiKey','in':'header','name':'X-Telegram-Bot-Api-Secret-Token'}
     return schema

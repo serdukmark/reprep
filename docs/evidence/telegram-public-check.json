@@ -1,0 +1,11 @@
+{
+  "bot_username": "MaxFuckYouBot",
+  "webhook_matches": true,
+  "pending_updates": 0,
+  "webhook_error_present": false,
+  "https_config": 200,
+  "telegram_enabled": true,
+  "forged_webhook": 401,
+  "forged_login": 401,
+  "embedding_allowed": true
+}

@@ -13,12 +13,14 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import ValidationError
 from .config import Settings
 from .db import initialize, connect, one, rows, dumps
-from .auth import token_hash, verify_max
+from .auth import token_hash, verify_max, verify_telegram
 from .models import (AssignmentInput, DraftInput, ReviewInput, InviteInput, TokenInput, ProfileInput, PlanInput, MessageInput, QuestionInput, QuestionAnswer, QuestionReview, GroupInput, GroupAssignment, GroupSchedule,
                      MaxLogin, LessonInput, MaterialInput, ReportInput, GenerationRequest, GeneratedWork)
 from .ai import ContextTooLarge, LocalRules, RemoteAdapter, OpenRouterAdapter, context_for, validate_analysis
 from .max_bot import public_origin, verify_webhook, accept_event, process_outbox
 from .service import uid, now, audit, seed, assignment_view, content_hash, progress
+
+from . import telegram_bot
 
 log = logging.getLogger('reprep')
 
@@ -37,6 +39,8 @@ def create_app(settings=None, provider=None, run_worker=True):
         raise RuntimeError('MAX bot requires token, public origin and bot ID; run setup check')
     if cfg.max_outbound_enabled and not cfg.max_bot_enabled:
         raise RuntimeError('MAX outbound requires bot enablement')
+    if cfg.telegram_enabled and (not cfg.telegram_token or not cfg.public_base_url):
+        raise RuntimeError('Telegram requires token and public origin')
     engine = provider or (OpenRouterAdapter(cfg.openrouter_key, cfg.openrouter_model) if cfg.openrouter_key and cfg.openrouter_model else RemoteAdapter(cfg.ai_url, cfg.ai_key) if cfg.ai_url and cfg.ai_data_approved else LocalRules())
 
     def claim_job():
@@ -201,6 +205,7 @@ def create_app(settings=None, provider=None, run_worker=True):
                     await asyncio.to_thread(queue_due_reminders,cfg)
                     last_reminders=time.time()
                 await asyncio.to_thread(process_outbox,cfg)
+                await asyncio.to_thread(telegram_bot.process_outbox,cfg)
             except asyncio.CancelledError:
                 raise
             except Exception:
@@ -214,7 +219,7 @@ def create_app(settings=None, provider=None, run_worker=True):
             with connect(cfg.database) as c:
                 seed(c)
         task = asyncio.create_task(worker()) if run_worker else None
-        bot_task = asyncio.create_task(bot_worker()) if run_worker and cfg.max_outbound_enabled else None
+        bot_task = asyncio.create_task(bot_worker()) if run_worker and (cfg.max_outbound_enabled or cfg.telegram_enabled) else None
         yield
         if bot_task:
             bot_task.cancel()
@@ -261,9 +266,9 @@ def create_app(settings=None, provider=None, run_worker=True):
         response.headers['X-Content-Type-Options'] = 'nosniff'
         response.headers['Referrer-Policy'] = 'no-referrer'
         response.headers['Cache-Control'] = 'no-store' if request.url.path.startswith('/api') else 'no-cache'
-        response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' https://st.max.ru; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self' https://max.ru https://*.max.ru https://*.oneme.ru"
+        response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' https://st.max.ru https://telegram.org; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self' https://max.ru https://*.max.ru https://*.oneme.ru https://web.telegram.org"
         if request.url.path == '/api/docs':
-            response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' data: https://fastapi.tiangolo.com; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self' https://max.ru https://*.max.ru https://*.oneme.ru"
+            response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' data: https://fastapi.tiangolo.com; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self' https://max.ru https://*.max.ru https://*.oneme.ru https://web.telegram.org"
         return response
 
     @app.exception_handler(HTTPException)
@@ -341,7 +346,7 @@ def create_app(settings=None, provider=None, run_worker=True):
 
     @app.get('/api/config')
     def config():
-        return {'demo_enabled': cfg.demo, 'max_enabled': bool(cfg.bot_token), 'assessment': engine.model if isinstance(engine, OpenRouterAdapter) else 'approved_adapter' if isinstance(engine, RemoteAdapter) else 'local_rules', 'version': '0.1.0'}
+        return {'demo_enabled': cfg.demo, 'max_enabled': bool(cfg.bot_token), 'telegram_enabled': cfg.telegram_enabled, 'assessment': engine.model if isinstance(engine, OpenRouterAdapter) else 'approved_adapter' if isinstance(engine, RemoteAdapter) else 'local_rules', 'version': '0.1.0'}
 
     @app.post('/api/max/webhook')
     async def max_webhook(request: Request):
@@ -356,6 +361,28 @@ def create_app(settings=None, provider=None, run_worker=True):
         except RuntimeError:
             fail(503,'MAX_QUEUE','Повторите доставку позже')
         return {'ok':True,'status':result}
+
+    @app.post('/api/telegram/webhook')
+    async def telegram_webhook(request: Request):
+        if not cfg.telegram_enabled:fail(404,'TELEGRAM_DISABLED','Бот не подключён')
+        if not telegram_bot.verify_webhook(request.headers,cfg):fail(401,'TELEGRAM_SECRET','Недопустимый запрос')
+        try:result=await asyncio.to_thread(telegram_bot.accept_event,cfg,await request.json())
+        except (ValueError,TypeError,AttributeError):fail(422,'TELEGRAM_UPDATE','Некорректное событие')
+        except RuntimeError:fail(503,'TELEGRAM_QUEUE','Повторите доставку позже')
+        return {'ok':True,'status':result}
+
+    @app.post('/api/auth/telegram')
+    def telegram_login(body: MaxLogin, request: Request, c=Depends(db)):
+        auth_rate(request)
+        if not cfg.telegram_enabled:fail(404,'TELEGRAM_DISABLED','Бот не подключён')
+        try:external_id=verify_telegram(body.init_data,cfg.telegram_token)
+        except (ValueError,KeyError,TypeError):fail(401,'TELEGRAM_SIGNATURE','Откройте приложение заново из Telegram')
+        u=one(c,'SELECT * FROM users WHERE external_id=?',(external_id,))
+        if not u:
+            id_=uid()
+            c.execute('INSERT INTO users(id,external_id,role,alias) VALUES(?,?,?,?)',(id_,external_id,body.role,body.alias))
+            u=one(c,'SELECT * FROM users WHERE id=?',(id_,))
+        return session(c,u)
 
     @app.post('/api/auth/demo/{persona}')
     def demo_login(persona: str, request: Request, c=Depends(db)):

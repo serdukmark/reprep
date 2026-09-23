@@ -111,7 +111,7 @@ class MaxAPI:
 def process_outbox(cfg, transport=None):
     if not cfg.max_outbound_enabled: return False
     with connect(cfg.database) as c:
-        item=one(c,"SELECT * FROM max_outbox WHERE status IN ('queued','sending') AND available_at<=? ORDER BY created LIMIT 1",(time.time(),))
+        item=one(c,"SELECT * FROM max_outbox WHERE id NOT LIKE 'telegram:%' AND status IN ('queued','sending') AND available_at<=? ORDER BY created LIMIT 1",(time.time(),))
         if not item: return False
         if item['id'].startswith('reminder:'):
             from .notifications import valid_reminder

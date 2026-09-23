@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { initializeMax, launchData, bindMaxBack } from "./max";
+import { initializeMax, launchData, bindMaxBack, inTelegram, inMax, platformName } from "./max";
 import { createRoot } from "react-dom/client";
 import {
   ArrowUpRight,
@@ -63,6 +63,7 @@ type Page =
 type Config = {
   demo_enabled: boolean;
   max_enabled: boolean;
+  telegram_enabled: boolean;
   assessment: string;
 };
 function App() {
@@ -349,7 +350,7 @@ function App() {
             <GraduationCap size={34} />
           </div>
           <h2>Ваше учебное пространство</h2>
-          <p>Начните с демонстрации или войдите через MAX.</p>
+          <p>Начните с демонстрации или откройте приложение в мессенджере.</p>
           {config?.demo_enabled && (
             <>
               <div className="notice">
@@ -386,13 +387,13 @@ function App() {
               </button>
             </>
           )}
-          {config?.max_enabled && (
+          {((inTelegram && config?.telegram_enabled) || (inMax && config?.max_enabled)) && (
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 action(async () => {
                   const data = await api<{ token: string; user: User }>(
-                    "/auth/max",
+                    inTelegram ? "/auth/telegram" : "/auth/max",
                     "POST",
                     {
                       init_data: launchData(),
@@ -402,7 +403,7 @@ function App() {
                   );
                   setToken(data.token);
                   setUser(data.user);
-                  history.replaceState(null, "", location.pathname);
+                  history.replaceState(null, "", location.pathname + (inTelegram ? "?platform=telegram" : ""));
                 });
               }}
             >
@@ -426,15 +427,19 @@ function App() {
                 </select>
               </label>
               <button className="primary full" disabled={busy}>
-                Войти через MAX
+                Войти через {platformName}
               </button>
             </form>
           )}
-          {!config?.demo_enabled && !config?.max_enabled && (
+          {!config?.demo_enabled && !config?.max_enabled && !config?.telegram_enabled && (
             <div className="notice">
               Вход ещё не настроен. Администратору нужно подключить MAX.
             </div>
           )}
+          {!inMax && !inTelegram && <div className="notice">
+            {config?.telegram_enabled && <p><a href="https://t.me/MaxFuckYouBot?startapp">Открыть RePrep в Telegram</a></p>}
+            {config?.max_enabled && <p><a href="https://max.ru/t792_hakaton_max_bot">Открыть RePrep в MAX</a></p>}
+          </div>}
           {error && (
             <div className="error" role="alert">
               {error}
@@ -535,7 +540,7 @@ function App() {
             <span>
               {user.alias}
               <small>
-                {user.demo ? "Демонстрационный аккаунт" : "Аккаунт MAX"}
+                {user.demo ? "Демонстрационный аккаунт" : `Аккаунт ${platformName}`}
               </small>
             </span>
             <ChevronRight size={15} />
