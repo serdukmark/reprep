@@ -210,3 +210,7 @@ The demo must:
 - avoid dependency on an unpredictable live AI answer for the only demonstration path;
 - still demonstrate the real AI integration honestly;
 - provide a backup recording if external services fail.
+
+## Registration role selection — 2026-09-23
+
+[CONFIRMED] По просьбе владельца нативный выпадающий список заменён тремя карточками ролей. Иконка, короткое пояснение и галочка выбранной роли; нажатие по всей карточке. Семантика fieldset/legend и native radio сохраняет клавиатурный выбор и доступность. Выбор блокируется на время отправки формы. Проверка: npm run build; после выкатки открыть регистрацию в Telegram или MAX. Правила назначения роли и серверные права не менялись.

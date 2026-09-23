@@ -1742,3 +1742,103 @@ footer span:last-child {
 .telegram-embedded .content {
   padding-bottom: calc(24px + var(--tg-safe-area-inset-bottom, 0px) + var(--tg-content-safe-area-inset-bottom, 0px));
 }
+
+/* Native radios keep keyboard and screen-reader semantics inside touch cards. */
+.registration-roles {
+  border: 0;
+  padding: 0;
+  margin: 4px 0 22px;
+  min-width: 0;
+}
+.registration-roles legend {
+  padding: 0;
+  margin-bottom: 12px;
+  color: #56614f;
+  font-size: 13px;
+  font-weight: 500;
+}
+.registration-role {
+  position: relative;
+  display: block;
+  margin: 0 0 9px;
+  cursor: pointer;
+}
+.registration-role:last-child { margin-bottom: 0; }
+.registration-role input[type="radio"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.registration-role-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 76px;
+  padding: 13px 14px;
+  border: 1px solid #e1e5db;
+  border-radius: 14px;
+  background: #fafbf8;
+}
+.registration-role-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: #eef1e9;
+  color: #66765d;
+}
+.registration-role-copy { flex: 1; min-width: 0; }
+.registration-role-copy strong {
+  display: block;
+  color: #2e3d29;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.registration-role-copy > span {
+  display: block;
+  margin-top: 3px;
+  color: #687160;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.registration-role-check {
+  display: grid;
+  place-items: center;
+  flex: 0 0 20px;
+  height: 20px;
+  border: 1px solid #bcc6b2;
+  border-radius: 50%;
+  background: #fff;
+  color: transparent;
+}
+.registration-role input:checked + .registration-role-card {
+  border-color: #64834e;
+  background: #f0f5e9;
+  box-shadow: 0 0 0 1px #64834e;
+}
+.registration-role input:checked + .registration-role-card .registration-role-icon {
+  background: #dfeacd;
+  color: #42612f;
+}
+.registration-role input:checked + .registration-role-card .registration-role-check {
+  border-color: #52713d;
+  background: #52713d;
+  color: #fff;
+}
+.registration-role input:focus-visible + .registration-role-card {
+  outline: 3px solid #749d50;
+  outline-offset: 3px;
+}
+.registration-role input:disabled + .registration-role-card { opacity: .6; cursor: wait; }
+@media (hover: hover) {
+  .registration-role:hover .registration-role-card { border-color: #80936e; }
+}

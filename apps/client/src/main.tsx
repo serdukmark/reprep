@@ -415,17 +415,32 @@ function App() {
                   maxLength={60}
                 />
               </label>
-              <label>
-                Ваша роль
-                <select
-                  value={role}
-                  onChange={(e) => setRole(e.target.value as typeof role)}
-                >
-                  <option value="tutor">Преподаватель</option>
-                  <option value="learner">Ученик</option>
-                  <option value="guardian">Родитель</option>
-                </select>
-              </label>
+              <fieldset className="registration-roles" disabled={busy}>
+                <legend>Как вы будете пользоваться RePrep?</legend>
+                {([
+                  { value: "tutor", title: "Преподаватель", description: "Назначать задания и помогать ученикам", icon: BookOpen },
+                  { value: "learner", title: "Ученик", description: "Решать задания и видеть свой прогресс", icon: GraduationCap },
+                  { value: "guardian", title: "Родитель", description: "Следить за обучением ребёнка", icon: Users },
+                ] as const).map(({ value, title, description, icon: Icon }) => (
+                  <label className="registration-role" key={value}>
+                    <input
+                      type="radio"
+                      name="registration-role"
+                      value={value}
+                      checked={role === value}
+                      onChange={() => setRole(value)}
+                    />
+                    <span className="registration-role-card">
+                      <span className="registration-role-icon"><Icon size={22} aria-hidden="true" /></span>
+                      <span className="registration-role-copy">
+                        <strong>{title}</strong>
+                        <span>{description}</span>
+                      </span>
+                      <span className="registration-role-check" aria-hidden="true"><Check size={13} strokeWidth={3} /></span>
+                    </span>
+                  </label>
+                ))}
+              </fieldset>
               <button className="primary full" disabled={busy}>
                 Войти через {platformName}
               </button>
