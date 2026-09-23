@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, choose } from "./audit-fixtures";
 
 test("tutor creates group, assigns copies, and learner receives only own assignment", async ({
   browser,
@@ -17,20 +17,19 @@ test("tutor creates group, assigns copies, and learner receives only own assignm
   await expect(
     tutor.getByText("Группа сохранена", { exact: true }),
   ).toBeVisible();
-  const group = tutor
-    .locator("article")
-    .filter({
-      has: tutor.getByRole("heading", {
-        name: "Совместная практика",
-        exact: true,
-      }),
-    });
-  await group
-    .getByRole("combobox", {
+  const group = tutor.locator("article").filter({
+    has: tutor.getByRole("heading", {
+      name: "Совместная практика",
+      exact: true,
+    }),
+  });
+  await choose(
+    group.getByRole("combobox", {
       name: "Работа для группы Совместная практика",
       exact: true,
-    })
-    .selectOption("demo-assignment");
+    }),
+    "demo-assignment",
+  );
   await group
     .getByRole("button", {
       name: "Назначить работу всем 2 участникам",

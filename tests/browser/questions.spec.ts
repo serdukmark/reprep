@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./audit-fixtures";
 
 test("question remains visible on AI outage and teacher can reply without losing it", async ({
   browser,

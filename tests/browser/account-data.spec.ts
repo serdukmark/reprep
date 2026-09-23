@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./audit-fixtures";
 import { readFile } from "node:fs/promises";
 
 test("learner can download own data and cancel deletion before operator processing", async ({

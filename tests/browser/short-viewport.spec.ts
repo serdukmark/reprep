@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./audit-fixtures";
 test("account controls remain reachable in short desktop and mobile navigation", async ({
   page,
 }) => {
@@ -9,7 +9,10 @@ test("account controls remain reachable in short desktop and mobile navigation",
     .click();
   await page.getByRole("button", { name: /Алекс • демо/ }).click();
   await expect(
-    page.getByRole("heading", { name: "Напоминания в MAX", exact: true }),
+    page.getByRole("heading", {
+      name: "Напоминания в мессенджере",
+      exact: true,
+    }),
   ).toBeVisible();
   await page.setViewportSize({ width: 390, height: 600 });
   await page.getByRole("button", { name: "Открыть меню", exact: true }).click();

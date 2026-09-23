@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, choose } from "./audit-fixtures";
 test("confirmed gap opens private practice draft and learner reports usefulness", async ({
   browser,
   request,
@@ -83,14 +83,12 @@ test("confirmed gap opens private practice draft and learner reports usefulness"
     .click();
   await tutor.getByRole("button", { name: "Ученики", exact: true }).click();
   await tutor.getByRole("button", { name: /Саша • демо/ }).click();
-  const card = tutor
-    .locator(".recommendations .work-task")
-    .filter({
-      has: tutor.getByRole("heading", {
-        name: "Навык рекомендации",
-        exact: true,
-      }),
-    });
+  const card = tutor.locator(".recommendations .work-task").filter({
+    has: tutor.getByRole("heading", {
+      name: "Навык рекомендации",
+      exact: true,
+    }),
+  });
   await card.getByRole("button", { name: "Подготовить тренировку" }).click();
   await expect(
     tutor.getByRole("heading", { name: "Редактирование работы", exact: true }),
@@ -111,9 +109,10 @@ test("confirmed gap opens private practice draft and learner reports usefulness"
   await learner.goto("/");
   await learner.getByRole("button", { name: "Я ученик", exact: true }).click();
   await learner.getByRole("button", { name: new RegExp(title) }).click();
-  await learner
-    .getByRole("combobox", { name: "Тип отзыва", exact: true })
-    .selectOption("useful");
+  await choose(
+    learner.getByRole("combobox", { name: "Тип отзыва", exact: true }),
+    "useful",
+  );
   await learner
     .getByLabel("Комментарий к разбору", { exact: true })
     .fill("Стало понятнее");
@@ -125,9 +124,10 @@ test("confirmed gap opens private practice draft and learner reports usefulness"
       exact: true,
     }),
   ).toBeVisible();
-  await learner
-    .getByRole("combobox", { name: "Тип отзыва", exact: true })
-    .selectOption("harmful_feedback");
+  await choose(
+    learner.getByRole("combobox", { name: "Тип отзыва", exact: true }),
+    "harmful_feedback",
+  );
   await learner
     .getByLabel("Комментарий к разбору", { exact: true })
     .fill("Синтетическая жалоба");

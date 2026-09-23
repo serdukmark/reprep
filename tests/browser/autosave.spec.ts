@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./audit-fixtures";
 
 test("answers autosave and survive reload without the save button", async ({
   page,

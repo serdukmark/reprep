@@ -56,6 +56,7 @@ export type Submission = {
   hints?: Record<string, string>;
 };
 export type Assignment = {
+  client_id?: string;
   lesson_id?: string;
   id: string;
   title: string;

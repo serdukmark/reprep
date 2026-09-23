@@ -1,0 +1,509 @@
+{
+  "stats": {
+    "startTime": "2026-09-23T23:40:57.099Z",
+    "duration": 407979.16000000003,
+    "expected": 70,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "learner can download own data and cancel deletion before operator processing",
+      "file": "account-data.spec.ts",
+      "line": 4,
+      "status": "expected",
+      "duration_ms": 3811
+    },
+    {
+      "title": "pupil TXT survives autosave, submission and tutor return without rewriting history",
+      "file": "answer-files.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 16955
+    },
+    {
+      "title": "learner: real browser identity cannot fetch another learner or privileged resources",
+      "file": "audit-access.spec.ts",
+      "line": 36,
+      "status": "expected",
+      "duration_ms": 2887
+    },
+    {
+      "title": "guardian: real browser identity cannot fetch another learner or privileged resources",
+      "file": "audit-access.spec.ts",
+      "line": 36,
+      "status": "expected",
+      "duration_ms": 3973
+    },
+    {
+      "title": "colleague: real browser identity cannot fetch another learner or privileged resources",
+      "file": "audit-access.spec.ts",
+      "line": 36,
+      "status": "expected",
+      "duration_ms": 1858
+    },
+    {
+      "title": "AUD-003 legacy scheduled lesson appears on dashboard and matches schedule",
+      "file": "audit-access.spec.ts",
+      "line": 94,
+      "status": "expected",
+      "duration_ms": 2045
+    },
+    {
+      "title": "tutor: export own data and cancel deletion",
+      "file": "audit-account-roles.spec.ts",
+      "line": 9,
+      "status": "expected",
+      "duration_ms": 1384
+    },
+    {
+      "title": "guardian: export own data and cancel deletion",
+      "file": "audit-account-roles.spec.ts",
+      "line": 9,
+      "status": "expected",
+      "duration_ms": 1114
+    },
+    {
+      "title": "outsider: export own data and cancel deletion",
+      "file": "audit-account-roles.spec.ts",
+      "line": 9,
+      "status": "expected",
+      "duration_ms": 1653
+    },
+    {
+      "title": "AI UNAVAILABLE: submission survives refresh and teacher reaches verified outcome",
+      "file": "audit-ai.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 13269
+    },
+    {
+      "title": "AI EMPTY: submission survives refresh and teacher reaches verified outcome",
+      "file": "audit-ai.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 6003
+    },
+    {
+      "title": "AI GARBAGE: submission survives refresh and teacher reaches verified outcome",
+      "file": "audit-ai.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 7878
+    },
+    {
+      "title": "AI SLOW: submission survives refresh and teacher reaches verified outcome",
+      "file": "audit-ai.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 12130
+    },
+    {
+      "title": "MAX simulator registration role Преподаватель and durable logout",
+      "file": "audit-auth.spec.ts",
+      "line": 28,
+      "status": "expected",
+      "duration_ms": 1220
+    },
+    {
+      "title": "MAX simulator registration role Ученик and durable logout",
+      "file": "audit-auth.spec.ts",
+      "line": 28,
+      "status": "expected",
+      "duration_ms": 1217
+    },
+    {
+      "title": "MAX simulator registration role Родитель and durable logout",
+      "file": "audit-auth.spec.ts",
+      "line": 28,
+      "status": "expected",
+      "duration_ms": 1015
+    },
+    {
+      "title": "MAX simulator rejects expired identity",
+      "file": "audit-auth.spec.ts",
+      "line": 91,
+      "status": "expected",
+      "duration_ms": 1586
+    },
+    {
+      "title": "MAX simulator rejects duplicate identity",
+      "file": "audit-auth.spec.ts",
+      "line": 91,
+      "status": "expected",
+      "duration_ms": 941
+    },
+    {
+      "title": "MAX simulator rejects forged identity",
+      "file": "audit-auth.spec.ts",
+      "line": 91,
+      "status": "expected",
+      "duration_ms": 1000
+    },
+    {
+      "title": "Telegram simulator registration role Преподаватель and durable logout",
+      "file": "audit-auth.spec.ts",
+      "line": 28,
+      "status": "expected",
+      "duration_ms": 4328
+    },
+    {
+      "title": "Telegram simulator registration role Ученик and durable logout",
+      "file": "audit-auth.spec.ts",
+      "line": 28,
+      "status": "expected",
+      "duration_ms": 6264
+    },
+    {
+      "title": "Telegram simulator registration role Родитель and durable logout",
+      "file": "audit-auth.spec.ts",
+      "line": 28,
+      "status": "expected",
+      "duration_ms": 3377
+    },
+    {
+      "title": "Telegram simulator rejects expired identity",
+      "file": "audit-auth.spec.ts",
+      "line": 91,
+      "status": "expected",
+      "duration_ms": 845
+    },
+    {
+      "title": "Telegram simulator rejects duplicate identity",
+      "file": "audit-auth.spec.ts",
+      "line": 91,
+      "status": "expected",
+      "duration_ms": 1498
+    },
+    {
+      "title": "Telegram simulator rejects forged identity",
+      "file": "audit-auth.spec.ts",
+      "line": 91,
+      "status": "expected",
+      "duration_ms": 1979
+    },
+    {
+      "title": "all task types validate, preserve Unicode and reject empty form without sending",
+      "file": "audit-boundaries.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 6498
+    },
+    {
+      "title": "learner preserves answer when session expires and rejects stale writes from a second tab",
+      "file": "audit-boundaries.spec.ts",
+      "line": 103,
+      "status": "expected",
+      "duration_ms": 13508
+    },
+    {
+      "title": "AUD-001 named choice control is keyboard-accessible and saves a new tutor draft",
+      "file": "audit-choices.spec.ts",
+      "line": 2,
+      "status": "expected",
+      "duration_ms": 2200
+    },
+    {
+      "title": "choice popup handles long labels on narrow screen and keyboard selection",
+      "file": "audit-choices.spec.ts",
+      "line": 47,
+      "status": "expected",
+      "duration_ms": 1707
+    },
+    {
+      "title": "draft preview and task removal, concurrent teacher edits cannot overwrite each other",
+      "file": "audit-editing.spec.ts",
+      "line": 2,
+      "status": "expected",
+      "duration_ms": 3986
+    },
+    {
+      "title": "group editing changes title and membership, bulk double click creates one copy per member",
+      "file": "audit-editing.spec.ts",
+      "line": 69,
+      "status": "expected",
+      "duration_ms": 1330
+    },
+    {
+      "title": "profile: blank and long input, Unicode, offline retry, double click and reload",
+      "file": "audit-forms.spec.ts",
+      "line": 4,
+      "status": "expected",
+      "duration_ms": 1198
+    },
+    {
+      "title": "workspace: blank and long input, Unicode, offline retry, double click and reload",
+      "file": "audit-forms.spec.ts",
+      "line": 4,
+      "status": "expected",
+      "duration_ms": 1610
+    },
+    {
+      "title": "group: blank and long input, Unicode, offline retry, double click and reload",
+      "file": "audit-forms.spec.ts",
+      "line": 4,
+      "status": "expected",
+      "duration_ms": 1029
+    },
+    {
+      "title": "lesson: blank and long input, Unicode, offline retry, double click and reload",
+      "file": "audit-forms.spec.ts",
+      "line": 4,
+      "status": "expected",
+      "duration_ms": 1310
+    },
+    {
+      "title": "material: blank and long input, Unicode, offline retry, double click and reload",
+      "file": "audit-forms.spec.ts",
+      "line": 4,
+      "status": "expected",
+      "duration_ms": 2109
+    },
+    {
+      "title": "invalid generation leaves material intact and retry available after reload",
+      "file": "audit-generation.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 7136
+    },
+    {
+      "title": "learner: revoked invitation cannot be accepted, including after refresh",
+      "file": "audit-invitations.spec.ts",
+      "line": 4,
+      "status": "expected",
+      "duration_ms": 1603
+    },
+    {
+      "title": "guardian: revoked invitation cannot be accepted, including after refresh",
+      "file": "audit-invitations.spec.ts",
+      "line": 4,
+      "status": "expected",
+      "duration_ms": 1952
+    },
+    {
+      "title": "colleague: revoked invitation cannot be accepted, including after refresh",
+      "file": "audit-invitations.spec.ts",
+      "line": 4,
+      "status": "expected",
+      "duration_ms": 1661
+    },
+    {
+      "title": "learner: expired invitation cannot be accepted, including after refresh",
+      "file": "audit-invitations.spec.ts",
+      "line": 4,
+      "status": "expected",
+      "duration_ms": 2996
+    },
+    {
+      "title": "guardian: expired invitation cannot be accepted, including after refresh",
+      "file": "audit-invitations.spec.ts",
+      "line": 4,
+      "status": "expected",
+      "duration_ms": 2189
+    },
+    {
+      "title": "colleague: expired invitation cannot be accepted, including after refresh",
+      "file": "audit-invitations.spec.ts",
+      "line": 4,
+      "status": "unexpected",
+      "duration_ms": 14618
+    },
+    {
+      "title": "AUD-005 retry after server committed draft but response was lost does not create duplicate",
+      "file": "audit-lost-response.spec.ts",
+      "line": 2,
+      "status": "expected",
+      "duration_ms": 2488
+    },
+    {
+      "title": "tutor exports selected progress JSON and sees truthful empty analytics",
+      "file": "audit-progress-export.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 1230
+    },
+    {
+      "title": "AUD-004 rejected work shows teacher reason and does not create progress",
+      "file": "audit-rejection.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 7003
+    },
+    {
+      "title": "oversized AI context retains uploaded work for manual review without unsafe retry",
+      "file": "audit-submissions.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 6489
+    },
+    {
+      "title": "two learners submit concurrently and each report category handles validation and network loss",
+      "file": "audit-submissions.spec.ts",
+      "line": 69,
+      "status": "expected",
+      "duration_ms": 11193
+    },
+    {
+      "title": "skill graph refuses cycles and dangling edges, then saves corrected graph",
+      "file": "audit-validation.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 1866
+    },
+    {
+      "title": "material rejects bad extension, empty, oversize, NUL and invalid UTF8 before upload",
+      "file": "audit-validation.spec.ts",
+      "line": 66,
+      "status": "expected",
+      "duration_ms": 2034
+    },
+    {
+      "title": "answers autosave and survive reload without the save button",
+      "file": "autosave.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 7013
+    },
+    {
+      "title": "catalog tutor offer leads to learner request and accepted study relationship",
+      "file": "catalog.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 8050
+    },
+    {
+      "title": "provider outage and lost polling recover to visible manual review",
+      "file": "failure.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 27077
+    },
+    {
+      "title": "material generation stays a draft until tutor publishes and includes its source",
+      "file": "generation-live.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 11616
+    },
+    {
+      "title": "tutor creates group, assigns copies, and learner receives only own assignment",
+      "file": "groups.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 4703
+    },
+    {
+      "title": "guardian invitation opens only read-only summary and tutor can revoke it",
+      "file": "guardian.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 33072
+    },
+    {
+      "title": "official Bridge snapshot emits back/closing events and rejects foreign-origin back",
+      "file": "max-sdk.spec.ts",
+      "line": 6,
+      "status": "expected",
+      "duration_ms": 2364
+    },
+    {
+      "title": "embedded storage denial does not prevent login",
+      "file": "max.spec.ts",
+      "line": 8,
+      "status": "expected",
+      "duration_ms": 6370
+    },
+    {
+      "title": "MAX URL authentication and iframe Bridge lifecycle (simulated client)",
+      "file": "max.spec.ts",
+      "line": 27,
+      "status": "expected",
+      "duration_ms": 3605
+    },
+    {
+      "title": "teacher plan is readable by pupil, and assignment discussion survives reload",
+      "file": "plan-discussion.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 9380
+    },
+    {
+      "title": "question remains visible on AI outage and teacher can reply without losing it",
+      "file": "questions.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 12153
+    },
+    {
+      "title": "confirmed gap opens private practice draft and learner reports usefulness",
+      "file": "recommendation-feedback.spec.ts",
+      "line": 2,
+      "status": "expected",
+      "duration_ms": 10611
+    },
+    {
+      "title": "return arrives without reload; resubmission starts from saved original and archive stays immutable",
+      "file": "resubmission.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 13072
+    },
+    {
+      "title": "profile, invitation consent, disabled MAX delivery and calendar download",
+      "file": "settings-calendar.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 3893
+    },
+    {
+      "title": "account controls remain reachable in short desktop and mobile navigation",
+      "file": "short-viewport.spec.ts",
+      "line": 2,
+      "status": "expected",
+      "duration_ms": 1132
+    },
+    {
+      "title": "tutor defines acyclic skill links and learner can inspect saved graph",
+      "file": "skill-graph.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 3892
+    },
+    {
+      "title": "tutor uploads TXT, learner downloads the original, tutor changes lesson status",
+      "file": "team-features.spec.ts",
+      "line": 4,
+      "status": "expected",
+      "duration_ms": 9699
+    },
+    {
+      "title": "work list separates overdue, active and complete; builder persists own lesson link",
+      "file": "work-status.spec.ts",
+      "line": 2,
+      "status": "expected",
+      "duration_ms": 4749
+    },
+    {
+      "title": "tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress",
+      "file": "workflow.spec.ts",
+      "line": 2,
+      "status": "expected",
+      "duration_ms": 4611
+    },
+    {
+      "title": "schedule, private payment note, material link and revocable invite",
+      "file": "workflow.spec.ts",
+      "line": 117,
+      "status": "expected",
+      "duration_ms": 3329
+    },
+    {
+      "title": "colleagues share template, create own draft and lose library access after removal",
+      "file": "workspaces.spec.ts",
+      "line": 3,
+      "status": "expected",
+      "duration_ms": 3190
+    }
+  ]
+}

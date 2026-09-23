@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, choose } from "./audit-fixtures";
 
 test("provider outage and lost polling recover to visible manual review", async ({
   browser,
@@ -17,10 +17,12 @@ test("provider outage and lost polling recover to visible manual review", async 
   await tutor.getByRole("button", { name: "Создать задание" }).click();
   const title = "Отказ AI " + Date.now();
   await tutor.getByLabel("Название работы").fill(title);
-  await tutor.getByLabel("Ученик", { exact: true }).selectOption("demo-link");
+  await choose(tutor.getByLabel("Ученик", { exact: true }), "demo-link");
   await tutor.getByLabel("Условие", { exact: true }).fill("Решите 3x + 7 = 22");
   await tutor.getByLabel("Эталонный ответ", { exact: true }).fill("5");
   await tutor.getByLabel("Навык", { exact: true }).fill("Уравнения");
+  if (process.env.E2E_AUDIT === "1")
+    await tutor.getByLabel("Инструкция ученику").fill("AUD_AI_UNAVAILABLE");
   await tutor.getByRole("button", { name: "Назначить ученику" }).click();
   await expect(tutor.getByRole("heading", { name: title })).toBeVisible();
   await learner.goto("/");
@@ -61,9 +63,10 @@ test("provider outage and lost polling recover to visible manual review", async 
   await expect(
     tutor.getByRole("button", { name: "Подтвердить разбор", exact: true }),
   ).toHaveCount(0);
-  await tutor
-    .getByRole("combobox", { name: "Результат", exact: true })
-    .selectOption("correct");
+  await choose(
+    tutor.getByRole("combobox", { name: "Результат", exact: true }),
+    "correct",
+  );
   await tutor
     .getByLabel("Обратная связь ученику")
     .fill("Ответ проверен преподавателем: верно.");

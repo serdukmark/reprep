@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./audit-fixtures";
 test.skip(
   !process.env.E2E_MAX_SDK_PATH,
   "Provide an explicitly downloaded official Bridge snapshot",

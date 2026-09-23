@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, choose } from "./audit-fixtures";
 
 test("return arrives without reload; resubmission starts from saved original and archive stays immutable", async ({
   browser,
@@ -10,7 +10,7 @@ test("return arrives without reload; resubmission starts from saved original and
   const title = "Повторная попытка " + Date.now();
   await tutor.getByRole("button", { name: "Создать задание" }).click();
   await tutor.getByLabel("Название работы").fill(title);
-  await tutor.getByLabel("Ученик", { exact: true }).selectOption("demo-link");
+  await choose(tutor.getByLabel("Ученик", { exact: true }), "demo-link");
   await tutor.getByLabel("Условие", { exact: true }).fill("Решите 3x + 7 = 22");
   await tutor.getByLabel("Эталонный ответ", { exact: true }).fill("5");
   await tutor.getByLabel("Навык", { exact: true }).fill("Уравнения");

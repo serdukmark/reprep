@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./audit-fixtures";
 import { createHmac } from "node:crypto";
 test.skip(
   process.env.E2E_MAX_SIM !== "true",
@@ -17,6 +17,10 @@ test("embedded storage denial does not prevent login", async ({ page }) => {
   await page.getByRole("button", { name: "Я ученик", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Ваш следующий шаг." }),
+  ).toBeVisible();
+  await page.reload();
+  await expect(
+    page.getByRole("button", { name: "Я ученик", exact: true }),
   ).toBeVisible();
 });
 

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./audit-fixtures";
 import { readFile } from "node:fs/promises";
 test("profile, invitation consent, disabled MAX delivery and calendar download", async ({
   browser,
@@ -28,7 +28,7 @@ test("profile, invitation consent, disabled MAX delivery and calendar download",
   await expect(learner.getByLabel("О ближайших занятиях")).toBeDisabled();
   await expect(
     learner.getByText(
-      "Отправка в MAX сейчас выключена. Напоминания на главном экране доступны.",
+      "Отправка в мессенджер сейчас выключена. Напоминания на главном экране доступны.",
     ),
   ).toBeVisible();
   await learner.getByLabel("Код приглашения").fill(first);

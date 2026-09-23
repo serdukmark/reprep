@@ -6,7 +6,7 @@ type Props = React.SelectHTMLAttributes<HTMLSelectElement>;
 export function ChoiceSelect({ children, value, defaultValue, onChange, disabled, className = "", ...props }: Props) {
   const options = React.Children.toArray(children).filter(React.isValidElement).map((child) => {
     const option = child as React.ReactElement<{ value: string | number; children: React.ReactNode; disabled?: boolean }>;
-    return { value: String(option.props.value ?? ""), label: option.props.children, disabled: !!option.props.disabled };
+    return { value: String(option.props.value ?? React.Children.toArray(option.props.children).join("")), label: option.props.children, disabled: !!option.props.disabled };
   });
   const [local, setLocal] = useState(String(defaultValue ?? options[0]?.value ?? ""));
   const selected = String(value ?? local);
@@ -19,6 +19,13 @@ export function ChoiceSelect({ children, value, defaultValue, onChange, disabled
   const native = useRef<HTMLSelectElement>(null);
   const popup = useRef<HTMLDivElement>(null);
   const id = useId();
+  const [accessibleLabel, setAccessibleLabel] = useState(props["aria-label"] ?? "");
+  useLayoutEffect(() => {
+    if (props["aria-label"]) { setAccessibleLabel(props["aria-label"]); return; }
+    const label = native.current?.closest("label")?.cloneNode(true) as HTMLElement | undefined;
+    label?.querySelectorAll(".choice-select").forEach((element) => element.remove());
+    setAccessibleLabel(label?.textContent?.trim() || "Выберите вариант");
+  }, [props["aria-label"], children]);
   function close() { setOpen(false); button.current?.focus(); }
   function choose(i: number) {
     const option = options[i];
@@ -65,14 +72,14 @@ export function ChoiceSelect({ children, value, defaultValue, onChange, disabled
       onInvalid={(event) => { event.preventDefault(); button.current?.focus(); setActive(index); setOpen(true); }}>
       {children}
     </select>
-    <button ref={button} type="button" className="choice-trigger" disabled={disabled || !options.length}
-      aria-label={props["aria-label"]} aria-haspopup="listbox" aria-expanded={open} aria-controls={open ? id : undefined}
+    <button ref={button} type="button" role="combobox" className="choice-trigger" disabled={disabled || !options.length}
+      aria-label={accessibleLabel} aria-required={props.required || undefined} aria-haspopup="listbox" aria-expanded={open} aria-controls={open ? id : undefined}
       onClick={() => { setActive(index); setOpen(!open); }}
       onKeyDown={(event) => { if (["ArrowDown", "ArrowUp"].includes(event.key)) { event.preventDefault(); setActive(index); setOpen(true); } }}>
       <span>{current?.label ?? "Нет доступных вариантов"}</span><ChevronDown size={17} aria-hidden="true" />
     </button>
     {open && createPortal(<div ref={popup} id={id} role="listbox" tabIndex={-1} className="choice-options" style={position}
-      aria-label={props["aria-label"] ?? "Выберите вариант"} aria-activedescendant={`${id}-${active}`}
+      aria-label={accessibleLabel || "Выберите вариант"} aria-activedescendant={`${id}-${active}`}
       onKeyDown={(event) => {
         if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); close(); }
         else if (event.key === "Tab") { event.preventDefault(); close(); }

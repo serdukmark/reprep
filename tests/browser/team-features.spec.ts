@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, choose } from "./audit-fixtures";
 import { readFile } from "node:fs/promises";
 
 test("tutor uploads TXT, learner downloads the original, tutor changes lesson status", async ({
@@ -11,9 +11,10 @@ test("tutor uploads TXT, learner downloads the original, tutor changes lesson st
   await tutor.getByRole("button", { name: "Материалы", exact: true }).click();
   await tutor.getByRole("button", { name: "Добавить материал" }).click();
   await tutor.getByLabel("Название", { exact: true }).fill("Конспект TXT");
-  await tutor
-    .getByRole("combobox", { name: "Ученик", exact: true })
-    .selectOption("demo-link");
+  await choose(
+    tutor.getByRole("combobox", { name: "Ученик", exact: true }),
+    "demo-link",
+  );
   const text =
     "Чтобы сохранить равенство, выполните одинаковую операцию с обеими частями.";
   await tutor.getByLabel("Или файл TXT").setInputFiles({
@@ -21,9 +22,10 @@ test("tutor uploads TXT, learner downloads the original, tutor changes lesson st
     mimeType: "text/plain",
     buffer: Buffer.from(text),
   });
-  await tutor
-    .getByRole("combobox", { name: "Задание", exact: true })
-    .selectOption("demo-assignment");
+  await choose(
+    tutor.getByRole("combobox", { name: "Задание", exact: true }),
+    "demo-assignment",
+  );
   await tutor.getByRole("button", { name: "Сохранить", exact: true }).click();
   await expect(
     tutor.getByRole("button", { name: "Скачать summary.txt" }),
@@ -37,13 +39,13 @@ test("tutor uploads TXT, learner downloads the original, tutor changes lesson st
   expect(download.suggestedFilename()).toBe("summary.txt");
   expect(await readFile((await download.path())!, "utf8")).toBe(text);
   await tutor.getByRole("button", { name: "Расписание", exact: true }).click();
-  await tutor
-    .getByRole("combobox", { name: "Статус занятия" })
-    .first()
-    .selectOption("completed");
+  await choose(
+    tutor.getByRole("combobox", { name: "Статус занятия" }).first(),
+    "completed",
+  );
   await expect(
     tutor.getByRole("combobox", { name: "Статус занятия" }).first(),
-  ).toHaveValue("completed");
+  ).toHaveText("Проведено");
   await learner
     .getByRole("button", { name: "Расписание", exact: true })
     .click();

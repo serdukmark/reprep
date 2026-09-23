@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, choose } from "./audit-fixtures";
 
 test("colleagues share template, create own draft and lose library access after removal", async ({
   browser,
@@ -36,9 +36,13 @@ test("colleagues share template, create own draft and lose library access after 
     .getByRole("button", { name: "Пригласить коллегу", exact: true })
     .click();
   const code = await owner.getByLabel("Код для коллеги").inputValue();
-  await owner
-    .getByRole("combobox", { name: "Моя работа для шаблона", exact: true })
-    .selectOption("demo-assignment");
+  await choose(
+    owner.getByRole("combobox", {
+      name: "Моя работа для шаблона",
+      exact: true,
+    }),
+    "demo-assignment",
+  );
   await owner.getByRole("button", { name: "Поделиться с участниками" }).click();
   await colleague.goto("/");
   await colleague
@@ -52,9 +56,13 @@ test("colleagues share template, create own draft and lose library access after 
   await expect(
     colleague.getByRole("button", { name: "Создать мой черновик" }),
   ).toBeVisible();
-  await colleague
-    .getByRole("combobox", { name: "Мой ученик для копии", exact: true })
-    .selectOption({ index: 1 });
+  await choose(
+    colleague.getByRole("combobox", {
+      name: "Мой ученик для копии",
+      exact: true,
+    }),
+    { index: 1 },
+  );
   await colleague.getByRole("button", { name: "Создать мой черновик" }).click();
   await expect(
     colleague.getByRole("heading", { name: "Редактирование работы" }),
@@ -70,6 +78,21 @@ test("colleagues share template, create own draft and lose library access after 
   await owner
     .getByRole("button", { name: /Исключить Другой репетитор/ })
     .click();
+  // The already-open colleague tab must not retain server privileges after removal.
+  await choose(
+    colleague.getByRole("combobox", {
+      name: "Мой ученик для копии",
+      exact: true,
+    }),
+    { index: 1 },
+  );
+  await colleague
+    .getByRole("button", { name: "Создать мой черновик", exact: true })
+    .click();
+  await expect(colleague.getByRole("alert")).toBeVisible();
+  await expect(
+    colleague.getByRole("heading", { name: "Редактирование работы" }),
+  ).toHaveCount(0);
   await colleague.reload();
   await colleague.getByRole("button", { name: "Ученики", exact: true }).click();
   await expect(

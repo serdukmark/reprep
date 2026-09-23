@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, choose } from "./audit-fixtures";
 
 test("tutor defines acyclic skill links and learner can inspect saved graph", async ({
   browser,
@@ -12,12 +12,14 @@ test("tutor defines acyclic skill links and learner can inspect saved graph", as
   await tutor
     .getByLabel("Навыки графа (каждый с новой строки)")
     .fill("Линейные уравнения\nСледующий навык");
-  await tutor
-    .getByRole("combobox", { name: "Сначала навык", exact: true })
-    .selectOption("Линейные уравнения");
-  await tutor
-    .getByRole("combobox", { name: "Затем навык", exact: true })
-    .selectOption("Следующий навык");
+  await choose(
+    tutor.getByRole("combobox", { name: "Сначала навык", exact: true }),
+    "Линейные уравнения",
+  );
+  await choose(
+    tutor.getByRole("combobox", { name: "Затем навык", exact: true }),
+    "Следующий навык",
+  );
   await tutor
     .getByRole("button", { name: "Добавить связь", exact: true })
     .click();

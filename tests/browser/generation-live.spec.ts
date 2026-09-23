@@ -1,11 +1,12 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, choose } from "./audit-fixtures";
 
-test("live material generation stays a draft until tutor publishes and includes its source", async ({
+test("material generation stays a draft until tutor publishes and includes its source", async ({
   browser,
 }) => {
   test.skip(
-    process.env.E2E_LIVE_GENERATION !== "1",
-    "Requires explicitly enabled synthetic paid AI run",
+    process.env.E2E_LIVE_GENERATION !== "1" &&
+      process.env.E2E_FIXTURE_GENERATION !== "1",
+    "Requires explicitly enabled fixture generation or synthetic paid AI run",
   );
   const tutor = await browser.newPage(),
     learner = await browser.newPage();
@@ -18,18 +19,17 @@ test("live material generation stays a draft until tutor publishes and includes 
   await tutor
     .getByLabel("Название", { exact: true })
     .fill("Пример для генерации");
-  await tutor
-    .getByRole("combobox", { name: "Ученик", exact: true })
-    .selectOption("demo-link");
-  await tutor
-    .getByLabel("Или файл TXT")
-    .setInputFiles({
-      name: "source.txt",
-      mimeType: "text/plain",
-      buffer: Buffer.from(
-        "Чтобы решить 3x + 7 = 22, вычтите 7 из обеих частей: 3x = 15. Затем разделите обе части на 3: x = 5. Проверка: 3 умножить на 5 плюс 7 равно 22.",
-      ),
-    });
+  await choose(
+    tutor.getByRole("combobox", { name: "Ученик", exact: true }),
+    "demo-link",
+  );
+  await tutor.getByLabel("Или файл TXT").setInputFiles({
+    name: "source.txt",
+    mimeType: "text/plain",
+    buffer: Buffer.from(
+      "Чтобы решить 3x + 7 = 22, вычтите 7 из обеих частей: 3x = 15. Затем разделите обе части на 3: x = 5. Проверка: 3 умножить на 5 плюс 7 равно 22.",
+    ),
+  });
   await tutor.getByRole("checkbox", { name: /Разрешаю/ }).check();
   await tutor.getByRole("button", { name: "Сохранить", exact: true }).click();
   await tutor
@@ -51,9 +51,9 @@ test("live material generation stays a draft until tutor publishes and includes 
       exact: true,
     })
     .click();
-  await expect(tutor.getByRole("textbox", { name:"Условие", exact: true })).not.toHaveValue(
-    "",
-  );
+  await expect(
+    tutor.getByRole("textbox", { name: "Условие", exact: true }),
+  ).not.toHaveValue("");
   const title = await tutor.getByLabel("Название работы").inputValue();
   await learner.goto("/");
   await learner.getByRole("button", { name: "Я ученик" }).click();

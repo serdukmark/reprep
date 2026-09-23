@@ -1,4 +1,5 @@
 import asyncio
+import hashlib
 import json
 import logging
 import secrets
@@ -565,8 +566,16 @@ def create_app(settings=None, provider=None, run_worker=True):
         tutor(u)
         if body.relationship_id:relation(c, body.relationship_id, u)
         check_assignment_lesson(c,body)
-        id_ = uid()
-        c.execute('INSERT INTO assignments(id,tutor_id,relationship_id,data,created) VALUES(?,?,?,?,?)', (id_, u['id'], body.relationship_id or None, body.model_dump_json(), now()))
+        # The same create operation can be retried after its committed response is lost.
+        # connect() holds BEGIN IMMEDIATE, so concurrent retries cannot both insert.
+        id_ = hashlib.sha256(('assignment-create-v1\0'+u['id']+'\0'+body.client_id).encode()).hexdigest() if body.client_id else uid()
+        payload = body.model_dump_json(exclude={'client_id'})
+        existing = one(c, 'SELECT * FROM assignments WHERE id=?', (id_,))
+        if existing:
+            if existing['tutor_id'] != u['id'] or json.loads(existing['data']) != json.loads(payload):
+                fail(409, 'CREATE_CONFLICT', 'Эта работа уже сохранена с другим содержимым. Откройте её из списка заданий')
+            return assignment_view(existing, 'tutor')
+        c.execute('INSERT INTO assignments(id,tutor_id,relationship_id,data,created) VALUES(?,?,?,?,?)', (id_, u['id'], body.relationship_id or None, payload, now()))
         audit(c, u['id'], 'assignment_draft_created', id_)
         return assignment_view(one(c, 'SELECT * FROM assignments WHERE id=?', (id_,)), 'tutor')
 

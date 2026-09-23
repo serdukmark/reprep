@@ -239,6 +239,7 @@ function App() {
   async function saveAssignment(a: Assignment, publish: boolean) {
     await action(async () => {
       const body = {
+        client_id: a.client_id || "",
         relationship_id: a.relationship_id,
         title: a.title,
         instructions: a.instructions,
@@ -289,7 +290,7 @@ function App() {
   );
   const nextLesson = lessons
     .filter(
-      (l) => l.status === "scheduled" && new Date(l.starts_at) > new Date(),
+      (l) => (l.status ?? "scheduled") === "scheduled" && new Date(l.starts_at) > new Date(),
     )
     .sort((a, b) => a.starts_at.localeCompare(b.starts_at))[0];
   const nav = [

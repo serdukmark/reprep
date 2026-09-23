@@ -36,6 +36,7 @@ class Task(Model):
 
 
 class AssignmentInput(Model):
+    client_id: str = Field(default="", exclude=True, max_length=100, pattern=r"^(?:[a-zA-Z0-9_-]{8,100})?$")
     relationship_id: str
     lesson_id: str = Field(default="",max_length=100)
     title: str = Field(min_length=3, max_length=160)

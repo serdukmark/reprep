@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, choose } from "./audit-fixtures";
 
 test("teacher plan is readable by pupil, and assignment discussion survives reload", async ({
   browser,
@@ -18,14 +18,17 @@ test("teacher plan is readable by pupil, and assignment discussion survives relo
     .getByLabel("Этап 1", { exact: true })
     .fill("Проверка равносильности");
   await tutor.getByLabel("Навык этапа 1", { exact: true }).fill("Уравнения");
-  await tutor
-    .getByRole("combobox", { name: "Работа этапа 1", exact: true })
-    .selectOption("demo-assignment");
+  await choose(
+    tutor.getByRole("combobox", { name: "Работа этапа 1", exact: true }),
+    "demo-assignment",
+  );
   await tutor.getByRole("button", { name: "Сохранить программу" }).click();
   await expect(tutor.getByText("Программа сохранена")).toBeVisible();
   await learner.goto("/");
   await learner.getByRole("button", { name: "Я ученик" }).click();
-  await learner.getByRole("button", { name: "Мой прогресс", exact: true }).click();
+  await learner
+    .getByRole("button", { name: "Мой прогресс", exact: true })
+    .click();
   await expect(learner.getByText("Научиться решать уравнения")).toBeVisible();
   await expect(
     learner.getByRole("button", { name: "Сохранить программу" }),

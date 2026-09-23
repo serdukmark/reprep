@@ -7,6 +7,9 @@ export default defineConfig({
   use: {
     baseURL: process.env.E2E_URL || "http://127.0.0.1:8000",
     headless: true,
+    actionTimeout: 12000,
+    screenshot: "only-on-failure",
+    trace: process.env.E2E_AUDIT === "1" ? "on" : "retain-on-failure",
     viewport: { width: 1440, height: 1000 },
     launchOptions: {
       executablePath:

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./audit-fixtures";
 
 test("guardian invitation opens only read-only summary and tutor can revoke it", async ({
   browser,
@@ -73,6 +73,32 @@ test("guardian invitation opens only read-only summary and tutor can revoke it",
   await expect(
     parent.getByText(/Последний результат: Верно/).first(),
   ).toBeVisible();
+  // A real foreign relationship exists, but substituting it must clear the visible summary.
+  await parent.route("**/api/guardian/links/demo-link", (route) =>
+    route.continue({ url: route.request().url() + "-2" }),
+  );
+  await expect(parent.getByRole("alert")).toBeVisible({ timeout: 12000 });
+  await expect(
+    parent.getByRole("heading", { name: "Подтверждённый прогресс" }),
+  ).toHaveCount(0);
+  await parent.unroute("**/api/guardian/links/demo-link");
+  await expect(
+    parent.getByRole("heading", { name: "Подтверждённый прогресс" }),
+  ).toBeVisible({ timeout: 12000 });
+  await parent.route("**/api/guardian/links/demo-link", (route) =>
+    route.abort(),
+  );
+  await expect(parent.getByRole("alert")).toContainText(
+    "Не удалось связаться с сервером",
+    { timeout: 12000 },
+  );
+  await expect(
+    parent.getByRole("heading", { name: "Подтверждённый прогресс" }),
+  ).toHaveCount(0);
+  await parent.unroute("**/api/guardian/links/demo-link");
+  await expect(
+    parent.getByRole("heading", { name: "Подтверждённый прогресс" }),
+  ).toBeVisible({ timeout: 12000 });
   await tutor.getByRole("button", { name: "Отозвать доступ родителя" }).click();
   await expect(parent.getByText(/Открытых доступов нет/)).toBeVisible();
   await expect(

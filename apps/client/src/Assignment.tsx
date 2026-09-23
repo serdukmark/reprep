@@ -40,6 +40,7 @@ export const blankTask = (): Task => ({
   hint: "",
 });
 export const blankAssignment = (r: string): Assignment => ({
+  client_id: crypto.randomUUID(),
   id: "",
   title: "",
   instructions: "",
@@ -589,7 +590,9 @@ export function AssignmentDetail({
               s.review?.note +
               ". Можно отправить новую попытку."
             : s.status === "reviewed"
-              ? "Преподаватель проверил работу. Обратная связь — под каждым ответом."
+              ? s.review?.action === "rejected"
+                ? "Работа отклонена без оценки. " + s.review.note
+                : "Преподаватель проверил работу. Обратная связь — под каждым ответом."
               : isTutor
                 ? s.analysis?.failure_reason === "context_too_large"
                   ? "Работа слишком длинная для одной AI-проверки. Все ответы сохранены; проверьте её вручную или назначьте меньшие части отдельными работами."

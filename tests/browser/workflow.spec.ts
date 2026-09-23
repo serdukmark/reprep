@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, choose } from "./audit-fixtures";
 test("tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress", async ({
   browser,
 }) => {
@@ -19,7 +19,7 @@ test("tutor assigns, learner saves/submits, real worker analyzes, tutor approves
   await tutor.getByRole("button", { name: "Создать задание" }).click();
   const title = "Браузерная проверка " + Date.now();
   await tutor.getByLabel("Название работы").fill(title);
-  await tutor.getByLabel("Ученик", { exact: true }).selectOption("demo-link");
+  await choose(tutor.getByLabel("Ученик", { exact: true }), "demo-link");
   await tutor
     .getByLabel("Условие", { exact: true })
     .fill("Решите уравнение 3x + 7 = 22.");
@@ -125,25 +125,29 @@ test("schedule, private payment note, material link and revocable invite", async
   await tutor.getByRole("button", { name: "Добавить занятие" }).click();
   const title = "Разбор ошибок " + Date.now();
   await tutor.getByLabel("Название", { exact: true }).fill(title);
-  await tutor.locator("select[name=relationship_id]").selectOption("demo-link");
+  await choose(tutor.locator("select[name=relationship_id]"), "demo-link");
   await tutor.getByLabel("Начало (ваш часовой пояс)").fill("2026-09-25T17:00");
   await tutor.getByRole("button", { name: "Сохранить", exact: true }).click();
   const lesson = tutor
     .locator(".lesson-row")
     .filter({ has: tutor.getByRole("heading", { name: title }) });
-  await lesson
-    .getByRole("combobox", { name: "Ваша отметка об оплате", exact: true })
-    .selectOption("paid");
+  await choose(
+    lesson.getByRole("combobox", {
+      name: "Ваша отметка об оплате",
+      exact: true,
+    }),
+    "paid",
+  );
   await expect(
     lesson.getByRole("combobox", {
       name: "Ваша отметка об оплате",
       exact: true,
     }),
-  ).toHaveValue("paid");
+  ).toHaveText("Оплачено");
   await tutor.getByRole("button", { name: "Материалы", exact: true }).click();
   await tutor.getByRole("button", { name: "Добавить материал" }).click();
   await tutor.getByLabel("Название", { exact: true }).fill(title);
-  await tutor.locator("select[name=relationship_id]").selectOption("demo-link");
+  await choose(tutor.locator("select[name=relationship_id]"), "demo-link");
   await tutor.getByLabel("Ссылка HTTPS").fill("https://example.org/math");
   await tutor.getByRole("button", { name: "Сохранить", exact: true }).click();
   await expect(tutor.getByRole("heading", { name: title })).toBeVisible();

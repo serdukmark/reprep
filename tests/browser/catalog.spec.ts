@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, choose } from "./audit-fixtures";
 
 test("catalog tutor offer leads to learner request and accepted study relationship", async ({
   browser,
@@ -18,7 +18,7 @@ test("catalog tutor offer leads to learner request and accepted study relationsh
     .fill("Синтетическая анкета преподавателя для технического демо.");
   await tutor
     .getByLabel("Предметы анкеты (каждый с новой строки)")
-    .fill("Физика");
+    .fill("Математика\nФизика");
   await tutor.getByLabel("Показывать мою анкету в каталоге").check();
   await tutor
     .getByRole("button", { name: "Сохранить анкету", exact: true })
@@ -34,6 +34,10 @@ test("catalog tutor offer leads to learner request and accepted study relationsh
     learner.getByRole("heading", { name: "Физика через понятные задачи" }),
   ).toBeVisible();
   await learner.getByRole("button", { name: "Оставить заявку" }).click();
+  await choose(
+    learner.getByRole("combobox", { name: "Предмет заявки", exact: true }),
+    "Физика",
+  );
   await learner
     .getByLabel("Что хотите изучать")
     .fill("Хочу разобрать движение тела.");

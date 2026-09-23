@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./audit-fixtures";
 
 test("pupil TXT survives autosave, submission and tutor return without rewriting history", async ({
   browser,
@@ -12,13 +12,11 @@ test("pupil TXT survives autosave, submission and tutor return without rewriting
     .getByRole("button", { name: /Линейные уравнения: от шага к решению/ })
     .click();
   const text = "  Решение: 3x = 15\nx = 5\n";
-  await learner
-    .getByLabel("TXT к заданию 1")
-    .setInputFiles({
-      name: "solution.txt",
-      mimeType: "text/plain",
-      buffer: Buffer.from(text),
-    });
+  await learner.getByLabel("TXT к заданию 1").setInputFiles({
+    name: "solution.txt",
+    mimeType: "text/plain",
+    buffer: Buffer.from(text),
+  });
   await learner.getByRole("radio", { name: "0,75", exact: true }).check();
   await learner
     .getByLabel("Ответ на задание 3")

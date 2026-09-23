@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, choose } from "./audit-fixtures";
 test("work list separates overdue, active and complete; builder persists own lesson link", async ({
   browser,
   request,
@@ -83,9 +83,10 @@ test("work list separates overdue, active and complete; builder persists own les
     ["active", "Активна"],
     ["completed", "Завершена"],
   ]) {
-    await learner
-      .getByRole("combobox", { name: "Статус работ", exact: true })
-      .selectOption(filter);
+    await choose(
+      learner.getByRole("combobox", { name: "Статус работ", exact: true }),
+      filter,
+    );
     await expect(learner.locator(".assignment-row")).toHaveCount(1);
     await expect(learner.locator(".assignment-row")).toContainText(title);
   }
@@ -97,14 +98,18 @@ test("work list separates overdue, active and complete; builder persists own les
   await tutor
     .getByRole("button", { name: "Создать задание", exact: true })
     .click();
-  await tutor.getByLabel("Ученик", { exact: true }).selectOption("demo-link");
+  await choose(tutor.getByLabel("Ученик", { exact: true }), "demo-link");
   const lessons = await (
     await request.get("/api/lessons", { headers: th })
   ).json();
   const lesson = lessons.find((l: any) => l.relationship_id === "demo-link");
-  await tutor
-    .getByRole("combobox", { name: "Занятие для этой работы", exact: true })
-    .selectOption(lesson.id);
+  await choose(
+    tutor.getByRole("combobox", {
+      name: "Занятие для этой работы",
+      exact: true,
+    }),
+    lesson.id,
+  );
   await tutor.getByLabel("Название работы").fill(prefix + " привязка");
   await tutor.getByLabel("Условие", { exact: true }).fill("2+2?");
   await tutor.getByLabel("Эталонный ответ", { exact: true }).fill("4");
