@@ -1,3 +1,5 @@
+> Основной домен теперь https://reprep.ru/. Webhook обоих ботов обновлены; Main App URL в BotFather и кабинете MAX меняет владелец. [DNS-кэш и проверки](39_REPREP_DOMAIN_RU.md).
+
 > Обновление 23.09: Telegram подключён и развёрнут: https://t.me/MaxFuckYouBot?startapp. Проверки, ограничения и доказательства — [отчёт Telegram](38_TELEGRAM_DEPLOYMENT_RU.md). Реальный запуск человеком в мессенджере не заявлен.
 
 # Утро: актуальная первая страница — 22.09.2026

@@ -7,6 +7,7 @@ import subprocess
 import tarfile
 import tempfile
 import time
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 HOST = 'root@2.26.49.28'
@@ -39,6 +40,10 @@ def main():
     for line in (ROOT/'.env').read_text().splitlines():
         if '=' in line and not line.lstrip().startswith('#'):
             k, v = line.split('=', 1); env[k.strip()] = v.strip()
+    origin = urlsplit(env.get('PUBLIC_BASE_URL', 'https://' + DOMAIN))
+    if origin.scheme != 'https' or not origin.hostname or origin.port or origin.username or origin.password or origin.query or origin.fragment or origin.path not in ('', '/'):
+        raise ValueError('PUBLIC_BASE_URL must be an HTTPS origin')
+    domain = origin.hostname
     if not env.get('MAX_BOT_TOKEN'):
         raise ValueError('MAX_BOT_TOKEN missing')
     if not KEY.is_file(): raise ValueError('SSH key missing')
@@ -68,11 +73,11 @@ def main():
                '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=10']
         subprocess.run(scp + [str(folder/'release.tgz'), str(folder/'.env'), str(folder/'max-ca.pem'),
                              HOST+':'+destination+'/'], check=True)
-        command = 'cd ' + shlex.quote(destination) + ' && tar xzf release.tgz && python3 scripts/vm_apply.py ' + shlex.join([DOMAIN, '8030'])
+        command = 'cd ' + shlex.quote(destination) + ' && tar xzf release.tgz && python3 scripts/vm_apply.py ' + shlex.join([domain, '8030'])
         subprocess.run(ssh + [command], check=True)
         # Independent check from the Mac; a local network failure is not success.
-        subprocess.run([str(ROOT/'.venv/bin/python'), 'scripts/check_public.py', '--url', 'https://'+DOMAIN, '--human'], cwd=ROOT, check=True)
-        print('https://' + DOMAIN + '/')
+        subprocess.run([str(ROOT/'.venv/bin/python'), 'scripts/check_public.py', '--url', 'https://'+domain, '--human'], cwd=ROOT, check=True)
+        print('https://' + domain + '/')
     return 0
 
 

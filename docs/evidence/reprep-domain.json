@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "check": "database_ready",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "check": "client_html",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "check": "client_assets",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "check": "max_embedding_headers",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "check": "anonymous_access_denied",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "check": "demo_disabled",
+      "passed": true,
+      "status": 404
+    },
+    {
+      "check": "forged_max_login_denied",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "check": "forged_webhook_denied",
+      "passed": true,
+      "status": 401
+    },
+    {
+      "check": "env_not_served",
+      "passed": true,
+      "status": 404
+    }
+  ],
+  "real_max_login": "not_tested",
+  "webhook_registration": "not_tested",
+  "ai_scenario": "not_tested",
+  "old_address_http": 200,
+  "telegram_forged_webhook": 401,
+  "max_subscription_new_domain": true,
+  "telegram_subscription_new_domain": true,
+  "dns_note": "Authoritative and Cloudflare DNS 2.26.49.28; local macOS resolver still 95.163.244.138. Verification pins correct IP, retaining hostname/SNI and TLS validation."
+}

@@ -76,7 +76,7 @@ def apply(root, domain, port):
         raise ValueError('Hostname already appears in unmanaged Caddy configuration')
     if previous is not None and not previous.startswith('# Managed by reprep deployment\n'):
         raise ValueError('Existing snippet is not managed by reprep')
-    candidate = '# Managed by reprep deployment\n' + (root/'infra/vm/Caddyfile.example').read_text().replace('{$REPREP_DOMAIN}', domain).replace('{$REPREP_BIND_PORT}', str(port))
+    candidate = '# Managed by reprep deployment\n' + (root/'infra/vm/Caddyfile.example').read_text().replace('{$REPREP_DOMAIN}', domain + (', reprep.2-26-49-28.nip.io' if domain != 'reprep.2-26-49-28.nip.io' else '')).replace('{$REPREP_BIND_PORT}', str(port))
     (root/'caddy-before.txt').write_text(original)
     if caddy.read_text() != original:
         raise ValueError('Caddy was modified concurrently; rerun deployment')
