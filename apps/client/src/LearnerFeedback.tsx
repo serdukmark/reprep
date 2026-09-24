@@ -19,6 +19,7 @@ export function LearnerFeedback({ assignment }: { assignment: string }) {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
+          if (busy) return;
           setBusy(true);
           setError("");
           setNotice("");
@@ -40,6 +41,7 @@ export function LearnerFeedback({ assignment }: { assignment: string }) {
         <label>
           Тип отзыва
           <ChoiceSelect
+            disabled={busy}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -52,6 +54,7 @@ export function LearnerFeedback({ assignment }: { assignment: string }) {
         <label>
           Комментарий к разбору
           <textarea
+            disabled={busy}
             value={text}
             maxLength={2000}
             onChange={(e) => setText(e.target.value)}

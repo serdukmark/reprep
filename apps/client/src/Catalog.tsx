@@ -113,6 +113,7 @@ export function Catalog({
     };
   }, [q, price, user.id]);
   async function run(fn: () => Promise<void>) {
+    if (busy) return;
     setBusy(true);
     setError("");
     setNotice("");
@@ -317,6 +318,7 @@ export function Catalog({
                 <label>
                   Предмет заявки
                   <ChoiceSelect
+                    disabled={busy}
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                   >
@@ -331,6 +333,7 @@ export function Catalog({
                     required
                     minLength={3}
                     maxLength={1000}
+                    disabled={busy}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                   />
@@ -370,6 +373,7 @@ export function Catalog({
                   Ответ на заявку
                   <textarea
                     maxLength={1000}
+                    disabled={busy}
                     value={replies[item.id] || ""}
                     onChange={(e) =>
                       setReplies({ ...replies, [item.id]: e.target.value })

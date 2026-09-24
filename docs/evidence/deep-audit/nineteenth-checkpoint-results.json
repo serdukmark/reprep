@@ -1,0 +1,259 @@
+{
+  "feedback-access-before": {
+    "stats": {
+      "startTime": "2026-09-24T11:56:20.000Z",
+      "duration": 21168.728,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "feedback foreign: server refusal remains visible and does not erase unsent comment",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "feedback session: server refusal remains visible and does not erase unsent comment",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "feedback pending response locks submitted fields and double click sends one report",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "feedback-access-after": {
+    "stats": {
+      "startTime": "2026-09-24T11:57:19.561Z",
+      "duration": 24469.684,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "feedback foreign: server refusal remains visible and does not erase unsent comment",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "feedback session: server refusal remains visible and does not erase unsent comment",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "feedback pending response locks submitted fields and double click sends one report",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "oversized AI context retains uploaded work for manual review without unsafe retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "two learners submit concurrently and each report category handles validation and network loss",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "feedback-pending-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T11:57:55.983Z",
+      "duration": 14966.378,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "feedback pending response locks submitted fields and double click sends one report",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "teacher-plan-access": {
+    "stats": {
+      "startTime": "2026-09-24T11:59:09.041Z",
+      "duration": 2781.844,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "teacher plan: another teacher's relationship rejects edits and preserves both documents",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "teacher skill-graph: another teacher's relationship rejects edits and preserves both documents",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "catalog-pending-before": {
+    "stats": {
+      "startTime": "2026-09-24T12:02:30.092Z",
+      "duration": 30408.834,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "catalog request: delayed response locks editable fields and duplicate action sends once",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "catalog review: delayed response locks editable fields and duplicate action sends once",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "catalog-pending-after": {
+    "stats": {
+      "startTime": "2026-09-24T12:03:42.352Z",
+      "duration": 30528.747,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "catalog request: delayed response locks editable fields and duplicate action sends once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog review: delayed response locks editable fields and duplicate action sends once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "feedback foreign: server refusal remains visible and does not erase unsent comment",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "feedback session: server refusal remains visible and does not erase unsent comment",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "feedback pending response locks submitted fields and double click sends one report",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog tutor offer leads to learner request and accepted study relationship",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "catalog-pending-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T12:04:35.676Z",
+      "duration": 29189.046,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "catalog request: delayed response locks editable fields and duplicate action sends once",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "catalog review: delayed response locks editable fields and duplicate action sends once",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "catalog-pending-visual": {
+    "stats": {
+      "startTime": "2026-09-24T12:05:30.242Z",
+      "duration": 14785.243999999999,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "catalog request: delayed response locks editable fields and duplicate action sends once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog review: delayed response locks editable fields and duplicate action sends once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  }
+}
