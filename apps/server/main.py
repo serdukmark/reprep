@@ -19,7 +19,7 @@ from .models import (AssignmentInput, DraftInput, ReviewInput, InviteInput, Toke
                      MaxLogin, LessonInput, MaterialInput, ReportInput, GenerationRequest, GeneratedWork)
 from .ai import ContextTooLarge, LocalRules, RemoteAdapter, OpenRouterAdapter, context_for, validate_analysis
 from .max_bot import public_origin, verify_webhook, accept_event, process_outbox
-from .service import uid, now, audit, seed, assignment_view, content_hash, progress
+from .service import uid, now, audit, seed, assignment_view, content_hash, progress, create_resource_id
 
 from . import telegram_bot
 
@@ -820,7 +820,14 @@ def create_app(settings=None, provider=None, run_worker=True):
     def create_group(body:GroupInput,u=Depends(user),c=Depends(db)):
         tutor(u)
         for rid in body.relationship_ids:relation(c,rid,u)
-        id_=uid();c.execute('INSERT INTO learning_groups VALUES(?,?,?,?)',(id_,u['id'],1,dumps(body.model_dump(exclude={'revision'}))))
+        id_=create_resource_id('group',u['id'],body.client_id)
+        payload=body.model_dump(exclude={'revision'})
+        old=one(c,'SELECT * FROM learning_groups WHERE id=?',(id_,))
+        if old:
+            if old['tutor_id']!=u['id'] or json.loads(old['data'])!=payload:
+                fail(409,'CREATE_CONFLICT','Группа уже сохранена с другим содержимым. Откройте список групп')
+            return owned_group(c,id_,u)
+        c.execute('INSERT INTO learning_groups VALUES(?,?,?,?)',(id_,u['id'],1,dumps(payload)))
         audit(c,u['id'],'group_created',id_)
         return owned_group(c,id_,u)
 
@@ -1010,8 +1017,14 @@ def create_app(settings=None, provider=None, run_worker=True):
     @app.post('/api/lessons')
     def create_lesson(body: LessonInput, u=Depends(user), c=Depends(db)):
         tutor(u); relation(c, body.relationship_id, u)
-        id_ = uid()
-        c.execute('INSERT INTO lessons VALUES(?,?,?)', (id_, body.relationship_id, body.model_dump_json()))
+        id_ = create_resource_id('lesson',u['id'],body.client_id)
+        payload=body.model_dump_json()
+        old=one(c,'SELECT * FROM lessons WHERE id=?',(id_,))
+        if old:
+            if json.loads(old['data'])!=json.loads(payload):
+                fail(409,'CREATE_CONFLICT','Запись уже сохранена с другим содержимым. Откройте список')
+            return {'id':id_}
+        c.execute('INSERT INTO lessons VALUES(?,?,?)', (id_, body.relationship_id, payload))
         return {'id': id_}
 
     @app.put('/api/lessons/{id_}')
@@ -1037,8 +1050,14 @@ def create_app(settings=None, provider=None, run_worker=True):
             lesson=one(c,'SELECT relationship_id FROM lessons WHERE id=?',(body.lesson_id,))
             if not lesson or lesson['relationship_id']!=body.relationship_id:
                 fail(422,'MATERIAL_SCOPE','Занятие относится к другому ученику')
-        id_ = uid()
-        c.execute('INSERT INTO materials VALUES(?,?,?)', (id_, body.relationship_id, body.model_dump_json()))
+        id_ = create_resource_id('material',u['id'],body.client_id)
+        payload=body.model_dump_json()
+        old=one(c,'SELECT * FROM materials WHERE id=?',(id_,))
+        if old:
+            if json.loads(old['data'])!=json.loads(payload):
+                fail(409,'CREATE_CONFLICT','Запись уже сохранена с другим содержимым. Откройте список')
+            return {'id':id_}
+        c.execute('INSERT INTO materials VALUES(?,?,?)', (id_, body.relationship_id, payload))
         return {'id': id_}
 
     def owned_material(c,id_,u):

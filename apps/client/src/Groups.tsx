@@ -24,6 +24,7 @@ export function Groups({
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [notice, setNotice] = useState("");
+  const createKey = useRef(crypto.randomUUID());
   const pending = useRef<
     Record<string, { signature: string; client_id: string }>
   >({});
@@ -96,10 +97,12 @@ export function Groups({
               editing ? "PUT" : "POST",
               {
                 title,
+                client_id: editing ? "" : createKey.current,
                 relationship_ids: members,
                 revision: editing?.revision || 0,
               },
             );
+            createKey.current = crypto.randomUUID();
             setTitle("");
             setMembers([]);
             setEditing(null);

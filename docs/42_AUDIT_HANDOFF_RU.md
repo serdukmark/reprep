@@ -64,3 +64,27 @@
 - Общий71test run:70passed1failed (6.8мин), failure толькоharness /expire-invitations SQLiteblockingeventloop. await asyncio.to_thread исправил; expiry-repeat 9passed(3rolesx3),39.8с. Полного71/71единымзапуском пока нет.
 - Текущий auditserver PID20519/session72813,8017. Browserrunner сейчасНЕТ. Backend156passed,2warnings, secretscan ранееpassed, передcommitповторяется.
 - Новыйутреннийпакет docs43. ВопросыАУДQ1/Q2 docs15. Все5bugs localonly, productionuntouched. Следующее:lostACKсозданияпрочих4форм, catalogdecline/unpublish,planlinks/steps,discussionnetwork/double,проверитьвсепробелы77карты. ЕстьподозрениянаduplicateпослеPOSTsuccess+lostresponse в lessons/materials/groups/workspaces (кодбезrequestkey), пока не воспроизведены.
+
+## Продолжение 24.09 — AUD006 и новый регресс (актуальнее предыдущих)
+- Локальный commit f7f3b92: AUD001–005 +71 browsertests, docs; push/deploy не было. docs/QA_INDEPENDENT.md чужой, не трогать/stage.
+- AUD006 uncommitted:4 создающих формы дублировались после потерянного ACK. Исправлены CreateInput.client_id, helper create_resource_id, endpoints groups/lessons/materials/workspaces +client UUID. tests/test_resource_retry.py8passed; mutation script все8ловит; audit-create-ack4before failed4after passed. Backend164passed. build index-ieHKzHPI.js.
+- Audit server session45438/PID9342 на8017. Текущий общий browser session86870, checkpoint-78.json/traces,78tests (новый plan-edit ещё не запускался отдельно). Один worker, synthetic only. Не запускать второйbrowser одновременно.
+- catalog-discussion2passed: pricefilters/decline/unpublish/lostACK retry и discussionempty/longUnicode/lostACK/reload/2tabs. Карта77обновлена частично этими фактами и ui-round12.
+- Следующее: дождаться78regression; исправить найденное, записать точные результаты, секретскан до локальногокоммита. Непроверенные строки остаются в карте, полную задачу не объявлять завершённой.
+
+## Новейшее: AUD007/008, ещё НЕ коммит
+- checkpoint-78:77passed1failed4.9мин. work-status helper index=-1 до прихода опций; choose теперь expect.poll(optionIndex), не force. Plan-edit прошёл; картаU025 обновлена.
+- AUD007 confirmed обе роли: delayedSasha response послевыбораЖени заменяетprogress уtutor/guardian. race-strict-before2failed; MutationObserverловиткраткийпоказ, предыдущиймягкийassertродителя былfalsegreenиз-заpoll5s.
+- AUD008 retryUI показываетoldfailure/retryпокаqueued. retry-submitbeforefailed. UIисправлен статусом queued/processing иguardawaiting_review.
+- Build index-Cavom3tr.js. Текущийrunner session16169 race-retry-after:race2/retry1/workstatus/guardian. Serverбезизменения45438.
+- Требуютсяmutation proofs AUD007/008, итоговыеtests/docs/scan+commit. Секретscan16605passed до новыхUIправок, передcommitповторить. 新tests untracked audit-selection-race/retry-submit/catalog-discussion/plan-edit/create-ack; scripts/test_resource_retry_mutations.py. AUD0068mutationscaught.
+
+## Самая новая точка — общий81 регресс
+- race-retry-after5passed58.5с; work-statushelper исправлен иpassed. AUD007tutor+guardian/AUD008retry mutation3expectedfailed(16.1/0.7/1.6s). Мутантbuild отдельнов /tmp черезscripts/build_audit_ui_mutant.py;fixtureподменяетJS толькоеслиE2E_MUTATION_ASSET. Обычнаяdistнеизменялась.
+- Сейчас browser session8952:checkpoint-81.json/traces,81tests; server45438/PID9342. Не запускать второйbrowser параллельно. Source main.tsx очищен отнесвязанныхprettierdiff, семантикатаже.
+- 8продуктовыхдефектов локальноисправлены, всеred/green/mutation. Backend164passed(послеAUD006), AUD007/8толькоUI, buildpassed. Новыйсекретscanпередcommitобязателен;ещёнетвторогокоммита.
+- КартаU020/U022/U061обновлена. СценарийU030уточнён: UIменяетстатус/оплату, поляназвание/времяредактироватьнельзя;неизобретатьпуть.
+
+checkpoint-81 завершён:81passed4.7мин. Следующий runner — schedule-files-policy:4 новыхUIтеста (календарь/отмена/файлы/2политикипodсказок). Пока не заявлятьихpassed.
+
+Все4schedule-files-policypassed14.5с. Теперь85browserтестов:81общийgreen+4таргетныхgreen. Карта51/77confirmed,26partial. Новыхдефектоввэтомпрогоненет. Browserпроцессовнет,server45438остаётся.

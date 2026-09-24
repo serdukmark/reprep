@@ -9,6 +9,11 @@ def uid():
     return secrets.token_hex(12)
 
 
+def create_resource_id(kind, actor_id, client_id):
+    """Operation-scoped IDs make committed creates safe to retry; callers own the transaction."""
+    return hashlib.sha256((kind+'-create-v1\0'+actor_id+'\0'+client_id).encode()).hexdigest() if client_id else uid()
+
+
 def now():
     return datetime.now(timezone.utc).isoformat()
 

@@ -8,6 +8,10 @@ class Model(BaseModel):
     model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
 
 
+class CreateInput(Model):
+    client_id: str = Field(default="", exclude=True, max_length=100, pattern=r"^(?:[a-zA-Z0-9_-]{8,100})?$")
+
+
 class Task(Model):
     id: str = Field(min_length=1, max_length=80, pattern=r'^[a-zA-Z0-9_-]+$')
     type: Literal['numeric', 'single_choice', 'short_text']
@@ -35,8 +39,7 @@ class Task(Model):
         return self
 
 
-class AssignmentInput(Model):
-    client_id: str = Field(default="", exclude=True, max_length=100, pattern=r"^(?:[a-zA-Z0-9_-]{8,100})?$")
+class AssignmentInput(CreateInput):
     relationship_id: str
     lesson_id: str = Field(default="",max_length=100)
     title: str = Field(min_length=3, max_length=160)
@@ -168,7 +171,7 @@ class QuestionReview(Model):
     text: str = Field(min_length=1,max_length=3000)
 
 
-class GroupInput(Model):
+class GroupInput(CreateInput):
     revision: int = Field(default=0,ge=0)
     title: str = Field(min_length=2,max_length=100)
     relationship_ids: list[str] = Field(min_length=1,max_length=20)
@@ -221,7 +224,7 @@ class MaxLogin(Model):
     alias: str = Field(default='Участник', min_length=1, max_length=60)
 
 
-class LessonInput(Model):
+class LessonInput(CreateInput):
     relationship_id: str
     title: str = Field(min_length=2, max_length=160)
     starts_at: datetime
@@ -237,7 +240,7 @@ class LessonInput(Model):
         return value
 
 
-class MaterialInput(Model):
+class MaterialInput(CreateInput):
     relationship_id: str
     title: str = Field(min_length=2, max_length=160)
     url: str = Field(default='', max_length=2000)

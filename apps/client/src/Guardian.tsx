@@ -119,39 +119,46 @@ export function GuardianPortal({
     [code, setCode] = useState("");
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
-  async function load() {
-    const items = await api<Relation[]>("/guardian/links");
-    setLinks(items);
-    setError("");
-    if (selected && !items.some((item) => item.id === selected)) {
-      setSelected("");
-      setSummary(null);
-    } else if (selected)
-      setSummary(await api<Summary>(`/guardian/links/${selected}`));
-  }
+  const [reload, setReload] = useState(0);
   useEffect(() => {
-    let live = true;
-    const refresh = () =>
-      load().catch((e) => {
-        if (live) {
-          setError(e.message);
+    let guardianLive = true;
+    let sequence = 0;
+    const refresh = async () => {
+      const request = ++sequence;
+      const current = () => guardianLive && request === sequence;
+      try {
+        const items = await api<Relation[]>("/guardian/links");
+        if (!current()) return;
+        setLinks(items);
+        setError("");
+        if (selected && !items.some((item) => item.id === selected)) {
+          setSelected("");
+          setSummary(null);
+        } else if (selected) {
+          const value = await api<Summary>(`/guardian/links/${selected}`);
+          if (current()) setSummary(value);
+        }
+      } catch (e) {
+        if (current()) {
+          setError((e as Error).message);
           setSummary(null);
         }
-      });
-    refresh();
+      }
+    };
+    void refresh();
     const timer = setInterval(refresh, 5000);
     return () => {
-      live = false;
+      guardianLive = false;
       clearInterval(timer);
     };
-  }, [selected]);
+  }, [selected, reload]);
   async function accept() {
     setBusy(true);
     setError("");
     try {
       await api("/guardian/accept", "POST", { token: code.trim() });
       setCode("");
-      await load();
+      setReload((value) => value + 1);
     } catch (e) {
       setError((e as Error).message);
     } finally {

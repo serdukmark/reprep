@@ -4,13 +4,13 @@ import secrets
 import time
 from fastapi import Depends
 from pydantic import Field
-from .models import Model,TokenInput,AssignmentInput
+from .models import Model,CreateInput,TokenInput,AssignmentInput
 from .auth import token_hash
 from .db import one,rows,dumps
-from .service import uid,now,audit
+from .service import uid,now,audit,create_resource_id
 
 
-class WorkspaceInput(Model):
+class WorkspaceInput(CreateInput):
     title:str=Field(min_length=2,max_length=100)
 
 
@@ -38,8 +38,14 @@ def install(app,user,db,tutor,relation,assignment,fail):
     @app.post('/api/workspaces',status_code=201)
     def create_workspace(body:WorkspaceInput,u=Depends(user),c=Depends(db)):
         tutor(u)
+        wid=create_resource_id('workspace',u['id'],body.client_id)
+        old=one(c,'SELECT * FROM workspaces WHERE id=?',(wid,))
+        if old:
+            if old['owner_id']!=u['id'] or old['title']!=body.title:
+                fail(409,'CREATE_CONFLICT','Пространство уже сохранено с другим названием. Откройте список')
+            return {'id':wid}
         if one(c,'SELECT count(*) n FROM workspaces WHERE owner_id=?',(u['id'],))['n']>=10:fail(429,'LIMIT','Не более 10 пространств')
-        wid=uid();c.execute('INSERT INTO workspaces VALUES(?,?,?,?)',(wid,u['id'],body.title,now()))
+        c.execute('INSERT INTO workspaces VALUES(?,?,?,?)',(wid,u['id'],body.title,now()))
         c.execute('INSERT INTO workspace_members VALUES(?,?,1)',(wid,u['id']))
         audit(c,u['id'],'workspace_created',wid)
         return {'id':wid}

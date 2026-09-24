@@ -1,5 +1,5 @@
 import { ChoiceSelect } from "./ChoiceSelect";
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState, useEffect, useRef, FormEvent } from "react";
 import { Plus, FolderOpen, ArrowUpRight } from "lucide-react";
 import { api, Relation, Lesson, Material, AssignmentSummary } from "./api";
 import { Generation } from "./Generation";
@@ -26,6 +26,7 @@ export function Collection({
   openDraft: (id: string) => void;
 }) {
   const [adding, setAdding] = useState(false);
+  const createKey = useRef(crypto.randomUUID());
   const [file, setFile] = useState<{
     file_name: string;
     content: string;
@@ -42,7 +43,10 @@ export function Collection({
   const schedule = page === "schedule";
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.currentTarget));
+    const data: Record<string, FormDataEntryValue> = {
+      ...Object.fromEntries(new FormData(e.currentTarget)),
+      client_id: createKey.current,
+    };
     await action(async () => {
       await api(
         schedule ? "/lessons" : "/materials",
@@ -56,6 +60,7 @@ export function Collection({
             }
           : { ...data, ...(file || {}), ai_allowed: data.ai_allowed === "on" },
       );
+      createKey.current = crypto.randomUUID();
       setAdding(false);
       setFile(null);
       await refresh();
@@ -77,7 +82,10 @@ export function Collection({
           <button
             className="primary"
             disabled={!relations.length}
-            onClick={() => setAdding(!adding)}
+            onClick={() => {
+              if (!adding) createKey.current = crypto.randomUUID();
+              setAdding(!adding);
+            }}
           >
             <Plus size={18} />
             {schedule ? "Добавить занятие" : "Добавить материал"}

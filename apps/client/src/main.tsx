@@ -140,9 +140,18 @@ function App() {
   }, [user?.id]);
   useEffect(() => {
     if (!selected || !user || user.role === "guardian") return;
+    let progressLive = true;
+    setSkills([]);
     api<Skill[]>("/relationships/" + selected + "/progress")
-      .then(setSkills)
-      .catch((e) => setError(e.message));
+      .then((value) => {
+        if (progressLive) setSkills(value);
+      })
+      .catch((e) => {
+        if (progressLive) setError(e.message);
+      });
+    return () => {
+      progressLive = false;
+    };
   }, [selected, page, assignments]);
   useEffect(() => {
     if (page === "learners" && isTutor)

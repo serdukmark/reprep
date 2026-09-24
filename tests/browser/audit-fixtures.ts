@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import { test as base, expect, Locator } from "@playwright/test";
 export { expect };
 export const test = base.extend<{ auditReset: void }>({
@@ -48,6 +49,15 @@ export const test = base.extend<{ auditReset: void }>({
           await route.fulfill({ response, body: mutated });
         });
       }
+      if (process.env.E2E_MUTATION_ASSET) {
+        const body = await readFile(process.env.E2E_MUTATION_ASSET, "utf8");
+        await context.route("**/assets/*.js", (route) =>
+          route.fulfill({
+            contentType: "application/javascript",
+            body,
+          }),
+        );
+      }
       await use();
     },
     { auto: true },
@@ -61,16 +71,22 @@ export async function choose(
   const root = control.locator(
     'xpath=ancestor-or-self::*[contains(concat(" ",normalize-space(@class)," ")," choice-select ")][1]',
   );
-  const index = await root
-    .locator("select")
-    .evaluate(
-      (select: HTMLSelectElement, wanted) =>
-        typeof wanted === "string"
-          ? Array.from(select.options).findIndex((x) => x.value === wanted)
-          : wanted.index,
-      value,
-    );
-  expect(index).toBeGreaterThanOrEqual(0);
+  const optionIndex = () =>
+    root
+      .locator("select")
+      .evaluate(
+        (select: HTMLSelectElement, wanted) =>
+          typeof wanted === "string"
+            ? Array.from(select.options).findIndex((x) => x.value === wanted)
+            : wanted.index < select.options.length
+              ? wanted.index
+              : -1,
+        value,
+      );
+  // Options can arrive after the form is visible. Wait as a user would,
+  // without forcing hidden native controls or racing the data request.
+  await expect.poll(optionIndex).toBeGreaterThanOrEqual(0);
+  const index = await optionIndex();
   await root.locator(".choice-trigger").click();
   await control
     .page()

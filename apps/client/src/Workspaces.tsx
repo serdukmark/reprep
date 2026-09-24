@@ -34,6 +34,7 @@ export function Workspaces({
     [target, setTarget] = useState(""),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  const createKey = useRef(crypto.randomUUID());
   const copyRequest = useRef<{
     template: string;
     relation: string;
@@ -95,7 +96,9 @@ export function Workspaces({
             run(async () => {
               const created = await api<{ id: string }>("/workspaces", "POST", {
                 title,
+                client_id: createKey.current,
               });
+              createKey.current = crypto.randomUUID();
               setTitle("");
               return created.id;
             });
@@ -242,7 +245,10 @@ export function Workspaces({
           </p>
           <label>
             Моя работа для шаблона
-            <ChoiceSelect value={source} onChange={(e) => setSource(e.target.value)}>
+            <ChoiceSelect
+              value={source}
+              onChange={(e) => setSource(e.target.value)}
+            >
               <option value="">Выберите работу</option>
               {assignments.map((item) => (
                 <option key={item.id} value={item.id}>
@@ -267,7 +273,10 @@ export function Workspaces({
           <h3>Общие шаблоны</h3>
           <label>
             Мой ученик для копии
-            <ChoiceSelect value={target} onChange={(e) => setTarget(e.target.value)}>
+            <ChoiceSelect
+              value={target}
+              onChange={(e) => setTarget(e.target.value)}
+            >
               <option value="">Выберите ученика</option>
               {relations.map((item) => (
                 <option key={item.id} value={item.id}>
