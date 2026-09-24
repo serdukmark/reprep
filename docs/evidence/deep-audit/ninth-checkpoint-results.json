@@ -1,0 +1,158 @@
+{
+  "save-navigation-before": {
+    "stats": {
+      "startTime": "2026-09-24T09:28:02.553Z",
+      "duration": 23753.665,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-save-navigation.spec.ts",
+        "title": "save: completed request cannot pull user back from the schedule",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-save-navigation.spec.ts",
+        "title": "duplicate: completed request cannot pull user back from the schedule",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      }
+    ]
+  },
+  "save-navigation-after": {
+    "stats": {
+      "startTime": "2026-09-24T09:29:16.344Z",
+      "duration": 18964.827,
+      "expected": 11,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-duplicate-retry.spec.ts",
+        "title": "published assignment stays immutable and retrying a lost duplicate response creates one private copy",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-editing.spec.ts",
+        "title": "draft preview and task removal, concurrent teacher edits cannot overwrite each other",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-editing.spec.ts",
+        "title": "group editing changes title and membership, bulk double click creates one copy per member",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-lost-response.spec.ts",
+        "title": "AUD-005 retry after server committed draft but response was lost does not create duplicate",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-save-navigation.spec.ts",
+        "title": "save: completed request cannot pull user back from the schedule",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-save-navigation.spec.ts",
+        "title": "duplicate: completed request cannot pull user back from the schedule",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-work-navigation-race.spec.ts",
+        "title": "delayed work opening cannot replace other-work chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-work-navigation-race.spec.ts",
+        "title": "delayed work opening cannot replace schedule chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-work-navigation-race.spec.ts",
+        "title": "delayed work opening cannot replace new-draft chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "workflow.spec.ts",
+        "title": "tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "workflow.spec.ts",
+        "title": "schedule, private payment note, material link and revocable invite",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  },
+  "save-navigation-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T09:30:30.250Z",
+      "duration": 24659.589,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-save-navigation.spec.ts",
+        "title": "save: completed request cannot pull user back from the schedule",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-save-navigation.spec.ts",
+        "title": "duplicate: completed request cannot pull user back from the schedule",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      }
+    ]
+  }
+}

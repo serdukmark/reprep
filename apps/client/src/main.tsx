@@ -265,6 +265,7 @@ function App() {
     });
   }
   async function saveAssignment(a: Assignment, publish: boolean) {
+    const saveView = workLoad.current;
     await action(async () => {
       const body = {
         client_id: a.client_id || "",
@@ -284,8 +285,11 @@ function App() {
         body,
       );
       if (publish) await api("/assignments/" + saved.id + "/publish", "POST");
-      showAssignment(await api<Assignment>("/assignments/" + saved.id));
-      setEditing(false);
+      const savedAssignment = await api<Assignment>("/assignments/" + saved.id);
+      if (saveView === workLoad.current) {
+        showAssignment(savedAssignment);
+        setEditing(false);
+      }
       await refresh();
       setToast(publish ? "Работа назначена ученику" : "Черновик сохранён");
     });
@@ -669,6 +673,7 @@ function App() {
                   edit={() => setEditing(true)}
                   duplicate={() =>
                     action(async () => {
+                      const duplicateView = workLoad.current;
                       if (duplicateRequest.current?.source !== active.id)
                         duplicateRequest.current = {source: active.id, client_id: crypto.randomUUID()};
                       const r = await api<{ id: string }>(
@@ -678,8 +683,10 @@ function App() {
                       );
                       const copied = await api<Assignment>("/assignments/" + r.id);
                       duplicateRequest.current = null;
-                      showAssignment(copied);
-                      setEditing(true);
+                      if (duplicateView === workLoad.current) {
+                        showAssignment(copied);
+                        setEditing(true);
+                      }
                       await refresh();
                     })
                   }
