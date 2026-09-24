@@ -510,11 +510,15 @@ def create_app(settings=None, provider=None, run_worker=True):
         if u['role'] != 'learner':
             fail(403, 'ROLE', 'Приглашение предназначено ученику')
         inv = one(c, 'SELECT * FROM invitations WHERE token_hash=?', (token_hash(body.token),))
-        if not inv or inv['state'] != 'created' or inv['expires'] < time.time():
+        if not inv or inv['state'] not in ('created', 'accepted') or inv['expires'] < time.time():
             fail(410, 'INVITE_EXPIRED', 'Приглашение недействительно или уже использовано')
         owner = one(c, 'SELECT demo FROM users WHERE id=?', (inv['tutor_id'],))
         if owner['demo'] != u['demo']:
             fail(403, 'DEMO_BOUNDARY', 'Демо и реальные аккаунты разделены')
+        if inv['state'] == 'accepted':
+            if inv['accepted_by'] == u['id']:
+                return {'ok': True}
+            fail(410, 'INVITE_EXPIRED', 'Приглашение недействительно или уже использовано')
         c.execute('INSERT OR IGNORE INTO relationships VALUES(?,?,?,?)', (uid(), inv['tutor_id'], u['id'], inv['subject']))
         c.execute("UPDATE invitations SET state='accepted',accepted_by=? WHERE id=?", (u['id'], inv['id']))
         audit(c, u['id'], 'invitation_accepted', inv['id'])

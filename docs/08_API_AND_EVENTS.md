@@ -203,3 +203,7 @@ Potential metrics:
 - pilot repeat-use rate.
 
 No metric becomes a public claim without data-quality validation.
+
+## Confirmed local retry behavior — AUD029 (not deployed)
+
+`POST /api/invitations/accept` may be retried by the same authenticated learner who accepted the invitation, while its lifetime remains valid. It returns success without creating another relationship. Another learner, an expired/revoked/declined invitation, or an incompatible role remains rejected. A new preview of a consumed invitation remains rejected. Verified by `test_invitation_retry.py`, the mutation runner and `audit-invite-delivery.spec.ts`; no schema migration or response-format change.

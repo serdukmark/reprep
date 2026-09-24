@@ -12,6 +12,8 @@ with tempfile.TemporaryDirectory(prefix='reprep-ui-mutant-') as tmp:
         shutil.copy(root/name, dest/name)
     (dest/'node_modules').symlink_to(root/'node_modules', target_is_directory=True)
     changes = [
+        ('Insights.tsx', '{ client_id: practiceRequests.current[requestKey] }', '{ client_id: crypto.randomUUID() }'),
+        ('main.tsx', 'if (activeView !== workLoad.current) return;', 'if (false) return;'),
         ('ProfileSettings.tsx', 'useUnsaved(name !== user.alias);', 'useUnsaved(false);'),
         ('Notifications.tsx', 'useUnsaved(Object.keys(changes).length > 0);', 'useUnsaved(false);'),
         ('Groups.tsx', 'Object.values(bulkDirty).some(Boolean) ||', 'false ||'),

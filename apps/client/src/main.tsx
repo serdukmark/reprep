@@ -103,6 +103,11 @@ function App() {
   const workLoad = useRef(0);
   // Capture the displayed view now, before a child starts an asynchronous mutation.
   const activeView = workLoad.current;
+  async function openDraft(id: string) {
+    // The child may finish creating a draft after its original screen is gone.
+    if (activeView !== workLoad.current) return;
+    await open(id, true);
+  }
   function showAssignment(next: Assignment | null) {
     workLoad.current++;
     setActive(next);
@@ -1099,7 +1104,7 @@ function App() {
                       user={user}
                       assignments={assignments}
                       relations={relations}
-                      openDraft={(id) => void open(id, true)}
+                      openDraft={openDraft}
                     />
                   )}
                   {isTutor && selected && (
@@ -1118,11 +1123,7 @@ function App() {
                   {isTutor && selected && (
                     <Recommendations
                       relationship={selected}
-                      onDraft={async (id) => {
-                        await open(id);
-                        setEditing(true);
-                        await refresh();
-                      }}
+                      onDraft={openDraft}
                     />
                   )}
                   {isTutor && invites.length > 0 && (
@@ -1177,7 +1178,7 @@ function App() {
                   busy={busy}
                   action={action}
                   refresh={refresh}
-                  openDraft={(id) => void open(id, true)}
+                  openDraft={openDraft}
                 />
               )}
               {page === "settings" && (

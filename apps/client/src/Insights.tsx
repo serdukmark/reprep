@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { api } from "./api";
 
 type Recommendation = {
@@ -18,6 +18,7 @@ export function Recommendations({
   const [items, setItems] = useState<Recommendation[]>([]),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  const practiceRequests = useRef<Record<string, string>>({});
   useEffect(() => {
     let active = true;
     setItems([]);
@@ -64,10 +65,14 @@ export function Recommendations({
               setBusy(true);
               setError("");
               try {
+                const requestKey = JSON.stringify([relationship, item.source_assignment_id]);
+                practiceRequests.current[requestKey] ??= crypto.randomUUID();
                 const draft = await api<{ id: string }>(
                   `/assignments/${item.source_assignment_id}/duplicate`,
                   "POST",
+                  { client_id: practiceRequests.current[requestKey] },
                 );
+                delete practiceRequests.current[requestKey];
                 await onDraft(draft.id);
               } catch (e) {
                 setError((e as Error).message);
