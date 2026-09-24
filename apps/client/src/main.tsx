@@ -244,6 +244,15 @@ function App() {
       setSearch("");
       setSkills([]);
       setInvite("");
+      // Root-level form buffers survive child unmounts, so clear them at logout too.
+      setInviteInput("");
+      setAlias("");
+      setRole("tutor");
+      setToast("");
+      setEditing(false);
+      setMobile(false);
+      setPage("today");
+      duplicateRequest.current = null;
     });
   }
   function navigate(p: Page) {

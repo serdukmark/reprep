@@ -159,3 +159,14 @@ for (const platform of ["MAX", "Telegram"])
       await page.reload();await expect(page.getByRole('heading',{name:'Ваш следующий шаг.',exact:true})).toBeVisible();
       await expect(page.getByRole('button',{name:new RegExp('Ученик <>&')})).toBeVisible();
     });
+
+for(const platform of ['MAX','Telegram'])test(`${platform} logout clears the previous registration alias`,async({page})=>{
+ const raw=signed(platform,Date.now());
+ await page.route('https://st.max.ru/js/max-web-app.js',r=>r.fulfill({body:'window.WebApp={initData:""}'}));
+ await page.route('https://telegram.org/js/telegram-web-app.js',r=>r.fulfill({body:'window.Telegram={WebApp:{initData:"",ready(){},expand(){}}}'}));
+ await page.goto('/#'+(platform==='MAX'?'WebAppData':'tgWebAppData')+'='+encodeURIComponent(raw));
+ await page.getByLabel('Как к вам обращаться').fill('Приватное прежнее имя');
+ await page.getByRole('button',{name:'Войти через '+platform,exact:true}).click();
+ await page.getByRole('button',{name:/Приватное прежнее имя/}).click();await page.getByRole('button',{name:'Выйти',exact:true}).click();
+ await expect(page.getByLabel('Как к вам обращаться')).toHaveValue('');
+});
