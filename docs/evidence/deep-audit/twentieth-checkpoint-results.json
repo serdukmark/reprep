@@ -1,0 +1,151 @@
+{
+  "guardian-revocation-race": {
+    "stats": {
+      "startTime": "2026-09-24T12:09:36.377Z",
+      "duration": 7789.157999999999,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "revoked guardian cannot recover a child's summary from an older successful response",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "export-isolation": {
+    "stats": {
+      "startTime": "2026-09-24T12:10:31.091Z",
+      "duration": 2471.6099999999997,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "parallel exports tutor/learner: injected account IDs never override each tab's authenticated identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "parallel exports guardian/outsider: injected account IDs never override each tab's authenticated identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "workspace-id-isolation": {
+    "stats": {
+      "startTime": "2026-09-24T12:11:45.573Z",
+      "duration": 2955.498,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "workspace members: replacing visible workspace ID cannot expose a colleague's private library",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "workspace templates: replacing visible workspace ID cannot expose a colleague's private library",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "workspace invitations: replacing visible workspace ID cannot expose a colleague's private library",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "workspace-id-isolation-fixed-fixture": {
+    "stats": {
+      "startTime": "2026-09-24T12:12:34.567Z",
+      "duration": 2689.954,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "workspace members: replacing visible workspace ID cannot expose a colleague's private library",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspace templates: replacing visible workspace ID cannot expose a colleague's private library",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspace invitations: replacing visible workspace ID cannot expose a colleague's private library",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "scope": {
+    "production_touched": false,
+    "new_product_defects": 0,
+    "fixture_failure": "First workspace run omitted required relationship_id; fixed with empty string for a tutor draft. No product change."
+  },
+  "workspace-invite-access": {
+    "stats": {
+      "startTime": "2026-09-24T12:15:22.176Z",
+      "duration": 2999.253,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "workspace invitation create: forged identifiers cannot grant or revoke a colleague's access",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspace invitation revoke-foreign-space: forged identifiers cannot grant or revoke a colleague's access",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspace invitation revoke-foreign-invite: forged identifiers cannot grant or revoke a colleague's access",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  }
+}

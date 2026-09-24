@@ -1,305 +1,37 @@
-# Состояние полного аудита — 24.09.2026
+# Handoff аудита RePrep — контрольная точка20, 24.09.2026
 
-> САМАЯ ПОСЛЕДНЯЯ ТОЧКА: AUD033 (LearnerFeedback) и AUD034 (Catalog request/review) блокируют поля при отправке. Все изменения проверены целевыми прогонами: feedback5/5, teacher-plan-access2/2, catalog6/6, visual2/2; мутации1+2 обнаружены. Сборка index-8zZfybfo.js. 34 дефекта, матрица327/444/87, основных75/78. Полный279 до этих двух малых правок, сервер173 без новых изменений.
-> Браузерных прогонов нет; auditserver PID1177/session26916 остаётся локально. Три новых spec, изменения двух компонентов, mutation builder и docs19 подготовлены к локальному коммиту (проверить log/status). Визуально просмотрены catalog-request-confirmed.png и catalog-review-confirmed.png. Стенд не менялся.
-> Продолжать фактическую матрицу: каталог истёкшая сессия на review/чужой request ID/конкурентное решение двух вкладок; отзывы потерянный ACK/уход/reload/две вкладки; прочие unchecked. Не считать 327 вариантами полного покрытия. Чужие design-mockup и QA_INDEPENDENT не трогать.
+## Текущее состояние
 
+- Задача НЕ завершена. Пользователь изменил приоритет: **изоляция чужих данных → демо → деньги/удаление/экспорт → остальное**. Непроверенные редкие ветки допустимы; не подменять прогон чтением кода.
+- Репозиторий `/Users/pozitiv4500/Goool/Max_fuck_you`, ветка `feat/reprep-mvp`. Последний продуктовый коммит `5a7216d` (AUD033/034). Текущий блок добавляет только тесты/документы; проверить git log/status для фиксации.
+- 34 дефекта локально исправлены. Основные пути75/78, варианты **332 прошёл /439 не проверялся /87 неприменимо**. Матрица — `docs/evidence/deep-audit/scenarios.json`; читаемая версия — docs45, генератор `python3 scripts/render_audit_matrix.py`.
+- Сервер173/173 после AUD029, backend после этого не менялся. Последний полный браузерный прогон279/279 до AUD033/034; после них целевые5+2+6+2. Это НЕ общий полный прогон текущего кода.
+- Сборка клиента `index-8zZfybfo.js`. Auditserver PID1177 / exec session26916, `127.0.0.1:8017`, SQLite `artifacts/deep-audit/browser.sqlite3`. Внешние AI/боты отключены. Браузерных прогонов сейчас нет.
 
-> НОВЕЕ ПРЕДЫДУЩЕГО БЛОКА: AUD033 блокирует поля отзыва на время отправки. feedback-access-before 2pass/1fail → after5/5, mutation1/1 detected. teacher-plan-access2/2. Матрица323/448/87, основных75/78; 33 дефекта. Сборка index-D0sXG7uF.js. Код сервера не менялся. Последний полный279 ДО AUD033, после неё только связанные5+2.
-> Предыдущие BFCache history/общий токен закоммичены14ac2f9. Текущие AUD033+два новых spec+документы требуют секретскана/локального коммита. Активных браузерных прогонов нет, auditserver прежний PID1177/session26916. Стенд не меняли. Следующие unchecked: отзывы потерянный ACK/reload/уход/две вкладки; каталог и другие оставшиеся клетки. Не считать наличие теста прохождением всей строки.
+## Последний блок и доказательства
 
+1. `audit-guardian-revocation-race.spec.ts`: **1/1**. Две вкладки — преподаватель отзывает доступ, родитель получает свежий список без ребёнка, затем приходит задержанный ранее200 со сводкой. Старые данные не возвращаются; MutationObserver контролирует краткое появление; reload без доступа.
+2. `audit-export-isolation.spec.ts`: **2/2**. Пары tutor/learner и guardian/outsider одновременно скачивают свои JSON. Запросы получают query user_id/account_id/role преподавателя. Проверяются реально скачанные файлы: собственный account.id, отсутствие приватной переписки второго ученика у неавторизованных ролей.
+3. `audit-workspace-id-isolation.spec.ts`: **3/3** после исправления фикстуры. ПодменаID на реальную приватную библиотеку коллеги для members/templates/invitations→404, чужой текст не отображается; восстановление собственного чтения через reload. Первый прогон3fail — ошибка фикстуры: обязательный relationship_id отсутствовал. Пустая строка допустима для черновика; продукт не менялся.
+4. `audit-workspace-invite-access.spec.ts`: **3/3**. Подмена workspace для создания, workspace+invite для отзыва и своего workspace с чужим invite. Все404, списки приглашений неизменны, UI отказ без кода, корректный повтор успешен.
+5. Итоги — `docs/evidence/deep-audit/twentieth-checkpoint-results.json`, сырые отчёты в artifacts/deep-audit. Новых утечек/продуктовых дефектов этим блоком не обнаружено. U067 ID теперь подтверждён чтением и созданием/отзывом; всего9 новых успешных проверок, без продуктовых правок.
 
-> АКТУАЛЬНО: AUD032/переписка/документы в локальном23fbf9e; AUD029–031 в bd708de. Общий279/279 (9,7мин), затем history-offline-demo5/5 и bfcache-history2/2. Сервер173/173. Код приложения послеобщего279 не менялся. Сборка index-CvwJf8dK.js.
-> Браузерных прогонов НЕТ. Локальный auditserver session26916/PID1177 на8017 остаётся включён, только синтетика, внешние AI/доставка выключены. Стенд/боевые данные не трогали.
-> Матрица78сценариев:75 основных прошли/3непроверены; варианты317passed/454unchecked/87N/A. Аудит НЕ завершён. docs45 генерируется из scenarios.json командой scripts/render_audit_matrix.py.
-> Последние2history-теста+документы подготовлены к локальной фиксации; проверить git status/log. Новые файлы больше не лежат только в /tmp: обе подготовленные ранее проверки уже в tests/browser и пройдены.
-> Дальше продолжать фактические unchecked из JSON. Приоритет: оставшиеся два-вкладки/сессии/чужие-ID/навигация плана, каталога, ответов/отзывов; U078 остался только одновременный дубль (последовательный back/forward уже проверен). Не повторять весь279 без нового кода/сбоя. Читать тесты перед разметкой: не выдавать покрытие другой роли или API-only за UI-прогон.
-> BFCache защита реальна: скрывает cached HTML и reload проверяет текущую сессию; все роли, offline, разные/общие токены вкладок проверены; 5+1 мутаций обнаружены. Настоящий MAX не запускался. Высший утренний вопросАУД-Q1 — разрешённое окно выкатки AUD022/AUD025/AUD032, сейчас deploy запрещён.
-> Чужие docs/QA_INDEPENDENT.md и design-mockup/ не трогать/не stage. Только localcommits, безpush/main/merge/deploy/туннелей/оконвладельца. Передкоммитом scripts/check_secrets.py. Никакихреальныхсекретоввлогах; rawtraces/XML не коммитить.
+## Следующая конкретная работа
 
+- Создание/отзыв приглашений коллеги с подменой ID уже проверены. Не повторять этот блок без нового основания. Читать имеющиеся тесты перед расширением матрицы.
+- Проверить оставшиеся поздние ответы/выход/историю в путях с идентификаторами и полномочиями. AUD022/025/032 уже закрывают общий sessionVersion, корневые буферы, BFCache всех ролей, offline и общий токен вкладок. Новые тесты должны добавлять иной риск.
+- Проверить чужой catalog request ID и конкурирующие решения преподавателя — до косметики.
+- Не менять отметку по целой клетке на основе частичного теста: писать точные границы в variant_notes.
+- При реальном дефекте: воспроизведение → минимальная правка → целевая регрессия → намеренная мутация. Не повторять весь279 без изменения/основания.
 
+## Ограничения и команды
 
+Только свой headless Chrome, workers1, локальная синтетика. **Нельзя**: deploy/push/main/merge, менять стенд и боевые данные, туннели, настоящий MAX, ввод в окна владельца. Чужие `design-mockup/` и `docs/QA_INDEPENDENT.md` не читать/не менять/не stage. Секреты `.env`/token.txt не выводить; перед каждым коммитом `python3 scripts/check_secrets.py`, explicit git add только своих файлов.
 
-Задача активна, не завершена. Продолжать exhaustive browser audit. Никакого deploy/push/production mutation/окон владельца. Только отдельный headless Chrome; не запускать подагентов. Исходный HEAD 4a6249d, ветка feat/reprep-mvp.
+```sh
+E2E_URL=http://127.0.0.1:8017 E2E_AUDIT=1 PLAYWRIGHT_JSON_OUTPUT_NAME=artifacts/deep-audit/NAME.json npx playwright test tests/browser/FILE.spec.ts --workers=1 --reporter=list,json --output=artifacts/deep-audit/NAME-traces
+```
 
-## Текущий запуск
-- Изолированный сервер: PID47084, exec session63667, `.venv/bin/python -m uvicorn tests.audit_server:app --host 127.0.0.1 --port 8017 --no-access-log`.
-- Только synthetic SQLite artifacts/deep-audit/browser.sqlite3. AuditProvider наследует OpenRouterAdapter для проверки возможностей, но ВСЕ методы локальные, никакой платной сети. Marker UNAVAILABLE ждёт3с и бросает; EMPTY/GARBAGE возвращают невалидное, SLOW ждёт4с. Генерация fixture; вопросы — отказ.
-- Playwright workers1, traces on в режиме E2E_AUDIT. Fixture reset каждого теста + отдельный virtual IP, чтобы тесты не расходовали общий auth rate limit. Продуктовый rate limit не менялся.
-- Текущий прогон roles-round5: account роли, invitations, workspaces, failure. Узнать результат по JSON artifacts/deep-audit/roles-round5.json; номер процесса в диалоге.
-- Headless CLI требует require_escalated; никогда не использовать окна владельца.
+Headless запуск требует require_escalated; разрешено владельцем. Общий прогон дополнительно E2E_MAX_SIM=true E2E_FAULT_SIM=true E2E_FIXTURE_GENERATION=1 E2E_MAX_SDK_PATH=artifacts/max-web-app.js. Это симулятор, не живой MAX/AI/боевойHTTPS.
 
-## Исправления (локально, НЕ выкачены)
-- AUD001: ChoiceSelect видимый button не имел role/доступного имени. Добавлено. audit-choices passed; mutation-choice-role падает ожидаемо.
-- AUD002: option без value давал пустую строку: не сохранялся single_choice, граф навыков, выбор второго предмета. Теперь fallback текст option. audit-boundaries/skill-graph/catalog passed, mutation-choice-value падает ожидаемо.
-- AUD003: главная игнорировала старые занятия без status. Fallback scheduled. audit-access AUD003 passed, mutation-lesson-status падает ожидаемо.
-- Сборка dist актуальна: index-yYdTfKLs.js. Код и тесты ещё не закоммичены.
-
-## Доказательства
-- suite-round2:22passed,3устаревших тестовых ожидания,1skip.
-- faults-access-before:8passed,2failed (AUD003 + неверное ожидание «Завершено» вместо «Проведено»).
-- suite-round3:36passed,2ошибки новых тестов (клик disabled группы без участников; label Предмет вместо Предмет заявки),1skip. Эти два теста исправлены и passed round4.
-- remaining-round4:9passed,2failed. Learner invite длинный ввод не обязан обрезаться: проверка изменена на видимую ошибку сервера. failure старый сценарий требует медленного отказа, fixture отказ был слишком быстрый и polling не возникал — добавлена задержка3с только fixture. Эти2 перепроверяются round5.
-- AI UNAVAILABLE/EMPTY/GARBAGE/SLOW: все полные UI-сдачи + ручное/AI решение + подтверждение ученику прошли.
-- Формы profile/workspace/group/lesson/material: blank/long/Unicode/offline retry/dblclick/reload прошли.
-- guardian/colleague revoked invitation через UI прошли.
-- Карта77строк docs41 и scenarios.json: часть статусов обновлена, ОСТАЛЬНОЕ обновить по evidence; частичный проход не полный pass.
-- docs/QA_INDEPENDENT.md — чужой независимый аудит, появился во время работы; не менять/не включать в свой коммит автоматически. В нём те же дефекты option и dashboard, могут дописываться другие.
-
-## Дальше
-1. Разобрать round5 и устранить реальные дефекты; тестовые ошибки не выдавать за продуктовые.
-2. Заполнить пробелы77сценариев: UI review reject/retry, preview/remove/duplicate/edit-conflict, parent экспорт, все role boundaries, UI expired invitations (server tests есть), граф цикл/удаление, редактирование групп, обратная связь все варианты, файлы validation, модель/context-too-large, browser back/2tabs/session variants. Учёт N/A объяснять; ещё нельзя говорить всё проверено.
-3. Серверный pytest154+ ещё НЕ перепрогнан в этом аудите. Выполнить после текущих браузерных тестов. Мутации для трёх локальных багов уже доказаны браузером; серверные mutation scripts по правам доступны scripts/test_*_mutations.py.
-4. Полный окончательный прогон с flags: E2E_URL=http://127.0.0.1:8017 E2E_AUDIT=1 E2E_MAX_SIM=true E2E_FAULT_SIM=true E2E_FIXTURE_GENERATION=1 E2E_MAX_SDK_PATH=artifacts/max-web-app.js PLAYWRIGHT_JSON_OUTPUT_NAME=artifacts/deep-audit/final.json npx playwright test --workers=1 --reporter=list,json --output=artifacts/deep-audit/final-traces.
-5. Docs41 обновить по конкретным результатам, не подменять UI API-тестами. Реальный MAX исключён, AI здесь fixture, production не проверяется этими локальными прогонами.
-6. Secret scan scripts/check_secrets.py перед локальным коммитом, никаких secrets output. Не stage чужой QA_INDEPENDENT.
-
-## Более свежее состояние
-- Сервер тот же PID47084/session63667. Последний runner validation-round6 session62240 (audit-validation, audit-rejection).
-- AUD004 исправление в Assignment.tsx: rejected review явно показывает note. Before тест красный; after runner62240. Нужна намеренная мутация и повтор.
-- Build index-Bp52ohAB.js. pytest.ini новый: testpaths=tests; pytest154 passed/2 warnings. Старый default pytest собирал scripts/test_* и падал SystemExit, временные мутации НЕ изменяли source.
-- New audit-account-roles (3passed), audit-invitations (3passed), audit-generation (passed), audit-validation (в процессе), audit-rejection (beforefailed). workspaces открытая вкладка после удаления: passed после выбора ученика длякопии.
-- Пользователь подтвердил ночной автономный режим, держать вопросы и пакет к утру. Работа остаётся активной, полнота пока не достигнута.
-
-## Последняя точка (после дополнительных прогонов)
-- Audit server перезапущен: session46016/PID93459, 8017. Telegram включён synthetic token; cfg публичный origin https://audit.invalid (никуда не ходит). ASGI тестовый wrapper переводит ТОЛЬКО Origin http://127.0.0.1:8017 в https://audit.invalid, чужие Origin не трогает. Это fixture для обязательного public URL, НЕ проверка боевой конфигурации HTTPS.
-- Добавлен тестовый POST /__audit__/expire-invitations, меняет expires=0 только created приглашений в synthetic DB. Используют browser audit-invitations (3 expired +3 revoked).
-- Current runner session24595: auth-round11 (audit-auth12, invitations6, guardian extended1). В round10 тесты пытались .check() у скрытого native radio, исправлены на click visible .registration-role + assert checked; это тестовый дефект, не продуктовый.
-- AUD004 after passed(validation-round6), deliberate mutation-rejection-note failed expected. Все4 найденных продуктовых бага локально исправлены и regression/mutation доказаны.
-- Extra passed: audit-editing (teacher draft concurrent conflict, preview/remove, editgroup and bulk dblclick); audit-validation (graph cycle/dangling, file types/empty/size/NUL/encoding); audit-submissions context-too-large passed; concurrent two learners +allreportcategories passed concurrent-round9. Пустой report comment разрешён контрактом; не считать дефектом. Product вопросы АУД-Q1/Q2 добавлены docs15.
-- Server154 passed. Guardian mutation revoked_summary/revoked_list caught; workspace mutation revoked_member/private_relationship/automatic_publication caught.
-- tests/browser/audit-choices.spec.ts добавлен новый narrow longlabel keyboard тест, ещё НЕ запускался. max.spec storage denial расширен reload, ещё НЕ запускался.
-- Поддерживать карту docs41/scenarios.json: накопилось много новых подтверждений, ещё не внесены. После текущего прогона обновить и закрыть оставшиеся варианты. Нужен финальный полный run (flags inclMAX/FAULT/GEN), форматирование новых тестов, секретскан, локальный коммит (без чужого QA_INDEPENDENT). Не завершать задачу как «всё прошло», пока матрица неполная.
-
-## Текущая контрольная точка (самая новая)
-- Сервер PID32971/session18720, 8017, запущен после AUD005. Build index-RTKiIYoc.js.
-- AUD005 найден и исправлен: lost server response after create -> duplicate. Файлы apps/server/models.py (AssignmentInput.client_id excluded metadata), main.py deterministic per-tutor ID + replay conflict, client api.ts Assignment.client_id optional, blankAssignment UUID, main save body sendskey. tests/test_create_retry.py2 +lost-response browser passed. Mutation script passed. DBmigrationне нужна.
-- Сейчас полный browser checkpoint session38214, report artifacts/deep-audit/checkpoint-full.json, traces checkpoint-full-traces, flags MAX_SIM/FAULT_SIM/GENFIXTURE все включены. Серверpytest session6993, server-tests.xml. До результатов не начинать второй browserrun.
-- auth-round11:19passed (allroleMAX/TGsim, forged/expired/duplicate, invitations3revoked3expired, guardiannetworkforeignchild). ui-round12:5passed (narrowlongchoice, exportJSONanalytics, storagedenialreload, MAXsim).
-- Всеtests/browser отформатированы prettier. Production untouched; коммитов этой задачи ещё нет.
-- Следующее по фактическим пробелам: response-lost-after-commit для прочих createформ (group/lesson/material/workspace; могут дублировать, пока НЕ проверено), catalog decline/unpublish/price, plan edits/material links, discussion double/network, role matrices/resources fullUI. Карта77 всё ещё33passed/44неполно — обновить evidence из последнихпрогонов. CSV в карте исправлен на фактическийJSON, родительскийплан отсутствует.
-- Передcommitscan scripts/check_secrets.py. docs/QA_INDEPENDENT.md чужой файл, не stage. Все5 локальныхдефектов до AUD005 имеют red/green+mutation.
-
-## После checkpoint
-- Общий71test run:70passed1failed (6.8мин), failure толькоharness /expire-invitations SQLiteblockingeventloop. await asyncio.to_thread исправил; expiry-repeat 9passed(3rolesx3),39.8с. Полного71/71единымзапуском пока нет.
-- Текущий auditserver PID20519/session72813,8017. Browserrunner сейчасНЕТ. Backend156passed,2warnings, secretscan ранееpassed, передcommitповторяется.
-- Новыйутреннийпакет docs43. ВопросыАУДQ1/Q2 docs15. Все5bugs localonly, productionuntouched. Следующее:lostACKсозданияпрочих4форм, catalogdecline/unpublish,planlinks/steps,discussionnetwork/double,проверитьвсепробелы77карты. ЕстьподозрениянаduplicateпослеPOSTsuccess+lostresponse в lessons/materials/groups/workspaces (кодбезrequestkey), пока не воспроизведены.
-
-## Продолжение 24.09 — AUD006 и новый регресс (актуальнее предыдущих)
-- Локальный commit f7f3b92: AUD001–005 +71 browsertests, docs; push/deploy не было. docs/QA_INDEPENDENT.md чужой, не трогать/stage.
-- AUD006 uncommitted:4 создающих формы дублировались после потерянного ACK. Исправлены CreateInput.client_id, helper create_resource_id, endpoints groups/lessons/materials/workspaces +client UUID. tests/test_resource_retry.py8passed; mutation script все8ловит; audit-create-ack4before failed4after passed. Backend164passed. build index-ieHKzHPI.js.
-- Audit server session45438/PID9342 на8017. Текущий общий browser session86870, checkpoint-78.json/traces,78tests (новый plan-edit ещё не запускался отдельно). Один worker, synthetic only. Не запускать второйbrowser одновременно.
-- catalog-discussion2passed: pricefilters/decline/unpublish/lostACK retry и discussionempty/longUnicode/lostACK/reload/2tabs. Карта77обновлена частично этими фактами и ui-round12.
-- Следующее: дождаться78regression; исправить найденное, записать точные результаты, секретскан до локальногокоммита. Непроверенные строки остаются в карте, полную задачу не объявлять завершённой.
-
-## Новейшее: AUD007/008, ещё НЕ коммит
-- checkpoint-78:77passed1failed4.9мин. work-status helper index=-1 до прихода опций; choose теперь expect.poll(optionIndex), не force. Plan-edit прошёл; картаU025 обновлена.
-- AUD007 confirmed обе роли: delayedSasha response послевыбораЖени заменяетprogress уtutor/guardian. race-strict-before2failed; MutationObserverловиткраткийпоказ, предыдущиймягкийassertродителя былfalsegreenиз-заpoll5s.
-- AUD008 retryUI показываетoldfailure/retryпокаqueued. retry-submitbeforefailed. UIисправлен статусом queued/processing иguardawaiting_review.
-- Build index-Cavom3tr.js. Текущийrunner session16169 race-retry-after:race2/retry1/workstatus/guardian. Serverбезизменения45438.
-- Требуютсяmutation proofs AUD007/008, итоговыеtests/docs/scan+commit. Секретscan16605passed до новыхUIправок, передcommitповторить. 新tests untracked audit-selection-race/retry-submit/catalog-discussion/plan-edit/create-ack; scripts/test_resource_retry_mutations.py. AUD0068mutationscaught.
-
-## Самая новая точка — общий81 регресс
-- race-retry-after5passed58.5с; work-statushelper исправлен иpassed. AUD007tutor+guardian/AUD008retry mutation3expectedfailed(16.1/0.7/1.6s). Мутантbuild отдельнов /tmp черезscripts/build_audit_ui_mutant.py;fixtureподменяетJS толькоеслиE2E_MUTATION_ASSET. Обычнаяdistнеизменялась.
-- Сейчас browser session8952:checkpoint-81.json/traces,81tests; server45438/PID9342. Не запускать второйbrowser параллельно. Source main.tsx очищен отнесвязанныхprettierdiff, семантикатаже.
-- 8продуктовыхдефектов локальноисправлены, всеred/green/mutation. Backend164passed(послеAUD006), AUD007/8толькоUI, buildpassed. Новыйсекретscanпередcommitобязателен;ещёнетвторогокоммита.
-- КартаU020/U022/U061обновлена. СценарийU030уточнён: UIменяетстатус/оплату, поляназвание/времяредактироватьнельзя;неизобретатьпуть.
-
-checkpoint-81 завершён:81passed4.7мин. Следующий runner — schedule-files-policy:4 новыхUIтеста (календарь/отмена/файлы/2политикипodсказок). Пока не заявлятьихpassed.
-
-Все4schedule-files-policypassed14.5с. Теперь85browserтестов:81общийgreen+4таргетныхgreen. Карта51/77confirmed,26partial. Новыхдефектоввэтомпрогоненет. Browserпроцессовнет,server45438остаётся.
-
-## После второго коммита
-- Локальный commit45cf6ba: AUD006–008 +дополнительныетесты/docs. Секретscanпереднимpassed. No push/deploy. Чужойdocs/QA_INDEPENDENT.mdнеstaged.
-- Новыеuncommitted: scripts/audit_public_readonly.mjs GET-only поhttps://reprep.ru, все10проверокpassed, screenshotпросмотрен, никакихPOST/входов/данных. Подтверждаеттолькоpublicsurface, неauthscenario.
-- AUD009 workspace delayedtemplates confirmed1failed, Workspaces.tsxисправленloadgeneration+atomicPromise.all,buildindex-Bvv5XPl6.js.
-- AUD010 публичныйtextpromisesdemoприdemoFalse. testaudit-landing-copyновый, ещёred-runидёт.
-- Currentrunner workspace-after-landing-before session будет в toolhistory;3tests(workspacerace,landingcopy,workspaces). После:landingconditionalfix+build,mutation2proof,docs+scan+commit.
-- Карта51confirmed26partial,85testsдоэтих2новых. ОстальныеважныеUIпробелы: idspermissionsforfiles/library, invitealreadyaccepted/anotheruser,bulkscheduledouble,formvalidationlimits, remindersenabledfixture;liveMAX/realdataexcluded.
-
-## Самая свежая точка: AUD009/010 после исправлений
-- workspace-landing-after7passed7.7с:race/templates,landingcopy,4createACK,workspaces. Buildindex-BIuRFf7K.js. AUD009/010обаисправленылокально; mutationдвухсейчасидёт. scripts/build_audit_ui_mutant.pyдополненworkspacecurrentfalseguard+wronglandingcopy,реальныеисходникинепортит.
-- Новые2tests/audit-private-resources.spec.ts покаНЕзапускались: чужойTXTпоID, чужаяprivateбиблиотекапоID. SetupсоздаётsyntheticAPIfixtures, UIпутьпроверяетвидимыйотказ. Послеmutationзапустить.
-- public-readonlyresultскопированвdocs/evidenceбезтелответовиучётныхданных. Новыхпродуктовыхвопросовнет,видимыебагификсимврамкахавторизации.
-
-## Самая новая точка — AUD011/012 (ещё не коммит)
-- Commit45cf6ba последний. После него AUD009workspace race, AUD010landingdemo обаred/green+mutation. private-resources-extended2passed,workspace-boundaries1passed,notifications-ui3passed,invite-group-auth16passed.
-- tests/audit_server.py теперь гарантированно блокирует обаtransportprocess_outbox (lambdaFalse). НовыйfixturePOST/__audit__/notification-contacts даётsyntheticcontacttutor/learner, cfgmaxenabled/outboundTrue толькоUIprefs; new-client сбрасываетфлагиFalse. Реальныхсообщенийнепосылает. Этаfixtureнеразвёртывается.
-- AUD011 duplicate потерянногоACK создаёт2копии; twoPythonbeforetestsfailed, browserduplicate-before-idempotencyfailed2rows. main.pyoptionalCreateInput body, idcreate_resource_id('assignment-copy:'+sourceid,user,key), existingreturn; clientuseRefsource/key, сброспослеGETcopy. tests/test_duplicate_retry2passed, repeatmutation теперь10assertfailuresdetected.
-- AUD012 «К заданиям» оставлялpage=today; source main добавленsetPage(assignments), mutantbuilderможетотключить. Был UIред навигации duplicate-before. Browserafter+dirtynav2 сейчасидётsessionизtoolhistory.
-- Текущийсервер session57174/PID14732,8017, свежийbackend. Buildindex-Dffhq6cK.js. Pythonfocused12passed; полныйсерверпосле2новыхтестовещёнезапущен(expected166).
-- Currentbrowser duplicate-navigation-after (3tests). Mutantbuildersessionтакжевtoolhistory;затемнамеренныйсломnav(duplicateUI)долженкраснеть. Нуженfullbrowserпослевсехправок,docs/sanitizedevidence/secret scan/commit. ЧужойdocsQA_INDEPENDENTнеstage.
-- PublicGET-onlycheck2: HTTPSvalid,healthok,readytrue,OpenAPIschema,401me,404env/token,UIrender,noJSerrors. Repo scriptGETonly,никакихPOST/аутентификации/данных. ДоказательствживогоMAXне даёт.
-
-## Самое новое: расширенный общий регресс и13дефектов
-- AUD013deadlineDSTconfirmed18→19вEurope/Berlin, исправленnewDate(a.due_at).getTimezoneOffset; builder-timezone-after5passed, deadline-mutationexpectedfailed. Buildindex-CyB60fEy.js.
-- AUD011/012duplicate-navigation-after3passed,navmutationcaught; Python166passed. Нетизвестныхнеисправленныхбаговнаэтотмомент;все13имеютred/green/mutation.
-- tests/audit_server теперь/__audit__/identity/guardian|learner создаётдополнительнуюsyntheticdemorole+sessionдляUIфикстур. Текущийserver99533/PID42795на8017. TransportMAX/TGпо-прежнемузаблокированы.
-- Remaining-paths7passed1testfixturefailure(staleinvitecode); first-learner-copy2passedпослеожиданияновогокода. foreignrelations(material/groups),materiallink,clipboardmock,answer3types,linkedparentfiles/paymentpermissionspassed.
-- Новыеbrowsertests audit-first-learner,foreign-relations,material-link,clipboard-answers2,private-resources3,invite-reuse3,notifications2,builderlimits,deadline,duplicate,unsaved2. Частьещёuntracked;latestcommit45cf6ba.
-- Сейчас полныйрасширенныйbrowsercheckpoint-expanded (sessionвtoolhistory),1worker. НЕзапускатьдругиеbrowserпараллельно. Карта74/77mainpaths,3частичных/excluded(U075/76/77),ноnegativevariantsещёнужносверить/дополнить,незаявлятьполныйаудитготовым.
-- Следующийосмысленныйнегативныйпробел:2вкладкиредактируютразныеполязанятия(status/payment);UIшлётполныйPUTсоstaleполями,подозрениепотериоплаты. ПокаНЕвоспроизведено/НЕправлено. ЗатемматрицаошибокGETвэкранах,актуальныйутреннийпакет+evidence+scan+commit.
-
-
-## Контрольная точка: 105 браузерных + AUD014
-
-Полный checkpoint-expanded: 105/105 прошли за 5,4 минуты. Далее AUD014: две вкладки преподавателя — оплата в первой стиралась сменой статуса во второй (schedule-concurrent-before). Исправлено частичным PATCH статуса/оплаты с транзакционным read/merge/write, валидацией и проверкой владельца. Старый PUT сохранён для совместимости и по-прежнему является полной заменой; новый UI использует PATCH. schedule-concurrent-after: 4/4; серверный test_lesson_patch проверяет одновременные изменения, неизменность других полей и запрет чужого доступа. test_lesson_patch_mutation обнаруживает намеренное затирание отсутствующих полей. Новый endpoint потребовал добавить ответ в openapi_contract; после этого 167 серверных тестов прошли. Сборка клиента index-BLUcrwlH.js прошла.
-
-read-failures: 8/8 браузерных сценариев обрыва начального GET (группы, пространства, план, навыки, рекомендации, каталог, напоминания, аналитика): ошибка видима, reload восстанавливает. Отчёты без токенов: docs/evidence/deep-audit/third-checkpoint-results.json. Исходные traces остаются игнорируемыми артефактами, в Git не добавлять.
-
-Аудит НЕ завершён: основные пути 74/77, но матрица негативных вариантов неполна; зелёные основные пути не заменяют её. Остаются варианты сессии, назад, конкурентных правок и отказов в отдельных формах, а также визуальный просмотр всех кадров. Live MAX исключён. Боевой стенд не менялся. Новые проверки запускать только на loopback со сбросом синтетической базы.
-
-
-## Следующая волна: визуальный просмотр, сессии и каталог
-
-Просмотрены все 30 выбранных кадров из artifacts/deep-audit/visual-review/index.json (это выборка, не каждый шаг всех сценариев). AUD015: чекбоксы растянуты, подписи отдельно. Исправлено общее оформление; checkbox-after 6/6 (два размера, каталог, группы, напоминания), CSS mutation 2/2 обнаружены. В первом общем checkpoint-130 обнаружена собственная регрессия CSS: непреднамеренно потерян префикс .registration-role у скрытого radio. Исправлена; первая серия остановлена с 15 passed/1 failed/1 interrupted/113 not run, НЕ считать успешной. Пересобран index-BMMnXTsj.js, повтор checkpoint-130-fixed идёт.
-
-AUD016: задержанный предыдущий поиск каталога заменял результат нового. catalog-race-before упал, guard последовательности исправлен, catalog-race-after 18/18, catalog-race-mutation снова упал на появлении старой анкеты. Тест использует реальную синтетическую анкету и задержку ответа, а не подставленный успешный результат.
-
-AUD017: /api/telegram/webhook ссылался в OpenAPI на необъявленную TelegramWebhookSecret. Исправлен runtime-контракт, экспорт больше не затирает securitySchemes; test_every_security_requirement_declares_its_scheme был красным, стал зелёным; test_openapi_mutation ловит удаление схемы. Обновлены openapi.json и DATA-API.yaml, содержащие также новый PATCH занятия. 168 серверных тестов прошли.
-
-read-session-failures 16/16: восемь разделов × обрыв GET / реальный отзыв синтетической сессии. learner-editors 1/1: при смене ученика чужие редактируемые план и граф исчезают до загрузки, ошибка не позволяет сохранить их другому ученику. account-failures 4/4: все роли, валидация имени, ошибки экспорта, двойной запрос удаления, потеря ответа отмены и reload. Реальные аккаунты/удаления не использовались.
-
-Следующий подготовленный, ещё НЕ запущенный тест: audit-question-failures.spec.ts. Запустить после полного checkpoint-130-fixed (не параллельно браузером). Проверяет пустой/длинный/Unicode вопрос, потерянный ACK, двойной повтор, ручной ответ преподавателя после сетевого отказа.
-
-
-## Актуальная контрольная точка: 130/130 + шесть новых
-
-checkpoint-130-fixed полностью прошёл: 130/130, 5,4 минуты. Затем question-offline 2/2 (полный context.setOffline + lost ACK вопроса и ответ преподавателя), catalog-validation 1/1, graph-editing 1/1, plan-material-limits план 1/1. Второй тест материалов первоначально ошибся в имени поля («Заметка» вместо «Пояснение»); исправлен только тест, material-url-after 1/1. Новых дефектов приложения эти шесть тестов не выявили. 168 серверных тестов прошли. История, включая неуспешные/прерванные попытки: fourth-checkpoint-results.json.
-
-Всего AUD001–017 исправлены локально; подробности и ограничения — в docs/43_AUDIT_MORNING_RU.md. После 6eca38e ещё требуется локальный коммит последней волны. Секрет-скан перед коммитом обязателен. docs/QA_INDEPENDENT.md чужой, не включать. Боевой стенд, MAX и внешние доставки не тронуты.
-
-Карта: 74 основных пути подтверждены, U075/U076 частично, U077 live MAX исключён. Варианты: {'не проверялся': 600, 'не применимо': 66, 'прошёл': 181}. Не считать аудит законченным: требуется дальнейший прогон оставшихся применимых вариантов и визуальный просмотр остальных экранов; текущие 30 кадров являются выборкой.
-
-Процессы: браузерных прогонов сейчас нет. Локальный сервер audit_server остаётся на 127.0.0.1:8017 (сессия 35121, PID 87506), синтетическая SQLite. Продакшен не перезапускался. Все подготовленные тесты уже запускались, незапущенных файлов нет. Следующее полезное направление: варианты ухода/возврата и истёкшей сессии во время заполнения форм, долгие запросы/повторы оставшихся операций; продолжать по scenarios.json, не повторять весь зелёный набор без причины.
-
-
-Дополнение: form-expiry 5/5 — профиль, пространство, группа, занятие, материал после реального отзыва тестовой сессии. Пользователь видит отказ, введённый текст остаётся, повторный вход подтверждает отсутствие несанкционированной записи. После полного 130/130 отдельно прошли 11 новых тестов, то есть текущий набор содержит 141 браузерный тест; весь набор 141 одним запуском ещё не запускался. Непроверенных ячеек матрицы 595, подтверждённых 186, неприменимых 66. Браузерных процессов больше нет, только loopback audit_server.
-
-## Рабочее продолжение после 13be796 (ещё не коммит)
-
-13be796 — локальный коммит предыдущей волны, без push/deploy. После него:
-- review-delivery 2/2: сетевой отказ и потерянный ACK решения преподавателя, оригинал и результат у ученика сохранены.
-- save-timeout 1/1: фактический 15-секундный таймаут PUT черновика, видимая ошибка, разблокировка, повтор и reload.
-- AUD018: несохранённые пространство/занятие/материал терялись при уходе без вопроса. before 3/3 failed; useUnsaved подключён, после 18/18 связанных проверок прошли; mutation 3/3 обнаружены.
-- AUD019: изменение названия при ожидающем сохранении стиралось ответом на предыдущий ввод. Первый тест был недостаточно строг (материал успел ложно позеленеть до обработки ACK); усилен ожиданием response.finished + двух кадров. before-strict 3/3 failed. Поля блокируются fieldset disabled=busy; after 19/19; mutation 3/3 failed по потере ввода. Просмотрены три кадра форм после изменения, вёрстка не перекрывает поля. Сборка index-BV1mnWy-.js прошла.
-- АУД-Q3 добавлен в docs/15_OPEN_QUESTIONS.md: временная блокировка формы при запросе против буфера последующих правок, обратимое решение. N-01/N-17 помечены закрытыми, старое утверждение о запрете headless на production исправлено.
-- Начат audit-notification-concurrency.spec.ts: две вкладки ученика включают разные флаги напоминаний. Сессия browser 38607, результат ещё неизвестен; ожидается возможное затирание первого флага полным PUT. Никакой фикс уведомлений пока НЕ сделан. Внешняя доставка в tests.audit_server полностью отключена.
-- Утренний отчёт пока содержит 17 дефектов, требуется дописать AUD018/019 и новые результаты, создать fifth-checkpoint-results.json. Сервер пока прежний 35121/PID87506; нового backend после AUD017 он не загрузил, перед проверкой новых серверных правок перезапустить только этот loopback процесс. Все изменения после 13be796 ещё не коммитить без нового secret-scan. Чужой docs/QA_INDEPENDENT.md не трогать.
-
-
-## Актуально после AUD020
-
-AUD018/019 завершены: формы предупреждают об уходе и блокируют поля на время сохранения; after 19/19, обе группы мутаций по 3/3 выявляют нарушение. AUD020 подтверждён красным browser notification-concurrency-before (вторая вкладка сбрасывала lessons). Исправлены PATCH /api/notifications и отправка только изменённых флагов клиентом. after 4/4; серверная мутация выявляет потерю конкурентного флага и чужого типа напоминаний при opt-out. Первая версия mutation-скрипта ошибочно ожидала строку AssertionError в XML, хотя оба теста уже падали на assert; проверка метаданных исправлена, мутация подтверждена. Права родителя/контакт/отмена очереди проверены. 170 серверных тестов прошли, затем шесть профильных тестов после уточнения документации ролей также прошли. OpenAPI/DATA-API экспортированы заново, 91 операция.
-
-Последняя сборка index-CNUg9vid.js. Локальный audit_server перезапущен с актуальным backend: сессия 96968, PID20260, 127.0.0.1:8017. Браузерных процессов сейчас нет. Внешние отправки заблокированы fixture. Все 151 тест запускаемые; полный зелёный checkpoint-130-fixed был до AUD018–020, после них проверены соответствующие поднаборы. Следующий широкий регресс оправдан при завершении очередной группы правок, не повторять бесцельно.
-
-Карта: {'не проверялся': 590, 'не применимо': 66, 'прошёл': 191}; основной путь 74/77, live MAX исключён и два публичных пункта частичны. docs/43_AUDIT_MORNING_RU.md обновлён до 20 дефектов. После 13be796 изменения этой волны ещё нуждаются в secret-scan и локальном коммите, чужой QA_INDEPENDENT.md исключить. Fifth-checkpoint-results.json содержит только названия/статусы/счётчики.
-
-
-## Контрольная точка: общий регресс 151 и приватность учебного плана
-
-151/151 браузерных проверок прошли одним запуском за 7,1 минуты после AUD018–020. Ещё пять проверок private-learning-review-session прошли: два новых отказа доступа к чужому плану/графу, новый отзыв сессии перед решением преподавателя и два повторных отказа доставки решения. Теперь в наборе 154 теста, три новых подтверждены отдельно; весь набор 154 одним запуском не запускался. 170 серверных тестов подтверждены ранее в этой волне. Новых дефектов эти проверки не выявили.
-
-Матрица вариантов: {'не проверялся': 587, 'не применимо': 66, 'прошёл': 194}. Полный аудит не завершён. Браузерных прогонов нет; loopback audit_server 127.0.0.1:8017, сессия 96968/PID20260 продолжает работать с синтетической базой. Внешние доставки выключены fixture. Следующее направление: остальные применимые варианты scenarios.json и визуальный просмотр; стенд и живой MAX не трогать. Все текущие тесты запускались.
-
-
-## AUD021 — фильтр статусов на телефоне
-
-Просмотр верхней/нижней части 14 снимков навигации преподавателя и ученика на 390 px нашёл сжатие выбранного «Все» до двух строк (на 320 px — трёх). Предыдущая проверка отсутствия горизонтального скролла дефект не выявляла. Новый audit-mobile-filter проверяет высоту текста относительно line-height для all/overdue/completed/draft. Before: 2 failed; CSS меняет раскладку .filters только до 650 px, поиск занимает полную строку. After: 8/8 связанных тестов; принудительный возврат тесного flex через E2E_MUTATION=mobile-filter: 2 failed ожидаемо. Исправленный снимок 320 px просмотрен. Сборка прошла (index-mRr9Mv7T.js, index-D9Zax2k2.css).
-
-Предыдущая волна сохранена локально cdf37b5, без push/deploy. Текущая новая волна: AUD021, два файла мобильных тестов, sixth-checkpoint-results.json. Всего 158 тестов; общий 151 был до AUD021, после него только целевой регресс 8/8. Backend не менялся. Матрица 194/587/66 не увеличена за счёт поверхностной навигации. Ни одного браузерного прогона сейчас нет; loopback audit_server остаётся. Чужой docs/QA_INDEPENDENT.md не включать.
-
-
-Дополнение к AUD021: editor-navigation 3/3 и auth-delivery 4/4 прошли, новых дефектов нет. Сохранность группы/анкеты/графа при отменённом переходе, восстановление регистрации MAX/TG после сетевого отказа или потерянного ACK (тот же user ID) подтверждены. Всего 165 тестов, общий 151 до AUD021; остальные отдельно. Матрица {'не проверялся': 580, 'не применимо': 66, 'прошёл': 201}. Доказательства — sixth-checkpoint-results.json. Все подготовленные тесты запускались.
-
-
-## AUD022 — данные предыдущей сессии
-
-Подтверждены два красных браузерных случая: преподаватель начал refresh/open, вышел, вошёл ученик, затем пришёл старый успешный ответ и показал чужую работу. api.ts теперь захватывает sessionVersion и отбрасывает ответ после смены token; та же защита у blob экспорта. logout очищает relations/lessons/materials/selected/invitations вместе с assignments. Проверки: account-switch-after 22/22; account-switch-export-after 4/4 (включая старое расписание до окончания нового refresh и отсутствие URL/скачивания старого экспорта). Мутация в отдельной копии JS отключает проверки версии и очистку lessons: 3/3 + экспорт 1/1 падают ожидаемо. Основные файлы mutation не изменяет.
-
-Сейчас идёт полный checkpoint-169: exec session89875, отчёт artifacts/deep-audit/checkpoint-169.json, traces одноимённые. Не запускать второй браузер параллельно. Последняя сборка index-DeJtCLBA.js / index-D9Zax2k2.css, сервер прежний 96968/PID20260. Backend не менялся, 170 серверных ранее прошли. Все изменения после cdf37b5 пока не коммит; завершить общий регресс, обновить пакет, secret-scan, локальный коммит. Чужой QA_INDEPENDENT.md исключить. Общий аудит всё ещё НЕ завершён.
-
-AUD022: дополнительно просмотрен исходный screenshot open-before — кабинет Саши действительно показывает работу Жени, рядом серверный 404; это подтверждает клиентскую утечку, несмотря на исправные серверные полномочия. Вопрос АУД-Q1 поднят в приоритет утра, deploy по-прежнему запрещён. Тест экспорта ожидает реального завершения blob и считает создание object URL, поэтому не может позеленеть только из-за раннего отрицательного ожидания download.
-
-Подготовлен, но ещё НЕ запускался audit-work-navigation-race.spec.ts (3 случая: позднее открытие работы против второй работы, расписания, нового черновика). Выполнить только после завершения session89875. Возможная гонка same-session open(), пока только гипотеза, не включена в число дефектов.
-
-
-## AUD023 — запоздалое открытие работы
-
-После общего checkpoint-169 (169/169, 7,6 минуты) три новых случая work-navigation-before упали: старый ответ возвращал работу поверх выбранной позже другой работы, расписания или заполненного нового черновика. Добавлен workLoad, открытия сверяют номер запроса; showAssignment инвалидирует предыдущие открытия при переходе/новом черновике/выходе. Polling существующей работы сохраняет прежнюю проверку ID. После исправления work-navigation-after 18/18, намеренная поломка условия 3/3 выявлена. Сборка index-mHx0xhGo.js / index-D9Zax2k2.css прошла. Всего 172 теста, полный 172 после AUD023 не запускался, связанный регресс пройден.
-
-Матрица 205 прошли / 576 не проверялись / 66 неприменимы. Все подготовленные тесты запускались. Браузерных/сборочных процессов нет, loopback audit_server прежний 96968/PID20260. Утренний пакет актуализирован до AUD023, аудит не завершён. Ссылка на утечки AUD022 — приоритет решения владельца о deploy; самостоятельно не публиковать. Проверка ссылок командного checklist: 126 отмеченных строк имеют ссылки на доказательства; это НЕ проверка свежего прохождения всех требований. Исправлена устаревшая подсказка audit_checklist.py, теперь она разрешает только headless на синтетике.
-
-Следующее конкретное направление (гипотеза, НЕ подтверждённый дефект): окончание saveAssignment/update/duplicate/openDraft после ухода пользователя с экрана. AUD023 пока доказан для open() и отмены его старых результатов; остальные асинхронные переходы не считать автоматически покрытыми. Также оставшиеся варианты матрицы и средние участки длинных мобильных страниц.
-
-
-## AUD024 — сохранение и копирование после ухода
-
-Гипотеза из предыдущей передачи проверена частично: saveAssignment и duplicate возвращали редактор поверх уже выбранного расписания. Before 2 failed. Обе операции запоминают workLoad при запуске; результат сохраняется и обновляет список, но смена экрана выполняется только при прежнем выборе. After 11/11 связанных, в том числе обе операции обнаруживаются в списке после reload; мутация обоих сравнений 2/2 выявлена. Сборка index-FSoTEZuF.js прошла, CSS прежний index-D9Zax2k2.css.
-
-Текущий набор 174, общий 169 прошёл до AUD023/024; после них целевые регрессы 18 и 11 прошли. Backend не менялся (170 ранее). Все подготовленные тесты запускались, браузерных/сборочных процессов нет. Сервер audit_server loopback8017 (96968/PID20260) остаётся с синтетикой, внешняя доставка выключена.
-
-Дальше НЕ считать покрытыми: завершение AssignmentDetail.update или генерации/openDraft после ухода; остальная матрица вариантов и визуальный просмотр средних частей длинных страниц. Это гипотезы для следующего прогона, не подтверждённые дефекты. Общее задание аудита НЕ завершено.
-
-
-## Новый проход: AUD025 и широкая изоляция сессий
-Найдены остатки inviteInput/alias при logout (before 1+2 failed), исправлены root buffers и вспомогательное состояние. Сборка index-B6u3oXx7.js. session-isolation-after 34/34. Усилены тесты отношений/уроков и 7 session-screens ожиданием новых ответов; добавлены guardian/notification, эти 9 после усиления ещё не запускались. Сейчас session-isolation-mutation (7) session69289; не запускать другой браузер одновременно. После него запустить 9 session-screens. Инвентаризация и ограничения — docs/44_SESSION_ISOLATION_AUDIT_RU.md. Всё после af15183 пока НЕ коммит, нужны результаты/документы/секрет-скан. Тот же loopback сервер96968/PID20260.
-
-
-## AUD025 завершённый checkpoint
-9 усиленных session-screens прошли, 7 session-isolation мутаций выявлены; TXT/ICS 2/2 после и 2/2 мутаций выявлены. Старые записи «ожидается» выше — история. Новые файлы тестов: audit-session-caches/screens/downloads; имя регистрации в audit-auth. Следом ещё проверить генерацию/openDraft и update, не считать их доказанными.
-
-## Продолжение после коммита 6e87124
-Начат AUD026: позднее открытие AI-черновика из материалов заменяет уже открытое расписание. generated-navigation-before: этот дефект подтверждён, смена аккаунта защищена. В тесте нового ручного черновика ошибочно искалась кнопка из раздела «Материалы»; тест исправлен переходом в «Задания», повторяется вместе с новым review-navigation. Сессия13381, generated-review-before.json; результаты ещё ожидаются. Никакой фикс этой находки пока не заявлен.
-
-AUD026: corrected generated-review-before подтвердил 3 падения (AI-черновик заменяет расписание/новый ручной черновик; ACK решения преподавателя возвращает старую работу), смена аккаунта прошла. openDraft обоих источников теперь использует общий open с версией выбора; update сравнивает версию экрана из замыкания. Сборка index-BQ7j1k9R.js прошла. Связанный регресс16 выполняется, session61551/generated-review-after.json. Подготовлен audit-payment-failures.spec.ts (offline/session/lost-ack), ещё не запускался.
-
-## AUD026 — поздние ответы обходных путей открытия
-AI-черновик из материала заменял расписание или новый ручной черновик; ACK решения преподавателя возвращал старую работу. Исправлено: оба openDraft (материалы/библиотека) используют общий open с версией выбора; update сравнивает версию экрана из замыкания. generated-review-before: 3 failed + 1 passed; after: 16/16 связанных; mutation: 4/4 обнаружены (включая уже существующую защиту аккаунта). Первый тест нового черновика ошибочно искал кнопку в материалах, исправлен переход в задания; это не дефект приложения.
-Сборка index-BQ7j1k9R.js прошла. Просмотрен кадр расписания после позднего ответа — экран остаётся выбранным, редактор не подменяет его. Оплаты/календарь: 7/7, включая offline, истёкшую сессию, потерянный ACK, подмену настоящего чужого ID оплаты/статуса и календарь ученика/преподавателя с reload. Новых дефектов эти семь не нашли.
-Матрица: {'не проверялся': 545, 'не применимо': 78, 'прошёл': 224}. Для четырёх действий без текстового ввода варианты пустота/длина/Unicode отмечены неприменимыми с причиной, это не дополнительные прогоны. Доказательства eleventh-checkpoint-results.json. Полный набор203 после AUD026 одним запуском ещё не прогонялся. Backend170 ранее, изменений нет. Подготовлены ещё 2 теста групповых форм — пока не включать в зелёный итог.
-
-AUD026: регресс16/16 прошёл, mutation4/4 выявлены; оплаты/календарь7/7. Ещё не коммитили. AUD027: group-bulk-navigation-before 2/2 failed, предупреждение о несохранённых bulk-формах отсутствовало. Добавлены независимые dirty-флаги по группе и типу операции, очищается только успешно отправленная форма. Сборка index-DH6cs7hE.js прошла. group-bulk-after (7 tests) запускается; данные/уведомления только синтетические. Подготовлен audit-group-bulk-failures.spec.ts: обязательные поля/длина/Unicode/потерянный ACK/два разных буфера.
-
-## AUD027 — групповые формы теряли ввод при уходе
-Выбранный шаблон группового назначения и заполненная форма общего занятия не учитывались предупреждением. before2/2 failed; добавлены отдельные dirty-флаги на группу/операцию, сбрасываются только после успеха соответствующей формы. after7/7, mutation2/2 обнаружены. Проверены обязательные поля/длина/Unicode, потерянный ACK и повтор, два занятия после reload, несохранённая вторая форма после отправки первой. Сборка index-DH6cs7hE.js.
-Матрица {'не проверялся': 516, 'не применимо': 78, 'прошёл': 253}. Полный206 идёт в session63055/checkpoint-206.json; результат ещё НЕ известен. Backend не менялся.
-
-Во время общего206 подготовлен audit-group-concurrency.spec.ts (3 сценария: устаревшее редактирование, назначение и занятие после изменения состава в другой вкладке). НЕ запускался, НЕ входит в206. После завершения общего прогона проверить отдельно; данные только synthetic.
-
-## Общий регресс после AUD025–027
-206/206 прошли одним запуском за 8.5 мин, без skipped/flaky/unexpected. Ещё3/3 group-concurrency прошли отдельно: устаревшая вкладка не перезаписывает состав и не назначает работу/занятие исключённому участнику. Всего209, весь209 одним запуском не выполнялся. Последний backend170 ранее, код сервера в этой волне не менялся. Доказательства thirteenth-checkpoint-results.json.
-Матрица: {'не проверялся': 504, 'не применимо': 78, 'прошёл': 265}. Аудит НЕ завершён. Следующие направления — ещё непройденные варианты приглашений/генерации/библиотеки и визуальные проверки. Prod/MAX не трогали. Чужие QA_INDEPENDENT.md и design-mockup/ не включать в коммит.
-
-Новый audit-generation-delivery.spec.ts: offline, revoked-session, lostACK/dblclick и count(empty/0/6/fraction). Запущенsession8689, generation-delivery-after.json, результата пока нет. ВнешнийAI не вызывается. Дальше возможное направление — расширить только fixture генерации на UNAVAILABLE/GARBAGE/SLOW (сейчас толькоEMPTY), после окончания текущего прогона.
-
-Локальный сервер перезапущен после добавления в tests/audit_server.py синтетических UNAVAILABLE/GARBAGE/SLOW для generate_assignment. Production-код не менялся. НовыйPID20789/session36623, прежний20260 остановлен. audit-generation.spec.ts теперь3 режима вместоEMPTY; generation-delivery добавленSLOW. Всего216 тестов, из них8 выполняютсяsession68040; 206 общий раньше, ещё3concurrency и4delivery отдельно прошли. Первыйdeliveryпрогон3failed был ошибкойgetByLabel на заполненной textarea, заменён на textbox role; приложение на кадре было корректно.
-
-Generation-faults-confirmed:8/8 прошли (5delivery/slow +3пустота/сбой/мусор). Добавлен audit-group-access.spec.ts на подмену реального чужогоID группы edit/assign/lessons, сейчасsession42654/group-access-after.json, результат неизвестен. Обновлённый auditserver36623/PID20789 активен. После результата обновитьfourteenth evidence/матрицу/утро, secretcheck и локальныйcommit тестовой волны. Последняяproductionправка9c50001; после неё новых дефектов пока нет.
-
-## Генерация и границы чужих групп
-Новых дефектов приложения в этом блоке нет. generation-faults-confirmed8/8: ошибка сети/сессии, lostACK/dblclick не создают второй черновик; count(empty/0/6/fraction) не отправляется; SLOW сохраняет ожидание через reload без автопубликации; EMPTY/UNAVAILABLE/GARBAGE оставляют исходник и возможность повторить. Только детерминированный тестовый провайдер. group-access-after3/3: подмена реального чужогоID при edit/assign/lessons отвергнута, чужие данные не изменены. Первыйdelivery3failed/1passed — ошибка локатора заполненной textarea в тесте, исправлена; повтор4/4.
-Текущий набор219; общий206 прошёл до расширения этих тестов, ещё3concurrency,8generation,3groupaccess подтверждены отдельно. Матрица {'не проверялся': 504, 'не применимо': 78, 'прошёл': 265}. Production-код не менялся после9c50001; тестовыйсервер перезапущен: session36623/PID20789.
-
-## AUD028 в работе
-settings-navigation-before4/4 failed: имя профиля и флаги напоминаний молча терялись при уходе у tutor/learner. Выделен ProfileSettings (локальный name, useUnsaved, блокировка поля на времяsave); Notifications подключён к useUnsaved поchanges. Изменён только локальный клиент, prodне трогали. audit-session-caches profile теперь явно принимает подтверждение выхода с ожидающим сохранением; остальные assertions не ослаблены. Сборка и новые проверки пока требуют подтверждения, mutationскрипт дополнен двумяотключениямиguard. Тестовая волна генерации/групп сохранена вcf2cd9f.
-
-## AUD028 — сохранность настроек
-Имя профиля и флаги напоминаний терялись при уходе без предупреждения (before4/4 failed). Выделен ProfileSettings с локальным вводом/useUnsaved/блокировкой на времяsave; Notifications учитывает несохранённыеchanges. После23/23, mutation4/4 обнаружены, ещё visual4/4. Просмотрены итоговые скриншоты профиля преподавателя и напоминаний ученика; поля и кнопки не перекрываются. Старый тест смены аккаунта теперь явно подтверждает выход с ожидающим сохранением профиля, проверки изоляции не ослаблены. Сборка index-u3g3pEuA.js прошла.
-Набор223; общий206 был ДО AUD028, после него именно связанный23 и visual4, не весь223. Backend170 ранее, серверное приложение не менялось. Матрица {'не проверялся': 501, 'не применимо': 78, 'прошёл': 268}. Активных браузерных прогонов нет; тестовыйсервер36623/PID20789 остаётся.
-
-## AUD029 в работе
-AUD028 сохранёнв1af6316. invite-delivery-before:8passed/1failed (learner lostACK; guardian/colleague offline/session/lostACK прошли). test_invitation_retry before:1failed/2passed; повтор послефикса5/5сprofileinvites. apps/server/main.py accept теперьвозвращаетok только томужеaccepted_by, при ещёнеистёкшемкоде; preview использованного по-прежнему410, чужойученик410. Mutations3 + полныйserver173 выполняютсяsession96419. Тестовыйсервер36623/PID20789 покаСТАРЫЙ backend, передbrowserafterперезапустить толькоего. Новыйtests/browser/audit-invite-delivery.spec.ts9, tests/test_invitation_retry.py3, scripts/test_invitation_retry_mutations.py. В матрицеU043сеть временноупалдоUIподтверждения.
-
-## AUD029 — потерянное подтверждение принятия приглашения учеником
-До: invite-delivery-before8passed/1failed; серверныйretry1failed/2passed. После:19/19UI,5/5 профильных unit, полный173/173server (2предупреждения библиотек). Контрольные мутации обнаружили запрет повтора, обход accepted_by и обход срока. Повтор POSTaccept возвращаетok только тому же ученику для ещёнеистёкшего acceptedкода, не создаёт новую связь. Preview использованного по-прежнему410, другойученик410. Документация API дополнена, схема/миграции не менялись.
-Матрица {'не проверялся': 494, 'не применимо': 78, 'прошёл': 275}; основной путь74/77. Общий232 сейчасвыполняетсяsession78727/checkpoint-232.json, результата НЕ заявляем. Сервер26916/PID1177 содержитAUD029,loopback8017;клиентindex-u3g3pEuA.js. Никакогоprod/push/MAX/внешнейдоставки.
-
-Пока общий232 идёт, подготовлен audit-learner-parent-read-failures.spec.ts (13): learner plan/skills/practice/catalog/notifications ×network/session; parent links/summary network и session polling. Ещё НЕ запускался и НЕ входитв232. Послеобщего232 запуститьотдельно, проверитьвидимыеошибки/реально загруженнуюновуюсводку, обновитькарту. Приложениевовремя232не менялось.
-
-Следующий набор подготовлен вне рабочего дерева: `/private/tmp/reprep-auth-validation.spec.ts`, 12 проверок регистрации MAX/TG ×3роли ×пустое имя/валидация (пробелы, длина60, Unicode), двойное нажатие и reload. НЕ запускался и НЕ входит в250. После текущего общего250 перенести в tests/browser/, прочитать/проверить, запустить отдельным headless. Пустое имя по существующему контракту даёт «Участник», пробелы отвергаются Pydantic; продуктовых решений не меняли.
-
-После279 подготовлены, НО НЕ ЗАПУСКАЛИСЬ и НЕ ВХОДЯТ в279: `/private/tmp/reprep-bfcache-offline.spec.ts` (1: offline возврат скрывает прошлый кабинет, Chrome ERR_INTERNET_DISCONNECTED, reconnect/reload текущий аккаунт); `/private/tmp/reprep-demo-login.spec.ts` (4роли: offline/double/reload/logout revokes token/отдельная вкладка сохраняет свою независимую сессию). Переносить в tests/browser только после279, сначала прочитать и проверить. Нельзя заявлять их passed до прогона.
-
-Новый docs45 — читаемая матрица из JSON, генератор `python3 scripts/render_audit_matrix.py`; регенерировать после изменения scenarios.json. README теперь ссылается на текущий аудит.
+Утренний пакет docs43, вопросы docs15; главный вопрос — окно выкатки исправлений смены аккаунта. Ответов ночью не ждать. Старые решения и полная история (включая устаревшие PID) сохранены в [архиве](evidence/deep-audit/handoff-history-through-checkpoint-19.md); текущий блок выше имеет приоритет.
