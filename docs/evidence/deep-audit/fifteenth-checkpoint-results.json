@@ -1,0 +1,295 @@
+{
+  "settings-navigation-before": {
+    "stats": {
+      "startTime": "2026-09-24T10:24:04.734Z",
+      "duration": 5611.821,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 4,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "tutor profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "tutor notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "learner profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "learner notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "settings-navigation-after": {
+    "stats": {
+      "startTime": "2026-09-24T10:26:12.402Z",
+      "duration": 23708.965999999997,
+      "expected": 23,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "profile: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspace: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "lesson: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "profile: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspace: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "lesson: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "two learner tabs preserve independent reminder preference changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor: notification opt-in requires contact, survives offline retry and can be disabled",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner: notification opt-in requires contact, survives offline retry and can be disabled",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "unaccepted invitation input does not survive logout into a different learner",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "old relationships response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "old lessons response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "old materials response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "old profile response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "profile, invitation consent, disabled MAX delivery and calendar download",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "settings-navigation-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T10:27:14.698Z",
+      "duration": 6175.004,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 4,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "tutor profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "tutor notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "learner profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "learner notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "settings-navigation-visual": {
+    "stats": {
+      "startTime": "2026-09-24T10:28:06.674Z",
+      "duration": 4970.353,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "tutor profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  }
+}

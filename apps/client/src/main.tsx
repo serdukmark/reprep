@@ -1,3 +1,4 @@
+import { ProfileSettings } from "./ProfileSettings";
 import { ChoiceSelect } from "./ChoiceSelect";
 import React, { useState, useEffect, useRef } from "react";
 import { initializeMax, launchData, bindMaxBack, inTelegram, inMax, platformName } from "./max";
@@ -1189,34 +1190,8 @@ function App() {
                       </p>
                     </div>
                   </div>
-                  <form
-                    className="card"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      const name = String(
-                        new FormData(e.currentTarget).get("alias") || "",
-                      );
-                      action(async () => {
-                        setUser(
-                          await api<User>("/profile", "PUT", { alias: name }),
-                        );
-                        setToast("Имя сохранено");
-                      });
-                    }}
-                  >
-                    <label>
-                      Отображаемое имя
-                      <input
-                        name="alias"
-                        defaultValue={user.alias}
-                        required
-                        maxLength={60}
-                      />
-                    </label>
-                    <button className="secondary" disabled={busy}>
-                      Сохранить имя
-                    </button>
-                  </form>
+                  <ProfileSettings user={user} busy={busy} action={action}
+                    saved={(updated) => { setUser(updated); setToast("Имя сохранено"); }} />
                   <Notifications user={user} />
                   <AccountData user={user} />
                   {isTutor && <Analytics />}

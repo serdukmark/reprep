@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api, User } from "./api";
+import { useUnsaved } from "./components";
 type Settings = {
   lessons: boolean;
   assignments: boolean;
@@ -16,6 +17,7 @@ export function Notifications({ user }: { user: User }) {
   const [changes, setChanges] = useState<
     Partial<Pick<Settings, "lessons" | "assignments">>
   >({});
+  useUnsaved(Object.keys(changes).length > 0);
   useEffect(() => {
     api<Settings>("/notifications")
       .then(setSettings)

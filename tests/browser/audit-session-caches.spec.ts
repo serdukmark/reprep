@@ -25,6 +25,7 @@ for(const resource of ['relationships','lessons','materials','profile'])test(`ol
   await page.getByRole('button',{name:/Алекс • демо/}).click();await page.getByLabel('Отображаемое имя').fill(oldName);await install();await page.getByRole('button',{name:'Сохранить имя',exact:true}).click();
  }
  await seen;
+ if(resource==='profile')page.once('dialog',d=>d.accept());
  if(resource!=='profile')await page.getByRole('button',{name:/Алекс • демо/}).click();
  await page.getByRole('button',{name:'Выйти',exact:true}).click();await page.getByRole('button',{name:'Я ученик',exact:true}).click();
  await expect(page.getByRole('button',{name:/Линейные уравнения: от шага к решению/})).toBeVisible();
