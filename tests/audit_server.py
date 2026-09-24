@@ -20,6 +20,9 @@ class AuditProvider(OpenRouterAdapter):
         return LocalRules().analyze(context)
     def answer_question(self,context):raise ConnectionError('Synthetic question outage')
     def generate_assignment(self,context):
+        if 'AUD_AI_UNAVAILABLE' in str(context):raise ConnectionError('Synthetic generation outage')
+        if 'AUD_AI_GARBAGE' in str(context):return 'not structured output'
+        if 'AUD_AI_SLOW' in str(context):time.sleep(4)
         if 'AUD_AI_EMPTY' in str(context):return {}
         return GeneratedWork(title='Синтетическая генерация из материала',instructions='Тест интерфейса с детерминированным провайдером, не живой AI.',tasks=[{'id':f'q{i}','type':'numeric','prompt':'Сколько будет 2+3?','answer':'5','skill':'Сложение'} for i in range(context['count'])])
 

@@ -1,6 +1,6 @@
 import { test, expect, choose } from "./audit-fixtures";
 
-test("invalid generation leaves material intact and retry available after reload", async ({
+for (const mode of ["EMPTY", "UNAVAILABLE", "GARBAGE"]) test(`invalid generation ${mode} leaves material intact and retry available after reload`, async ({
   browser,
 }) => {
   test.skip(
@@ -27,7 +27,7 @@ test("invalid generation leaves material intact and retry available after reload
     name: "source.txt",
     mimeType: "text/plain",
     buffer: Buffer.from(
-      "AUD_AI_EMPTY Чтобы решить 3x + 7 = 22, вычтите 7 из обеих частей: 3x = 15. Затем разделите обе части на 3: x = 5. Проверка: 3 умножить на 5 плюс 7 равно 22.",
+      `AUD_AI_${mode} Чтобы решить 3x + 7 = 22, вычтите 7 из обеих частей: 3x = 15. Затем разделите обе части на 3: x = 5. Проверка: 3 умножить на 5 плюс 7 равно 22.`,
     ),
   });
   await tutor.getByRole("checkbox", { name: /Разрешаю/ }).check();

@@ -1,0 +1,183 @@
+{
+  "generation-delivery-after": {
+    "stats": {
+      "startTime": "2026-09-24T10:15:48.436Z",
+      "duration": 74642.66100000001,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "generation offline: retry creates one private draft and survives reload",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "generation expired-session: retry creates one private draft and survives reload",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "generation lost-ack: retry creates one private draft and survives reload",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "generation count rejects empty, zero, fraction and over-limit without posting",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "generation-delivery-confirmed": {
+    "stats": {
+      "startTime": "2026-09-24T10:17:37.013Z",
+      "duration": 31520.223,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "generation offline: retry creates one private draft and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "generation expired-session: retry creates one private draft and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "generation lost-ack: retry creates one private draft and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "generation count rejects empty, zero, fraction and over-limit without posting",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "generation-faults-confirmed": {
+    "stats": {
+      "startTime": "2026-09-24T10:19:26.106Z",
+      "duration": 48187.128000000004,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "generation offline: retry creates one private draft and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "generation expired-session: retry creates one private draft and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "generation lost-ack: retry creates one private draft and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "generation count rejects empty, zero, fraction and over-limit without posting",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "slow generation shows pending state across reload and never publishes automatically",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "invalid generation EMPTY leaves material intact and retry available after reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "invalid generation UNAVAILABLE leaves material intact and retry available after reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "invalid generation GARBAGE leaves material intact and retry available after reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "group-access-after": {
+    "stats": {
+      "startTime": "2026-09-24T10:21:05.224Z",
+      "duration": 5123.987,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "tutor cannot edit another teacher group using a substituted group id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor cannot assign another teacher group using a substituted group id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor cannot lessons another teacher group using a substituted group id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  }
+}

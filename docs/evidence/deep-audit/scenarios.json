@@ -653,7 +653,7 @@
       "назад": "прошёл",
       "две вкладки": "прошёл",
       "сессия": "не проверялся",
-      "чужой ID": "не проверялся",
+      "чужой ID": "прошёл",
       "AI отказ": "не применимо",
       "сеть": "не проверялся"
     },
@@ -661,7 +661,8 @@
       "AI отказ": "Этот путь не вызывает AI и не показывает состояние выполняемой AI-операции; отказ проверяется в путях сдачи, повторной проверки, генерации и вопросов.",
       "пустота": "group-bulk-after: обязательные поля, ограничение160, Unicode, отмена перехода, сохранение другой формы, два занятия после lostACK/retry/reload; twelfth-checkpoint-results.json.",
       "назад": "group-bulk-after: обязательные поля, ограничение160, Unicode, отмена перехода, сохранение другой формы, два занятия после lostACK/retry/reload; twelfth-checkpoint-results.json.",
-      "две вкладки": "group-concurrency-after: новый состав в первой вкладке; устаревшее редактирование/назначение/занятие во второй получает отказ; reload и повтор только для нового состава."
+      "две вкладки": "group-concurrency-after: новый состав в первой вкладке; устаревшее редактирование/назначение/занятие во второй получает отказ; reload и повтор только для нового состава.",
+      "чужой ID": "fourteenth-checkpoint-results.json: generation-faults-confirmed (count0/6/fraction/empty, lostACK/dblclick/reload, offline, expired-session, EMPTY/UNAVAILABLE/GARBAGE/SLOW) или group-access-after (реальный чужойID группы, видимый отказ)."
     }
   },
   {
@@ -679,7 +680,7 @@
       "назад": "прошёл",
       "две вкладки": "прошёл",
       "сессия": "не проверялся",
-      "чужой ID": "не проверялся",
+      "чужой ID": "прошёл",
       "AI отказ": "не применимо",
       "сеть": "прошёл"
     },
@@ -690,7 +691,8 @@
       "Unicode": "group-bulk-after: обязательные поля, ограничение160, Unicode, отмена перехода, сохранение другой формы, два занятия после lostACK/retry/reload; twelfth-checkpoint-results.json.",
       "назад": "group-bulk-after: обязательные поля, ограничение160, Unicode, отмена перехода, сохранение другой формы, два занятия после lostACK/retry/reload; twelfth-checkpoint-results.json.",
       "reload": "group-bulk-after: обязательные поля, ограничение160, Unicode, отмена перехода, сохранение другой формы, два занятия после lostACK/retry/reload; twelfth-checkpoint-results.json.",
-      "две вкладки": "group-concurrency-after: новый состав в первой вкладке; устаревшее редактирование/назначение/занятие во второй получает отказ; reload и повтор только для нового состава."
+      "две вкладки": "group-concurrency-after: новый состав в первой вкладке; устаревшее редактирование/назначение/занятие во второй получает отказ; reload и повтор только для нового состава.",
+      "чужой ID": "fourteenth-checkpoint-results.json: generation-faults-confirmed (count0/6/fraction/empty, lostACK/dblclick/reload, offline, expired-session, EMPTY/UNAVAILABLE/GARBAGE/SLOW) или group-access-after (реальный чужойID группы, видимый отказ)."
     }
   },
   {
@@ -832,21 +834,27 @@
     "status": "прошёл",
     "evidence": "suite-round2: generation-live с E2E_FIXTURE_GENERATION, НЕ живой AI",
     "variants": {
-      "пустота": "не проверялся",
-      "длина": "не проверялся",
+      "пустота": "прошёл",
+      "длина": "прошёл",
       "Unicode": "не проверялся",
-      "дубль": "не проверялся",
-      "reload": "не проверялся",
+      "дубль": "прошёл",
+      "reload": "прошёл",
       "назад": "прошёл",
       "две вкладки": "не проверялся",
       "сессия": "прошёл",
       "чужой ID": "не проверялся",
-      "AI отказ": "не проверялся",
-      "сеть": "не проверялся"
+      "AI отказ": "прошёл",
+      "сеть": "прошёл"
     },
     "variant_notes": {
       "назад": "eleventh-checkpoint-results.json: generated-review-after / payment-calendar-after; браузер на синтетике, отказ сети/сессии, переход или подмена ID согласно названию теста.",
-      "сессия": "eleventh-checkpoint-results.json: generated-review-after / payment-calendar-after; браузер на синтетике, отказ сети/сессии, переход или подмена ID согласно названию теста."
+      "сессия": "eleventh-checkpoint-results.json: generated-review-after / payment-calendar-after; браузер на синтетике, отказ сети/сессии, переход или подмена ID согласно названию теста.",
+      "пустота": "fourteenth-checkpoint-results.json: generation-faults-confirmed (count0/6/fraction/empty, lostACK/dblclick/reload, offline, expired-session, EMPTY/UNAVAILABLE/GARBAGE/SLOW) или group-access-after (реальный чужойID группы, видимый отказ).",
+      "длина": "fourteenth-checkpoint-results.json: generation-faults-confirmed (count0/6/fraction/empty, lostACK/dblclick/reload, offline, expired-session, EMPTY/UNAVAILABLE/GARBAGE/SLOW) или group-access-after (реальный чужойID группы, видимый отказ).",
+      "дубль": "fourteenth-checkpoint-results.json: generation-faults-confirmed (count0/6/fraction/empty, lostACK/dblclick/reload, offline, expired-session, EMPTY/UNAVAILABLE/GARBAGE/SLOW) или group-access-after (реальный чужойID группы, видимый отказ).",
+      "reload": "fourteenth-checkpoint-results.json: generation-faults-confirmed (count0/6/fraction/empty, lostACK/dblclick/reload, offline, expired-session, EMPTY/UNAVAILABLE/GARBAGE/SLOW) или group-access-after (реальный чужойID группы, видимый отказ).",
+      "сеть": "fourteenth-checkpoint-results.json: generation-faults-confirmed (count0/6/fraction/empty, lostACK/dblclick/reload, offline, expired-session, EMPTY/UNAVAILABLE/GARBAGE/SLOW) или group-access-after (реальный чужойID группы, видимый отказ).",
+      "AI отказ": "fourteenth-checkpoint-results.json: generation-faults-confirmed (count0/6/fraction/empty, lostACK/dblclick/reload, offline, expired-session, EMPTY/UNAVAILABLE/GARBAGE/SLOW) или group-access-after (реальный чужойID группы, видимый отказ)."
     }
   },
   {
@@ -866,7 +874,10 @@
       "сессия": "не проверялся",
       "чужой ID": "не проверялся",
       "AI отказ": "прошёл",
-      "сеть": "не проверялся"
+      "сеть": "прошёл"
+    },
+    "variant_notes": {
+      "сеть": "fourteenth-checkpoint-results.json: generation-faults-confirmed (count0/6/fraction/empty, lostACK/dblclick/reload, offline, expired-session, EMPTY/UNAVAILABLE/GARBAGE/SLOW) или group-access-after (реальный чужойID группы, видимый отказ)."
     }
   },
   {
