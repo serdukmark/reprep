@@ -15,8 +15,8 @@ from pydantic import ValidationError
 from .config import Settings
 from .db import initialize, connect, one, rows, dumps
 from .auth import token_hash, verify_max, verify_telegram
-from .models import (AssignmentInput, DraftInput, ReviewInput, InviteInput, TokenInput, ProfileInput, PlanInput, MessageInput, QuestionInput, QuestionAnswer, QuestionReview, GroupInput, GroupAssignment, GroupSchedule,
-                     MaxLogin, LessonInput, MaterialInput, ReportInput, GenerationRequest, GeneratedWork)
+from .models import (CreateInput, AssignmentInput, DraftInput, ReviewInput, InviteInput, TokenInput, ProfileInput, PlanInput, MessageInput, QuestionInput, QuestionAnswer, QuestionReview, GroupInput, GroupAssignment, GroupSchedule,
+                     MaxLogin, LessonInput, LessonStatusPatch, MaterialInput, ReportInput, GenerationRequest, GeneratedWork)
 from .ai import ContextTooLarge, LocalRules, RemoteAdapter, OpenRouterAdapter, context_for, validate_analysis
 from .max_bot import public_origin, verify_webhook, accept_event, process_outbox
 from .service import uid, now, audit, seed, assignment_view, content_hash, progress, create_resource_id
@@ -601,11 +601,13 @@ def create_app(settings=None, provider=None, run_worker=True):
         return {'ok': True}
 
     @app.post('/api/assignments/{id_}/duplicate')
-    def duplicate(id_: str, u=Depends(user), c=Depends(db)):
+    def duplicate(id_: str, body: CreateInput | None = None, u=Depends(user), c=Depends(db)):
         tutor(u)
         a = assignment(c, id_, u)
         data = json.loads(a['data']); data['title'] = (data['title'][:145]+' · копия')
-        new_id = uid()
+        new_id = create_resource_id('assignment-copy:'+id_, u['id'], body.client_id if body else '')
+        if one(c,'SELECT id FROM assignments WHERE id=?',(new_id,)):
+            return {'id':new_id}
         c.execute('INSERT INTO assignments(id,tutor_id,relationship_id,data,created) VALUES(?,?,?,?,?)', (new_id, u['id'], a['relationship_id'], dumps(data), now()))
         return {'id': new_id}
 
@@ -1026,6 +1028,19 @@ def create_app(settings=None, provider=None, run_worker=True):
             return {'id':id_}
         c.execute('INSERT INTO lessons VALUES(?,?,?)', (id_, body.relationship_id, payload))
         return {'id': id_}
+
+    @app.patch('/api/lessons/{id_}')
+    def patch_lesson(id_: str, body: LessonStatusPatch, u=Depends(user), c=Depends(db)):
+        tutor(u)
+        old = one(c, 'SELECT * FROM lessons WHERE id=?', (id_,))
+        if not old:
+            fail(404, 'NOT_FOUND', 'Занятие не найдено')
+        relation(c, old['relationship_id'], u)
+        # The DB transaction serializes read/merge/write; unrelated fields survive other tabs.
+        data = json.loads(old['data'])
+        data.update(body.model_dump(exclude_unset=True))
+        c.execute('UPDATE lessons SET data=? WHERE id=?', (json.dumps(data), id_))
+        return {'ok': True}
 
     @app.put('/api/lessons/{id_}')
     def edit_lesson(id_: str, body: LessonInput, u=Depends(user), c=Depends(db)):

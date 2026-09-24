@@ -259,9 +259,7 @@ export function Collection({
                         value={l.status || "scheduled"}
                         onChange={(e) =>
                           action(async () => {
-                            const { id, ...body } = l;
-                            await api("/lessons/" + id, "PUT", {
-                              ...body,
+                            await api("/lessons/" + l.id, "PATCH", {
                               status: e.target.value,
                             });
                             await refresh();
@@ -281,9 +279,7 @@ export function Collection({
                         value={l.payment_status}
                         onChange={(e) =>
                           action(async () => {
-                            const { id, ...body } = l;
-                            await api("/lessons/" + id, "PUT", {
-                              ...body,
+                            await api("/lessons/" + l.id, "PATCH", {
                               payment_status: e.target.value,
                             });
                             await refresh();

@@ -41,12 +41,25 @@ test("tutor creates group, assigns copies, and learner receives only own assignm
   ).toBeVisible();
   await group.getByLabel("Тема общего занятия").fill("Совместный разбор");
   await group.getByLabel("Начало общего занятия").fill("2026-09-27T16:00");
+  await tutor.route("**/api/groups/*/lessons", async (route) => {
+    const response = await route.fetch();
+    expect(response.ok()).toBeTruthy();
+    await route.abort();
+  });
   await group
     .getByRole("button", {
       name: "Запланировать для всех 2 участников",
       exact: true,
     })
     .click();
+  await expect(tutor.getByRole("alert")).toBeVisible();
+  await tutor.unroute("**/api/groups/*/lessons");
+  await group
+    .getByRole("button", {
+      name: "Запланировать для всех 2 участников",
+      exact: true,
+    })
+    .dblclick();
   await expect(
     tutor.getByText("Создано записей для участников: 2", { exact: true }),
   ).toBeVisible();

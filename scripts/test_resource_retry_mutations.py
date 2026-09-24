@@ -1,4 +1,4 @@
-"""Disable create deduplication in an isolated test process; all eight tests must fail."""
+"""Disable create deduplication in an isolated test process; all ten tests must fail."""
 import os
 from pathlib import Path
 import subprocess
@@ -18,18 +18,18 @@ def main():
         )
         report = Path(tmp) / 'results.xml'
         result = subprocess.run(
-            [sys.executable, '-m', 'pytest', 'tests/test_resource_retry.py',
+            [sys.executable, '-m', 'pytest', 'tests/test_resource_retry.py', 'tests/test_duplicate_retry.py',
              '-p', 'resource_retry_mutation', '-q', '--tb=short', f'--junitxml={report}'],
             cwd=root, env={**os.environ, 'PYTHONPATH': tmp + os.pathsep + str(root)},
             capture_output=True, timeout=60,
         )
         cases = ET.parse(report).findall('.//testcase') if report.exists() else []
-        if result.returncode != 1 or len(cases) != 8 or not all(
+        if result.returncode != 1 or len(cases) != 10 or not all(
             case.find('failure') is not None and 'AssertionError' in (case.find('failure').text or '')
             for case in cases
         ):
-            raise SystemExit('FAIL: expected eight assertion failures after disabling deduplication')
-        print('PASS: all four resources detect broken sequential and concurrent retry (8 mutations caught)')
+            raise SystemExit('FAIL: expected ten assertion failures after disabling deduplication')
+        print('PASS: all five resource operations detect broken sequential and concurrent retry (10 mutations caught)')
 
 
 if __name__ == '__main__':

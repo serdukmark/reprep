@@ -1,5 +1,5 @@
 import { ChoiceSelect } from "./ChoiceSelect";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { initializeMax, launchData, bindMaxBack, inTelegram, inMax, platformName } from "./max";
 import { createRoot } from "react-dom/client";
 import {
@@ -68,6 +68,7 @@ type Config = {
   assessment: string;
 };
 function App() {
+  const duplicateRequest = useRef<{source: string; client_id: string} | null>(null);
   const [config, setConfig] = useState<Config | null>(null),
     [user, setUser] = useState<User | null>(null),
     [loading, setLoading] = useState(true);
@@ -361,7 +362,9 @@ function App() {
             <GraduationCap size={34} />
           </div>
           <h2>Ваше учебное пространство</h2>
-          <p>Начните с демонстрации или откройте приложение в мессенджере.</p>
+          <p>{config?.demo_enabled
+            ? "Начните с демонстрации или откройте приложение в мессенджере."
+            : "Откройте приложение в мессенджере."}</p>
           {config?.demo_enabled && (
             <>
               <div className="notice">
@@ -618,6 +621,7 @@ function App() {
                   if (!mayLeave()) return;
                   setActive(null);
                   setEditing(false);
+                  setPage("assignments");
                   refresh();
                 }}
               >
@@ -647,11 +651,16 @@ function App() {
                   edit={() => setEditing(true)}
                   duplicate={() =>
                     action(async () => {
+                      if (duplicateRequest.current?.source !== active.id)
+                        duplicateRequest.current = {source: active.id, client_id: crypto.randomUUID()};
                       const r = await api<{ id: string }>(
                         "/assignments/" + active.id + "/duplicate",
                         "POST",
+                        {client_id: duplicateRequest.current.client_id},
                       );
-                      setActive(await api<Assignment>("/assignments/" + r.id));
+                      const copied = await api<Assignment>("/assignments/" + r.id);
+                      duplicateRequest.current = null;
+                      setActive(copied);
                       setEditing(true);
                       await refresh();
                     })

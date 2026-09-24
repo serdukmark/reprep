@@ -240,6 +240,17 @@ class LessonInput(CreateInput):
         return value
 
 
+class LessonStatusPatch(Model):
+    status: Literal['scheduled', 'completed', 'cancelled'] | None = None
+    payment_status: Literal['unknown', 'paid', 'unpaid', 'waived'] | None = None
+
+    @model_validator(mode='after')
+    def nonempty(self):
+        if not self.model_fields_set or any(getattr(self, key) is None for key in self.model_fields_set):
+            raise ValueError('Укажите статус занятия или отметку оплаты')
+        return self
+
+
 class MaterialInput(CreateInput):
     relationship_id: str
     title: str = Field(min_length=2, max_length=160)

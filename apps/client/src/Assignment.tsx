@@ -152,7 +152,7 @@ export function Builder({
                 a.due_at
                   ? new Date(
                       new Date(a.due_at).getTime() -
-                        new Date().getTimezoneOffset() * 60000,
+                        new Date(a.due_at).getTimezoneOffset() * 60000,
                     )
                       .toISOString()
                       .slice(0, 16)

@@ -44,6 +44,10 @@ for (const platform of ["MAX", "Telegram"]) {
           encodeURIComponent(raw),
       );
       await page.getByLabel("Как к вам обращаться").fill("Аудит роли 🧪");
+      await expect(page.getByRole("radio")).toHaveCount(3);
+      await expect(
+        page.getByRole("radio", { name: /Организатор/ }),
+      ).toHaveCount(0);
       await page
         .locator(".registration-role")
         .filter({

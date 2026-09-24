@@ -1,0 +1,65 @@
+{
+  "origin": "https://reprep.ru",
+  "checked_at": "2026-09-24T00:37:32.604Z",
+  "method": "GET only; unauthenticated; valid TLS required",
+  "checks": [
+    {
+      "check": "canonical_https",
+      "passed": true
+    },
+    {
+      "check": "max_frame_policy",
+      "passed": true
+    },
+    {
+      "check": "no_demo_login_ui",
+      "passed": true
+    },
+    {
+      "check": "client_rendered",
+      "passed": true
+    },
+    {
+      "check": "/api/ready",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "/api/health",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "/api/openapi.json",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "/api/me",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "check": "/.env",
+      "status": 404,
+      "passed": true
+    },
+    {
+      "check": "/token.txt",
+      "status": 404,
+      "passed": true
+    },
+    {
+      "check": "no_uncaught_browser_error",
+      "passed": true
+    }
+  ],
+  "not_tested": [
+    "authenticated user flows",
+    "live MAX",
+    "webhook registration",
+    "AI",
+    "POST demo-login denial",
+    "production data"
+  ]
+}

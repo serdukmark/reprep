@@ -43,6 +43,37 @@ test("colleagues share template, create own draft and lose library access after 
     }),
     "demo-assignment",
   );
+  const foreign = await owner.request.post("/api/assignments", {
+    headers: { Authorization: "Bearer " + outsiderSession.token },
+    data: {
+      relationship_id: "",
+      title: "Чужой личный черновик",
+      tasks: [
+        {
+          id: "foreign",
+          type: "numeric",
+          prompt: "2+3?",
+          answer: "5",
+          skill: "Сложение",
+        },
+      ],
+    },
+  });
+  expect(foreign.ok()).toBeTruthy();
+  const foreignId = (await foreign.json()).id;
+  await owner.route("**/api/workspaces/*/templates", (route) =>
+    route.request().method() === "POST"
+      ? route.continue({
+          postData: JSON.stringify({ assignment_id: foreignId }),
+        })
+      : route.continue(),
+  );
+  await owner.getByRole("button", { name: "Поделиться с участниками" }).click();
+  await expect(owner.getByRole("alert")).toBeVisible();
+  await expect(
+    owner.getByText("Чужой личный черновик", { exact: true }),
+  ).toHaveCount(0);
+  await owner.unroute("**/api/workspaces/*/templates");
   await owner.getByRole("button", { name: "Поделиться с участниками" }).click();
   await colleague.goto("/");
   await colleague
@@ -63,7 +94,26 @@ test("colleagues share template, create own draft and lose library access after 
     }),
     { index: 1 },
   );
+  await colleague.route("**/api/workspace-templates/*/copy", async (route) => {
+    const response = await route.fetch();
+    expect(response.ok()).toBeTruthy();
+    await route.abort();
+  });
   await colleague.getByRole("button", { name: "Создать мой черновик" }).click();
+  await expect(colleague.getByRole("alert")).toBeVisible();
+  await colleague.unroute("**/api/workspace-templates/*/copy");
+  await colleague
+    .getByRole("button", { name: "Создать мой черновик" })
+    .dblclick();
+  const ownWorks = await colleague.request.get("/api/assignments", {
+    headers: { Authorization: "Bearer " + outsiderSession.token },
+  });
+  expect(
+    (await ownWorks.json()).filter(
+      (item: any) => item.title === "Линейные уравнения: от шага к решению",
+    ),
+  ).toHaveLength(1);
+
   await expect(
     colleague.getByRole("heading", { name: "Редактирование работы" }),
   ).toBeVisible();

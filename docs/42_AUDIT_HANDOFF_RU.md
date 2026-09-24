@@ -88,3 +88,43 @@
 checkpoint-81 завершён:81passed4.7мин. Следующий runner — schedule-files-policy:4 новыхUIтеста (календарь/отмена/файлы/2политикипodсказок). Пока не заявлятьихpassed.
 
 Все4schedule-files-policypassed14.5с. Теперь85browserтестов:81общийgreen+4таргетныхgreen. Карта51/77confirmed,26partial. Новыхдефектоввэтомпрогоненет. Browserпроцессовнет,server45438остаётся.
+
+## После второго коммита
+- Локальный commit45cf6ba: AUD006–008 +дополнительныетесты/docs. Секретscanпереднимpassed. No push/deploy. Чужойdocs/QA_INDEPENDENT.mdнеstaged.
+- Новыеuncommitted: scripts/audit_public_readonly.mjs GET-only поhttps://reprep.ru, все10проверокpassed, screenshotпросмотрен, никакихPOST/входов/данных. Подтверждаеттолькоpublicsurface, неauthscenario.
+- AUD009 workspace delayedtemplates confirmed1failed, Workspaces.tsxисправленloadgeneration+atomicPromise.all,buildindex-Bvv5XPl6.js.
+- AUD010 публичныйtextpromisesdemoприdemoFalse. testaudit-landing-copyновый, ещёred-runидёт.
+- Currentrunner workspace-after-landing-before session будет в toolhistory;3tests(workspacerace,landingcopy,workspaces). После:landingconditionalfix+build,mutation2proof,docs+scan+commit.
+- Карта51confirmed26partial,85testsдоэтих2новых. ОстальныеважныеUIпробелы: idspermissionsforfiles/library, invitealreadyaccepted/anotheruser,bulkscheduledouble,formvalidationlimits, remindersenabledfixture;liveMAX/realdataexcluded.
+
+## Самая свежая точка: AUD009/010 после исправлений
+- workspace-landing-after7passed7.7с:race/templates,landingcopy,4createACK,workspaces. Buildindex-BIuRFf7K.js. AUD009/010обаисправленылокально; mutationдвухсейчасидёт. scripts/build_audit_ui_mutant.pyдополненworkspacecurrentfalseguard+wronglandingcopy,реальныеисходникинепортит.
+- Новые2tests/audit-private-resources.spec.ts покаНЕзапускались: чужойTXTпоID, чужаяprivateбиблиотекапоID. SetupсоздаётsyntheticAPIfixtures, UIпутьпроверяетвидимыйотказ. Послеmutationзапустить.
+- public-readonlyresultскопированвdocs/evidenceбезтелответовиучётныхданных. Новыхпродуктовыхвопросовнет,видимыебагификсимврамкахавторизации.
+
+## Самая новая точка — AUD011/012 (ещё не коммит)
+- Commit45cf6ba последний. После него AUD009workspace race, AUD010landingdemo обаred/green+mutation. private-resources-extended2passed,workspace-boundaries1passed,notifications-ui3passed,invite-group-auth16passed.
+- tests/audit_server.py теперь гарантированно блокирует обаtransportprocess_outbox (lambdaFalse). НовыйfixturePOST/__audit__/notification-contacts даётsyntheticcontacttutor/learner, cfgmaxenabled/outboundTrue толькоUIprefs; new-client сбрасываетфлагиFalse. Реальныхсообщенийнепосылает. Этаfixtureнеразвёртывается.
+- AUD011 duplicate потерянногоACK создаёт2копии; twoPythonbeforetestsfailed, browserduplicate-before-idempotencyfailed2rows. main.pyoptionalCreateInput body, idcreate_resource_id('assignment-copy:'+sourceid,user,key), existingreturn; clientuseRefsource/key, сброспослеGETcopy. tests/test_duplicate_retry2passed, repeatmutation теперь10assertfailuresdetected.
+- AUD012 «К заданиям» оставлялpage=today; source main добавленsetPage(assignments), mutantbuilderможетотключить. Был UIред навигации duplicate-before. Browserafter+dirtynav2 сейчасидётsessionизtoolhistory.
+- Текущийсервер session57174/PID14732,8017, свежийbackend. Buildindex-Dffhq6cK.js. Pythonfocused12passed; полныйсерверпосле2новыхтестовещёнезапущен(expected166).
+- Currentbrowser duplicate-navigation-after (3tests). Mutantbuildersessionтакжевtoolhistory;затемнамеренныйсломnav(duplicateUI)долженкраснеть. Нуженfullbrowserпослевсехправок,docs/sanitizedevidence/secret scan/commit. ЧужойdocsQA_INDEPENDENTнеstage.
+- PublicGET-onlycheck2: HTTPSvalid,healthok,readytrue,OpenAPIschema,401me,404env/token,UIrender,noJSerrors. Repo scriptGETonly,никакихPOST/аутентификации/данных. ДоказательствживогоMAXне даёт.
+
+## Самое новое: расширенный общий регресс и13дефектов
+- AUD013deadlineDSTconfirmed18→19вEurope/Berlin, исправленnewDate(a.due_at).getTimezoneOffset; builder-timezone-after5passed, deadline-mutationexpectedfailed. Buildindex-CyB60fEy.js.
+- AUD011/012duplicate-navigation-after3passed,navmutationcaught; Python166passed. Нетизвестныхнеисправленныхбаговнаэтотмомент;все13имеютred/green/mutation.
+- tests/audit_server теперь/__audit__/identity/guardian|learner создаётдополнительнуюsyntheticdemorole+sessionдляUIфикстур. Текущийserver99533/PID42795на8017. TransportMAX/TGпо-прежнемузаблокированы.
+- Remaining-paths7passed1testfixturefailure(staleinvitecode); first-learner-copy2passedпослеожиданияновогокода. foreignrelations(material/groups),materiallink,clipboardmock,answer3types,linkedparentfiles/paymentpermissionspassed.
+- Новыеbrowsertests audit-first-learner,foreign-relations,material-link,clipboard-answers2,private-resources3,invite-reuse3,notifications2,builderlimits,deadline,duplicate,unsaved2. Частьещёuntracked;latestcommit45cf6ba.
+- Сейчас полныйрасширенныйbrowsercheckpoint-expanded (sessionвtoolhistory),1worker. НЕзапускатьдругиеbrowserпараллельно. Карта74/77mainpaths,3частичных/excluded(U075/76/77),ноnegativevariantsещёнужносверить/дополнить,незаявлятьполныйаудитготовым.
+- Следующийосмысленныйнегативныйпробел:2вкладкиредактируютразныеполязанятия(status/payment);UIшлётполныйPUTсоstaleполями,подозрениепотериоплаты. ПокаНЕвоспроизведено/НЕправлено. ЗатемматрицаошибокGETвэкранах,актуальныйутреннийпакет+evidence+scan+commit.
+
+
+## Контрольная точка: 105 браузерных + AUD014
+
+Полный checkpoint-expanded: 105/105 прошли за 5,4 минуты. Далее AUD014: две вкладки преподавателя — оплата в первой стиралась сменой статуса во второй (schedule-concurrent-before). Исправлено частичным PATCH статуса/оплаты с транзакционным read/merge/write, валидацией и проверкой владельца. Старый PUT сохранён для совместимости и по-прежнему является полной заменой; новый UI использует PATCH. schedule-concurrent-after: 4/4; серверный test_lesson_patch проверяет одновременные изменения, неизменность других полей и запрет чужого доступа. test_lesson_patch_mutation обнаруживает намеренное затирание отсутствующих полей. Новый endpoint потребовал добавить ответ в openapi_contract; после этого 167 серверных тестов прошли. Сборка клиента index-BLUcrwlH.js прошла.
+
+read-failures: 8/8 браузерных сценариев обрыва начального GET (группы, пространства, план, навыки, рекомендации, каталог, напоминания, аналитика): ошибка видима, reload восстанавливает. Отчёты без токенов: docs/evidence/deep-audit/third-checkpoint-results.json. Исходные traces остаются игнорируемыми артефактами, в Git не добавлять.
+
+Аудит НЕ завершён: основные пути 74/77, но матрица негативных вариантов неполна; зелёные основные пути не заменяют её. Остаются варианты сессии, назад, конкурентных правок и отказов в отдельных формах, а также визуальный просмотр всех кадров. Live MAX исключён. Боевой стенд не менялся. Новые проверки запускать только на loopback со сбросом синтетической базы.

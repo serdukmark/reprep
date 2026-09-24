@@ -42,24 +42,36 @@ export function Workspaces({
   } | null>(null);
   const owner =
     spaces.find((item) => item.id === selected)?.owner_id === user.id;
+  const workspaceLoad = useRef(0);
   async function load(preferred = selected) {
-    const items = await api<Space[]>("/workspaces");
-    setSpaces(items);
-    const chosen = items.some((item) => item.id === preferred)
-      ? preferred
-      : items[0]?.id || "";
-    if (chosen !== selected) {
-      setSelected(chosen);
-      return;
-    }
-    if (selected) {
-      setMembers(await api<Member[]>(`/workspaces/${selected}/members`));
-      setTemplates(await api<Template[]>(`/workspaces/${selected}/templates`));
-      setInvites(
-        items.find((item) => item.id === selected)?.owner_id === user.id
-          ? await api<Invite[]>(`/workspaces/${selected}/invitations`)
-          : [],
-      );
+    const revision = ++workspaceLoad.current;
+    const current = () => workspaceLoad.current === revision;
+    try {
+      const items = await api<Space[]>("/workspaces");
+      if (!current()) return;
+      setSpaces(items);
+      const chosen = items.some((item) => item.id === preferred)
+        ? preferred
+        : items[0]?.id || "";
+      if (chosen !== selected) {
+        setSelected(chosen);
+        return;
+      }
+      if (selected) {
+        const [nextMembers, nextTemplates, nextInvites] = await Promise.all([
+          api<Member[]>(`/workspaces/${selected}/members`),
+          api<Template[]>(`/workspaces/${selected}/templates`),
+          items.find((item) => item.id === selected)?.owner_id === user.id
+            ? api<Invite[]>(`/workspaces/${selected}/invitations`)
+            : Promise.resolve([] as Invite[]),
+        ]);
+        if (!current()) return;
+        setMembers(nextMembers);
+        setTemplates(nextTemplates);
+        setInvites(nextInvites);
+      }
+    } catch (error) {
+      if (current()) throw error;
     }
   }
   useEffect(() => {
@@ -68,6 +80,9 @@ export function Workspaces({
     setTemplates([]);
     setInvites([]);
     load().catch((e) => setError(e.message));
+    return () => {
+      workspaceLoad.current += 1;
+    };
   }, [selected]);
   async function run(fn: () => Promise<void | string>) {
     setBusy(true);

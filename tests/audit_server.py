@@ -1,5 +1,6 @@
 """Isolated synthetic browser audit. Never deploy this module or use production data."""
 import time
+import json
 import asyncio
 from apps.server.config import Settings
 from apps.server.main import create_app
@@ -22,7 +23,12 @@ class AuditProvider(OpenRouterAdapter):
         if 'AUD_AI_EMPTY' in str(context):return {}
         return GeneratedWork(title='Синтетическая генерация из материала',instructions='Тест интерфейса с детерминированным провайдером, не живой AI.',tasks=[{'id':f'q{i}','type':'numeric','prompt':'Сколько будет 2+3?','answer':'5','skill':'Сложение'} for i in range(context['count'])])
 
-inner=create_app(Settings(database='artifacts/deep-audit/browser.sqlite3',environment='test',demo=True,bot_token='synthetic-max-test-token',public_base_url='https://audit.invalid',telegram_enabled=True,telegram_token='synthetic-tg-test-token',ai_daily_limit=10000),provider=AuditProvider())
+# The fixture must never send messages, even after synthetic notification opt-in.
+import apps.server.main as server_main
+server_main.process_outbox = lambda cfg: False
+server_main.telegram_bot.process_outbox = lambda cfg: False
+audit_settings=Settings(database='artifacts/deep-audit/browser.sqlite3',environment='test',demo=True,bot_token='synthetic-max-test-token',public_base_url='https://audit.invalid',telegram_enabled=True,telegram_token='synthetic-tg-test-token',ai_daily_limit=10000)
+inner=create_app(audit_settings,provider=AuditProvider())
 class AuditApp:
     """Give each isolated test its own virtual client; production rate limits stay intact."""
     def __init__(self):self.client=0
@@ -30,8 +36,39 @@ class AuditApp:
         if scope['type']=='http':
             if scope['path']=='/__audit__/new-client' and scope['method']=='POST':
                 self.client+=1
+                audit_settings.max_bot_enabled=False
+                audit_settings.max_outbound_enabled=False
                 await send({'type':'http.response.start','status':200,'headers':[(b'content-type',b'application/json')]})
                 await send({'type':'http.response.body','body':b'{"ok":true}'})
+                return
+            if scope['path'] in ('/__audit__/identity/guardian','/__audit__/identity/learner') and scope['method']=='POST':
+                from apps.server.db import connect
+                from apps.server.auth import token_hash
+                from apps.server.service import uid
+                role=scope['path'].rsplit('/',1)[1]
+                identity={'id':'audit-'+uid(),'role':role,'alias':'Другой родитель • аудит' if role=='guardian' else 'Новый ученик • аудит','demo':True}
+                token='synthetic-session-'+uid()
+                def identity_session():
+                    with connect(audit_settings.database) as db:
+                        db.execute('INSERT INTO users(id,role,alias,demo) VALUES(?,?,?,1)',(identity['id'],role,identity['alias']))
+                        db.execute('INSERT INTO sessions VALUES(?,?,?)',(token_hash(token),identity['id'],time.time()+3600))
+                await asyncio.to_thread(identity_session)
+                await send({'type':'http.response.start','status':200,'headers':[(b'content-type',b'application/json')]})
+                await send({'type':'http.response.body','body':json.dumps({'token':token,'user':identity}).encode()})
+                return
+            if scope['path']=='/__audit__/notification-contacts' and scope['method']=='POST':
+                from apps.server.db import connect
+                def contacts():
+                    with connect(audit_settings.database) as db:
+                        for role,external in (('tutor','900001'),('learner','900002')):
+                            db.execute('UPDATE users SET external_id=? WHERE id=?',(external,'demo-'+role))
+                            db.execute('INSERT OR REPLACE INTO bot_contacts VALUES(?,?)',(external,time.time()))
+                await asyncio.to_thread(contacts)
+                audit_settings.max_bot_enabled=True
+                audit_settings.max_outbound_enabled=True
+                audit_settings.max_bot_id=123
+                await send({'type':'http.response.start','status':200,'headers':[(b'content-type',b'application/json')]})
+                await send({'type':'http.response.body','body':b'{"ok":true,"delivery":"blocked_test_transport"}'})
                 return
             if scope['path']=='/__audit__/expire-invitations' and scope['method']=='POST':
                 from apps.server.db import connect
