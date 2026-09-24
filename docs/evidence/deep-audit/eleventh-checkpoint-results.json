@@ -1,0 +1,300 @@
+{
+  "generated-navigation-before": {
+    "stats": {
+      "startTime": "2026-09-24T09:52:21.263Z",
+      "duration": 49954.778,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "pending generated draft cannot replace schedule selected afterwards",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace new-draft selected afterwards",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace new-account selected afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "generated-review-before": {
+    "stats": {
+      "startTime": "2026-09-24T09:53:52.227Z",
+      "duration": 57197.026,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "pending generated draft cannot replace schedule selected afterwards",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace new-draft selected afterwards",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace new-account selected afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "late review acknowledgement cannot reopen work after tutor leaves for schedule",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "generated-review-after": {
+    "stats": {
+      "startTime": "2026-09-24T09:55:40.862Z",
+      "duration": 58941.051,
+      "expected": 16,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "pending generated draft cannot replace schedule selected afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace new-draft selected afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace new-account selected afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "teacher review with network failure remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "teacher review with lost acknowledgement remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "teacher review with expired session remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "late review acknowledgement cannot reopen work after tutor leaves for schedule",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "save: completed request cannot pull user back from the schedule",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "duplicate: completed request cannot pull user back from the schedule",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "delayed work opening cannot replace other-work chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "delayed work opening cannot replace schedule chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "delayed work opening cannot replace new-draft chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material generation stays a draft until tutor publishes and includes its source",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "schedule, private payment note, material link and revocable invite",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "colleagues share template, create own draft and lose library access after removal",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "generated-review-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T09:57:09.342Z",
+      "duration": 71253.86,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 4,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "pending generated draft cannot replace schedule selected afterwards",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace new-draft selected afterwards",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace new-account selected afterwards",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "late review acknowledgement cannot reopen work after tutor leaves for schedule",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "payment-calendar-after": {
+    "stats": {
+      "startTime": "2026-09-24T09:58:41.587Z",
+      "duration": 8614.443,
+      "expected": 7,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "tutor calendar offline error, recovery and reload produce private valid download",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner calendar offline error, recovery and reload produce private valid download",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor cannot change colleague lesson payment through substituted id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor cannot change colleague lesson status through substituted id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "manual payment offline: truthful state and durable retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "manual payment expired-session: truthful state and durable retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "manual payment lost-ack: truthful state and durable retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  }
+}

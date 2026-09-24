@@ -12,6 +12,8 @@ with tempfile.TemporaryDirectory(prefix='reprep-ui-mutant-') as tmp:
         shutil.copy(root/name, dest/name)
     (dest/'node_modules').symlink_to(root/'node_modules', target_is_directory=True)
     changes = [
+        ('Groups.tsx', 'Object.values(bulkDirty).some(Boolean) ||', 'false ||'),
+        ('main.tsx', 'if (activeView === workLoad.current) showAssignment(updated);', 'showAssignment(updated);'),
         ('main.tsx', '      setInviteInput("");\n      setAlias("");', '      /* mutation: keep previous identity form buffers */'),
         ('main.tsx', 'if (saveView === workLoad.current) {', 'if (true) {'),
         ('main.tsx', 'if (duplicateView === workLoad.current) {', 'if (true) {'),

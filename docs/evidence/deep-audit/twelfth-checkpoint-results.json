@@ -1,0 +1,115 @@
+{
+  "group-bulk-navigation-before": {
+    "stats": {
+      "startTime": "2026-09-24T10:00:03.635Z",
+      "duration": 3530.525,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "group assign: cancelling navigation keeps unsubmitted bulk form",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "group lessons: cancelling navigation keeps unsubmitted bulk form",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "group-bulk-after": {
+    "stats": {
+      "startTime": "2026-09-24T10:02:12.346Z",
+      "duration": 10112.905999999999,
+      "expected": 7,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "group: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "skills: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group bulk forms validate, preserve the other draft, retry lost ACK and clear warnings only after success",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group assign: cancelling navigation keeps unsubmitted bulk form",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group lessons: cancelling navigation keeps unsubmitted bulk form",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor creates group, assigns copies, and learner receives only own assignment",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "group-bulk-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T10:03:04.860Z",
+      "duration": 5486.357,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "group assign: cancelling navigation keeps unsubmitted bulk form",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "group lessons: cancelling navigation keeps unsubmitted bulk form",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  }
+}

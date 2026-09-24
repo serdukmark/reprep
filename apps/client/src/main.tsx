@@ -100,6 +100,8 @@ function App() {
   const [alias, setAlias] = useState(""),
     [role, setRole] = useState<"tutor" | "learner" | "guardian">("tutor");
   const workLoad = useRef(0);
+  // Capture the displayed view now, before a child starts an asynchronous mutation.
+  const activeView = workLoad.current;
   function showAssignment(next: Assignment | null) {
     workLoad.current++;
     setActive(next);
@@ -171,7 +173,7 @@ function App() {
       return () => clearTimeout(t);
     }
   }, [toast]);
-  async function open(id: string) {
+  async function open(id: string, asDraft = false) {
     if (!mayLeave()) return;
     const revision = ++workLoad.current;
     await action(async () => {
@@ -179,7 +181,8 @@ function App() {
         const assignment = await api<Assignment>("/assignments/" + id);
         if (revision !== workLoad.current) return;
         showAssignment(assignment);
-        setEditing(false);
+        setEditing(asDraft);
+        if (asDraft) await refresh();
       } catch (e) {
         if (revision === workLoad.current) throw e;
       }
@@ -674,9 +677,8 @@ function App() {
                   busy={busy}
                   action={action}
                   update={async () => {
-                    showAssignment(
-                      await api<Assignment>("/assignments/" + active.id),
-                    );
+                    const updated = await api<Assignment>("/assignments/" + active.id);
+                    if (activeView === workLoad.current) showAssignment(updated);
                     await refresh();
                   }}
                   edit={() => setEditing(true)}
@@ -1096,16 +1098,7 @@ function App() {
                       user={user}
                       assignments={assignments}
                       relations={relations}
-                      openDraft={(id) =>
-                        void action(async () => {
-                          if (!mayLeave()) return;
-                          showAssignment(
-                            await api<Assignment>("/assignments/" + id),
-                          );
-                          setEditing(true);
-                          await refresh();
-                        })
-                      }
+                      openDraft={(id) => void open(id, true)}
                     />
                   )}
                   {isTutor && selected && (
@@ -1183,14 +1176,7 @@ function App() {
                   busy={busy}
                   action={action}
                   refresh={refresh}
-                  openDraft={(id) =>
-                    action(async () => {
-                      if (!mayLeave()) return;
-                      showAssignment(await api<Assignment>("/assignments/" + id));
-                      setEditing(true);
-                      await refresh();
-                    })
-                  }
+                  openDraft={(id) => void open(id, true)}
                 />
               )}
               {page === "settings" && (

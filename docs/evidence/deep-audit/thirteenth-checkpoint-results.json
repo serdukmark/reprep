@@ -1,0 +1,1489 @@
+{
+  "checkpoint-206": {
+    "stats": {
+      "startTime": "2026-09-24T10:03:36.475Z",
+      "duration": 508142.392,
+      "expected": 206,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "learner can download own data and cancel deletion before operator processing",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "pupil TXT survives autosave, submission and tutor return without rewriting history",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner: real browser identity cannot fetch another learner or privileged resources",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "guardian: real browser identity cannot fetch another learner or privileged resources",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "colleague: real browser identity cannot fetch another learner or privileged resources",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "AUD-003 legacy scheduled lesson appears on dashboard and matches schedule",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor: account export and deletion fail visibly, retry once and survive reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner: account export and deletion fail visibly, retry once and survive reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "guardian: account export and deletion fail visibly, retry once and survive reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "colleague: account export and deletion fail visibly, retry once and survive reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor: export own data and cancel deletion",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "guardian: export own data and cancel deletion",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "outsider: export own data and cancel deletion",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "refresh: delayed teacher response cannot enter the next learner session",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "open: delayed teacher response cannot enter the next learner session",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout clears the old schedule before the new account refresh finishes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "delayed export cannot download previous account data after logout and a new login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "AI UNAVAILABLE: submission survives refresh and teacher reaches verified outcome",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "AI EMPTY: submission survives refresh and teacher reaches verified outcome",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "AI GARBAGE: submission survives refresh and teacher reaches verified outcome",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "AI SLOW: submission survives refresh and teacher reaches verified outcome",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "MAX simulator registration role Преподаватель and durable logout",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "MAX simulator registration role Ученик and durable logout",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "MAX simulator registration role Родитель and durable logout",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "MAX simulator rejects expired identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "MAX simulator rejects duplicate identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "MAX simulator rejects forged identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "Telegram simulator registration role Преподаватель and durable logout",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "Telegram simulator registration role Ученик and durable logout",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "Telegram simulator registration role Родитель and durable logout",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "Telegram simulator rejects expired identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "Telegram simulator rejects duplicate identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "Telegram simulator rejects forged identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "MAX registration recovers from network outage without changing role or alias",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "MAX registration recovers from lost acknowledgement without changing role or alias",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "Telegram registration recovers from network outage without changing role or alias",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "Telegram registration recovers from lost acknowledgement without changing role or alias",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "MAX logout clears the previous registration alias",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "Telegram logout clears the previous registration alias",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "all task types validate, preserve Unicode and reject empty form without sending",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner preserves answer when session expires and rejects stale writes from a second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "builder validates numeric reference, choice cardinality and limits twenty tasks",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor calendar offline error, recovery and reload produce private valid download",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner calendar offline error, recovery and reload produce private valid download",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog filters, lost committed request, decline and unpublish are visible to learner",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "discussion validates empty and long input, retries lost acknowledgement once, survives reload and second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "delayed old catalog search cannot replace results for the current query",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog profile rejects invalid fields and stale second-tab save without losing typed input",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "checkbox labels remain adjacent at 1440px",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "checkbox labels remain adjacent at 390px",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "AUD-001 named choice control is keyboard-accessible and saves a new tutor draft",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "choice popup handles long labels on narrow screen and keyboard selection",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "copy invitation reports denied clipboard and copies exact code after permission succeeds",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner cannot submit missing task answers and preserves all three answer types with long Unicode text",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspace: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "lesson: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspace: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "lesson: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "deadline keeps the entered local hour across a daylight-saving boundary",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "published assignment stays immutable and retrying a lost duplicate response creates one private copy",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "draft preview and task removal, concurrent teacher edits cannot overwrite each other",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group editing changes title and membership, bulk double click creates one copy per member",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "skills: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "feedback after_review: empty submit rejected, double submit immutable, hints and teacher feedback follow policy",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "feedback hints_first: empty submit rejected, double submit immutable, hints and teacher feedback follow policy",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "new learner starts empty, can decline and then accept a fresh invitation",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "teacher cannot assign a work or group to a real relationship owned by a colleague",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "profile: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspace: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "lesson: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "profile: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspace: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "lesson: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace schedule selected afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace new-draft selected afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace new-account selected afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "invalid generation leaves material intact and retry available after reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "graph accepts empty configuration, rejects duplicates and size limits, preserves concurrent edits and offline input",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group bulk forms validate, preserve the other draft, retry lost ACK and clear warnings only after success",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group assign: cancelling navigation keeps unsubmitted bulk form",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group lessons: cancelling navigation keeps unsubmitted bulk form",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspace: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "lesson: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner: revoked invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "guardian: revoked invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "colleague: revoked invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner: expired invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "guardian: expired invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "colleague: expired invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner: accepted invitation cannot create a duplicate relationship",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "guardian: accepted invitation cannot create a duplicate relationship",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "colleague: accepted invitation cannot create a duplicate relationship",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "public landing does not promise demonstration when demo access is disabled",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "switching learner clears editable plan and graph while the next learner loads or fails",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "AUD-005 retry after server committed draft but response was lost does not create duplicate",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material linked to lesson appears in the assigned work and keeps its explanatory note in library",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "work status filter remains readable at 320px",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "work status filter remains readable at 390px",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor: every navigation destination fits a narrow screen and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner: every navigation destination fits a narrow screen and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "two learner tabs preserve independent reminder preference changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor: notification opt-in requires contact, survives offline retry and can be disabled",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner: notification opt-in requires contact, survives offline retry and can be disabled",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "whole browser goes offline mid-answer, never claims submission and restores saved work after reconnect",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor cannot change colleague lesson payment through substituted id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor cannot change colleague lesson status through substituted id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "manual payment offline: truthful state and durable retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "manual payment expired-session: truthful state and durable retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "manual payment lost-ack: truthful state and durable retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "plan stages reorder, remove, change status, link material and preserve concurrent edits",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "plan validates required fields and limits, warns before leaving, preserves input across failed save",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material rejects non-HTTPS and oversized links without claiming success, then saves corrected Unicode note",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner cannot open another child's plan by substituting the id in the visible screen",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner cannot open another child's skill-graph by substituting the id in the visible screen",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner cannot download another learner material by substituted file id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "colleague sees shared templates but substituted private workspace is rejected visibly",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "linked parent cannot open child work or material, see payment notes or change lessons",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor exports selected progress JSON and sees truthful empty analytics",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "question validates empty and long text, lost acknowledgement retries once, teacher reply recovers from network failure",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "groups: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspaces: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "plan: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "skills: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "recommendations: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "notifications: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "analytics: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "groups: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspaces: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "plan: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "skills: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "recommendations: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "notifications: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "analytics: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "AUD-004 rejected work shows teacher reason and does not create progress",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "cancel submission preserves draft; AI retries stop honestly at limit and manual review remains available",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "teacher review with network failure remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "teacher review with lost acknowledgement remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "teacher review with expired session remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "late review acknowledgement cannot reopen work after tutor leaves for schedule",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "save: completed request cannot pull user back from the schedule",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "duplicate: completed request cannot pull user back from the schedule",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "hung draft save times out visibly, unlocks controls and preserves answer for retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "two tutor tabs preserve independent payment and lesson status changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "schedule cancellation, all payment notes and calendar preserve learner privacy after reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner TXT validates type, size, encoding and empty bytes then removes a valid attachment without losing answer",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor: delayed previous learner response cannot replace current learner summary",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "guardian: delayed previous learner response cannot replace current learner summary",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "unaccepted invitation input does not survive logout into a different learner",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "old relationships response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "old lessons response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "old materials response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "old profile response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "pending calendar download cannot deliver previous account data after login changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "pending material download cannot deliver previous account data after login changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "workspace: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "plan: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "skills: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "lesson: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "notification preferences and contact state belong only to the current account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "guardian summary and invitation buffer disappear for a new guardian identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "oversized AI context retains uploaded work for manual review without unsafe retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "two learners submit concurrently and each report category handles validation and network loss",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor: refusing navigation preserves unsaved input and accepting returns to requested page",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner: refusing navigation preserves unsaved input and accepting returns to requested page",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "skill graph refuses cycles and dangling edges, then saves corrected graph",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material rejects bad extension, empty, oversize, NUL and invalid UTF8 before upload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "delayed work opening cannot replace other-work chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "delayed work opening cannot replace schedule chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "delayed work opening cannot replace new-draft chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "switching workspaces cannot show delayed templates from previous workspace",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "answers autosave and survive reload without the save button",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog tutor offer leads to learner request and accepted study relationship",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "provider outage and lost polling recover to visible manual review",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "material generation stays a draft until tutor publishes and includes its source",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor creates group, assigns copies, and learner receives only own assignment",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "guardian invitation opens only read-only summary and tutor can revoke it",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "official Bridge snapshot emits back/closing events and rejects foreign-origin back",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "embedded storage denial does not prevent login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "MAX URL authentication and iframe Bridge lifecycle (simulated client)",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "teacher plan is readable by pupil, and assignment discussion survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "question remains visible on AI outage and teacher can reply without losing it",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "confirmed gap opens private practice draft and learner reports usefulness",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "return arrives without reload; resubmission starts from saved original and archive stays immutable",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "profile, invitation consent, disabled MAX delivery and calendar download",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "account controls remain reachable in short desktop and mobile navigation",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor defines acyclic skill links and learner can inspect saved graph",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor uploads TXT, learner downloads the original, tutor changes lesson status",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "work list separates overdue, active and complete; builder persists own lesson link",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "schedule, private payment note, material link and revocable invite",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "colleagues share template, create own draft and lose library access after removal",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "group-concurrency-after": {
+    "stats": {
+      "startTime": "2026-09-24T10:13:05.927Z",
+      "duration": 11633.822,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "group edit: stale second tab cannot use the previous membership",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group assign: stale second tab cannot use the previous membership",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "group lessons: stale second tab cannot use the previous membership",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  }
+}

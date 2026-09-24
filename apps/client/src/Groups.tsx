@@ -24,15 +24,17 @@ export function Groups({
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [notice, setNotice] = useState("");
+  const [bulkDirty, setBulkDirty] = useState<Record<string, boolean>>({});
   const createKey = useRef(crypto.randomUUID());
   const pending = useRef<
     Record<string, { signature: string; client_id: string }>
   >({});
   useUnsaved(
-    editing
-      ? title !== editing.title ||
-          JSON.stringify(members) !== JSON.stringify(editing.relationship_ids)
-      : !!title || !!members.length,
+    Object.values(bulkDirty).some(Boolean) ||
+      (editing
+        ? title !== editing.title ||
+            JSON.stringify(members) !== JSON.stringify(editing.relationship_ids)
+        : !!title || !!members.length),
   );
   async function load() {
     setGroups(await api("/groups"));
@@ -76,6 +78,7 @@ export function Groups({
     await refresh();
     await load();
     delete pending.current[key];
+    setBulkDirty((old) => ({ ...old, [key]: false }));
     setNotice(`Создано записей для участников: ${result.count}`);
   }
   return (
@@ -198,7 +201,8 @@ export function Groups({
           >
             <label>
               Работа для группы {g.title}
-              <ChoiceSelect name="assignment_id" required disabled={busy}>
+              <ChoiceSelect name="assignment_id" required disabled={busy}
+                onChange={(e) => setBulkDirty((old) => ({ ...old, [g.id + "assign"]: !!e.target.value }))}>
                 <option value="">Выберите проверенный шаблон</option>
                 {assignments.map((a) => (
                   <option key={a.id} value={a.id}>
@@ -216,6 +220,7 @@ export function Groups({
             </button>
           </form>
           <form
+            onChange={() => setBulkDirty((old) => ({ ...old, [g.id + "lessons"]: true }))}
             onSubmit={(e) => {
               e.preventDefault();
               const data = new FormData(e.currentTarget);
