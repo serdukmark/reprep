@@ -1,0 +1,935 @@
+{
+  "catalog-access-concurrency": {
+    "stats": {
+      "startTime": "2026-09-24T12:18:41.362Z",
+      "duration": 11926.975,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "catalog review foreign: denied write does not expose or modify the other request",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog review session: denied write does not expose or modify the other request",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog two tabs same: accepted request cannot create duplicate relationships or be overwritten",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "catalog two tabs conflict: accepted request cannot create duplicate relationships or be overwritten",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "demo-priority-rehearsal": {
+    "stats": {
+      "startTime": "2026-09-24T12:19:28.477Z",
+      "duration": 31100.652,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "provider outage and lost polling recover to visible manual review",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "schedule, private payment note, material link and revocable invite",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "payment-deletion-priority": {
+    "stats": {
+      "startTime": "2026-09-24T12:20:28.255Z",
+      "duration": 8109.5509999999995,
+      "expected": 7,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "deletion tutor/learner: simultaneous requests and forged cancellation keep accounts isolated",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "deletion guardian/outsider: simultaneous requests and forged cancellation keep accounts isolated",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor cannot change colleague lesson payment through substituted id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor cannot change colleague lesson status through substituted id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "manual payment offline: truthful state and durable retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "manual payment expired-session: truthful state and durable retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "manual payment lost-ack: truthful state and durable retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "review-concurrency": {
+    "stats": {
+      "startTime": "2026-09-24T12:22:23.481Z",
+      "duration": 10559.904,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "review two tabs same: the first teacher decision remains authoritative",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "review two tabs conflict: the first teacher decision remains authoritative",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "logout-failures-before": {
+    "stats": {
+      "startTime": "2026-09-24T12:25:06.643Z",
+      "duration": 11328.194,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "logout tutor expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "logout-failures-after": {
+    "stats": {
+      "startTime": "2026-09-24T12:26:16.894Z",
+      "duration": 14390.178,
+      "expected": 18,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "refresh: delayed teacher response cannot enter the next learner session",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "open: delayed teacher response cannot enter the next learner session",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout clears the old schedule before the new account refresh finishes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "delayed export cannot download previous account data after logout and a new login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "two back then two forward transitions revalidate each cached account document",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout of a copied session in another tab invalidates a cached document on return",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout tutor expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout tutor offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout tutor lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout learner expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout learner offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout learner lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout guardian expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout guardian offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout guardian lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout outsider expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout outsider offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout outsider lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "logout-failures-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T12:26:52.243Z",
+      "duration": 33716.149,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "logout tutor expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout tutor offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout tutor lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "logout-demo-confirmed": {
+    "stats": {
+      "startTime": "2026-09-24T12:28:20.079Z",
+      "duration": 24361.992,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 12,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "demo tutor: offline login, double retry, reload and independent second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "demo learner: offline login, double retry, reload and independent second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "demo guardian: offline login, double retry, reload and independent second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "demo outsider: offline login, double retry, reload and independent second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout tutor expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout tutor offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout tutor lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout learner expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout learner offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout learner lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout guardian expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout guardian offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout guardian lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout outsider expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout outsider offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout outsider lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "schedule, private payment note, material link and revocable invite",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "logout-server-status-confirmed": {
+    "stats": {
+      "startTime": "2026-09-24T12:29:04.936Z",
+      "duration": 8638.193,
+      "expected": 10,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "logout tutor expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout tutor offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout tutor lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout learner expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout learner offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout learner lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout guardian expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout guardian offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout guardian lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout outsider expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout outsider offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout outsider lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "logout-server-status-final": {
+    "stats": {
+      "startTime": "2026-09-24T12:29:49.186Z",
+      "duration": 7755.715999999999,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "logout tutor expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout tutor offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout tutor lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout learner expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout learner offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout learner lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout guardian expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout guardian offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout guardian lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout outsider expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout outsider offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout outsider lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "logout-double-before": {
+    "stats": {
+      "startTime": "2026-09-24T12:31:07.544Z",
+      "duration": 3238.1279999999997,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "logout tutor double click shares one operation and cannot erase a later login",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout guardian double click shares one operation and cannot erase a later login",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "logout-final-regression": {
+    "stats": {
+      "startTime": "2026-09-24T12:32:03.630Z",
+      "duration": 23112.324999999997,
+      "expected": 26,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "refresh: delayed teacher response cannot enter the next learner session",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "open: delayed teacher response cannot enter the next learner session",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout clears the old schedule before the new account refresh finishes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "delayed export cannot download previous account data after logout and a new login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "two back then two forward transitions revalidate each cached account document",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout of a copied session in another tab invalidates a cached document on return",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "demo tutor: offline login, double retry, reload and independent second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "demo learner: offline login, double retry, reload and independent second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "demo guardian: offline login, double retry, reload and independent second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "demo outsider: offline login, double retry, reload and independent second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout tutor double click shares one operation and cannot erase a later login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout guardian double click shares one operation and cannot erase a later login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout tutor expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout tutor offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout tutor lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout learner expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout learner offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout learner lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout guardian expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout guardian offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout guardian lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout outsider expired: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout outsider offline: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "logout outsider lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "schedule, private payment note, material link and revocable invite",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "logout-double-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T12:32:40.457Z",
+      "duration": 2392.0460000000003,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "logout tutor double click shares one operation and cannot erase a later login",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "logout guardian double click shares one operation and cannot erase a later login",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "notes": {
+    "fixture_errors": [
+      "logout-demo-confirmed:12 failed because request fixture was omitted;6 unrelated tests passed.",
+      "logout-server-status-confirmed:10 passed,2 failed because guardian token was read before login finished. Explicit heading wait fixed test; final12/12."
+    ],
+    "limits": "Only loopback synthetic data; AI deterministic. No MAX, production mutation, push or deploy. Server unchanged. Final26 is targeted, not full suite."
+  }
+}

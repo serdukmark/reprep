@@ -12,6 +12,8 @@ with tempfile.TemporaryDirectory(prefix='reprep-ui-mutant-') as tmp:
         shutil.copy(root/name, dest/name)
     (dest/'node_modules').symlink_to(root/'node_modules', target_is_directory=True)
     changes = [
+        ('main.tsx', 'if (logoutPending.current || !mayLeave()) return;', 'if (!mayLeave()) return;'),
+        ('main.tsx', 'setError("Данные этой вкладки очищены. Не удалось подтвердить отзыв сессии на сервере.");', 'throw new Error("mutation: abort local logout cleanup");'),
         ('Catalog.tsx', 'disabled={busy}\n                    value={subject}', 'disabled={false}\n                    value={subject}'),
         ('Catalog.tsx', 'disabled={busy}\n                    value={message}', 'disabled={false}\n                    value={message}'),
         ('Catalog.tsx', 'disabled={busy}\n                    value={replies[item.id] || ""}', 'disabled={false}\n                    value={replies[item.id] || ""}'),

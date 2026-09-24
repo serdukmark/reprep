@@ -236,10 +236,16 @@ function App() {
       setPage("today");
     });
   }
+  const logoutPending = useRef(false);
   async function logout() {
-    if (!mayLeave()) return;
+    if (logoutPending.current || !mayLeave()) return;
+    logoutPending.current = true;
     await action(async () => {
-      await api("/logout", "POST");
+      try {
+        await api("/logout", "POST");
+      } catch {
+        setError("Данные этой вкладки очищены. Не удалось подтвердить отзыв сессии на сервере.");
+      }
       setToken("");
       setUser(null);
       showAssignment(null);
@@ -263,6 +269,8 @@ function App() {
       setMobile(false);
       setPage("today");
       duplicateRequest.current = null;
+    }).finally(() => {
+      logoutPending.current = false;
     });
   }
   function navigate(p: Page) {
