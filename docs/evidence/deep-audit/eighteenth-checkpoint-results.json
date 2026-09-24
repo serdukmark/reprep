@@ -3583,5 +3583,47 @@
         ]
       }
     ]
+  },
+  "bfcache-history": {
+    "stats": {
+      "startTime": "2026-09-24T11:48:22.616Z",
+      "duration": 4930.751,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "two back then two forward transitions revalidate each cached account document",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "2"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "logout of a copied session in another tab invalidates a cached document on return",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      }
+    ]
   }
 }
