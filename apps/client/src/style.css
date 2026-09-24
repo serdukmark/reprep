@@ -1881,3 +1881,11 @@ footer span:last-child {
   padding: 0;
   border: 0;
 }
+
+/* Keep assignment filters readable in the narrow messenger viewport. */
+@media (max-width: 650px) {
+  .filters { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: end; }
+  .filters > .search { grid-column: 1 / -1; width: 100%; max-width: none; }
+  .filters > label { min-width: 0; margin: 0; }
+  .filters > span { white-space: nowrap; padding-bottom: 14px; }
+}

@@ -1,0 +1,230 @@
+{
+  "work-navigation-before": {
+    "stats": {
+      "startTime": "2026-09-24T09:19:01.159Z",
+      "duration": 4269.856000000001,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-work-navigation-race.spec.ts",
+        "title": "delayed work opening cannot replace other-work chosen afterwards",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-work-navigation-race.spec.ts",
+        "title": "delayed work opening cannot replace schedule chosen afterwards",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-work-navigation-race.spec.ts",
+        "title": "delayed work opening cannot replace new-draft chosen afterwards",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      }
+    ]
+  },
+  "work-navigation-after": {
+    "stats": {
+      "startTime": "2026-09-24T09:20:44.828Z",
+      "duration": 29084.835,
+      "expected": 18,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-account-switch.spec.ts",
+        "title": "refresh: delayed teacher response cannot enter the next learner session",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-account-switch.spec.ts",
+        "title": "open: delayed teacher response cannot enter the next learner session",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-account-switch.spec.ts",
+        "title": "logout clears the old schedule before the new account refresh finishes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-account-switch.spec.ts",
+        "title": "delayed export cannot download previous account data after logout and a new login",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-duplicate-retry.spec.ts",
+        "title": "published assignment stays immutable and retrying a lost duplicate response creates one private copy",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-editing.spec.ts",
+        "title": "draft preview and task removal, concurrent teacher edits cannot overwrite each other",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-editing.spec.ts",
+        "title": "group editing changes title and membership, bulk double click creates one copy per member",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-unsaved-navigation.spec.ts",
+        "title": "tutor: refusing navigation preserves unsaved input and accepting returns to requested page",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-unsaved-navigation.spec.ts",
+        "title": "learner: refusing navigation preserves unsaved input and accepting returns to requested page",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-work-navigation-race.spec.ts",
+        "title": "delayed work opening cannot replace other-work chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-work-navigation-race.spec.ts",
+        "title": "delayed work opening cannot replace schedule chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-work-navigation-race.spec.ts",
+        "title": "delayed work opening cannot replace new-draft chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "max.spec.ts",
+        "title": "embedded storage denial does not prevent login",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "max.spec.ts",
+        "title": "MAX URL authentication and iframe Bridge lifecycle (simulated client)",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "recommendation-feedback.spec.ts",
+        "title": "confirmed gap opens private practice draft and learner reports usefulness",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "resubmission.spec.ts",
+        "title": "return arrives without reload; resubmission starts from saved original and archive stays immutable",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "workflow.spec.ts",
+        "title": "tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "workflow.spec.ts",
+        "title": "schedule, private payment note, material link and revocable invite",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  },
+  "work-navigation-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T09:21:50.532Z",
+      "duration": 4248.5779999999995,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-work-navigation-race.spec.ts",
+        "title": "delayed work opening cannot replace other-work chosen afterwards",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-work-navigation-race.spec.ts",
+        "title": "delayed work opening cannot replace schedule chosen afterwards",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-work-navigation-race.spec.ts",
+        "title": "delayed work opening cannot replace new-draft chosen afterwards",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      }
+    ]
+  }
+}

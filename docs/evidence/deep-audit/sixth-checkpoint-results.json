@@ -1,0 +1,242 @@
+{
+  "mobile-pages": {
+    "stats": {
+      "startTime": "2026-09-24T08:58:02.481Z",
+      "duration": 4297.228,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-mobile-pages.spec.ts",
+        "title": "tutor: every navigation destination fits a narrow screen and survives reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-mobile-pages.spec.ts",
+        "title": "learner: every navigation destination fits a narrow screen and survives reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  },
+  "mobile-filter-before": {
+    "stats": {
+      "startTime": "2026-09-24T08:59:27.620Z",
+      "duration": 3570.257,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-mobile-filter.spec.ts",
+        "title": "work status filter remains readable at 320px",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-mobile-filter.spec.ts",
+        "title": "work status filter remains readable at 390px",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      }
+    ]
+  },
+  "mobile-filter-after": {
+    "stats": {
+      "startTime": "2026-09-24T09:00:31.183Z",
+      "duration": 7907.8330000000005,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-choices.spec.ts",
+        "title": "AUD-001 named choice control is keyboard-accessible and saves a new tutor draft",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-choices.spec.ts",
+        "title": "choice popup handles long labels on narrow screen and keyboard selection",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-mobile-filter.spec.ts",
+        "title": "work status filter remains readable at 320px",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-mobile-filter.spec.ts",
+        "title": "work status filter remains readable at 390px",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-mobile-pages.spec.ts",
+        "title": "tutor: every navigation destination fits a narrow screen and survives reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-mobile-pages.spec.ts",
+        "title": "learner: every navigation destination fits a narrow screen and survives reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "short-viewport.spec.ts",
+        "title": "account controls remain reachable in short desktop and mobile navigation",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "work-status.spec.ts",
+        "title": "work list separates overdue, active and complete; builder persists own lesson link",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  },
+  "mobile-filter-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T09:00:54.205Z",
+      "duration": 2866.614,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-mobile-filter.spec.ts",
+        "title": "work status filter remains readable at 320px",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-mobile-filter.spec.ts",
+        "title": "work status filter remains readable at 390px",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      }
+    ]
+  },
+  "editor-navigation": {
+    "stats": {
+      "startTime": "2026-09-24T09:03:08.047Z",
+      "duration": 2700.457,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-editor-navigation.spec.ts",
+        "title": "group: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-editor-navigation.spec.ts",
+        "title": "catalog: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-editor-navigation.spec.ts",
+        "title": "skills: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  },
+  "auth-delivery": {
+    "stats": {
+      "startTime": "2026-09-24T09:04:10.741Z",
+      "duration": 3540.362,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "MAX registration recovers from network outage without changing role or alias",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "MAX registration recovers from lost acknowledgement without changing role or alias",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "Telegram registration recovers from network outage without changing role or alias",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "Telegram registration recovers from lost acknowledgement without changing role or alias",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  }
+}

@@ -12,6 +12,10 @@ with tempfile.TemporaryDirectory(prefix='reprep-ui-mutant-') as tmp:
         shutil.copy(root/name, dest/name)
     (dest/'node_modules').symlink_to(root/'node_modules', target_is_directory=True)
     changes = [
+        ('main.tsx', 'if (revision !== workLoad.current) return;', 'if (false) return;'),
+        ('api.ts', 'if (requestSession !== sessionVersion)\n      throw', 'if (false)\n      throw'),
+        ('api.ts', 'if (requestSession !== sessionVersion)\n    throw', 'if (false)\n    throw'),
+        ('main.tsx', '      setLessons([]);', '      /* mutation: retain previous schedule */'),
         ('Collection.tsx', '<fieldset disabled={busy} className="form-fields">', '<fieldset disabled={false} className="form-fields">'),
         ('Workspaces.tsx', '<fieldset disabled={busy} className="form-fields">', '<fieldset disabled={false} className="form-fields">'),
         ('Collection.tsx', 'useUnsaved(adding && formDirty);', 'useUnsaved(false);'),

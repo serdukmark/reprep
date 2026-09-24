@@ -11,7 +11,7 @@
         "tests/test_profile_invites.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/settings-calendar.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/settings-calendar.spec.ts",
         ".venv/bin/python -m pytest tests/test_profile_invites.py -q"
       ]
     },
@@ -24,8 +24,8 @@
         "tests/test_profile_invites.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/settings-calendar.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/settings-calendar.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_profile_invites.py -q"
       ]
     },
@@ -38,9 +38,9 @@
         "tests/browser/skill-graph.spec.ts"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/guardian.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/plan-discussion.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/skill-graph.spec.ts"
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/guardian.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/plan-discussion.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/skill-graph.spec.ts"
       ]
     },
     {
@@ -53,8 +53,8 @@
         "tests/test_marketplace.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/catalog.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/groups.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/catalog.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/groups.spec.ts",
         ".venv/bin/python -m pytest tests/test_groups.py -q",
         ".venv/bin/python -m pytest tests/test_marketplace.py -q"
       ]
@@ -70,9 +70,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -88,9 +88,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -103,7 +103,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -114,7 +114,7 @@
         "tests/browser/recommendation-feedback.spec.ts"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts"
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/recommendation-feedback.spec.ts"
       ]
     },
     {
@@ -128,9 +128,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -146,9 +146,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -164,9 +164,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -196,9 +196,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -214,9 +214,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -232,9 +232,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -250,9 +250,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -268,9 +268,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -283,7 +283,7 @@
         "tests/test_insights.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/recommendation-feedback.spec.ts",
         ".venv/bin/python -m pytest tests/test_insights.py -q"
       ]
     },
@@ -294,7 +294,7 @@
         "tests/browser/workflow.spec.ts"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts"
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts"
       ]
     },
     {
@@ -304,7 +304,7 @@
         "tests/browser/workflow.spec.ts"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts"
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts"
       ]
     },
     {
@@ -325,7 +325,7 @@
         "tests/test_feedback_context.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/recommendation-feedback.spec.ts",
         ".venv/bin/python -m pytest tests/test_feedback_context.py -q"
       ]
     },
@@ -338,7 +338,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_profile_invites.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -350,7 +350,7 @@
         "tests/browser/workflow.spec.ts"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts"
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts"
       ]
     },
     {
@@ -360,7 +360,7 @@
         "tests/browser/work-status.spec.ts"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/work-status.spec.ts"
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/work-status.spec.ts"
       ]
     },
     {
@@ -374,9 +374,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -389,7 +389,7 @@
         "tests/test_answer_files.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/answer-files.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/answer-files.spec.ts",
         ".venv/bin/python -m pytest tests/test_answer_files.py -q"
       ]
     },
@@ -400,7 +400,7 @@
         "tests/browser/autosave.spec.ts"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/autosave.spec.ts"
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/autosave.spec.ts"
       ]
     },
     {
@@ -414,9 +414,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -430,8 +430,8 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/questions.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/questions.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -446,9 +446,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -464,9 +464,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -481,7 +481,7 @@
       ],
       "verification_methods": [
         "Read recorded evidence and its limitations: docs/evidence/live-question-v3.json",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/questions.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/questions.spec.ts",
         ".venv/bin/python -m pytest tests/test_questions.py -q"
       ]
     },
@@ -496,9 +496,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -514,9 +514,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -532,9 +532,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -547,7 +547,7 @@
         "tests/test_feedback_context.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/recommendation-feedback.spec.ts",
         ".venv/bin/python -m pytest tests/test_feedback_context.py -q"
       ]
     },
@@ -559,7 +559,7 @@
         "tests/test_feedback_context.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/recommendation-feedback.spec.ts",
         ".venv/bin/python -m pytest tests/test_feedback_context.py -q"
       ]
     },
@@ -586,7 +586,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_feedback_context.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -602,9 +602,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -687,7 +687,7 @@
         "tests/test_insights.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/recommendation-feedback.spec.ts",
         ".venv/bin/python -m pytest tests/test_insights.py -q"
       ]
     },
@@ -701,7 +701,7 @@
       ],
       "verification_methods": [
         "Read recorded evidence and its limitations: docs/evidence/live-question-v3.json",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/questions.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/questions.spec.ts",
         ".venv/bin/python -m pytest tests/test_questions.py -q"
       ]
     },
@@ -730,9 +730,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -747,7 +747,7 @@
       ],
       "verification_methods": [
         "Inspect artifact / explicit operation (not automatically executed): scripts/test_failure_mutations.py",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q"
       ]
     },
@@ -788,7 +788,7 @@
         "tests/test_skill_graph.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/plan-discussion.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/plan-discussion.spec.ts",
         ".venv/bin/python -m pytest tests/test_plan_discussion.py -q",
         ".venv/bin/python -m pytest tests/test_skill_graph.py -q"
       ]
@@ -801,7 +801,7 @@
         "tests/test_plan_discussion.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/plan-discussion.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/plan-discussion.spec.ts",
         ".venv/bin/python -m pytest tests/test_plan_discussion.py -q"
       ]
     },
@@ -816,9 +816,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -834,9 +834,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -852,9 +852,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -870,9 +870,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -885,7 +885,7 @@
         "tests/test_insights.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/recommendation-feedback.spec.ts",
         ".venv/bin/python -m pytest tests/test_insights.py -q"
       ]
     },
@@ -900,9 +900,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -915,7 +915,7 @@
         "tests/test_calendar_reminders.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/settings-calendar.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/settings-calendar.spec.ts",
         ".venv/bin/python -m pytest tests/test_calendar_reminders.py -q"
       ]
     },
@@ -927,7 +927,7 @@
         "tests/test_material_files.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/team-features.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/team-features.spec.ts",
         ".venv/bin/python -m pytest tests/test_material_files.py -q"
       ]
     },
@@ -939,7 +939,7 @@
         "tests/test_material_files.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/work-status.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/work-status.spec.ts",
         ".venv/bin/python -m pytest tests/test_material_files.py -q"
       ]
     },
@@ -954,9 +954,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -972,9 +972,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -990,9 +990,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -1008,9 +1008,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -1036,9 +1036,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -1054,9 +1054,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -1072,9 +1072,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -1087,7 +1087,7 @@
         "tests/test_insights.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/skill-graph.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/skill-graph.spec.ts",
         ".venv/bin/python -m pytest tests/test_insights.py -q"
       ]
     },
@@ -1102,9 +1102,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -1120,9 +1120,9 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/resubmission.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/resubmission.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
@@ -1135,7 +1135,7 @@
         "tests/test_groups.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/groups.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/groups.spec.ts",
         ".venv/bin/python -m pytest tests/test_groups.py -q"
       ]
     },
@@ -1147,7 +1147,7 @@
         "tests/test_generation.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/generation-live.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/generation-live.spec.ts",
         ".venv/bin/python -m pytest tests/test_generation.py -q"
       ]
     },
@@ -1159,7 +1159,7 @@
         "tests/test_marketplace.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/catalog.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/catalog.spec.ts",
         ".venv/bin/python -m pytest tests/test_marketplace.py -q"
       ]
     },
@@ -1171,7 +1171,7 @@
         "tests/test_skill_graph.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/skill-graph.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/skill-graph.spec.ts",
         ".venv/bin/python -m pytest tests/test_skill_graph.py -q"
       ]
     },
@@ -1183,7 +1183,7 @@
         "tests/test_marketplace.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/catalog.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/catalog.spec.ts",
         ".venv/bin/python -m pytest tests/test_marketplace.py -q"
       ]
     },
@@ -1197,7 +1197,7 @@
       ],
       "verification_methods": [
         "Read recorded evidence and its limitations: docs/evidence/public-rehearsal.json",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/guardian.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/guardian.spec.ts",
         ".venv/bin/python -m pytest tests/test_guardian.py -q"
       ]
     },
@@ -1209,7 +1209,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1221,7 +1221,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1234,8 +1234,8 @@
         "tests/test_profile_invites.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/settings-calendar.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/settings-calendar.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_profile_invites.py -q"
       ]
     },
@@ -1247,7 +1247,7 @@
         "tests/test_profile_invites.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/settings-calendar.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/settings-calendar.spec.ts",
         ".venv/bin/python -m pytest tests/test_profile_invites.py -q"
       ]
     },
@@ -1269,7 +1269,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1281,7 +1281,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1293,7 +1293,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1305,7 +1305,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1317,7 +1317,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1328,7 +1328,7 @@
         "tests/browser/recommendation-feedback.spec.ts"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts"
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/recommendation-feedback.spec.ts"
       ]
     },
     {
@@ -1339,7 +1339,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1351,7 +1351,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1363,8 +1363,8 @@
         "tests/browser/workflow.spec.ts"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/work-status.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts"
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/work-status.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts"
       ]
     },
     {
@@ -1374,7 +1374,7 @@
         "tests/browser/autosave.spec.ts"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/autosave.spec.ts"
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/autosave.spec.ts"
       ]
     },
     {
@@ -1385,7 +1385,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1397,7 +1397,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1409,7 +1409,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1421,7 +1421,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1433,7 +1433,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1445,7 +1445,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1457,7 +1457,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1469,7 +1469,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1481,7 +1481,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1493,7 +1493,7 @@
         "tests/test_failure_paths.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/failure.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/failure.spec.ts",
         ".venv/bin/python -m pytest tests/test_failure_paths.py -q"
       ]
     },
@@ -1505,7 +1505,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1517,7 +1517,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1529,7 +1529,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1541,7 +1541,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1553,7 +1553,7 @@
         "tests/test_insights.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/recommendation-feedback.spec.ts",
         ".venv/bin/python -m pytest tests/test_insights.py -q"
       ]
     },
@@ -1565,7 +1565,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1577,7 +1577,7 @@
         "tests/test_material_files.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/team-features.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/team-features.spec.ts",
         ".venv/bin/python -m pytest tests/test_material_files.py -q"
       ]
     },
@@ -1589,7 +1589,7 @@
         "tests/test_material_files.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/team-features.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/team-features.spec.ts",
         ".venv/bin/python -m pytest tests/test_material_files.py -q"
       ]
     },
@@ -1601,7 +1601,7 @@
         "tests/test_material_files.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/team-features.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/team-features.spec.ts",
         ".venv/bin/python -m pytest tests/test_material_files.py -q"
       ]
     },
@@ -1613,7 +1613,7 @@
         "tests/test_workflow.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts",
         ".venv/bin/python -m pytest tests/test_workflow.py -q"
       ]
     },
@@ -1625,7 +1625,7 @@
         "tests/test_feedback_context.py"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/recommendation-feedback.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/recommendation-feedback.spec.ts",
         ".venv/bin/python -m pytest tests/test_feedback_context.py -q"
       ]
     },
@@ -1648,9 +1648,9 @@
         "tests/browser/workflow.spec.ts"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/plan-discussion.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/team-features.spec.ts",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts"
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/plan-discussion.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/team-features.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts"
       ]
     },
     {
@@ -1670,7 +1670,7 @@
         "tests/browser/workflow.spec.ts"
       ],
       "verification_methods": [
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/workflow.spec.ts"
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/workflow.spec.ts"
       ]
     },
     {
@@ -1725,7 +1725,7 @@
       ],
       "verification_methods": [
         "Read recorded evidence and its limitations: docs/evidence/live-question-v3.json",
-        "Historical browser test; do not rerun while GUI input is forbidden: tests/browser/questions.spec.ts",
+        "Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: tests/browser/questions.spec.ts",
         ".venv/bin/python -m pytest tests/test_questions.py -q"
       ]
     }

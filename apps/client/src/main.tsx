@@ -99,6 +99,11 @@ function App() {
   } | null>(null);
   const [alias, setAlias] = useState(""),
     [role, setRole] = useState<"tutor" | "learner" | "guardian">("tutor");
+  const workLoad = useRef(0);
+  function showAssignment(next: Assignment | null) {
+    workLoad.current++;
+    setActive(next);
+  }
   const isTutor = user?.role === "tutor";
   async function refresh() {
     const [r, a, l, m] = await Promise.all([
@@ -168,9 +173,16 @@ function App() {
   }, [toast]);
   async function open(id: string) {
     if (!mayLeave()) return;
+    const revision = ++workLoad.current;
     await action(async () => {
-      setActive(await api<Assignment>("/assignments/" + id));
-      setEditing(false);
+      try {
+        const assignment = await api<Assignment>("/assignments/" + id);
+        if (revision !== workLoad.current) return;
+        showAssignment(assignment);
+        setEditing(false);
+      } catch (e) {
+        if (revision === workLoad.current) throw e;
+      }
     });
   }
   useEffect(() => {
@@ -210,7 +222,7 @@ function App() {
       );
       setToken(data.token);
       setUser(data.user);
-      setActive(null);
+      showAssignment(null);
       setPage("today");
     });
   }
@@ -220,8 +232,14 @@ function App() {
       await api("/logout", "POST");
       setToken("");
       setUser(null);
-      setActive(null);
+      showAssignment(null);
       setAssignments([]);
+      setRelations([]);
+      setLessons([]);
+      setMaterials([]);
+      setSelected("");
+      setInvites([]);
+      setInvitePreview(null);
       setWorkFilter("all");
       setSearch("");
       setSkills([]);
@@ -231,7 +249,7 @@ function App() {
   function navigate(p: Page) {
     if (!mayLeave()) return;
     setPage(p);
-    setActive(null);
+    showAssignment(null);
     setEditing(false);
     setMobile(false);
     setSearch("");
@@ -266,7 +284,7 @@ function App() {
         body,
       );
       if (publish) await api("/assignments/" + saved.id + "/publish", "POST");
-      setActive(await api<Assignment>("/assignments/" + saved.id));
+      showAssignment(await api<Assignment>("/assignments/" + saved.id));
       setEditing(false);
       await refresh();
       setToast(publish ? "Работа назначена ученику" : "Черновик сохранён");
@@ -278,7 +296,7 @@ function App() {
         active
           ? () => {
               if (!mayLeave()) return;
-              setActive(null);
+              showAssignment(null);
               setEditing(false);
               action(refresh);
             }
@@ -619,7 +637,7 @@ function App() {
                 className="back"
                 onClick={() => {
                   if (!mayLeave()) return;
-                  setActive(null);
+                  showAssignment(null);
                   setEditing(false);
                   setPage("assignments");
                   refresh();
@@ -643,7 +661,7 @@ function App() {
                   busy={busy}
                   action={action}
                   update={async () => {
-                    setActive(
+                    showAssignment(
                       await api<Assignment>("/assignments/" + active.id),
                     );
                     await refresh();
@@ -660,7 +678,7 @@ function App() {
                       );
                       const copied = await api<Assignment>("/assignments/" + r.id);
                       duplicateRequest.current = null;
-                      setActive(copied);
+                      showAssignment(copied);
                       setEditing(true);
                       await refresh();
                     })
@@ -690,7 +708,7 @@ function App() {
                     {isTutor && (
                       <button
                         className="primary"
-                        onClick={() => setActive(blankAssignment(selected))}
+                        onClick={() => showAssignment(blankAssignment(selected))}
                       >
                         <Plus size={18} /> Создать задание
                       </button>
@@ -837,7 +855,7 @@ function App() {
                     {isTutor && (
                       <button
                         className="primary"
-                        onClick={() => setActive(blankAssignment(selected))}
+                        onClick={() => showAssignment(blankAssignment(selected))}
                       >
                         <Plus size={18} /> Создать задание
                       </button>
@@ -1065,7 +1083,7 @@ function App() {
                       openDraft={(id) =>
                         void action(async () => {
                           if (!mayLeave()) return;
-                          setActive(
+                          showAssignment(
                             await api<Assignment>("/assignments/" + id),
                           );
                           setEditing(true);
@@ -1152,7 +1170,7 @@ function App() {
                   openDraft={(id) =>
                     action(async () => {
                       if (!mayLeave()) return;
-                      setActive(await api<Assignment>("/assignments/" + id));
+                      showAssignment(await api<Assignment>("/assignments/" + id));
                       setEditing(true);
                       await refresh();
                     })

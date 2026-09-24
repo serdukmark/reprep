@@ -119,12 +119,14 @@ export type Material = {
   note: string;
 };
 let token = "";
+let sessionVersion = 0;
 try {
   token = sessionStorage.getItem(sessionKey) || "";
 } catch {
   /* Embedded storage may be denied. Keep this session in memory. */
 }
 export function setToken(value: string) {
+  if (value !== token) sessionVersion++;
   token = value;
   try {
     if (value) sessionStorage.setItem(sessionKey, value);
@@ -138,6 +140,7 @@ export async function api<T>(
   method = "GET",
   body?: unknown,
 ): Promise<T> {
+  const requestSession = sessionVersion;
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15000);
   let res: Response;
@@ -172,6 +175,8 @@ export async function api<T>(
   } finally {
     clearTimeout(timeout);
   }
+  if (requestSession !== sessionVersion)
+    throw new Error("Сессия изменилась. Откройте нужный раздел заново.");
   if (!res.ok)
     throw new Error(
       (data?.error?.message || "Не удалось выполнить действие") +
@@ -205,6 +210,7 @@ export function date(value: string | null) {
 }
 
 export async function downloadOwnData(): Promise<void> {
+  const requestSession = sessionVersion;
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 60000);
   try {
@@ -216,8 +222,10 @@ export async function downloadOwnData(): Promise<void> {
       throw new Error(
         "Экспорт не получен. Проверьте вход и повторите попытку.",
       );
-    const blob = await response.blob(),
-      url = URL.createObjectURL(blob);
+    const blob = await response.blob();
+    if (requestSession !== sessionVersion)
+      throw new Error("Сессия изменилась. Повторите экспорт после входа.");
+    const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
     link.download = "reprep-my-data.json";

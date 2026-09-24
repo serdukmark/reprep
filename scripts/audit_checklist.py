@@ -40,7 +40,7 @@ def audit():
             if source.startswith('tests/test_') and source.endswith('.py'):
                 methods.append('.venv/bin/python -m pytest '+source+' -q')
             elif source.startswith('tests/browser/'):
-                methods.append('Historical browser test; do not rerun while GUI input is forbidden: '+source)
+                methods.append('Headless browser only, isolated loopback DB; setup in docs/43_AUDIT_MORNING_RU.md: '+source)
             elif source.startswith('docs/evidence/'):
                 methods.append('Read recorded evidence and its limitations: '+source)
             else:methods.append('Inspect artifact / explicit operation (not automatically executed): '+source)

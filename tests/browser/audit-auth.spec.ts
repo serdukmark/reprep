@@ -128,3 +128,34 @@ for (const platform of ["MAX", "Telegram"]) {
       ).toHaveCount(0);
     });
 }
+
+for (const platform of ["MAX", "Telegram"])
+  for (const committed of [false, true])
+    test(`${platform} registration recovers from ${committed ? 'lost acknowledgement' : 'network outage'} without changing role or alias`, async ({page}) => {
+      const raw=signed(platform,Date.now());
+      await page.route('https://st.max.ru/js/max-web-app.js',r=>r.fulfill({body:'window.WebApp={initData:""}'}));
+      await page.route('https://telegram.org/js/telegram-web-app.js',r=>r.fulfill({body:'window.Telegram={WebApp:{initData:"",ready(){},expand(){}}}'}));
+      await page.goto('/#'+(platform==='MAX'?'WebAppData':'tgWebAppData')+'='+encodeURIComponent(raw));
+      const alias='Ученик <>& 🧪';
+      await page.getByLabel('Как к вам обращаться').fill(alias);
+      await page.locator('.registration-role').filter({has:page.getByRole('radio',{name:/^Ученик/})}).click();
+      const path='**/api/auth/'+(platform==='MAX'?'max':'telegram');
+      let firstId='';
+      await page.route(path,async route=>{
+        if(committed){const response=await route.fetch();expect(response.ok()).toBe(true);firstId=(await response.json()).user.id;}
+        await route.abort();
+      });
+      await page.getByRole('button',{name:'Войти через '+platform,exact:true}).click();
+      await expect(page.getByRole('alert')).toBeVisible();
+      await expect(page.getByLabel('Как к вам обращаться')).toHaveValue(alias);
+      await expect(page.getByRole('radio',{name:/^Ученик/})).toBeChecked();
+      await expect(page.getByRole('heading',{name:'Ваш следующий шаг.',exact:true})).toHaveCount(0);
+      await page.unroute(path);
+      const reply=page.waitForResponse(r=>r.url().endsWith('/auth/'+(platform==='MAX'?'max':'telegram')));
+      await page.getByRole('button',{name:'Войти через '+platform,exact:true}).click();
+      const second=(await (await reply).json()).user;
+      expect(second.role).toBe('learner');expect(second.alias).toBe(alias);if(committed)expect(second.id).toBe(firstId);
+      await expect(page.getByRole('heading',{name:'Ваш следующий шаг.',exact:true})).toBeVisible();
+      await page.reload();await expect(page.getByRole('heading',{name:'Ваш следующий шаг.',exact:true})).toBeVisible();
+      await expect(page.getByRole('button',{name:new RegExp('Ученик <>&')})).toBeVisible();
+    });
