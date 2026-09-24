@@ -1,3 +1,4 @@
+import { installSessionLifecycle } from "./sessionLifecycle";
 import { ProfileSettings } from "./ProfileSettings";
 import { ChoiceSelect } from "./ChoiceSelect";
 import React, { useState, useEffect, useRef } from "react";
@@ -1320,6 +1321,7 @@ function App() {
     </div>
   );
 }
+installSessionLifecycle();
 initializeMax().finally(() =>
   createRoot(document.getElementById("root")!).render(<App />),
 );

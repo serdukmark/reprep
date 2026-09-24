@@ -12,6 +12,7 @@ with tempfile.TemporaryDirectory(prefix='reprep-ui-mutant-') as tmp:
         shutil.copy(root/name, dest/name)
     (dest/'node_modules').symlink_to(root/'node_modules', target_is_directory=True)
     changes = [
+        ('sessionLifecycle.ts', 'if (!event.persisted) return;', 'if (true) return;'),
         ('Insights.tsx', '{ client_id: practiceRequests.current[requestKey] }', '{ client_id: crypto.randomUUID() }'),
         ('main.tsx', 'if (activeView !== workLoad.current) return;', 'if (false) return;'),
         ('ProfileSettings.tsx', 'useUnsaved(name !== user.alias);', 'useUnsaved(false);'),
@@ -41,9 +42,9 @@ with tempfile.TemporaryDirectory(prefix='reprep-ui-mutant-') as tmp:
     for filename, before, after in changes:
         path = dest/'apps/client/src'/filename
         source = path.read_text()
-        expected = 2 if filename == "Workspaces.tsx" and before.startswith("<fieldset") else 1
+        expected = 2 if (filename == "Workspaces.tsx" and before.startswith("<fieldset")) or filename == "sessionLifecycle.ts" else 1
         assert source.count(before) == expected, filename
-        path.write_text(source.replace(before, after, 1))
+        path.write_text(source.replace(before, after, expected if filename == "sessionLifecycle.ts" else 1))
     subprocess.run([str(root/'node_modules/.bin/vite'), 'build'], cwd=dest,
                    check=True, capture_output=True, timeout=60)
     bundles = list((dest/'dist/assets').glob('*.js'))

@@ -1,0 +1,3587 @@
+{
+  "conversation-access": {
+    "stats": {
+      "startTime": "2026-09-24T11:15:56.489Z",
+      "duration": 33370.838,
+      "expected": 10,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "learner cannot read foreign messages through the visible work",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner cannot read foreign questions through the visible work",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor cannot read foreign messages through the visible work",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor cannot read foreign questions through the visible work",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner messages foreign: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner messages session: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor messages foreign: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor messages session: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner questions foreign: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner questions session: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor review foreign: visible refusal, retained input and authorized recovery",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      },
+      {
+        "title": "tutor review session: visible refusal, retained input and authorized recovery",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ]
+      }
+    ]
+  },
+  "conversation-access-confirmed": {
+    "stats": {
+      "startTime": "2026-09-24T11:16:59.425Z",
+      "duration": 13445.313999999998,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "learner cannot read foreign messages through the visible work",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner cannot read foreign questions through the visible work",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor cannot read foreign messages through the visible work",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor cannot read foreign questions through the visible work",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner messages foreign: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner messages session: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor messages foreign: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor messages session: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner questions foreign: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "learner questions session: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor review foreign: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      },
+      {
+        "title": "tutor review session: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ]
+      }
+    ]
+  },
+  "bfcache-before": {
+    "stats": {
+      "startTime": "2026-09-24T11:20:01.444Z",
+      "duration": 91231,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "browser history restoration cannot revive a teacher after the same tab logged in as learner",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ],
+        "annotations": [
+          []
+        ]
+      }
+    ]
+  },
+  "bfcache-commit-navigation": {
+    "stats": {
+      "startTime": "2026-09-24T11:22:06.420Z",
+      "duration": 14374.612,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "browser history restoration cannot revive a teacher after the same tab logged in as learner",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  "bfcache-after": {
+    "stats": {
+      "startTime": "2026-09-24T11:24:40.686Z",
+      "duration": 2968.863,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "browser history restoration cannot revive a teacher after the same tab logged in as learner",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  "bfcache-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T11:25:27.615Z",
+      "duration": 12851.030999999999,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "browser history restoration cannot revive a teacher after the same tab logged in as learner",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  "bfcache-roles-after": {
+    "stats": {
+      "startTime": "2026-09-24T11:27:07.250Z",
+      "duration": 34903.526,
+      "expected": 25,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "refresh: delayed teacher response cannot enter the next learner session",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "open: delayed teacher response cannot enter the next learner session",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "logout clears the old schedule before the new account refresh finishes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "delayed export cannot download previous account data after logout and a new login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "BFCache tutor to learner: restores only the currently authenticated account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "BFCache learner to outsider: restores only the currently authenticated account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "BFCache guardian to learner: restores only the currently authenticated account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "BFCache outsider to learner: restores only the currently authenticated account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "BFCache tutor to tutor: restores only the currently authenticated account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "unaccepted invitation input does not survive logout into a different learner",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "old relationships response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "old lessons response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "old materials response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "old profile response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "pending calendar download cannot deliver previous account data after login changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "pending material download cannot deliver previous account data after login changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "workspace: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "catalog: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "plan: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "skills: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "lesson: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "material: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "notification preferences and contact state belong only to the current account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian summary and invitation buffer disappear for a new guardian identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      }
+    ]
+  },
+  "bfcache-roles-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T11:28:48.214Z",
+      "duration": 60598.132,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 5,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "BFCache tutor to learner: restores only the currently authenticated account",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "BFCache learner to outsider: restores only the currently authenticated account",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "BFCache guardian to learner: restores only the currently authenticated account",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "BFCache outsider to learner: restores only the currently authenticated account",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "BFCache tutor to tutor: restores only the currently authenticated account",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  "checkpoint-279": {
+    "stats": {
+      "startTime": "2026-09-24T11:31:22.028Z",
+      "duration": 583716.212,
+      "expected": 279,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "learner can download own data and cancel deletion before operator processing",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "pupil TXT survives autosave, submission and tutor return without rewriting history",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner: real browser identity cannot fetch another learner or privileged resources",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian: real browser identity cannot fetch another learner or privileged resources",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "colleague: real browser identity cannot fetch another learner or privileged resources",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "AUD-003 legacy scheduled lesson appears on dashboard and matches schedule",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor: account export and deletion fail visibly, retry once and survive reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner: account export and deletion fail visibly, retry once and survive reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian: account export and deletion fail visibly, retry once and survive reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "colleague: account export and deletion fail visibly, retry once and survive reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor: export own data and cancel deletion",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian: export own data and cancel deletion",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "outsider: export own data and cancel deletion",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "refresh: delayed teacher response cannot enter the next learner session",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "open: delayed teacher response cannot enter the next learner session",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "logout clears the old schedule before the new account refresh finishes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "delayed export cannot download previous account data after logout and a new login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "AI UNAVAILABLE: submission survives refresh and teacher reaches verified outcome",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "AI EMPTY: submission survives refresh and teacher reaches verified outcome",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "AI GARBAGE: submission survives refresh and teacher reaches verified outcome",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "AI SLOW: submission survives refresh and teacher reaches verified outcome",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX simulator registration role Преподаватель and durable logout",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX simulator registration role Ученик and durable logout",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX simulator registration role Родитель and durable logout",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX simulator rejects expired identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX simulator rejects duplicate identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX simulator rejects forged identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram simulator registration role Преподаватель and durable logout",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram simulator registration role Ученик and durable logout",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram simulator registration role Родитель and durable logout",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram simulator rejects expired identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram simulator rejects duplicate identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram simulator rejects forged identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX registration recovers from network outage without changing role or alias",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX registration recovers from lost acknowledgement without changing role or alias",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram registration recovers from network outage without changing role or alias",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram registration recovers from lost acknowledgement without changing role or alias",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX logout clears the previous registration alias",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram logout clears the previous registration alias",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "BFCache tutor to learner: restores only the currently authenticated account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "BFCache learner to outsider: restores only the currently authenticated account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "BFCache guardian to learner: restores only the currently authenticated account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "BFCache outsider to learner: restores only the currently authenticated account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "BFCache tutor to tutor: restores only the currently authenticated account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "all task types validate, preserve Unicode and reject empty form without sending",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner preserves answer when session expires and rejects stale writes from a second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "builder validates numeric reference, choice cardinality and limits twenty tasks",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor calendar offline error, recovery and reload produce private valid download",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner calendar offline error, recovery and reload produce private valid download",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "catalog filters, lost committed request, decline and unpublish are visible to learner",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "discussion validates empty and long input, retries lost acknowledgement once, survives reload and second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "delayed old catalog search cannot replace results for the current query",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "catalog profile rejects invalid fields and stale second-tab save without losing typed input",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "checkbox labels remain adjacent at 1440px",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "checkbox labels remain adjacent at 390px",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "AUD-001 named choice control is keyboard-accessible and saves a new tutor draft",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "choice popup handles long labels on narrow screen and keyboard selection",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "copy invitation reports denied clipboard and copies exact code after permission succeeds",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner cannot submit missing task answers and preserves all three answer types with long Unicode text",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "workspace: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "lesson: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "material: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner cannot read foreign messages through the visible work",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner cannot read foreign questions through the visible work",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor cannot read foreign messages through the visible work",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor cannot read foreign questions through the visible work",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner messages foreign: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner messages session: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor messages foreign: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor messages session: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner questions foreign: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner questions session: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor review foreign: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor review session: visible refusal, retained input and authorized recovery",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "workspace: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "lesson: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "material: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "deadline keeps the entered local hour across a daylight-saving boundary",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "published assignment stays immutable and retrying a lost duplicate response creates one private copy",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "draft preview and task removal, concurrent teacher edits cannot overwrite each other",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group editing changes title and membership, bulk double click creates one copy per member",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "catalog: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "skills: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "feedback after_review: empty submit rejected, double submit immutable, hints and teacher feedback follow policy",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "feedback hints_first: empty submit rejected, double submit immutable, hints and teacher feedback follow policy",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "new learner starts empty, can decline and then accept a fresh invitation",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "teacher cannot assign a work or group to a real relationship owned by a colleague",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "profile: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "workspace: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "lesson: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "material: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "profile: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "workspace: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "lesson: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "material: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace schedule selected afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace new-draft selected afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "pending generated draft cannot replace new-account selected afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "generation offline: retry creates one private draft and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "generation expired-session: retry creates one private draft and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "generation lost-ack: retry creates one private draft and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "generation count rejects empty, zero, fraction and over-limit without posting",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "slow generation shows pending state across reload and never publishes automatically",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "invalid generation EMPTY leaves material intact and retry available after reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "invalid generation UNAVAILABLE leaves material intact and retry available after reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "invalid generation GARBAGE leaves material intact and retry available after reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "graph accepts empty configuration, rejects duplicates and size limits, preserves concurrent edits and offline input",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor cannot edit another teacher group using a substituted group id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor cannot assign another teacher group using a substituted group id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor cannot lessons another teacher group using a substituted group id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group bulk forms validate, preserve the other draft, retry lost ACK and clear warnings only after success",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group assign: cancelling navigation keeps unsubmitted bulk form",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group lessons: cancelling navigation keeps unsubmitted bulk form",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group edit: stale second tab cannot use the previous membership",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group assign: stale second tab cannot use the previous membership",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group lessons: stale second tab cannot use the previous membership",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "workspace: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "lesson: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "material: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner: revoked invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian: revoked invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "colleague: revoked invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner: expired invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian: expired invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "colleague: expired invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner invitation offline: visible failure then retry grants one access",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner invitation expired-session: visible failure then retry grants one access",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner invitation lost-ack: visible failure then retry grants one access",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian invitation offline: visible failure then retry grants one access",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian invitation expired-session: visible failure then retry grants one access",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian invitation lost-ack: visible failure then retry grants one access",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "colleague invitation offline: visible failure then retry grants one access",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "colleague invitation expired-session: visible failure then retry grants one access",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "colleague invitation lost-ack: visible failure then retry grants one access",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner: accepted invitation cannot create a duplicate relationship",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian: accepted invitation cannot create a duplicate relationship",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "colleague: accepted invitation cannot create a duplicate relationship",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "public landing does not promise demonstration when demo access is disabled",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "switching learner clears editable plan and graph while the next learner loads or fails",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner progress network: visible read failure and recovery after login/reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner plan network: visible read failure and recovery after login/reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner skills network: visible read failure and recovery after login/reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner catalog network: visible read failure and recovery after login/reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner notifications network: visible read failure and recovery after login/reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner progress session: visible read failure and recovery after login/reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner plan session: visible read failure and recovery after login/reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner skills session: visible read failure and recovery after login/reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner catalog session: visible read failure and recovery after login/reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner notifications session: visible read failure and recovery after login/reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "parent links-network: polling failure clears the displayed summary and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "parent summary-network: polling failure clears the displayed summary and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "parent expired-session: polling failure clears the displayed summary and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "AUD-005 retry after server committed draft but response was lost does not create duplicate",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "material linked to lesson appears in the assigned work and keeps its explanatory note in library",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "work status filter remains readable at 320px",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "work status filter remains readable at 390px",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor: every navigation destination fits a narrow screen and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner: every navigation destination fits a narrow screen and survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "two learner tabs preserve independent reminder preference changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor: notification opt-in requires contact, survives offline retry and can be disabled",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner: notification opt-in requires contact, survives offline retry and can be disabled",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "whole browser goes offline mid-answer, never claims submission and restores saved work after reconnect",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor cannot change colleague lesson payment through substituted id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor cannot change colleague lesson status through substituted id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "manual payment offline: truthful state and durable retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "manual payment expired-session: truthful state and durable retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "manual payment lost-ack: truthful state and durable retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "plan stages reorder, remove, change status, link material and preserve concurrent edits",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "plan validates required fields and limits, warns before leaving, preserves input across failed save",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "material rejects non-HTTPS and oversized links without claiming success, then saves corrected Unicode note",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner cannot open another child's plan by substituting the id in the visible screen",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner cannot open another child's skill-graph by substituting the id in the visible screen",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner cannot download another learner material by substituted file id",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "colleague sees shared templates but substituted private workspace is rejected visibly",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "linked parent cannot open child work or material, see payment notes or change lessons",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor exports selected progress JSON and sees truthful empty analytics",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "question validates empty and long text, lost acknowledgement retries once, teacher reply recovers from network failure",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "groups: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "workspaces: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "plan: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "skills: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "recommendations: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "catalog: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "notifications: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "analytics: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "groups: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "workspaces: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "plan: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "skills: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "recommendations: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "catalog: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "notifications: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "analytics: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "recommendation offline retries without another private draft",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "recommendation lost-ack retries without another private draft",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "recommendation delayed duplicate cannot replace schedule chosen meanwhile",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "recommendation delayed open cannot replace schedule chosen meanwhile",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX Преподаватель registration empty: validation and durable identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX Преподаватель registration validated: validation and durable identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX Ученик registration empty: validation and durable identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX Ученик registration validated: validation and durable identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX Родитель registration empty: validation and durable identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX Родитель registration validated: validation and durable identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram Преподаватель registration empty: validation and durable identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram Преподаватель registration validated: validation and durable identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram Ученик registration empty: validation and durable identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram Ученик registration validated: validation and durable identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram Родитель registration empty: validation and durable identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "Telegram Родитель registration validated: validation and durable identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "AUD-004 rejected work shows teacher reason and does not create progress",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "cancel submission preserves draft; AI retries stop honestly at limit and manual review remains available",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "teacher review with network failure remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "teacher review with lost acknowledgement remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "teacher review with expired session remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "late review acknowledgement cannot reopen work after tutor leaves for schedule",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "save: completed request cannot pull user back from the schedule",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "duplicate: completed request cannot pull user back from the schedule",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "hung draft save times out visibly, unlocks controls and preserves answer for retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "two tutor tabs preserve independent payment and lesson status changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "schedule cancellation, all payment notes and calendar preserve learner privacy after reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner TXT validates type, size, encoding and empty bytes then removes a valid attachment without losing answer",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor: delayed previous learner response cannot replace current learner summary",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian: delayed previous learner response cannot replace current learner summary",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "unaccepted invitation input does not survive logout into a different learner",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "old relationships response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "old lessons response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "old materials response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "old profile response cannot restore teacher data after a learner login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "pending calendar download cannot deliver previous account data after login changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "pending material download cannot deliver previous account data after login changes",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "group: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "workspace: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "catalog: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "plan: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "skills: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "lesson: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "material: saved teacher content is absent for the next colleague account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "notification preferences and contact state belong only to the current account",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian summary and invitation buffer disappear for a new guardian identity",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "oversized AI context retains uploaded work for manual review without unsafe retry",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "two learners submit concurrently and each report category handles validation and network loss",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "late template copy does not reopen editor after leaving library",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor: refusing navigation preserves unsaved input and accepting returns to requested page",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "learner: refusing navigation preserves unsaved input and accepting returns to requested page",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "skill graph refuses cycles and dangling edges, then saves corrected graph",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "material rejects bad extension, empty, oversize, NUL and invalid UTF8 before upload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "delayed work opening cannot replace other-work chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "delayed work opening cannot replace schedule chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "delayed work opening cannot replace new-draft chosen afterwards",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "switching workspaces cannot show delayed templates from previous workspace",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "answers autosave and survive reload without the save button",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "catalog tutor offer leads to learner request and accepted study relationship",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "provider outage and lost polling recover to visible manual review",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "material generation stays a draft until tutor publishes and includes its source",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor creates group, assigns copies, and learner receives only own assignment",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "guardian invitation opens only read-only summary and tutor can revoke it",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "official Bridge snapshot emits back/closing events and rejects foreign-origin back",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "embedded storage denial does not prevent login",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "MAX URL authentication and iframe Bridge lifecycle (simulated client)",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "teacher plan is readable by pupil, and assignment discussion survives reload",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "question remains visible on AI outage and teacher can reply without losing it",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "confirmed gap opens private practice draft and learner reports usefulness",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "return arrives without reload; resubmission starts from saved original and archive stays immutable",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "profile, invitation consent, disabled MAX delivery and calendar download",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "account controls remain reachable in short desktop and mobile navigation",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor defines acyclic skill links and learner can inspect saved graph",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor uploads TXT, learner downloads the original, tutor changes lesson status",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "work list separates overdue, active and complete; builder persists own lesson link",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "schedule, private payment note, material link and revocable invite",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "colleagues share template, create own draft and lose library access after removal",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      }
+    ]
+  },
+  "history-offline-demo": {
+    "stats": {
+      "startTime": "2026-09-24T11:41:47.059Z",
+      "duration": 7463.06,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "BFCache offline: hides previous account and recovers after reconnect",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          [
+            {
+              "type": "bfcache-restored",
+              "description": "1"
+            }
+          ]
+        ]
+      },
+      {
+        "title": "demo tutor: offline login, double retry, reload and independent second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "demo learner: offline login, double retry, reload and independent second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "demo guardian: offline login, double retry, reload and independent second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      },
+      {
+        "title": "demo outsider: offline login, double retry, reload and independent second tab",
+        "ok": true,
+        "statuses": [
+          "expected"
+        ],
+        "annotations": [
+          []
+        ]
+      }
+    ]
+  },
+  "bfcache-offline-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T11:43:48.410Z",
+      "duration": 13035.791000000001,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "BFCache offline: hides previous account and recovers after reconnect",
+        "ok": false,
+        "statuses": [
+          "unexpected"
+        ],
+        "annotations": [
+          []
+        ]
+      }
+    ]
+  }
+}
