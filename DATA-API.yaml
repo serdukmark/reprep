@@ -140,6 +140,9 @@
                   "max_enabled": {
                     "type": "boolean"
                   },
+                  "telegram_enabled": {
+                    "type": "boolean"
+                  },
                   "assessment": {
                     "type": "string"
                   },
@@ -150,6 +153,7 @@
                 "required": [
                   "demo_enabled",
                   "max_enabled",
+                  "telegram_enabled",
                   "assessment",
                   "version"
                 ]
@@ -199,6 +203,96 @@
         },
         "404": {
           "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/telegram/webhook",
+      "role": [
+        "MAX webhook"
+      ],
+      "parameters": [],
+      "request_body": null,
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ok",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Invalid or expired authorization"
+        },
+        "403": {
+          "description": "Role or origin forbidden"
+        },
+        "404": {
+          "description": "Resource not visible to this account"
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/telegram",
+      "role": [
+        "public"
+      ],
+      "parameters": [],
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/MaxLogin"
+            }
+          }
+        },
+        "required": true
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Session"
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
         },
         "409": {
           "description": "Version, state or replay conflict when applicable"
@@ -2039,7 +2133,23 @@
           }
         }
       ],
-      "request_body": null,
+      "request_body": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/CreateInput"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Body"
+            }
+          }
+        }
+      },
       "expected_responses": {
         "200": {
           "description": "Successful Response",
@@ -4341,6 +4451,98 @@
                 },
                 "required": [
                   "id"
+                ]
+              }
+            }
+          }
+        },
+        "422": {
+          "description": "Validation Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Authorization, role or resource visibility error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiError"
+              }
+            }
+          }
+        },
+        "409": {
+          "description": "Version, state or replay conflict when applicable"
+        }
+      },
+      "response_contract": "See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects."
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/lessons/{id_}",
+      "role": [
+        "tutor"
+      ],
+      "parameters": [
+        {
+          "name": "id_",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "title": "Id "
+          }
+        }
+      ],
+      "request_body": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LessonStatusPatch"
+            }
+          }
+        }
+      },
+      "expected_responses": {
+        "200": {
+          "description": "Successful Response",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ok": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "ok"
                 ]
               }
             }

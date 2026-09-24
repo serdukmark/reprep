@@ -129,6 +129,21 @@ select {
 code {
   overflow-wrap: anywhere;
 }
+label:has(> input[type="checkbox"]) {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  cursor: pointer;
+}
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  margin: 0;
+  padding: 0;
+  accent-color: #527b41;
+}
 input[type="radio"] {
   width: 17px;
   accent-color: #527b41;

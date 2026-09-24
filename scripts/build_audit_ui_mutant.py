@@ -12,6 +12,7 @@ with tempfile.TemporaryDirectory(prefix='reprep-ui-mutant-') as tmp:
         shutil.copy(root/name, dest/name)
     (dest/'node_modules').symlink_to(root/'node_modules', target_is_directory=True)
     changes = [
+        ('Catalog.tsx', 'if (sequence !== catalogLoad.current) return;', 'if (false) return;'),
         ('main.tsx', 'progressLive = false;', 'progressLive = true;'),
         ('Guardian.tsx', 'guardianLive = false;', 'guardianLive = true;'),
         ('Assignment.tsx', 's.status === "awaiting_review" &&', 'true &&'),

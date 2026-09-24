@@ -105,7 +105,7 @@ def enrich(schema,routes,base_url):
     for name in ('publish','accept','decline_invite','revoke','logout','retry','edit_lesson','patch_lesson','review_question'):outputs[name]=ok_result
     tutors={'save_skill_graph','catalog_profile','save_catalog_profile','review_tutor_request','workspaces','create_workspace','workspace_accept','share_workspace_template','copy_workspace_template','workspace_invite','workspace_invitations','workspace_members','workspace_templates','workspace_remove','workspace_revoke_invite','invite_guardian','guardian_invitations','revoke_guardian','invite','invitations','revoke','create_assignment','edit_assignment','publish','duplicate','retry','review','recommendations','analytics','groups','create_group','edit_group','assign_group','schedule_group','save_plan','review_question','create_lesson','edit_lesson','patch_lesson','create_material','generations','generate_material','reset'}
     learners={'request_tutor','preview_invite','accept','decline_invite','save_draft','submit','ask_question'}
-    schema['components']['securitySchemes']={'SessionBearer':{'type':'http','scheme':'bearer'},'MaxWebhookSecret':{'type':'apiKey','in':'header','name':'X-Max-Bot-Api-Secret'}}
+    schema['components']['securitySchemes']={'SessionBearer':{'type':'http','scheme':'bearer'},'MaxWebhookSecret':{'type':'apiKey','in':'header','name':'X-Max-Bot-Api-Secret'},'TelegramWebhookSecret':{'type':'apiKey','in':'header','name':'X-Telegram-Bot-Api-Secret-Token'}}
     schema['servers']=[{'url':base_url or 'http://127.0.0.1:8000','description':'Configured origin; localhost is not a public judging endpoint'}]
     for route in routes:
         if not getattr(route,'path','').startswith('/api/') or not hasattr(route,'dependant'):continue

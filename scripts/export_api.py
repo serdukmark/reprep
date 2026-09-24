@@ -10,7 +10,6 @@ def artifacts():
     schema=app.openapi()
     # Public local base is deliberately not presented as a judge-accessible HTTPS.
     schema['servers']=[{'url':'http://127.0.0.1:8000','description':'Local demo only; configure approved HTTPS for judging'}]
-    schema['components']['securitySchemes']={'SessionBearer':{'type':'http','scheme':'bearer'},'MaxWebhookSecret':{'type':'apiKey','in':'header','name':'X-Max-Bot-Api-Secret'}}
     operations=[]
     for path,methods in schema['paths'].items():
         if not path.startswith('/api/'):continue

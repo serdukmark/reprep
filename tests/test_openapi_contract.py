@@ -68,3 +68,16 @@ def test_output_fields_match_role_filtered_records(env):
     assert 'content' not in schemas['StoredMaterial']['properties']
     assert 'id' not in schemas['MaterialInput']['properties']
     assert 'created' not in schemas['ReviewInput']['properties']
+
+
+def test_every_security_requirement_declares_its_scheme(env):
+    c, app, cfg, h = env
+    from scripts.export_api import artifacts
+    exported, _ = artifacts()
+    for schema in (app.openapi(), exported):
+        schemes = schema['components']['securitySchemes']
+        for path, methods in schema['paths'].items():
+            for operation in methods.values():
+                for requirement in operation.get('security', []):
+                    assert set(requirement) <= set(schemes), path
+        assert schemes['TelegramWebhookSecret']['name'] == 'X-Telegram-Bot-Api-Secret-Token'

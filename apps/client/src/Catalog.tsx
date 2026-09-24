@@ -55,6 +55,7 @@ export function Catalog({
     [replies, setReplies] = useState<Record<string, string>>({});
   const requestRef = useRef<{ payload: string; id: string } | null>(null),
     accepted = useRef("");
+  const catalogLoad = useRef(0);
   useUnsaved(
     user.role === "tutor" &&
       loaded &&
@@ -73,19 +74,27 @@ export function Catalog({
       .catch((e) => setError(e.message));
   }, [user.id]);
   async function load() {
-    const catalog = await api<{ items: Card[] }>(
-      `/catalog?q=${encodeURIComponent(q)}&max_price=${price}`,
-    );
-    setItems(catalog.items);
-    const incoming = await api<RequestItem[]>("/catalog/requests");
-    setRequests(incoming);
-    const ids = incoming
-      .filter((item) => item.status === "accepted")
-      .map((item) => item.id)
-      .join(",");
-    if (ids !== accepted.current) {
-      accepted.current = ids;
-      await onChanged();
+    const sequence = ++catalogLoad.current;
+    try {
+      const [catalog, incoming] = await Promise.all([
+        api<{ items: Card[] }>(
+          `/catalog?q=${encodeURIComponent(q)}&max_price=${price}`,
+        ),
+        api<RequestItem[]>("/catalog/requests"),
+      ]);
+      if (sequence !== catalogLoad.current) return;
+      setItems(catalog.items);
+      setRequests(incoming);
+      const ids = incoming
+        .filter((item) => item.status === "accepted")
+        .map((item) => item.id)
+        .join(",");
+      if (ids !== accepted.current) {
+        accepted.current = ids;
+        await onChanged();
+      }
+    } catch (e) {
+      if (sequence === catalogLoad.current) setError((e as Error).message);
     }
   }
   useEffect(() => {
@@ -98,6 +107,7 @@ export function Catalog({
       5000,
     );
     return () => {
+      catalogLoad.current++;
       clearTimeout(timer);
       clearInterval(poll);
     };
