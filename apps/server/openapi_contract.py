@@ -89,6 +89,7 @@ def enrich(schema,routes,base_url):
             'lessons':array(obj({'id':string,'title':string,'starts_at':string,'duration':integer,'status':string})),'note':string}),
         'notification_settings':obj({'lessons':{'type':'boolean'},'assignments':{'type':'boolean'},'bot_started':{'type':'boolean'},'delivery_enabled':{'type':'boolean'},'deliveries':{'type':'object','additionalProperties':integer},'note':string}),
         'save_notifications':ok_result,
+        'patch_notifications':ok_result,
         'health':obj({'status':string}),
         'ready':obj({'ready':{'type':'boolean'},'checks':array(string),'external_services':string}),
         'config':obj({'demo_enabled':{'type':'boolean'},'max_enabled':{'type':'boolean'},'telegram_enabled':{'type':'boolean'},'assessment':string,'version':string}),
@@ -115,7 +116,7 @@ def enrich(schema,routes,base_url):
         for method in route.methods:
             op=schema.get('paths',{}).get(route.path,{}).get(method.lower())
             if not op:continue
-            roles=['tutor','learner'] if name=='tutor_requests' else ['guardian'] if name in {'accept_guardian','guardian_links','guardian_summary'} else ['tutor'] if name in tutors else ['learner'] if name in learners else ['tutor','learner','guardian'] if authenticated else ['MAX webhook'] if webhook else ['public']
+            roles=['tutor','learner'] if name in {'tutor_requests','notification_settings','save_notifications','patch_notifications'} else ['guardian'] if name in {'accept_guardian','guardian_links','guardian_summary'} else ['tutor'] if name in tutors else ['learner'] if name in learners else ['tutor','learner','guardian'] if authenticated else ['MAX webhook'] if webhook else ['public']
             op['x-roles']=roles
             if authenticated or webhook:op['security']=[{('TelegramWebhookSecret' if 'telegram' in route.path else 'MaxWebhookSecret') if webhook else 'SessionBearer':[]}]
             if authenticated:

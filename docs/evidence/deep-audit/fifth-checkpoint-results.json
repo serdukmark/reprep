@@ -1,0 +1,1886 @@
+{
+  "review-delivery": {
+    "stats": {
+      "startTime": "2026-09-24T01:37:01.936Z",
+      "duration": 8227.65,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-review-delivery.spec.ts",
+        "title": "teacher review with network failure remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-review-delivery.spec.ts",
+        "title": "teacher review with lost acknowledgement remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  },
+  "save-timeout": {
+    "stats": {
+      "startTime": "2026-09-24T01:37:43.269Z",
+      "duration": 17161.896,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-save-timeout.spec.ts",
+        "title": "hung draft save times out visibly, unlocks controls and preserves answer for retry",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  },
+  "collection-navigation-before": {
+    "stats": {
+      "startTime": "2026-09-24T01:39:08.612Z",
+      "duration": 3954.9619999999995,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "workspace: leaving a filled unsaved form asks before discarding it",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "lesson: leaving a filled unsaved form asks before discarding it",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "material: leaving a filled unsaved form asks before discarding it",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      }
+    ]
+  },
+  "collection-navigation-after": {
+    "stats": {
+      "startTime": "2026-09-24T01:40:18.919Z",
+      "duration": 15726.624,
+      "expected": 18,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "workspace: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "lesson: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "material: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-create-ack.spec.ts",
+        "title": "workspace: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-create-ack.spec.ts",
+        "title": "group: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-create-ack.spec.ts",
+        "title": "lesson: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-create-ack.spec.ts",
+        "title": "material: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-form-expiry.spec.ts",
+        "title": "profile: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-form-expiry.spec.ts",
+        "title": "workspace: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-form-expiry.spec.ts",
+        "title": "group: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-form-expiry.spec.ts",
+        "title": "lesson: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-form-expiry.spec.ts",
+        "title": "material: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "profile: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "workspace: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "group: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "lesson: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "material: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "workspaces.spec.ts",
+        "title": "colleagues share template, create own draft and lose library access after removal",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  },
+  "collection-navigation-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T08:28:48.965Z",
+      "duration": 3867.8950000000004,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "workspace: leaving a filled unsaved form asks before discarding it",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "lesson: leaving a filled unsaved form asks before discarding it",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "material: leaving a filled unsaved form asks before discarding it",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      }
+    ]
+  },
+  "inflight-edit-before": {
+    "stats": {
+      "startTime": "2026-09-24T08:35:08.020Z",
+      "duration": 24435.718999999997,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "workspace: edits made while save is in flight are blocked or preserved",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "lesson: edits made while save is in flight are blocked or preserved",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "material: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  },
+  "inflight-edit-before-strict": {
+    "stats": {
+      "startTime": "2026-09-24T08:35:45.040Z",
+      "duration": 35338.490000000005,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "workspace: edits made while save is in flight are blocked or preserved",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "lesson: edits made while save is in flight are blocked or preserved",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "material: edits made while save is in flight are blocked or preserved",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      }
+    ]
+  },
+  "inflight-edit-after": {
+    "stats": {
+      "startTime": "2026-09-24T08:37:30.059Z",
+      "duration": 18916.548000000003,
+      "expected": 19,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "workspace: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "lesson: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "material: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-create-ack.spec.ts",
+        "title": "workspace: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-create-ack.spec.ts",
+        "title": "group: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-create-ack.spec.ts",
+        "title": "lesson: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-create-ack.spec.ts",
+        "title": "material: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "profile: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "workspace: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "group: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "lesson: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "material: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "workspace: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "lesson: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "material: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-plan-material-limits.spec.ts",
+        "title": "plan validates required fields and limits, warns before leaving, preserves input across failed save",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-plan-material-limits.spec.ts",
+        "title": "material rejects non-HTTPS and oversized links without claiming success, then saves corrected Unicode note",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "team-features.spec.ts",
+        "title": "tutor uploads TXT, learner downloads the original, tutor changes lesson status",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "workspaces.spec.ts",
+        "title": "colleagues share template, create own draft and lose library access after removal",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  },
+  "inflight-edit-mutation": {
+    "stats": {
+      "startTime": "2026-09-24T08:38:58.335Z",
+      "duration": 34649.22,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "workspace: edits made while save is in flight are blocked or preserved",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "lesson: edits made while save is in flight are blocked or preserved",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      },
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "material: edits made while save is in flight are blocked or preserved",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      }
+    ]
+  },
+  "notification-concurrency-before": {
+    "stats": {
+      "startTime": "2026-09-24T08:41:26.389Z",
+      "duration": 12501.061,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-notification-concurrency.spec.ts",
+        "title": "two learner tabs preserve independent reminder preference changes",
+        "ok": false,
+        "statuses": [
+          "failed"
+        ]
+      }
+    ]
+  },
+  "notification-concurrency-after": {
+    "stats": {
+      "startTime": "2026-09-24T08:44:05.517Z",
+      "duration": 10981.022,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-notification-concurrency.spec.ts",
+        "title": "two learner tabs preserve independent reminder preference changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-notifications.spec.ts",
+        "title": "tutor: notification opt-in requires contact, survives offline retry and can be disabled",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-notifications.spec.ts",
+        "title": "learner: notification opt-in requires contact, survives offline retry and can be disabled",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "settings-calendar.spec.ts",
+        "title": "profile, invitation consent, disabled MAX delivery and calendar download",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  },
+  "checkpoint-151": {
+    "stats": {
+      "startTime": "2026-09-24T08:47:51.212Z",
+      "duration": 424026.419,
+      "expected": 151,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "account-data.spec.ts",
+        "title": "learner can download own data and cancel deletion before operator processing",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "answer-files.spec.ts",
+        "title": "pupil TXT survives autosave, submission and tutor return without rewriting history",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-access.spec.ts",
+        "title": "learner: real browser identity cannot fetch another learner or privileged resources",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-access.spec.ts",
+        "title": "guardian: real browser identity cannot fetch another learner or privileged resources",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-access.spec.ts",
+        "title": "colleague: real browser identity cannot fetch another learner or privileged resources",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-access.spec.ts",
+        "title": "AUD-003 legacy scheduled lesson appears on dashboard and matches schedule",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-account-failures.spec.ts",
+        "title": "tutor: account export and deletion fail visibly, retry once and survive reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-account-failures.spec.ts",
+        "title": "learner: account export and deletion fail visibly, retry once and survive reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-account-failures.spec.ts",
+        "title": "guardian: account export and deletion fail visibly, retry once and survive reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-account-failures.spec.ts",
+        "title": "colleague: account export and deletion fail visibly, retry once and survive reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-account-roles.spec.ts",
+        "title": "tutor: export own data and cancel deletion",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-account-roles.spec.ts",
+        "title": "guardian: export own data and cancel deletion",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-account-roles.spec.ts",
+        "title": "outsider: export own data and cancel deletion",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-ai.spec.ts",
+        "title": "AI UNAVAILABLE: submission survives refresh and teacher reaches verified outcome",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-ai.spec.ts",
+        "title": "AI EMPTY: submission survives refresh and teacher reaches verified outcome",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-ai.spec.ts",
+        "title": "AI GARBAGE: submission survives refresh and teacher reaches verified outcome",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-ai.spec.ts",
+        "title": "AI SLOW: submission survives refresh and teacher reaches verified outcome",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "MAX simulator registration role Преподаватель and durable logout",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "MAX simulator registration role Ученик and durable logout",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "MAX simulator registration role Родитель and durable logout",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "MAX simulator rejects expired identity",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "MAX simulator rejects duplicate identity",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "MAX simulator rejects forged identity",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "Telegram simulator registration role Преподаватель and durable logout",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "Telegram simulator registration role Ученик and durable logout",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "Telegram simulator registration role Родитель and durable logout",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "Telegram simulator rejects expired identity",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "Telegram simulator rejects duplicate identity",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-auth.spec.ts",
+        "title": "Telegram simulator rejects forged identity",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-boundaries.spec.ts",
+        "title": "all task types validate, preserve Unicode and reject empty form without sending",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-boundaries.spec.ts",
+        "title": "learner preserves answer when session expires and rejects stale writes from a second tab",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-builder-limits.spec.ts",
+        "title": "builder validates numeric reference, choice cardinality and limits twenty tasks",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-catalog-discussion.spec.ts",
+        "title": "catalog filters, lost committed request, decline and unpublish are visible to learner",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-catalog-discussion.spec.ts",
+        "title": "discussion validates empty and long input, retries lost acknowledgement once, survives reload and second tab",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-catalog-race.spec.ts",
+        "title": "delayed old catalog search cannot replace results for the current query",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-catalog-validation.spec.ts",
+        "title": "catalog profile rejects invalid fields and stale second-tab save without losing typed input",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-checkbox-layout.spec.ts",
+        "title": "checkbox labels remain adjacent at 1440px",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-checkbox-layout.spec.ts",
+        "title": "checkbox labels remain adjacent at 390px",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-choices.spec.ts",
+        "title": "AUD-001 named choice control is keyboard-accessible and saves a new tutor draft",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-choices.spec.ts",
+        "title": "choice popup handles long labels on narrow screen and keyboard selection",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-clipboard-answers.spec.ts",
+        "title": "copy invitation reports denied clipboard and copies exact code after permission succeeds",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-clipboard-answers.spec.ts",
+        "title": "learner cannot submit missing task answers and preserves all three answer types with long Unicode text",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "workspace: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "lesson: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-collection-navigation.spec.ts",
+        "title": "material: leaving a filled unsaved form asks before discarding it",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-create-ack.spec.ts",
+        "title": "workspace: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-create-ack.spec.ts",
+        "title": "group: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-create-ack.spec.ts",
+        "title": "lesson: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-create-ack.spec.ts",
+        "title": "material: retry after committed response loss creates only one resource",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-deadline-timezone.spec.ts",
+        "title": "deadline keeps the entered local hour across a daylight-saving boundary",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-duplicate-retry.spec.ts",
+        "title": "published assignment stays immutable and retrying a lost duplicate response creates one private copy",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-editing.spec.ts",
+        "title": "draft preview and task removal, concurrent teacher edits cannot overwrite each other",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-editing.spec.ts",
+        "title": "group editing changes title and membership, bulk double click creates one copy per member",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-feedback-policy.spec.ts",
+        "title": "feedback after_review: empty submit rejected, double submit immutable, hints and teacher feedback follow policy",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-feedback-policy.spec.ts",
+        "title": "feedback hints_first: empty submit rejected, double submit immutable, hints and teacher feedback follow policy",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-first-learner.spec.ts",
+        "title": "new learner starts empty, can decline and then accept a fresh invitation",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-foreign-relations.spec.ts",
+        "title": "teacher cannot assign a work or group to a real relationship owned by a colleague",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-form-expiry.spec.ts",
+        "title": "profile: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-form-expiry.spec.ts",
+        "title": "workspace: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-form-expiry.spec.ts",
+        "title": "group: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-form-expiry.spec.ts",
+        "title": "lesson: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-form-expiry.spec.ts",
+        "title": "material: expired session refuses save visibly, retains input and never persists unauthorized changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "profile: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "workspace: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "group: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "lesson: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-forms.spec.ts",
+        "title": "material: blank and long input, Unicode, offline retry, double click and reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-generation.spec.ts",
+        "title": "invalid generation leaves material intact and retry available after reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-graph-editing.spec.ts",
+        "title": "graph accepts empty configuration, rejects duplicates and size limits, preserves concurrent edits and offline input",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "workspace: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "lesson: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-inflight-edit.spec.ts",
+        "title": "material: edits made while save is in flight are blocked or preserved",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-invitations.spec.ts",
+        "title": "learner: revoked invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-invitations.spec.ts",
+        "title": "guardian: revoked invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-invitations.spec.ts",
+        "title": "colleague: revoked invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-invitations.spec.ts",
+        "title": "learner: expired invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-invitations.spec.ts",
+        "title": "guardian: expired invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-invitations.spec.ts",
+        "title": "colleague: expired invitation cannot be accepted, including after refresh",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-invite-reuse.spec.ts",
+        "title": "learner: accepted invitation cannot create a duplicate relationship",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-invite-reuse.spec.ts",
+        "title": "guardian: accepted invitation cannot create a duplicate relationship",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-invite-reuse.spec.ts",
+        "title": "colleague: accepted invitation cannot create a duplicate relationship",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-landing-copy.spec.ts",
+        "title": "public landing does not promise demonstration when demo access is disabled",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-learner-editors.spec.ts",
+        "title": "switching learner clears editable plan and graph while the next learner loads or fails",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-lost-response.spec.ts",
+        "title": "AUD-005 retry after server committed draft but response was lost does not create duplicate",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-material-link.spec.ts",
+        "title": "material linked to lesson appears in the assigned work and keeps its explanatory note in library",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-notification-concurrency.spec.ts",
+        "title": "two learner tabs preserve independent reminder preference changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-notifications.spec.ts",
+        "title": "tutor: notification opt-in requires contact, survives offline retry and can be disabled",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-notifications.spec.ts",
+        "title": "learner: notification opt-in requires contact, survives offline retry and can be disabled",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-offline.spec.ts",
+        "title": "whole browser goes offline mid-answer, never claims submission and restores saved work after reconnect",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-plan-edit.spec.ts",
+        "title": "plan stages reorder, remove, change status, link material and preserve concurrent edits",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-plan-material-limits.spec.ts",
+        "title": "plan validates required fields and limits, warns before leaving, preserves input across failed save",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-plan-material-limits.spec.ts",
+        "title": "material rejects non-HTTPS and oversized links without claiming success, then saves corrected Unicode note",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-private-resources.spec.ts",
+        "title": "learner cannot download another learner material by substituted file id",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-private-resources.spec.ts",
+        "title": "colleague sees shared templates but substituted private workspace is rejected visibly",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-private-resources.spec.ts",
+        "title": "linked parent cannot open child work or material, see payment notes or change lessons",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-progress-export.spec.ts",
+        "title": "tutor exports selected progress JSON and sees truthful empty analytics",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-question-failures.spec.ts",
+        "title": "question validates empty and long text, lost acknowledgement retries once, teacher reply recovers from network failure",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "groups: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "workspaces: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "plan: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "skills: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "recommendations: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "catalog: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "notifications: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "analytics: network failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "groups: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "workspaces: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "plan: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "skills: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "recommendations: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "catalog: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "notifications: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-read-failures.spec.ts",
+        "title": "analytics: session failure is visible and login/reload recovers",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-rejection.spec.ts",
+        "title": "AUD-004 rejected work shows teacher reason and does not create progress",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-retry-submit.spec.ts",
+        "title": "cancel submission preserves draft; AI retries stop honestly at limit and manual review remains available",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-review-delivery.spec.ts",
+        "title": "teacher review with network failure remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-review-delivery.spec.ts",
+        "title": "teacher review with lost acknowledgement remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-save-timeout.spec.ts",
+        "title": "hung draft save times out visibly, unlocks controls and preserves answer for retry",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-schedule-concurrent.spec.ts",
+        "title": "two tutor tabs preserve independent payment and lesson status changes",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-schedule-files.spec.ts",
+        "title": "schedule cancellation, all payment notes and calendar preserve learner privacy after reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-schedule-files.spec.ts",
+        "title": "learner TXT validates type, size, encoding and empty bytes then removes a valid attachment without losing answer",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-selection-race.spec.ts",
+        "title": "tutor: delayed previous learner response cannot replace current learner summary",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-selection-race.spec.ts",
+        "title": "guardian: delayed previous learner response cannot replace current learner summary",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-submissions.spec.ts",
+        "title": "oversized AI context retains uploaded work for manual review without unsafe retry",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-submissions.spec.ts",
+        "title": "two learners submit concurrently and each report category handles validation and network loss",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-unsaved-navigation.spec.ts",
+        "title": "tutor: refusing navigation preserves unsaved input and accepting returns to requested page",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-unsaved-navigation.spec.ts",
+        "title": "learner: refusing navigation preserves unsaved input and accepting returns to requested page",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-validation.spec.ts",
+        "title": "skill graph refuses cycles and dangling edges, then saves corrected graph",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-validation.spec.ts",
+        "title": "material rejects bad extension, empty, oversize, NUL and invalid UTF8 before upload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-workspace-race.spec.ts",
+        "title": "switching workspaces cannot show delayed templates from previous workspace",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "autosave.spec.ts",
+        "title": "answers autosave and survive reload without the save button",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "catalog.spec.ts",
+        "title": "catalog tutor offer leads to learner request and accepted study relationship",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "failure.spec.ts",
+        "title": "provider outage and lost polling recover to visible manual review",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "generation-live.spec.ts",
+        "title": "material generation stays a draft until tutor publishes and includes its source",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "groups.spec.ts",
+        "title": "tutor creates group, assigns copies, and learner receives only own assignment",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "guardian.spec.ts",
+        "title": "guardian invitation opens only read-only summary and tutor can revoke it",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "max-sdk.spec.ts",
+        "title": "official Bridge snapshot emits back/closing events and rejects foreign-origin back",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "max.spec.ts",
+        "title": "embedded storage denial does not prevent login",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "max.spec.ts",
+        "title": "MAX URL authentication and iframe Bridge lifecycle (simulated client)",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "plan-discussion.spec.ts",
+        "title": "teacher plan is readable by pupil, and assignment discussion survives reload",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "questions.spec.ts",
+        "title": "question remains visible on AI outage and teacher can reply without losing it",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "recommendation-feedback.spec.ts",
+        "title": "confirmed gap opens private practice draft and learner reports usefulness",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "resubmission.spec.ts",
+        "title": "return arrives without reload; resubmission starts from saved original and archive stays immutable",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "settings-calendar.spec.ts",
+        "title": "profile, invitation consent, disabled MAX delivery and calendar download",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "short-viewport.spec.ts",
+        "title": "account controls remain reachable in short desktop and mobile navigation",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "skill-graph.spec.ts",
+        "title": "tutor defines acyclic skill links and learner can inspect saved graph",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "team-features.spec.ts",
+        "title": "tutor uploads TXT, learner downloads the original, tutor changes lesson status",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "work-status.spec.ts",
+        "title": "work list separates overdue, active and complete; builder persists own lesson link",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "workflow.spec.ts",
+        "title": "tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "workflow.spec.ts",
+        "title": "schedule, private payment note, material link and revocable invite",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "workspaces.spec.ts",
+        "title": "colleagues share template, create own draft and lose library access after removal",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  },
+  "private-learning-review-session": {
+    "stats": {
+      "startTime": "2026-09-24T08:55:10.553Z",
+      "duration": 20206.35,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "file": "audit-private-learning.spec.ts",
+        "title": "learner cannot open another child's plan by substituting the id in the visible screen",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-private-learning.spec.ts",
+        "title": "learner cannot open another child's skill-graph by substituting the id in the visible screen",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-review-delivery.spec.ts",
+        "title": "teacher review with network failure remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-review-delivery.spec.ts",
+        "title": "teacher review with lost acknowledgement remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      },
+      {
+        "file": "audit-review-delivery.spec.ts",
+        "title": "teacher review with expired session remains truthful and reaches learner once",
+        "ok": true,
+        "statuses": [
+          "passed"
+        ]
+      }
+    ]
+  }
+}

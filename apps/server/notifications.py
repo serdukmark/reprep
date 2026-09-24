@@ -96,3 +96,14 @@ def install(app,cfg,user,db,fail):
         for item in rows(c,"SELECT r.id FROM reminder_deliveries r JOIN max_outbox o ON o.id=r.id WHERE r.user_id=? AND o.status='queued'",(u['id'],)):
             if not valid_reminder(c,item['id'],time.time()):c.execute("UPDATE max_outbox SET status='cancelled' WHERE id=?",(item['id'],))
         return {'ok':True}
+
+
+    @app.patch('/api/notifications')
+    def patch_notifications(body:NotificationInput,u=Depends(user),c=Depends(db)):
+        allowed(u)
+        if not body.model_fields_set:
+            fail(422,'EMPTY_PATCH','Выберите настройку для изменения')
+        # db holds a write transaction: another tab cannot reset an unrelated preference.
+        merged = dict(preferences(c,u['id']))
+        merged.update(body.model_dump(exclude_unset=True))
+        return save_notifications(NotificationInput(**merged),u,c)

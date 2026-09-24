@@ -13,6 +13,9 @@ export function Notifications({ user }: { user: User }) {
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [notice, setNotice] = useState("");
+  const [changes, setChanges] = useState<
+    Partial<Pick<Settings, "lessons" | "assignments">>
+  >({});
   useEffect(() => {
     api<Settings>("/notifications")
       .then(setSettings)
@@ -24,11 +27,10 @@ export function Notifications({ user }: { user: User }) {
     setError("");
     setNotice("");
     try {
-      await api("/notifications", "PUT", {
-        lessons: settings.lessons,
-        assignments: settings.assignments,
-      });
+      if (Object.keys(changes).length)
+        await api("/notifications", "PATCH", changes);
       setSettings(await api<Settings>("/notifications"));
+      setChanges({});
       setNotice("Настройки напоминаний сохранены");
     } catch (e) {
       setError((e as Error).message);
@@ -50,8 +52,8 @@ export function Notifications({ user }: { user: User }) {
           </p>
           {!settings.delivery_enabled && (
             <p>
-              Отправка в мессенджер сейчас выключена. Напоминания на главном экране
-              доступны.
+              Отправка в мессенджер сейчас выключена. Напоминания на главном
+              экране доступны.
             </p>
           )}
           <label>
@@ -59,9 +61,11 @@ export function Notifications({ user }: { user: User }) {
               type="checkbox"
               checked={settings.lessons}
               disabled={!settings.bot_started || busy}
-              onChange={(e) =>
-                setSettings({ ...settings, lessons: e.target.checked })
-              }
+              onChange={(e) => {
+                setSettings({ ...settings, lessons: e.target.checked });
+                setChanges({ ...changes, lessons: e.target.checked });
+                setNotice("");
+              }}
             />
             О ближайших занятиях
           </label>
@@ -71,9 +75,11 @@ export function Notifications({ user }: { user: User }) {
                 type="checkbox"
                 checked={settings.assignments}
                 disabled={!settings.bot_started || busy}
-                onChange={(e) =>
-                  setSettings({ ...settings, assignments: e.target.checked })
-                }
+                onChange={(e) => {
+                  setSettings({ ...settings, assignments: e.target.checked });
+                  setChanges({ ...changes, assignments: e.target.checked });
+                  setNotice("");
+                }}
               />
               О сроках заданий
             </label>

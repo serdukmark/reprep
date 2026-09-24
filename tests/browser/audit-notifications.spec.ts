@@ -32,7 +32,7 @@ for (const role of ["tutor", "learner"])
     if (role === "learner") await page.getByLabel("О сроках заданий").check();
     else await expect(page.getByLabel("О сроках заданий")).toHaveCount(0);
     await page.route("**/api/notifications", (route) =>
-      route.request().method() === "PUT" ? route.abort() : route.continue(),
+      route.request().method() === "PATCH" ? route.abort() : route.continue(),
     );
     await page
       .getByRole("button", { name: "Сохранить напоминания", exact: true })

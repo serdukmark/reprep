@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, FormEvent } from "react";
 import { Plus, FolderOpen, ArrowUpRight } from "lucide-react";
 import { api, Relation, Lesson, Material, AssignmentSummary } from "./api";
 import { Generation } from "./Generation";
-import { Empty } from "./components";
+import { Empty, mayLeave, useUnsaved } from "./components";
 export function Collection({
   page,
   tutor,
@@ -26,6 +26,8 @@ export function Collection({
   openDraft: (id: string) => void;
 }) {
   const [adding, setAdding] = useState(false);
+  const [formDirty, setFormDirty] = useState(false);
+  useUnsaved(adding && formDirty);
   const createKey = useRef(crypto.randomUUID());
   const [file, setFile] = useState<{
     file_name: string;
@@ -61,6 +63,7 @@ export function Collection({
           : { ...data, ...(file || {}), ai_allowed: data.ai_allowed === "on" },
       );
       createKey.current = crypto.randomUUID();
+      setFormDirty(false);
       setAdding(false);
       setFile(null);
       await refresh();
@@ -83,6 +86,11 @@ export function Collection({
             className="primary"
             disabled={!relations.length}
             onClick={() => {
+              if (adding && formDirty && !mayLeave()) return;
+              setFormDirty(false);
+              setFile(null);
+              setFileError("");
+              setTarget(relations[0]?.id || "");
               if (!adding) createKey.current = crypto.randomUUID();
               setAdding(!adding);
             }}
@@ -93,124 +101,135 @@ export function Collection({
         )}
       </div>
       {adding && (
-        <form className="card collection-form" onSubmit={submit}>
-          <label>
-            Название
-            <input name="title" required minLength={2} maxLength={160} />
-          </label>
-          <label>
-            Ученик
-            <ChoiceSelect
-              name="relationship_id"
-              value={target}
-              onChange={(e) => setTarget(e.target.value)}
-            >
-              {relations.map((r) => (
-                <option value={r.id} key={r.id}>
-                  {r.learner_alias}
-                </option>
-              ))}
-            </ChoiceSelect>
-          </label>
-          {schedule ? (
-            <div className="form-grid">
-              <label>
-                Начало (ваш часовой пояс)
-                <input name="starts_at" type="datetime-local" required />
-              </label>
-              <label>
-                Длительность, минут
-                <input
-                  name="duration"
-                  type="number"
-                  defaultValue={60}
-                  min={15}
-                  max={240}
-                />
-              </label>
-            </div>
-          ) : (
-            <>
-              <label>
-                Ссылка HTTPS
-                <input
-                  name="url"
-                  type="url"
-                  pattern="https://.*"
-                  required={!file}
-                  disabled={!!file}
-                />
-              </label>
-              <label>
-                Или файл TXT (UTF-8, до 60 KB)
-                <input
-                  type="file"
-                  accept=".txt,text/plain"
-                  onChange={async (e) => {
-                    setFile(null);
-                    setFileError("");
-                    const chosen = e.target.files?.[0];
-                    if (!chosen) return;
-                    try {
-                      if (!chosen.name.endsWith(".txt") || chosen.size > 60000)
-                        throw new Error("Нужен TXT до 60 KB");
-                      const content = new TextDecoder("utf-8", {
-                        fatal: true,
-                      }).decode(await chosen.arrayBuffer());
-                      if (!content.trim() || content.includes("\0"))
-                        throw new Error("Файл пуст или содержит нулевые байты");
-                      setFile({ file_name: chosen.name, content });
-                    } catch (err) {
-                      setFileError((err as Error).message);
-                    }
-                  }}
-                />
-              </label>
-              {fileError && (
-                <p className="error" role="alert">
-                  {fileError}
-                </p>
-              )}
-              <label>
-                Задание
-                <ChoiceSelect name="assignment_id" key={"a" + target}>
-                  <option value="">Для всех заданий ученика</option>
-                  {works
-                    .filter((w) => w.relationship_id === target)
-                    .map((w) => (
-                      <option key={w.id} value={w.id}>
-                        {w.title}
-                      </option>
-                    ))}
-                </ChoiceSelect>
-              </label>
-              <label>
-                Занятие
-                <ChoiceSelect name="lesson_id" key={"l" + target}>
-                  <option value="">Без привязки</option>
-                  {lessons
-                    .filter((l) => l.relationship_id === target)
-                    .map((l) => (
-                      <option key={l.id} value={l.id}>
-                        {l.title}
-                      </option>
-                    ))}
-                </ChoiceSelect>
-              </label>
-              <label>
-                <input type="checkbox" name="ai_allowed" disabled={!file} />{" "}
-                Разрешаю использовать этот TXT в AI-проверке: у меня есть права
-                на материал, персональных данных нет
-              </label>
-              <label>
-                Пояснение
-                <textarea name="note" maxLength={500} />
-              </label>
-            </>
-          )}
-          <button className="primary" disabled={busy || !!fileError}>
-            Сохранить
-          </button>
+        <form
+          className="card collection-form"
+          onSubmit={submit}
+          onChange={() => setFormDirty(true)}
+        >
+          <fieldset disabled={busy} className="form-fields">
+            <label>
+              Название
+              <input name="title" required minLength={2} maxLength={160} />
+            </label>
+            <label>
+              Ученик
+              <ChoiceSelect
+                name="relationship_id"
+                value={target}
+                onChange={(e) => setTarget(e.target.value)}
+              >
+                {relations.map((r) => (
+                  <option value={r.id} key={r.id}>
+                    {r.learner_alias}
+                  </option>
+                ))}
+              </ChoiceSelect>
+            </label>
+            {schedule ? (
+              <div className="form-grid">
+                <label>
+                  Начало (ваш часовой пояс)
+                  <input name="starts_at" type="datetime-local" required />
+                </label>
+                <label>
+                  Длительность, минут
+                  <input
+                    name="duration"
+                    type="number"
+                    defaultValue={60}
+                    min={15}
+                    max={240}
+                  />
+                </label>
+              </div>
+            ) : (
+              <>
+                <label>
+                  Ссылка HTTPS
+                  <input
+                    name="url"
+                    type="url"
+                    pattern="https://.*"
+                    required={!file}
+                    disabled={!!file}
+                  />
+                </label>
+                <label>
+                  Или файл TXT (UTF-8, до 60 KB)
+                  <input
+                    type="file"
+                    accept=".txt,text/plain"
+                    onChange={async (e) => {
+                      setFile(null);
+                      setFileError("");
+                      const chosen = e.target.files?.[0];
+                      if (!chosen) return;
+                      try {
+                        if (
+                          !chosen.name.endsWith(".txt") ||
+                          chosen.size > 60000
+                        )
+                          throw new Error("Нужен TXT до 60 KB");
+                        const content = new TextDecoder("utf-8", {
+                          fatal: true,
+                        }).decode(await chosen.arrayBuffer());
+                        if (!content.trim() || content.includes("\0"))
+                          throw new Error(
+                            "Файл пуст или содержит нулевые байты",
+                          );
+                        setFile({ file_name: chosen.name, content });
+                      } catch (err) {
+                        setFileError((err as Error).message);
+                      }
+                    }}
+                  />
+                </label>
+                {fileError && (
+                  <p className="error" role="alert">
+                    {fileError}
+                  </p>
+                )}
+                <label>
+                  Задание
+                  <ChoiceSelect name="assignment_id" key={"a" + target}>
+                    <option value="">Для всех заданий ученика</option>
+                    {works
+                      .filter((w) => w.relationship_id === target)
+                      .map((w) => (
+                        <option key={w.id} value={w.id}>
+                          {w.title}
+                        </option>
+                      ))}
+                  </ChoiceSelect>
+                </label>
+                <label>
+                  Занятие
+                  <ChoiceSelect name="lesson_id" key={"l" + target}>
+                    <option value="">Без привязки</option>
+                    {lessons
+                      .filter((l) => l.relationship_id === target)
+                      .map((l) => (
+                        <option key={l.id} value={l.id}>
+                          {l.title}
+                        </option>
+                      ))}
+                  </ChoiceSelect>
+                </label>
+                <label>
+                  <input type="checkbox" name="ai_allowed" disabled={!file} />{" "}
+                  Разрешаю использовать этот TXT в AI-проверке: у меня есть
+                  права на материал, персональных данных нет
+                </label>
+                <label>
+                  Пояснение
+                  <textarea name="note" maxLength={500} />
+                </label>
+              </>
+            )}
+            <button className="primary" disabled={busy || !!fileError}>
+              Сохранить
+            </button>
+          </fieldset>
         </form>
       )}
       {schedule ? (

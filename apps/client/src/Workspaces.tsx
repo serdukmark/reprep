@@ -1,3 +1,4 @@
+import { useUnsaved } from "./components";
 import { ChoiceSelect } from "./ChoiceSelect";
 import { useEffect, useRef, useState } from "react";
 import { api, AssignmentSummary, Relation, User } from "./api";
@@ -34,6 +35,7 @@ export function Workspaces({
     [target, setTarget] = useState(""),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  useUnsaved(!!title.trim());
   const createKey = useRef(crypto.randomUUID());
   const copyRequest = useRef<{
     template: string;
@@ -119,19 +121,21 @@ export function Workspaces({
             });
           }}
         >
-          <label>
-            Название пространства
-            <input
-              minLength={2}
-              maxLength={100}
-              required
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </label>
-          <button className="secondary" disabled={busy}>
-            Создать пространство
-          </button>
+          <fieldset disabled={busy} className="form-fields">
+            <label>
+              Название пространства
+              <input
+                minLength={2}
+                maxLength={100}
+                required
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </label>
+            <button className="secondary" disabled={busy}>
+              Создать пространство
+            </button>
+          </fieldset>
         </form>
         <form
           onSubmit={(e) => {
@@ -147,18 +151,20 @@ export function Workspaces({
             });
           }}
         >
-          <label>
-            Код пространства
-            <input
-              required
-              value={joinCode}
-              maxLength={200}
-              onChange={(e) => setJoinCode(e.target.value)}
-            />
-          </label>
-          <button className="secondary" disabled={busy}>
-            Вступить в пространство
-          </button>
+          <fieldset disabled={busy} className="form-fields">
+            <label>
+              Код пространства
+              <input
+                required
+                value={joinCode}
+                maxLength={200}
+                onChange={(e) => setJoinCode(e.target.value)}
+              />
+            </label>
+            <button className="secondary" disabled={busy}>
+              Вступить в пространство
+            </button>
+          </fieldset>
         </form>
       </div>
       {!!spaces.length && (

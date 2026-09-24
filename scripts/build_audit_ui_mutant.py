@@ -12,6 +12,10 @@ with tempfile.TemporaryDirectory(prefix='reprep-ui-mutant-') as tmp:
         shutil.copy(root/name, dest/name)
     (dest/'node_modules').symlink_to(root/'node_modules', target_is_directory=True)
     changes = [
+        ('Collection.tsx', '<fieldset disabled={busy} className="form-fields">', '<fieldset disabled={false} className="form-fields">'),
+        ('Workspaces.tsx', '<fieldset disabled={busy} className="form-fields">', '<fieldset disabled={false} className="form-fields">'),
+        ('Collection.tsx', 'useUnsaved(adding && formDirty);', 'useUnsaved(false);'),
+        ('Workspaces.tsx', 'useUnsaved(!!title.trim());', 'useUnsaved(false);'),
         ('Catalog.tsx', 'if (sequence !== catalogLoad.current) return;', 'if (false) return;'),
         ('main.tsx', 'progressLive = false;', 'progressLive = true;'),
         ('Guardian.tsx', 'guardianLive = false;', 'guardianLive = true;'),
@@ -24,7 +28,8 @@ with tempfile.TemporaryDirectory(prefix='reprep-ui-mutant-') as tmp:
     for filename, before, after in changes:
         path = dest/'apps/client/src'/filename
         source = path.read_text()
-        assert source.count(before) == 1, filename
+        expected = 2 if filename == "Workspaces.tsx" and before.startswith("<fieldset") else 1
+        assert source.count(before) == expected, filename
         path.write_text(source.replace(before, after, 1))
     subprocess.run([str(root/'node_modules/.bin/vite'), 'build'], cwd=dest,
                    check=True, capture_output=True, timeout=60)

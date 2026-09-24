@@ -1874,3 +1874,10 @@ footer span:last-child {
 .choice-mark { display: grid; place-items: center; width: 19px; height: 19px; flex-shrink: 0; border: 1px solid #c6cfbd; border-radius: 50%; }
 .choice-option[aria-selected="true"] .choice-mark { color: white; background: #52713d; border-color: #52713d; }
 @media (hover: hover) { .choice-trigger:hover, .choice-option:not(:disabled):hover { border-color: #80936e; background: #f0f5e9; } }
+
+.form-fields {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
