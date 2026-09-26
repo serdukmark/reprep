@@ -275,6 +275,7 @@ export function Collection({
                     <label>
                       Статус занятия
                       <ChoiceSelect
+                        disabled={busy}
                         value={l.status || "scheduled"}
                         onChange={(e) =>
                           action(async () => {
@@ -295,6 +296,7 @@ export function Collection({
                     <label className="payment-label">
                       Ваша отметка об оплате
                       <ChoiceSelect
+                        disabled={busy}
                         value={l.payment_status}
                         onChange={(e) =>
                           action(async () => {

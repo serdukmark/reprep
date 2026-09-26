@@ -1,0 +1,231 @@
+{
+  "payment-status-before-and-export-repeat": {
+    "stats": {
+      "startTime": "2026-09-26T15:46:31.382Z",
+      "duration": 36861.302,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 4,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "account export tutor: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1460
+          }
+        ]
+      },
+      {
+        "title": "account export learner: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1275
+          }
+        ]
+      },
+      {
+        "title": "account export guardian: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1188
+          }
+        ]
+      },
+      {
+        "title": "account export outsider: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1189
+          }
+        ]
+      },
+      {
+        "title": "progress export tutor: pending double click delivers only the selected pupil's complete evidence",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 5834
+          }
+        ]
+      },
+      {
+        "title": "progress export learner: pending double click delivers only the selected pupil's complete evidence",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 8363
+          }
+        ]
+      },
+      {
+        "title": "calendar export tutor: pending double click downloads one complete ICS with authorized lessons and no payment",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1798
+          }
+        ]
+      },
+      {
+        "title": "calendar export learner: pending double click downloads one complete ICS with authorized lessons and no payment",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1800
+          }
+        ]
+      }
+    ]
+  },
+  "payment-final-export-repeat-expiry-before": {
+    "stats": {
+      "startTime": "2026-09-26T16:32:35.608Z",
+      "duration": 82946.765,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 4,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "account export tutor: revoked session downloads nothing, fresh login exports unchanged authorized data",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 13019
+          }
+        ]
+      },
+      {
+        "title": "account export learner: revoked session downloads nothing, fresh login exports unchanged authorized data",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 12286
+          }
+        ]
+      },
+      {
+        "title": "account export guardian: revoked session downloads nothing, fresh login exports unchanged authorized data",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 11212
+          }
+        ]
+      },
+      {
+        "title": "account export outsider: revoked session downloads nothing, fresh login exports unchanged authorized data",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 11756
+          }
+        ]
+      },
+      {
+        "title": "account export tutor: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1383
+          }
+        ]
+      },
+      {
+        "title": "account export learner: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1264
+          }
+        ]
+      },
+      {
+        "title": "account export guardian: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1201
+          }
+        ]
+      },
+      {
+        "title": "account export outsider: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1149
+          }
+        ]
+      },
+      {
+        "title": "progress export tutor: pending double click delivers only the selected pupil's complete evidence",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 8099
+          }
+        ]
+      },
+      {
+        "title": "progress export learner: pending double click delivers only the selected pupil's complete evidence",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 3628
+          }
+        ]
+      },
+      {
+        "title": "calendar export tutor: pending double click downloads one complete ICS with authorized lessons and no payment",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1901
+          }
+        ]
+      },
+      {
+        "title": "calendar export learner: pending double click downloads one complete ICS with authorized lessons and no payment",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1828
+          }
+        ]
+      }
+    ]
+  },
+  "notes": [
+    "Checkpoint38:8unique export repeat tests pass: account4, progress2, ICS2. The mixed final run has12passed/4failed; account-expired4fail are AUD038, not passing repeat cases.",
+    "Initial progress2 failed on expected minified JSON while actual download intentionally uses two-space indentation. Test serializer corrected; complete byte equality of every file with real response retained.",
+    "Actual files read after UI double click while real response is held. Account/ICS busy prevent duplicate:one request and one file. Progress allows1–2requests; every file independently correct and belongs to selected learner. Real UI fixtures and privacy assertions, no real messaging service."
+  ]
+}

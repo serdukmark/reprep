@@ -213,24 +213,14 @@ export async function downloadOwnData(): Promise<void> {
   const requestSession = sessionVersion;
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 60000);
+  let response: Response;
+  let blob: Blob | undefined;
   try {
-    const response = await fetch("/api/account/export", {
+    response = await fetch("/api/account/export", {
       headers: { Authorization: "Bearer " + token },
       signal: controller.signal,
     });
-    if (!response.ok)
-      throw new Error(
-        "Экспорт не получен. Проверьте вход и повторите попытку.",
-      );
-    const blob = await response.blob();
-    if (requestSession !== sessionVersion)
-      throw new Error("Сессия изменилась. Повторите экспорт после входа.");
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "reprep-my-data.json";
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    if (response.ok) blob = await response.blob();
   } catch {
     throw new Error(
       "Не удалось скачать данные. Проверьте соединение и повторите попытку.",
@@ -238,4 +228,16 @@ export async function downloadOwnData(): Promise<void> {
   } finally {
     clearTimeout(timeout);
   }
+  if (response.status === 401)
+    throw new Error("Сессия завершилась. Войдите снова и повторите экспорт.");
+  if (!response.ok || !blob)
+    throw new Error("Экспорт не получен. Проверьте вход и повторите попытку.");
+  if (requestSession !== sessionVersion)
+    throw new Error("Сессия изменилась. Повторите экспорт после входа.");
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "reprep-my-data.json";
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }

@@ -1,0 +1,453 @@
+{
+  "payment-order-before": {
+    "stats": {
+      "startTime": "2026-09-26T15:23:19.637Z",
+      "duration": 7239.05,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "manual payment pending opposite choices preserve last choice",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 2687
+          }
+        ]
+      },
+      {
+        "title": "manual payment pending same choice remains idempotent",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2861
+          }
+        ]
+      }
+    ]
+  },
+  "payment-status-before-and-export-repeat": {
+    "stats": {
+      "startTime": "2026-09-26T15:46:31.382Z",
+      "duration": 36861.302,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 4,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "account export tutor: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1460
+          }
+        ]
+      },
+      {
+        "title": "account export learner: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1275
+          }
+        ]
+      },
+      {
+        "title": "account export guardian: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1188
+          }
+        ]
+      },
+      {
+        "title": "account export outsider: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1189
+          }
+        ]
+      },
+      {
+        "title": "progress export tutor: pending double click delivers only the selected pupil's complete evidence",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 5834
+          }
+        ]
+      },
+      {
+        "title": "progress export learner: pending double click delivers only the selected pupil's complete evidence",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 8363
+          }
+        ]
+      },
+      {
+        "title": "calendar export tutor: pending double click downloads one complete ICS with authorized lessons and no payment",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1798
+          }
+        ]
+      },
+      {
+        "title": "calendar export learner: pending double click downloads one complete ICS with authorized lessons and no payment",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1800
+          }
+        ]
+      },
+      {
+        "title": "manual payment pending opposite choices preserve last choice",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 2089
+          }
+        ]
+      },
+      {
+        "title": "manual payment pending same choice remains idempotent",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2858
+          }
+        ]
+      },
+      {
+        "title": "lesson status pending opposite choices preserve last choice",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 2120
+          }
+        ]
+      },
+      {
+        "title": "lesson status pending same choice remains idempotent",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2744
+          }
+        ]
+      }
+    ]
+  },
+  "payment-order-after-and-draft": {
+    "stats": {
+      "startTime": "2026-09-26T15:49:13.660Z",
+      "duration": 31179.586,
+      "expected": 15,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "manual payment pending opposite choices preserve last choice",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2201
+          }
+        ]
+      },
+      {
+        "title": "manual payment pending same choice remains idempotent",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2193
+          }
+        ]
+      },
+      {
+        "title": "lesson status pending opposite choices preserve last choice",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2397
+          }
+        ]
+      },
+      {
+        "title": "lesson status pending same choice remains idempotent",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2139
+          }
+        ]
+      }
+    ]
+  },
+  "payment-order-mutation": {
+    "stats": {
+      "startTime": "2026-09-26T16:25:28.334Z",
+      "duration": 14787.087,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "manual payment pending opposite choices preserve last choice",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 7790
+          }
+        ]
+      },
+      {
+        "title": "lesson status pending opposite choices preserve last choice",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 3772
+          }
+        ]
+      }
+    ]
+  },
+  "payment-order-mutation-fixed-test": {
+    "stats": {
+      "startTime": "2026-09-26T16:28:09.024Z",
+      "duration": 8853.259,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "manual payment pending opposite choices preserve last choice",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 3858
+          }
+        ]
+      },
+      {
+        "title": "lesson status pending opposite choices preserve last choice",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 3202
+          }
+        ]
+      }
+    ]
+  },
+  "payment-order-mutation-final": {
+    "stats": {
+      "startTime": "2026-09-26T16:31:38.445Z",
+      "duration": 6719.1539999999995,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "manual payment pending opposite choices preserve last choice",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 2668
+          }
+        ]
+      },
+      {
+        "title": "lesson status pending opposite choices preserve last choice",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 2346
+          }
+        ]
+      }
+    ]
+  },
+  "payment-final-export-repeat-expiry-before": {
+    "stats": {
+      "startTime": "2026-09-26T16:32:35.608Z",
+      "duration": 82946.765,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 4,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "account export tutor: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1383
+          }
+        ]
+      },
+      {
+        "title": "account export learner: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1264
+          }
+        ]
+      },
+      {
+        "title": "account export guardian: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1201
+          }
+        ]
+      },
+      {
+        "title": "account export outsider: pending double click downloads one complete private snapshot",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1149
+          }
+        ]
+      },
+      {
+        "title": "progress export tutor: pending double click delivers only the selected pupil's complete evidence",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 8099
+          }
+        ]
+      },
+      {
+        "title": "progress export learner: pending double click delivers only the selected pupil's complete evidence",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 3628
+          }
+        ]
+      },
+      {
+        "title": "calendar export tutor: pending double click downloads one complete ICS with authorized lessons and no payment",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1901
+          }
+        ]
+      },
+      {
+        "title": "calendar export learner: pending double click downloads one complete ICS with authorized lessons and no payment",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1828
+          }
+        ]
+      },
+      {
+        "title": "manual payment pending opposite choices preserve last choice",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2295
+          }
+        ]
+      },
+      {
+        "title": "manual payment pending same choice remains idempotent",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2384
+          }
+        ]
+      },
+      {
+        "title": "lesson status pending opposite choices preserve last choice",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2355
+          }
+        ]
+      },
+      {
+        "title": "lesson status pending same choice remains idempotent",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2389
+          }
+        ]
+      }
+    ]
+  },
+  "notes": [
+    "AUD037: real first paid/completed PATCH held before delivery, newer unpaid/cancelled committed first; late old request overwrote it. Independent UI/reload confirmed wrong durable values.",
+    "Fixed both lesson selectors with disabled busy. Related15/15 passed, then final revised payment4/4 passed in mixed16 (the4unrelated failures exposed AUD038).",
+    "First and second mutation runs failed because test captured old refresh response across reload; these failures are not credited as mutation detection. Final synchronization reads the refresh triggered by each fulfilled write before reloading. Final2/2 mutations correctly detected stale paid/completed values.",
+    "Peer agent reviewed both source lines and tests. Busy protects one page and temporarily locks all lesson selectors during shared action; distinct tab concurrent writes are outside this locking mechanism. Existing independent-field two-tab regression passed.",
+    "Build index-Bje19LLi.js; no backend changes."
+  ]
+}
