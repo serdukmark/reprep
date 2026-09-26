@@ -1,0 +1,3373 @@
+{
+  "stats": {
+    "startTime": "2026-09-26T13:02:01.476Z",
+    "duration": 829271.035,
+    "expected": 336,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors_count": 0,
+  "cases": [
+    {
+      "title": "learner can download own data and cancel deletion before operator processing",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1212
+        }
+      ]
+    },
+    {
+      "title": "pupil TXT survives autosave, submission and tutor return without rewriting history",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7271
+        }
+      ]
+    },
+    {
+      "title": "learner: real browser identity cannot fetch another learner or privileged resources",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 782
+        }
+      ]
+    },
+    {
+      "title": "guardian: real browser identity cannot fetch another learner or privileged resources",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 632
+        }
+      ]
+    },
+    {
+      "title": "colleague: real browser identity cannot fetch another learner or privileged resources",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 521
+        }
+      ]
+    },
+    {
+      "title": "AUD-003 legacy scheduled lesson appears on dashboard and matches schedule",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 859
+        }
+      ]
+    },
+    {
+      "title": "tutor: account export and deletion fail visibly, retry once and survive reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1631
+        }
+      ]
+    },
+    {
+      "title": "learner: account export and deletion fail visibly, retry once and survive reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1578
+        }
+      ]
+    },
+    {
+      "title": "guardian: account export and deletion fail visibly, retry once and survive reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2412
+        }
+      ]
+    },
+    {
+      "title": "colleague: account export and deletion fail visibly, retry once and survive reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1494
+        }
+      ]
+    },
+    {
+      "title": "tutor: export own data and cancel deletion",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1006
+        }
+      ]
+    },
+    {
+      "title": "guardian: export own data and cancel deletion",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1058
+        }
+      ]
+    },
+    {
+      "title": "outsider: export own data and cancel deletion",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1525
+        }
+      ]
+    },
+    {
+      "title": "refresh: delayed teacher response cannot enter the next learner session",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1022
+        }
+      ]
+    },
+    {
+      "title": "open: delayed teacher response cannot enter the next learner session",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 866
+        }
+      ]
+    },
+    {
+      "title": "logout clears the old schedule before the new account refresh finishes",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1298
+        }
+      ]
+    },
+    {
+      "title": "delayed export cannot download previous account data after logout and a new login",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 690
+        }
+      ]
+    },
+    {
+      "title": "AI UNAVAILABLE: submission survives refresh and teacher reaches verified outcome",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 11547
+        }
+      ]
+    },
+    {
+      "title": "AI EMPTY: submission survives refresh and teacher reaches verified outcome",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4341
+        }
+      ]
+    },
+    {
+      "title": "AI GARBAGE: submission survives refresh and teacher reaches verified outcome",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9892
+        }
+      ]
+    },
+    {
+      "title": "AI SLOW: submission survives refresh and teacher reaches verified outcome",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 11717
+        }
+      ]
+    },
+    {
+      "title": "attempt history learner rejects foreign list ID and recovers own history",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3322
+        }
+      ]
+    },
+    {
+      "title": "attempt history learner rejects foreign detail ID and recovers own history",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3645
+        }
+      ]
+    },
+    {
+      "title": "attempt history tutor rejects foreign list ID and recovers own history",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4145
+        }
+      ]
+    },
+    {
+      "title": "attempt history tutor rejects foreign detail ID and recovers own history",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3957
+        }
+      ]
+    },
+    {
+      "title": "MAX simulator registration role Преподаватель and durable logout",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 826
+        }
+      ]
+    },
+    {
+      "title": "MAX simulator registration role Ученик and durable logout",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 865
+        }
+      ]
+    },
+    {
+      "title": "MAX simulator registration role Родитель and durable logout",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 583
+        }
+      ]
+    },
+    {
+      "title": "MAX simulator rejects expired identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 376
+        }
+      ]
+    },
+    {
+      "title": "MAX simulator rejects duplicate identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 339
+        }
+      ]
+    },
+    {
+      "title": "MAX simulator rejects forged identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 369
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulator registration role Преподаватель and durable logout",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 744
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulator registration role Ученик and durable logout",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 692
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulator registration role Родитель and durable logout",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 629
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulator rejects expired identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 445
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulator rejects duplicate identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 400
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulator rejects forged identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 359
+        }
+      ]
+    },
+    {
+      "title": "MAX registration recovers from network outage without changing role or alias",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 631
+        }
+      ]
+    },
+    {
+      "title": "MAX registration recovers from lost acknowledgement without changing role or alias",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 611
+        }
+      ]
+    },
+    {
+      "title": "Telegram registration recovers from network outage without changing role or alias",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 670
+        }
+      ]
+    },
+    {
+      "title": "Telegram registration recovers from lost acknowledgement without changing role or alias",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 580
+        }
+      ]
+    },
+    {
+      "title": "MAX logout clears the previous registration alias",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 530
+        }
+      ]
+    },
+    {
+      "title": "Telegram logout clears the previous registration alias",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 759
+        }
+      ]
+    },
+    {
+      "title": "two back then two forward transitions revalidate each cached account document",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4251
+        }
+      ]
+    },
+    {
+      "title": "logout of a copied session in another tab invalidates a cached document on return",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1693
+        }
+      ]
+    },
+    {
+      "title": "failed logout tutor does not restore cached account through browser back",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1486
+        }
+      ]
+    },
+    {
+      "title": "failed logout guardian does not restore cached account through browser back",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1086
+        }
+      ]
+    },
+    {
+      "title": "BFCache offline: hides previous account and recovers after reconnect",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1904
+        }
+      ]
+    },
+    {
+      "title": "BFCache tutor to learner: restores only the currently authenticated account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1884
+        }
+      ]
+    },
+    {
+      "title": "BFCache learner to outsider: restores only the currently authenticated account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2037
+        }
+      ]
+    },
+    {
+      "title": "BFCache guardian to learner: restores only the currently authenticated account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3559
+        }
+      ]
+    },
+    {
+      "title": "BFCache outsider to learner: restores only the currently authenticated account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4701
+        }
+      ]
+    },
+    {
+      "title": "BFCache tutor to tutor: restores only the currently authenticated account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3180
+        }
+      ]
+    },
+    {
+      "title": "all task types validate, preserve Unicode and reject empty form without sending",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1217
+        }
+      ]
+    },
+    {
+      "title": "learner preserves answer when session expires and rejects stale writes from a second tab",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9011
+        }
+      ]
+    },
+    {
+      "title": "builder validates numeric reference, choice cardinality and limits twenty tasks",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3093
+        }
+      ]
+    },
+    {
+      "title": "learner calendar ignores injected teacher and foreign relationship IDs",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 613
+        }
+      ]
+    },
+    {
+      "title": "tutor calendar offline error, recovery and reload produce private valid download",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 953
+        }
+      ]
+    },
+    {
+      "title": "learner calendar offline error, recovery and reload produce private valid download",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 695
+        }
+      ]
+    },
+    {
+      "title": "catalog review foreign: denied write does not expose or modify the other request",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2455
+        }
+      ]
+    },
+    {
+      "title": "catalog review session: denied write does not expose or modify the other request",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2340
+        }
+      ]
+    },
+    {
+      "title": "catalog two tabs same: accepted request cannot create duplicate relationships or be overwritten",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2876
+        }
+      ]
+    },
+    {
+      "title": "catalog two tabs conflict: accepted request cannot create duplicate relationships or be overwritten",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3356
+        }
+      ]
+    },
+    {
+      "title": "catalog filters, lost committed request, decline and unpublish are visible to learner",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 13853
+        }
+      ]
+    },
+    {
+      "title": "discussion validates empty and long input, retries lost acknowledgement once, survives reload and second tab",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6443
+        }
+      ]
+    },
+    {
+      "title": "catalog request: delayed response locks editable fields and duplicate action sends once",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2243
+        }
+      ]
+    },
+    {
+      "title": "catalog review: delayed response locks editable fields and duplicate action sends once",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 11222
+        }
+      ]
+    },
+    {
+      "title": "delayed old catalog search cannot replace results for the current query",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2784
+        }
+      ]
+    },
+    {
+      "title": "catalog profile rejects invalid fields and stale second-tab save without losing typed input",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3434
+        }
+      ]
+    },
+    {
+      "title": "checkbox labels remain adjacent at 1440px",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 459
+        }
+      ]
+    },
+    {
+      "title": "checkbox labels remain adjacent at 390px",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 469
+        }
+      ]
+    },
+    {
+      "title": "AUD-001 named choice control is keyboard-accessible and saves a new tutor draft",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 738
+        }
+      ]
+    },
+    {
+      "title": "choice popup handles long labels on narrow screen and keyboard selection",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 884
+        }
+      ]
+    },
+    {
+      "title": "copy invitation reports denied clipboard and copies exact code after permission succeeds",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 510
+        }
+      ]
+    },
+    {
+      "title": "learner cannot submit missing task answers and preserves all three answer types with long Unicode text",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 979
+        }
+      ]
+    },
+    {
+      "title": "workspace: leaving a filled unsaved form asks before discarding it",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 540
+        }
+      ]
+    },
+    {
+      "title": "lesson: leaving a filled unsaved form asks before discarding it",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 588
+        }
+      ]
+    },
+    {
+      "title": "material: leaving a filled unsaved form asks before discarding it",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 700
+        }
+      ]
+    },
+    {
+      "title": "learner cannot read foreign messages through the visible work",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1177
+        }
+      ]
+    },
+    {
+      "title": "learner cannot read foreign questions through the visible work",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 838
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot read foreign messages through the visible work",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1005
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot read foreign questions through the visible work",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 606
+        }
+      ]
+    },
+    {
+      "title": "learner messages foreign: visible refusal, retained input and authorized recovery",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1042
+        }
+      ]
+    },
+    {
+      "title": "learner messages session: visible refusal, retained input and authorized recovery",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1449
+        }
+      ]
+    },
+    {
+      "title": "tutor messages foreign: visible refusal, retained input and authorized recovery",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 839
+        }
+      ]
+    },
+    {
+      "title": "tutor messages session: visible refusal, retained input and authorized recovery",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1134
+        }
+      ]
+    },
+    {
+      "title": "learner questions foreign: visible refusal, retained input and authorized recovery",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 672
+        }
+      ]
+    },
+    {
+      "title": "learner questions session: visible refusal, retained input and authorized recovery",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1919
+        }
+      ]
+    },
+    {
+      "title": "tutor review foreign: visible refusal, retained input and authorized recovery",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1017
+        }
+      ]
+    },
+    {
+      "title": "tutor review session: visible refusal, retained input and authorized recovery",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1207
+        }
+      ]
+    },
+    {
+      "title": "workspace: retry after committed response loss creates only one resource",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 606
+        }
+      ]
+    },
+    {
+      "title": "group: retry after committed response loss creates only one resource",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 572
+        }
+      ]
+    },
+    {
+      "title": "lesson: retry after committed response loss creates only one resource",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 715
+        }
+      ]
+    },
+    {
+      "title": "material: retry after committed response loss creates only one resource",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 813
+        }
+      ]
+    },
+    {
+      "title": "deadline keeps the entered local hour across a daylight-saving boundary",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 514
+        }
+      ]
+    },
+    {
+      "title": "deletion tutor/learner: simultaneous requests and forged cancellation keep accounts isolated",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1062
+        }
+      ]
+    },
+    {
+      "title": "deletion guardian/outsider: simultaneous requests and forged cancellation keep accounts isolated",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 932
+        }
+      ]
+    },
+    {
+      "title": "demo tutor: offline login, double retry, reload and independent second tab",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 875
+        }
+      ]
+    },
+    {
+      "title": "demo learner: offline login, double retry, reload and independent second tab",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 994
+        }
+      ]
+    },
+    {
+      "title": "demo guardian: offline login, double retry, reload and independent second tab",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1091
+        }
+      ]
+    },
+    {
+      "title": "demo outsider: offline login, double retry, reload and independent second tab",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 860
+        }
+      ]
+    },
+    {
+      "title": "published assignment stays immutable and retrying a lost duplicate response creates one private copy",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 818
+        }
+      ]
+    },
+    {
+      "title": "draft preview and task removal, concurrent teacher edits cannot overwrite each other",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1771
+        }
+      ]
+    },
+    {
+      "title": "group editing changes title and membership, bulk double click creates one copy per member",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1280
+        }
+      ]
+    },
+    {
+      "title": "group: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 492
+        }
+      ]
+    },
+    {
+      "title": "catalog: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 551
+        }
+      ]
+    },
+    {
+      "title": "skills: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 695
+        }
+      ]
+    },
+    {
+      "title": "parallel exports tutor/learner: injected account IDs never override each tab's authenticated identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1078
+        }
+      ]
+    },
+    {
+      "title": "parallel exports guardian/outsider: injected account IDs never override each tab's authenticated identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1747
+        }
+      ]
+    },
+    {
+      "title": "feedback foreign: server refusal remains visible and does not erase unsent comment",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3382
+        }
+      ]
+    },
+    {
+      "title": "feedback session: server refusal remains visible and does not erase unsent comment",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3381
+        }
+      ]
+    },
+    {
+      "title": "feedback pending response locks submitted fields and double click sends one report",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3165
+        }
+      ]
+    },
+    {
+      "title": "feedback after_review: empty submit rejected, double submit immutable, hints and teacher feedback follow policy",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3674
+        }
+      ]
+    },
+    {
+      "title": "feedback hints_first: empty submit rejected, double submit immutable, hints and teacher feedback follow policy",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4120
+        }
+      ]
+    },
+    {
+      "title": "new learner starts empty, can decline and then accept a fresh invitation",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1824
+        }
+      ]
+    },
+    {
+      "title": "teacher cannot assign a work or group to a real relationship owned by a colleague",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1141
+        }
+      ]
+    },
+    {
+      "title": "profile: expired session refuses save visibly, retains input and never persists unauthorized changes",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1235
+        }
+      ]
+    },
+    {
+      "title": "workspace: expired session refuses save visibly, retains input and never persists unauthorized changes",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1010
+        }
+      ]
+    },
+    {
+      "title": "group: expired session refuses save visibly, retains input and never persists unauthorized changes",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1235
+        }
+      ]
+    },
+    {
+      "title": "lesson: expired session refuses save visibly, retains input and never persists unauthorized changes",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1436
+        }
+      ]
+    },
+    {
+      "title": "material: expired session refuses save visibly, retains input and never persists unauthorized changes",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1642
+        }
+      ]
+    },
+    {
+      "title": "profile: blank and long input, Unicode, offline retry, double click and reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1209
+        }
+      ]
+    },
+    {
+      "title": "workspace: blank and long input, Unicode, offline retry, double click and reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1226
+        }
+      ]
+    },
+    {
+      "title": "group: blank and long input, Unicode, offline retry, double click and reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 956
+        }
+      ]
+    },
+    {
+      "title": "lesson: blank and long input, Unicode, offline retry, double click and reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1136
+        }
+      ]
+    },
+    {
+      "title": "material: blank and long input, Unicode, offline retry, double click and reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1767
+        }
+      ]
+    },
+    {
+      "title": "pending generated draft cannot replace schedule selected afterwards",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6351
+        }
+      ]
+    },
+    {
+      "title": "pending generated draft cannot replace new-draft selected afterwards",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6221
+        }
+      ]
+    },
+    {
+      "title": "pending generated draft cannot replace new-account selected afterwards",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6278
+        }
+      ]
+    },
+    {
+      "title": "generation offline: retry creates one private draft and survives reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6470
+        }
+      ]
+    },
+    {
+      "title": "generation expired-session: retry creates one private draft and survives reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6608
+        }
+      ]
+    },
+    {
+      "title": "generation lost-ack: retry creates one private draft and survives reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6350
+        }
+      ]
+    },
+    {
+      "title": "generation count rejects empty, zero, fraction and over-limit without posting",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5800
+        }
+      ]
+    },
+    {
+      "title": "slow generation shows pending state across reload and never publishes automatically",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6676
+        }
+      ]
+    },
+    {
+      "title": "invalid generation EMPTY leaves material intact and retry available after reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6739
+        }
+      ]
+    },
+    {
+      "title": "invalid generation UNAVAILABLE leaves material intact and retry available after reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6711
+        }
+      ]
+    },
+    {
+      "title": "invalid generation GARBAGE leaves material intact and retry available after reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6430
+        }
+      ]
+    },
+    {
+      "title": "graph accepts empty configuration, rejects duplicates and size limits, preserves concurrent edits and offline input",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1962
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot edit another teacher group using a substituted group id",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1361
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot assign another teacher group using a substituted group id",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1275
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot lessons another teacher group using a substituted group id",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1319
+        }
+      ]
+    },
+    {
+      "title": "group bulk forms validate, preserve the other draft, retry lost ACK and clear warnings only after success",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2864
+        }
+      ]
+    },
+    {
+      "title": "group assign: cancelling navigation keeps unsubmitted bulk form",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1210
+        }
+      ]
+    },
+    {
+      "title": "group lessons: cancelling navigation keeps unsubmitted bulk form",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 905
+        }
+      ]
+    },
+    {
+      "title": "group edit: stale second tab cannot use the previous membership",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2308
+        }
+      ]
+    },
+    {
+      "title": "group assign: stale second tab cannot use the previous membership",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1938
+        }
+      ]
+    },
+    {
+      "title": "group lessons: stale second tab cannot use the previous membership",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1426
+        }
+      ]
+    },
+    {
+      "title": "revoked guardian cannot recover a child's summary from an older successful response",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8510
+        }
+      ]
+    },
+    {
+      "title": "workspace: edits made while save is in flight are blocked or preserved",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1126
+        }
+      ]
+    },
+    {
+      "title": "lesson: edits made while save is in flight are blocked or preserved",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1289
+        }
+      ]
+    },
+    {
+      "title": "material: edits made while save is in flight are blocked or preserved",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 876
+        }
+      ]
+    },
+    {
+      "title": "learner: revoked invitation cannot be accepted, including after refresh",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1720
+        }
+      ]
+    },
+    {
+      "title": "guardian: revoked invitation cannot be accepted, including after refresh",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2700
+        }
+      ]
+    },
+    {
+      "title": "colleague: revoked invitation cannot be accepted, including after refresh",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3177
+        }
+      ]
+    },
+    {
+      "title": "learner: expired invitation cannot be accepted, including after refresh",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3613
+        }
+      ]
+    },
+    {
+      "title": "guardian: expired invitation cannot be accepted, including after refresh",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2156
+        }
+      ]
+    },
+    {
+      "title": "colleague: expired invitation cannot be accepted, including after refresh",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2288
+        }
+      ]
+    },
+    {
+      "title": "learner invitation offline: visible failure then retry grants one access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1696
+        }
+      ]
+    },
+    {
+      "title": "learner invitation expired-session: visible failure then retry grants one access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2271
+        }
+      ]
+    },
+    {
+      "title": "learner invitation lost-ack: visible failure then retry grants one access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1992
+        }
+      ]
+    },
+    {
+      "title": "guardian invitation offline: visible failure then retry grants one access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1875
+        }
+      ]
+    },
+    {
+      "title": "guardian invitation expired-session: visible failure then retry grants one access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1491
+        }
+      ]
+    },
+    {
+      "title": "guardian invitation lost-ack: visible failure then retry grants one access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1255
+        }
+      ]
+    },
+    {
+      "title": "colleague invitation offline: visible failure then retry grants one access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1286
+        }
+      ]
+    },
+    {
+      "title": "colleague invitation expired-session: visible failure then retry grants one access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1279
+        }
+      ]
+    },
+    {
+      "title": "colleague invitation lost-ack: visible failure then retry grants one access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1101
+        }
+      ]
+    },
+    {
+      "title": "learner: accepted invitation cannot create a duplicate relationship",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2220
+        }
+      ]
+    },
+    {
+      "title": "guardian: accepted invitation cannot create a duplicate relationship",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1702
+        }
+      ]
+    },
+    {
+      "title": "colleague: accepted invitation cannot create a duplicate relationship",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1365
+        }
+      ]
+    },
+    {
+      "title": "public landing does not promise demonstration when demo access is disabled",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 471
+        }
+      ]
+    },
+    {
+      "title": "switching learner clears editable plan and graph while the next learner loads or fails",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1174
+        }
+      ]
+    },
+    {
+      "title": "learner progress network: visible read failure and recovery after login/reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 639
+        }
+      ]
+    },
+    {
+      "title": "learner plan network: visible read failure and recovery after login/reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 780
+        }
+      ]
+    },
+    {
+      "title": "learner skills network: visible read failure and recovery after login/reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 679
+        }
+      ]
+    },
+    {
+      "title": "learner catalog network: visible read failure and recovery after login/reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1615
+        }
+      ]
+    },
+    {
+      "title": "learner notifications network: visible read failure and recovery after login/reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 808
+        }
+      ]
+    },
+    {
+      "title": "learner progress session: visible read failure and recovery after login/reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 670
+        }
+      ]
+    },
+    {
+      "title": "learner plan session: visible read failure and recovery after login/reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 675
+        }
+      ]
+    },
+    {
+      "title": "learner skills session: visible read failure and recovery after login/reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 659
+        }
+      ]
+    },
+    {
+      "title": "learner catalog session: visible read failure and recovery after login/reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1244
+        }
+      ]
+    },
+    {
+      "title": "learner notifications session: visible read failure and recovery after login/reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 932
+        }
+      ]
+    },
+    {
+      "title": "parent links-network: polling failure clears the displayed summary and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6026
+        }
+      ]
+    },
+    {
+      "title": "parent summary-network: polling failure clears the displayed summary and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6100
+        }
+      ]
+    },
+    {
+      "title": "parent expired-session: polling failure clears the displayed summary and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6235
+        }
+      ]
+    },
+    {
+      "title": "logout tutor double click shares one operation and cannot erase a later login",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 700
+        }
+      ]
+    },
+    {
+      "title": "logout guardian double click shares one operation and cannot erase a later login",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 821
+        }
+      ]
+    },
+    {
+      "title": "logout tutor expired: local identity and cached screens are cleared despite failed server acknowledgement",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 691
+        }
+      ]
+    },
+    {
+      "title": "logout tutor offline: local identity and cached screens are cleared despite failed server acknowledgement",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 653
+        }
+      ]
+    },
+    {
+      "title": "logout tutor lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 618
+        }
+      ]
+    },
+    {
+      "title": "logout learner expired: local identity and cached screens are cleared despite failed server acknowledgement",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 599
+        }
+      ]
+    },
+    {
+      "title": "logout learner offline: local identity and cached screens are cleared despite failed server acknowledgement",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 542
+        }
+      ]
+    },
+    {
+      "title": "logout learner lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 506
+        }
+      ]
+    },
+    {
+      "title": "logout guardian expired: local identity and cached screens are cleared despite failed server acknowledgement",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 599
+        }
+      ]
+    },
+    {
+      "title": "logout guardian offline: local identity and cached screens are cleared despite failed server acknowledgement",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 667
+        }
+      ]
+    },
+    {
+      "title": "logout guardian lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 521
+        }
+      ]
+    },
+    {
+      "title": "logout outsider expired: local identity and cached screens are cleared despite failed server acknowledgement",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 574
+        }
+      ]
+    },
+    {
+      "title": "logout outsider offline: local identity and cached screens are cleared despite failed server acknowledgement",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 662
+        }
+      ]
+    },
+    {
+      "title": "logout outsider lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 662
+        }
+      ]
+    },
+    {
+      "title": "logout tutor: real request timeout clears this tab without claiming server revocation",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16190
+        }
+      ]
+    },
+    {
+      "title": "logout guardian: real request timeout clears this tab without claiming server revocation",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16473
+        }
+      ]
+    },
+    {
+      "title": "AUD-005 retry after server committed draft but response was lost does not create duplicate",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 737
+        }
+      ]
+    },
+    {
+      "title": "material download learner: foreign file refused, own TXT survives retry",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 679
+        }
+      ]
+    },
+    {
+      "title": "material download tutor: foreign file refused, own TXT survives retry",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 640
+        }
+      ]
+    },
+    {
+      "title": "material linked to lesson appears in the assigned work and keeps its explanatory note in library",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1647
+        }
+      ]
+    },
+    {
+      "title": "work status filter remains readable at 320px",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 676
+        }
+      ]
+    },
+    {
+      "title": "work status filter remains readable at 390px",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 722
+        }
+      ]
+    },
+    {
+      "title": "tutor: every navigation destination fits a narrow screen and survives reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1140
+        }
+      ]
+    },
+    {
+      "title": "learner: every navigation destination fits a narrow screen and survives reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1100
+        }
+      ]
+    },
+    {
+      "title": "two learner tabs preserve independent reminder preference changes",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 995
+        }
+      ]
+    },
+    {
+      "title": "tutor: notification opt-in requires contact, survives offline retry and can be disabled",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1072
+        }
+      ]
+    },
+    {
+      "title": "learner: notification opt-in requires contact, survives offline retry and can be disabled",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1111
+        }
+      ]
+    },
+    {
+      "title": "whole browser goes offline mid-answer, never claims submission and restores saved work after reconnect",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6232
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot change colleague lesson payment through substituted id",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1588
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot change colleague lesson status through substituted id",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 958
+        }
+      ]
+    },
+    {
+      "title": "manual payment offline: truthful state and durable retry",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1048
+        }
+      ]
+    },
+    {
+      "title": "manual payment expired-session: truthful state and durable retry",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1098
+        }
+      ]
+    },
+    {
+      "title": "manual payment lost-ack: truthful state and durable retry",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 919
+        }
+      ]
+    },
+    {
+      "title": "plan stages reorder, remove, change status, link material and preserve concurrent edits",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2554
+        }
+      ]
+    },
+    {
+      "title": "plan validates required fields and limits, warns before leaving, preserves input across failed save",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3830
+        }
+      ]
+    },
+    {
+      "title": "material rejects non-HTTPS and oversized links without claiming success, then saves corrected Unicode note",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 803
+        }
+      ]
+    },
+    {
+      "title": "learner cannot open another child's plan by substituting the id in the visible screen",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1274
+        }
+      ]
+    },
+    {
+      "title": "learner cannot open another child's skill-graph by substituting the id in the visible screen",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1161
+        }
+      ]
+    },
+    {
+      "title": "learner cannot download another learner material by substituted file id",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 531
+        }
+      ]
+    },
+    {
+      "title": "colleague sees shared templates but substituted private workspace is rejected visibly",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1015
+        }
+      ]
+    },
+    {
+      "title": "linked parent cannot open child work or material, see payment notes or change lessons",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 452
+        }
+      ]
+    },
+    {
+      "title": "tutor exports selected progress JSON and sees truthful empty analytics",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 509
+        }
+      ]
+    },
+    {
+      "title": "question validates empty and long text, lost acknowledgement retries once, teacher reply recovers from network failure",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6323
+        }
+      ]
+    },
+    {
+      "title": "groups: network failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 546
+        }
+      ]
+    },
+    {
+      "title": "workspaces: network failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 591
+        }
+      ]
+    },
+    {
+      "title": "plan: network failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 724
+        }
+      ]
+    },
+    {
+      "title": "skills: network failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 684
+        }
+      ]
+    },
+    {
+      "title": "recommendations: network failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 623
+        }
+      ]
+    },
+    {
+      "title": "catalog: network failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 510
+        }
+      ]
+    },
+    {
+      "title": "notifications: network failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 630
+        }
+      ]
+    },
+    {
+      "title": "analytics: network failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 541
+        }
+      ]
+    },
+    {
+      "title": "groups: session failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 623
+        }
+      ]
+    },
+    {
+      "title": "workspaces: session failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 636
+        }
+      ]
+    },
+    {
+      "title": "plan: session failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 878
+        }
+      ]
+    },
+    {
+      "title": "skills: session failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 669
+        }
+      ]
+    },
+    {
+      "title": "recommendations: session failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 697
+        }
+      ]
+    },
+    {
+      "title": "catalog: session failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 646
+        }
+      ]
+    },
+    {
+      "title": "notifications: session failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 628
+        }
+      ]
+    },
+    {
+      "title": "analytics: session failure is visible and login/reload recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 695
+        }
+      ]
+    },
+    {
+      "title": "recommendation offline retries without another private draft",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1619
+        }
+      ]
+    },
+    {
+      "title": "recommendation lost-ack retries without another private draft",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1090
+        }
+      ]
+    },
+    {
+      "title": "recommendation delayed duplicate cannot replace schedule chosen meanwhile",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1522
+        }
+      ]
+    },
+    {
+      "title": "recommendation delayed open cannot replace schedule chosen meanwhile",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1717
+        }
+      ]
+    },
+    {
+      "title": "MAX Преподаватель registration empty: validation and durable identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 450
+        }
+      ]
+    },
+    {
+      "title": "MAX Преподаватель registration validated: validation and durable identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 514
+        }
+      ]
+    },
+    {
+      "title": "MAX Ученик registration empty: validation and durable identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 489
+        }
+      ]
+    },
+    {
+      "title": "MAX Ученик registration validated: validation and durable identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 586
+        }
+      ]
+    },
+    {
+      "title": "MAX Родитель registration empty: validation and durable identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1132
+        }
+      ]
+    },
+    {
+      "title": "MAX Родитель registration validated: validation and durable identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1180
+        }
+      ]
+    },
+    {
+      "title": "Telegram Преподаватель registration empty: validation and durable identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 913
+        }
+      ]
+    },
+    {
+      "title": "Telegram Преподаватель registration validated: validation and durable identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 636
+        }
+      ]
+    },
+    {
+      "title": "Telegram Ученик registration empty: validation and durable identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 450
+        }
+      ]
+    },
+    {
+      "title": "Telegram Ученик registration validated: validation and durable identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 641
+        }
+      ]
+    },
+    {
+      "title": "Telegram Родитель registration empty: validation and durable identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 531
+        }
+      ]
+    },
+    {
+      "title": "Telegram Родитель registration validated: validation and durable identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 575
+        }
+      ]
+    },
+    {
+      "title": "AUD-004 rejected work shows teacher reason and does not create progress",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6918
+        }
+      ]
+    },
+    {
+      "title": "cancel submission preserves draft; AI retries stop honestly at limit and manual review remains available",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19582
+        }
+      ]
+    },
+    {
+      "title": "returned work resubmitted with lost acknowledgement keeps two immutable attempts and one confirmed progress result",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9607
+        }
+      ]
+    },
+    {
+      "title": "review two tabs same: the first teacher decision remains authoritative",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4021
+        }
+      ]
+    },
+    {
+      "title": "review two tabs conflict: the first teacher decision remains authoritative",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6729
+        }
+      ]
+    },
+    {
+      "title": "teacher review with network failure remains truthful and reaches learner once",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3625
+        }
+      ]
+    },
+    {
+      "title": "teacher review with lost acknowledgement remains truthful and reaches learner once",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4037
+        }
+      ]
+    },
+    {
+      "title": "teacher review with expired session remains truthful and reaches learner once",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7854
+        }
+      ]
+    },
+    {
+      "title": "late review acknowledgement cannot reopen work after tutor leaves for schedule",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1957
+        }
+      ]
+    },
+    {
+      "title": "save: completed request cannot pull user back from the schedule",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1169
+        }
+      ]
+    },
+    {
+      "title": "duplicate: completed request cannot pull user back from the schedule",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 958
+        }
+      ]
+    },
+    {
+      "title": "hung draft save times out visibly, unlocks controls and preserves answer for retry",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16294
+        }
+      ]
+    },
+    {
+      "title": "two tutor tabs preserve independent payment and lesson status changes",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1333
+        }
+      ]
+    },
+    {
+      "title": "schedule cancellation, all payment notes and calendar preserve learner privacy after reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2339
+        }
+      ]
+    },
+    {
+      "title": "learner TXT validates type, size, encoding and empty bytes then removes a valid attachment without losing answer",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3159
+        }
+      ]
+    },
+    {
+      "title": "tutor: delayed previous learner response cannot replace current learner summary",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 842
+        }
+      ]
+    },
+    {
+      "title": "guardian: delayed previous learner response cannot replace current learner summary",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1224
+        }
+      ]
+    },
+    {
+      "title": "unaccepted invitation input does not survive logout into a different learner",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 549
+        }
+      ]
+    },
+    {
+      "title": "old relationships response cannot restore teacher data after a learner login",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 959
+        }
+      ]
+    },
+    {
+      "title": "old lessons response cannot restore teacher data after a learner login",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 775
+        }
+      ]
+    },
+    {
+      "title": "old materials response cannot restore teacher data after a learner login",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1193
+        }
+      ]
+    },
+    {
+      "title": "old profile response cannot restore teacher data after a learner login",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 860
+        }
+      ]
+    },
+    {
+      "title": "pending calendar download cannot deliver previous account data after login changes",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 763
+        }
+      ]
+    },
+    {
+      "title": "pending material download cannot deliver previous account data after login changes",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 805
+        }
+      ]
+    },
+    {
+      "title": "group: saved teacher content is absent for the next colleague account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1193
+        }
+      ]
+    },
+    {
+      "title": "workspace: saved teacher content is absent for the next colleague account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1286
+        }
+      ]
+    },
+    {
+      "title": "catalog: saved teacher content is absent for the next colleague account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1140
+        }
+      ]
+    },
+    {
+      "title": "plan: saved teacher content is absent for the next colleague account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1167
+        }
+      ]
+    },
+    {
+      "title": "skills: saved teacher content is absent for the next colleague account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1063
+        }
+      ]
+    },
+    {
+      "title": "lesson: saved teacher content is absent for the next colleague account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1069
+        }
+      ]
+    },
+    {
+      "title": "material: saved teacher content is absent for the next colleague account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1085
+        }
+      ]
+    },
+    {
+      "title": "notification preferences and contact state belong only to the current account",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1192
+        }
+      ]
+    },
+    {
+      "title": "guardian summary and invitation buffer disappear for a new guardian identity",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1521
+        }
+      ]
+    },
+    {
+      "title": "tutor profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1348
+        }
+      ]
+    },
+    {
+      "title": "tutor notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 945
+        }
+      ]
+    },
+    {
+      "title": "learner profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 904
+        }
+      ]
+    },
+    {
+      "title": "learner notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1121
+        }
+      ]
+    },
+    {
+      "title": "oversized AI context retains uploaded work for manual review without unsafe retry",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5464
+        }
+      ]
+    },
+    {
+      "title": "two learners submit concurrently and each report category handles validation and network loss",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8744
+        }
+      ]
+    },
+    {
+      "title": "teacher plan: another teacher's relationship rejects edits and preserves both documents",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1193
+        }
+      ]
+    },
+    {
+      "title": "teacher skill-graph: another teacher's relationship rejects edits and preserves both documents",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 970
+        }
+      ]
+    },
+    {
+      "title": "late template copy does not reopen editor after leaving library",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1379
+        }
+      ]
+    },
+    {
+      "title": "tutor: refusing navigation preserves unsaved input and accepting returns to requested page",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 466
+        }
+      ]
+    },
+    {
+      "title": "learner: refusing navigation preserves unsaved input and accepting returns to requested page",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 490
+        }
+      ]
+    },
+    {
+      "title": "skill graph refuses cycles and dangling edges, then saves corrected graph",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1439
+        }
+      ]
+    },
+    {
+      "title": "material rejects bad extension, empty, oversize, NUL and invalid UTF8 before upload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 591
+        }
+      ]
+    },
+    {
+      "title": "delayed work opening cannot replace other-work chosen afterwards",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 497
+        }
+      ]
+    },
+    {
+      "title": "delayed work opening cannot replace schedule chosen afterwards",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 524
+        }
+      ]
+    },
+    {
+      "title": "delayed work opening cannot replace new-draft chosen afterwards",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 496
+        }
+      ]
+    },
+    {
+      "title": "workspace members: replacing visible workspace ID cannot expose a colleague's private library",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 621
+        }
+      ]
+    },
+    {
+      "title": "workspace templates: replacing visible workspace ID cannot expose a colleague's private library",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 506
+        }
+      ]
+    },
+    {
+      "title": "workspace invitations: replacing visible workspace ID cannot expose a colleague's private library",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 516
+        }
+      ]
+    },
+    {
+      "title": "workspace invitation create: forged identifiers cannot grant or revoke a colleague's access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 694
+        }
+      ]
+    },
+    {
+      "title": "workspace invitation revoke-foreign-space: forged identifiers cannot grant or revoke a colleague's access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 708
+        }
+      ]
+    },
+    {
+      "title": "workspace invitation revoke-foreign-invite: forged identifiers cannot grant or revoke a colleague's access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 514
+        }
+      ]
+    },
+    {
+      "title": "switching workspaces cannot show delayed templates from previous workspace",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 801
+        }
+      ]
+    },
+    {
+      "title": "answers autosave and survive reload without the save button",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5524
+        }
+      ]
+    },
+    {
+      "title": "catalog tutor offer leads to learner request and accepted study relationship",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6049
+        }
+      ]
+    },
+    {
+      "title": "provider outage and lost polling recover to visible manual review",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 26142
+        }
+      ]
+    },
+    {
+      "title": "material generation stays a draft until tutor publishes and includes its source",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7122
+        }
+      ]
+    },
+    {
+      "title": "tutor creates group, assigns copies, and learner receives only own assignment",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1460
+        }
+      ]
+    },
+    {
+      "title": "guardian invitation opens only read-only summary and tutor can revoke it",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 32032
+        }
+      ]
+    },
+    {
+      "title": "official Bridge snapshot emits back/closing events and rejects foreign-origin back",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 884
+        }
+      ]
+    },
+    {
+      "title": "embedded storage denial does not prevent login",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 619
+        }
+      ]
+    },
+    {
+      "title": "MAX URL authentication and iframe Bridge lifecycle (simulated client)",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2163
+        }
+      ]
+    },
+    {
+      "title": "teacher plan is readable by pupil, and assignment discussion survives reload",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7816
+        }
+      ]
+    },
+    {
+      "title": "question remains visible on AI outage and teacher can reply without losing it",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 11387
+        }
+      ]
+    },
+    {
+      "title": "confirmed gap opens private practice draft and learner reports usefulness",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9880
+        }
+      ]
+    },
+    {
+      "title": "return arrives without reload; resubmission starts from saved original and archive stays immutable",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 13017
+        }
+      ]
+    },
+    {
+      "title": "profile, invitation consent, disabled MAX delivery and calendar download",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1761
+        }
+      ]
+    },
+    {
+      "title": "account controls remain reachable in short desktop and mobile navigation",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 529
+        }
+      ]
+    },
+    {
+      "title": "tutor defines acyclic skill links and learner can inspect saved graph",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1487
+        }
+      ]
+    },
+    {
+      "title": "tutor uploads TXT, learner downloads the original, tutor changes lesson status",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1704
+        }
+      ]
+    },
+    {
+      "title": "work list separates overdue, active and complete; builder persists own lesson link",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1899
+        }
+      ]
+    },
+    {
+      "title": "tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4777
+        }
+      ]
+    },
+    {
+      "title": "schedule, private payment note, material link and revocable invite",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1907
+        }
+      ]
+    },
+    {
+      "title": "colleagues share template, create own draft and lose library access after removal",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3013
+        }
+      ]
+    }
+  ]
+}

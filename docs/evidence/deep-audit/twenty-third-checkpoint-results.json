@@ -1,0 +1,56 @@
+{
+  "material-download-access": {
+    "stats": {
+      "startTime": "2026-09-26T13:00:15.781Z",
+      "duration": 2362.8729999999996,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "material download learner: foreign file refused, own TXT survives retry",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 936
+          }
+        ]
+      },
+      {
+        "title": "material download tutor: foreign file refused, own TXT survives retry",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 713
+          }
+        ]
+      }
+    ]
+  },
+  "calendar-access": {
+    "stats": {
+      "startTime": "2026-09-26T13:01:27.323Z",
+      "duration": 1781.0410000000002,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "learner calendar ignores injected teacher and foreign relationship IDs",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 909
+          }
+        ]
+      }
+    ]
+  }
+}
