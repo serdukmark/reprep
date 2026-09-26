@@ -1,0 +1,178 @@
+{
+  "choice-label-before": {
+    "stats": {
+      "startTime": "2026-09-26T15:14:18.326Z",
+      "duration": 14328.658,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "choice answer has a named group and exact option labels, keyboard selection survives save and reload",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 13381
+          }
+        ]
+      }
+    ]
+  },
+  "choice-label-before-fixed-test": {
+    "stats": {
+      "startTime": "2026-09-26T15:15:31.192Z",
+      "duration": 12445.680999999999,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "choice answer has a named group and exact option labels, keyboard selection survives save and reload",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 11498
+          }
+        ]
+      }
+    ]
+  },
+  "choice-label-after": {
+    "stats": {
+      "startTime": "2026-09-26T15:18:35.264Z",
+      "duration": 21318.052,
+      "expected": 7,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "all task types validate, preserve Unicode and reject empty form without sending",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1293
+          }
+        ]
+      },
+      {
+        "title": "learner preserves answer when session expires and rejects stale writes from a second tab",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 8145
+          }
+        ]
+      },
+      {
+        "title": "choice answer has a named group and exact option labels, keyboard selection survives save and reload",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1732
+          }
+        ]
+      },
+      {
+        "title": "copy invitation reports denied clipboard and copies exact code after permission succeeds",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 480
+          }
+        ]
+      },
+      {
+        "title": "learner cannot submit missing task answers and preserves all three answer types with long Unicode text",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 995
+          }
+        ]
+      },
+      {
+        "title": "learner first submission: UI-revoked session refuses submission, keeps all saved answers and fresh login creates one attempt",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 3408
+          }
+        ]
+      },
+      {
+        "title": "learner returned submission: UI-revoked session refuses submission, keeps all saved answers and fresh login creates one attempt",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 3807
+          }
+        ]
+      }
+    ]
+  },
+  "choice-label-mutation": {
+    "stats": {
+      "startTime": "2026-09-26T15:20:02.485Z",
+      "duration": 43826.793,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "choice answer has a named group and exact option labels, keyboard selection survives save and reload",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 11654
+          }
+        ]
+      },
+      {
+        "title": "learner first submission: UI-revoked session refuses submission, keeps all saved answers and fresh login creates one attempt",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 14143
+          }
+        ]
+      },
+      {
+        "title": "learner returned submission: UI-revoked session refuses submission, keeps all saved answers and fresh login creates one attempt",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 15367
+          }
+        ]
+      }
+    ]
+  },
+  "notes": [
+    "AUD036: nested labels gave the first answer radio a concatenated accessible name. The independent group/legend fix restores exact option names and native keyboard navigation.",
+    "Initial before run failed in fixture setup: exact builder options label ignored helper text. Corrected before run failed on missing named group; the two earlier learner-expiry failures independently failed on exact first option name.",
+    "After:7/7, including keyboard Space/ArrowDown, exact names, save/reload, full first and returned submissions after actual shared-token UI logout.",
+    "Isolated mutant restores nested labels in a temporary source copy:3/3 regressions failed as expected. Working sources and server bundle remained corrected.",
+    "Desktop1440 and mobile390 screenshots from the successful choice test were inspected: labels/options visible without overlap.",
+    "Build passed: index-CYJpCOxe.js. Full336 is historical before AUD036; only related7 repeated at this checkpoint."
+  ]
+}

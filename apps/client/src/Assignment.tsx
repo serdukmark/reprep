@@ -629,10 +629,10 @@ export function AssignmentDetail({
             </div>
             <h2>{t.prompt}</h2>
             {writable ? (
-              <label>
-                Ваш ответ
+              <>
                 {t.type === "single_choice" ? (
-                  <div className="options">
+                  <fieldset className="options">
+                    <legend>Ваш ответ</legend>
                     {t.options.map((o) => (
                       <label
                         className={
@@ -654,27 +654,30 @@ export function AssignmentDetail({
                         {o}
                       </label>
                     ))}
-                  </div>
+                  </fieldset>
                 ) : (
-                  <textarea
-                    aria-label={"Ответ на задание " + (i + 1)}
-                    disabled={saving || busy}
-                    rows={t.type === "numeric" ? 2 : 4}
-                    maxLength={5000}
-                    value={answers[t.id] || ""}
-                    placeholder={
-                      t.type === "numeric"
-                        ? "Введите число"
-                        : "Напишите ответ и ход рассуждений"
-                    }
-                    onChange={(e) => {
-                      setAnswers({ ...answers, [t.id]: e.target.value });
-                      setDirty(true);
-                      setSaved("");
-                    }}
-                  />
+                  <label>
+                    Ваш ответ
+                    <textarea
+                      aria-label={"Ответ на задание " + (i + 1)}
+                      disabled={saving || busy}
+                      rows={t.type === "numeric" ? 2 : 4}
+                      maxLength={5000}
+                      value={answers[t.id] || ""}
+                      placeholder={
+                        t.type === "numeric"
+                          ? "Введите число"
+                          : "Напишите ответ и ход рассуждений"
+                      }
+                      onChange={(e) => {
+                        setAnswers({ ...answers, [t.id]: e.target.value });
+                        setDirty(true);
+                        setSaved("");
+                      }}
+                    />
+                  </label>
                 )}
-              </label>
+              </>
             ) : (
               s && (
                 <div className="original">

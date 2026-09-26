@@ -1,0 +1,66 @@
+{
+  "stats": {
+    "startTime": "2026-09-26T15:05:27.888Z",
+    "duration": 35623.424,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "learner invitation accept: tutor revocation after successful preview rejects stale action and fresh code recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2120
+        }
+      ]
+    },
+    {
+      "title": "learner invitation decline: tutor revocation after successful preview rejects stale action and fresh code recovers",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1792
+        }
+      ]
+    },
+    {
+      "title": "guardian prefilled invitation: revocation in tutor page denies acceptance and fresh code grants one child",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1549
+        }
+      ]
+    },
+    {
+      "title": "learner first submission: UI-revoked session refuses submission, keeps all saved answers and fresh login creates one attempt",
+      "ok": false,
+      "results": [
+        {
+          "status": "failed",
+          "duration": 13667
+        }
+      ]
+    },
+    {
+      "title": "learner returned submission: UI-revoked session refuses submission, keeps all saved answers and fresh login creates one attempt",
+      "ok": false,
+      "results": [
+        {
+          "status": "failed",
+          "duration": 14615
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Checkpoint33: stale-preview3 passed; learner-expiry2 failed because the first radio accessible name contains group text and both options. Real AUD036, fix and green/mutation pending.",
+    "Only learner accept/decline after another UI revoked a previously previewed code, and guardian acceptance after revocation of a prefilled code were verified. Expiry and reuse races are not covered by this block."
+  ]
+}
