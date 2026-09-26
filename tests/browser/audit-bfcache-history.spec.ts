@@ -84,12 +84,10 @@ test("two back then two forward transitions revalidate each cached account docum
     page.getByRole("button", { name: /Линейные уравнения: от шага к решению/ }),
   ).toHaveCount(0);
   expect(state.painted).toBe(false);
-  test
-    .info()
-    .annotations.push({
-      type: "bfcache-restored",
-      description: String(state.restored),
-    });
+  test.info().annotations.push({
+    type: "bfcache-restored",
+    description: String(state.restored),
+  });
 });
 test("logout of a copied session in another tab invalidates a cached document on return", async ({
   page,
@@ -139,11 +137,60 @@ test("logout of a copied session in another tab invalidates a cached document on
   await expect(
     page.getByRole("heading", { name: "Ваш следующий шаг.", exact: true }),
   ).toBeVisible();
-  test
-    .info()
-    .annotations.push({
-      type: "bfcache-restored",
-      description: String(state.restored),
-    });
+  test.info().annotations.push({
+    type: "bfcache-restored",
+    description: String(state.restored),
+  });
   await second.close();
 });
+for (const role of ["tutor", "guardian"])
+  test(`failed logout ${role} does not restore cached account through browser back`, async ({
+    page,
+  }) => {
+    const state = await observe(page);
+    await page.goto("/");
+    await enter(page, role === "tutor" ? "Я преподаватель" : "Я родитель");
+    await expect(
+      page.getByRole("heading", {
+        name:
+          role === "tutor" ? "Хороший день, чтобы учить." : "Кабинет родителя",
+        exact: true,
+      }),
+    ).toBeVisible();
+    await page.waitForLoadState("networkidle");
+    await page.goto("/api/health");
+    await page.goto("/?audit-failed-logout=1");
+    if (role === "tutor")
+      await page.getByRole("button", { name: /Алекс • демо/ }).click();
+    else
+      await expect(
+        page.getByRole("heading", { name: "Кабинет родителя", exact: true }),
+      ).toBeVisible();
+    await page.route("**/api/logout", (r) => r.abort("connectionreset"));
+    await enter(page, "Выйти");
+    await expect(
+      page.getByRole("button", { name: "Я ученик", exact: true }),
+    ).toBeVisible();
+    await expect(page.getByRole("alert").first()).toContainText(
+      "Не удалось подтвердить отзыв сессии на сервере",
+    );
+    await page.unroute("**/api/logout");
+    await page.goBack(navigation);
+    await page.goBack(navigation);
+    await expect.poll(() => state.restored).toBe(1);
+    await expect(
+      page.getByRole("button", { name: "Я ученик", exact: true }),
+    ).toBeVisible();
+    await expect(page.locator(".shell,.guardian-portal")).toHaveCount(0);
+    expect(state.painted).toBe(false);
+    test
+      .info()
+      .annotations.push({
+        type: "bfcache-restored",
+        description: String(state.restored),
+      });
+    await enter(page, "Я ученик");
+    await expect(
+      page.getByRole("heading", { name: "Ваш следующий шаг.", exact: true }),
+    ).toBeVisible();
+  });

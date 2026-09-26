@@ -1,0 +1,140 @@
+{
+  "return-lost-ack-resume": {
+    "stats": {
+      "startTime": "2026-09-26T12:52:54.303Z",
+      "duration": 10849.985,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "returned work resubmitted with lost acknowledgement keeps two immutable attempts and one confirmed progress result",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 9545
+          }
+        ]
+      }
+    ]
+  },
+  "logout-timeout": {
+    "stats": {
+      "startTime": "2026-09-26T12:53:57.057Z",
+      "duration": 34018.969,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "logout tutor: real request timeout clears this tab without claiming server revocation",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 16787
+          }
+        ]
+      },
+      {
+        "title": "logout guardian: real request timeout clears this tab without claiming server revocation",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 16105
+          }
+        ]
+      }
+    ]
+  },
+  "logout-failed-history": {
+    "stats": {
+      "startTime": "2026-09-26T12:55:28.171Z",
+      "duration": 4541.2609999999995,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "failed logout tutor does not restore cached account through browser back",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2364
+          }
+        ]
+      },
+      {
+        "title": "failed logout guardian does not restore cached account through browser back",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1189
+          }
+        ]
+      }
+    ]
+  },
+  "attempt-access": {
+    "stats": {
+      "startTime": "2026-09-26T12:57:42.805Z",
+      "duration": 18091.217,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "attempt history learner rejects foreign list ID and recovers own history",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 3935
+          }
+        ]
+      },
+      {
+        "title": "attempt history learner rejects foreign detail ID and recovers own history",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 3309
+          }
+        ]
+      },
+      {
+        "title": "attempt history tutor rejects foreign list ID and recovers own history",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 4684
+          }
+        ]
+      },
+      {
+        "title": "attempt history tutor rejects foreign detail ID and recovers own history",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 4696
+          }
+        ]
+      }
+    ]
+  }
+}
