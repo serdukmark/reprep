@@ -1,0 +1,141 @@
+{
+  "learner-write-and-generation-id": {
+    "stats": {
+      "startTime": "2026-09-26T14:42:37.046Z",
+      "duration": 95156.009,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "generation GET: real foreign material is denied and own retry creates one draft",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 15096
+          }
+        ]
+      },
+      {
+        "title": "generation POST: real foreign material is denied and own retry creates one draft",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 13926
+          }
+        ]
+      },
+      {
+        "title": "learner manual save: foreign assignment ID is denied, retains input and correct retry survives reload",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 16129
+          }
+        ]
+      },
+      {
+        "title": "learner autosave: foreign assignment ID is denied, retains input and correct retry survives reload",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 18777
+          }
+        ]
+      },
+      {
+        "title": "learner first submission: foreign assignment ID cannot submit or overwrite another learner's original",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 17853
+          }
+        ]
+      },
+      {
+        "title": "learner returned submission: foreign assignment ID cannot submit or overwrite another learner's original",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 9069
+          }
+        ]
+      }
+    ]
+  },
+  "learner-write-final-and-tutor-progress": {
+    "stats": {
+      "startTime": "2026-09-26T14:47:32.747Z",
+      "duration": 34829.076,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "learner manual save: foreign assignment ID is denied, retains input and correct retry survives reload",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 5044
+          }
+        ]
+      },
+      {
+        "title": "learner autosave: foreign assignment ID is denied, retains input and correct retry survives reload",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 6775
+          }
+        ]
+      },
+      {
+        "title": "learner first submission: foreign assignment ID cannot submit or overwrite another learner's original",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 5260
+          }
+        ]
+      },
+      {
+        "title": "learner returned submission: foreign assignment ID cannot submit or overwrite another learner's original",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 6851
+          }
+        ]
+      },
+      {
+        "title": "tutor progress: a foreign relationship with confirmed evidence is denied and own selection recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 9016
+          }
+        ]
+      }
+    ]
+  },
+  "notes": [
+    "GenerationGET/POST2/2 passed in first report. Learner write initially1/4: empty history UI has no button before first submission, corrected test; final4/4.",
+    "Earlier learner4/4 failures expected wrong public error text (checkpoint28), now exact visible text matches generic record denial.",
+    "Tutor progress1/1: actual confirmed private evidence created by UI P0; substituted relationship404, own evidence recovers and foreign owner remains unchanged. Product unchanged."
+  ]
+}

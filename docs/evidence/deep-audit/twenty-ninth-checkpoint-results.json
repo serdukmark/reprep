@@ -1,0 +1,149 @@
+{
+  "review-strengthened-and-tutor-session": {
+    "stats": {
+      "startTime": "2026-09-26T14:40:20.051Z",
+      "duration": 53615.811,
+      "expected": 13,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "plan nested assignment_id: rejects another pupil of other tutor, preserves plans and recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 5542
+          }
+        ]
+      },
+      {
+        "title": "plan nested material_id: rejects another pupil of other tutor, preserves plans and recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 4063
+          }
+        ]
+      },
+      {
+        "title": "plan nested assignment_id: rejects another pupil of same tutor, preserves plans and recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 4523
+          }
+        ]
+      },
+      {
+        "title": "plan nested material_id: rejects another pupil of same tutor, preserves plans and recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 7694
+          }
+        ]
+      },
+      {
+        "title": "profile tutor: body IDs rejected and query IDs cannot choose the updated account",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 3659
+          }
+        ]
+      },
+      {
+        "title": "profile learner: body IDs rejected and query IDs cannot choose the updated account",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 3191
+          }
+        ]
+      },
+      {
+        "title": "profile outsider: body IDs rejected and query IDs cannot choose the updated account",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1981
+          }
+        ]
+      },
+      {
+        "title": "empty tutor draft creation: revoked session preserves form, fresh login creates one draft",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1659
+          }
+        ]
+      },
+      {
+        "title": "tutor draft editing: revoked session cannot replace saved contents and new login permits retry",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 8401
+          }
+        ]
+      },
+      {
+        "title": "tutor publication: session revoked after draft save rejects publication until a fresh login",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 3388
+          }
+        ]
+      },
+      {
+        "title": "tutor duplication: revoked session creates no copy, authenticated retry creates one private draft",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2030
+          }
+        ]
+      },
+      {
+        "title": "tutor learner invitation create: expired session preserves server state and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2364
+          }
+        ]
+      },
+      {
+        "title": "tutor learner invitation revoke: expired session preserves server state and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 2106
+          }
+        ]
+      }
+    ]
+  },
+  "notes": [
+    "13/13: 6 new tutor expiry tests and 7 repeated tests strengthened after independent agent review.",
+    "Plan verifies own selected resource after denial and success reload; profile verifies old own stored alias in independent UI session before retry. No product changes.",
+    "Tutor session is revoked by actual UI logout in second headless page, no fake401. Publication is held until after draft save then revoked, testing POSTpublish401."
+  ]
+}

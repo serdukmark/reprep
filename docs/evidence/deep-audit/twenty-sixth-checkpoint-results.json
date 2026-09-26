@@ -1,0 +1,185 @@
+{
+  "account-expired-session": {
+    "stats": {
+      "startTime": "2026-09-26T14:02:27.295Z",
+      "duration": 99444.56499999999,
+      "expected": 2,
+      "skipped": 2,
+      "unexpected": 4,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "account deletion tutor request: revoked session refuses mutation and fresh login recovers",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 13098
+          }
+        ]
+      },
+      {
+        "title": "account deletion tutor cancel: revoked session refuses mutation and fresh login recovers",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 12934
+          }
+        ]
+      },
+      {
+        "title": "account deletion learner request: revoked session refuses mutation and fresh login recovers",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 13089
+          }
+        ]
+      },
+      {
+        "title": "account deletion learner cancel: revoked session refuses mutation and fresh login recovers",
+        "ok": false,
+        "results": [
+          {
+            "status": "failed",
+            "duration": 13093
+          }
+        ]
+      },
+      {
+        "title": "account deletion guardian request: revoked session refuses mutation and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1521
+          }
+        ]
+      },
+      {
+        "title": "account deletion guardian cancel: revoked session refuses mutation and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1445
+          }
+        ]
+      },
+      {
+        "title": "account deletion outsider request: revoked session refuses mutation and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "interrupted",
+            "duration": 10317
+          }
+        ]
+      },
+      {
+        "title": "account deletion outsider cancel: revoked session refuses mutation and fresh login recovers",
+        "ok": true,
+        "results": []
+      }
+    ]
+  },
+  "account-expired-session-final": {
+    "stats": {
+      "startTime": "2026-09-26T14:04:39.736Z",
+      "duration": 13525.474,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "cases": [
+      {
+        "title": "account deletion tutor request: revoked session refuses mutation and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1956
+          }
+        ]
+      },
+      {
+        "title": "account deletion tutor cancel: revoked session refuses mutation and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1534
+          }
+        ]
+      },
+      {
+        "title": "account deletion learner request: revoked session refuses mutation and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1544
+          }
+        ]
+      },
+      {
+        "title": "account deletion learner cancel: revoked session refuses mutation and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1467
+          }
+        ]
+      },
+      {
+        "title": "account deletion guardian request: revoked session refuses mutation and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1208
+          }
+        ]
+      },
+      {
+        "title": "account deletion guardian cancel: revoked session refuses mutation and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1172
+          }
+        ]
+      },
+      {
+        "title": "account deletion outsider request: revoked session refuses mutation and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1730
+          }
+        ]
+      },
+      {
+        "title": "account deletion outsider cancel: revoked session refuses mutation and fresh login recovers",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "duration": 1589
+          }
+        ]
+      }
+    ]
+  },
+  "notes": [
+    "Initial run stopped after wrong exact sidebar alias selector: 4 failed, 2 passed, 1 interrupted, 1 did not run. Fixed test only; final8/8.",
+    "Real server token revocation through UI logout in second headless page; no fake401. Deletion request/cancel only, no account erasure."
+  ]
+}
