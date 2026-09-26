@@ -1,6 +1,7 @@
 import { test, expect } from "./audit-fixtures";
+import { readFile } from "node:fs/promises";
 for (const role of ["learner", "tutor"])
-  for (const resource of ["list", "detail"])
+  for (const resource of ["list", "detail", "attachment"])
     test(`attempt history ${role} rejects foreign ${resource} ID and recovers own history`, async ({
       page,
       request,
@@ -54,16 +55,46 @@ for (const role of ["learner", "tutor"])
       const marker = "Чужое приватное объяснение 🧪";
       const sub = await request.post(`/api/assignments/${aid}/submit`, {
         headers: lh,
-        data: { revision: 0, answers: { linear: marker } },
+        data: {
+          revision: 0,
+          answers: { linear: marker },
+          ...(resource === "attachment"
+            ? {
+                attachments: {
+                  linear: {
+                    file_name: "private.txt",
+                    content: marker + " — файл",
+                  },
+                },
+              }
+            : {}),
+        },
       });
       expect(sub.ok()).toBe(true);
       const sid = (await sub.json()).id;
+      if (resource === "attachment") {
+        const owner = await request.get(`/api/submissions/${sid}`, {
+          headers: th,
+        });
+        expect(owner.ok()).toBe(true);
+        expect((await owner.json()).attachments.linear.content).toBe(
+          marker + " — файл",
+        );
+      }
       // Own work is submitted through UI; foreign data above is fixture setup only.
       await page.goto("/");
       await page.getByRole("button", { name: "Я ученик", exact: true }).click();
       const title = /Линейные уравнения: от шага к решению/;
       await page.getByRole("button", { name: title }).click();
       await page.getByLabel("Ответ на задание 1").fill("5");
+      if (resource === "attachment")
+        await page
+          .getByLabel("TXT к заданию 1", { exact: true })
+          .setInputFiles({
+            name: "own.txt",
+            mimeType: "text/plain",
+            buffer: Buffer.from("Свой исходный файл 🧪\n2+3=5"),
+          });
       await page.getByRole("radio", { name: "0,75", exact: true }).check();
       await page.getByLabel("Ответ на задание 3").fill("Своё объяснение");
       await expect(page.getByRole("status")).toHaveText("Сохранено");
@@ -105,12 +136,15 @@ for (const role of ["learner", "tutor"])
         .getByRole("button", { name: "История попыток", exact: true })
         .click();
       const history = page.locator(".attempt-history");
-      if (resource === "detail")
+      if (resource !== "list")
         await history.getByRole("button", { name: /Попытка 1/ }).click();
       await expect(history.getByRole("alert")).toBeVisible();
       expect(denied).toBe(1);
       await expect(page.getByText(marker, { exact: true })).toHaveCount(0);
       await expect(page.locator(".attempt-detail")).toHaveCount(0);
+      await expect(
+        page.getByText("Файл: private.txt", { exact: true }),
+      ).toHaveCount(0);
       await page.unroute(pattern);
       await page.reload();
       await page.getByRole("button", { name: title }).click();
@@ -122,4 +156,17 @@ for (const role of ["learner", "tutor"])
         page.locator(".attempt-detail .original p").first(),
       ).toHaveText("5");
       await expect(page.getByText(marker, { exact: true })).toHaveCount(0);
+      if (resource === "attachment") {
+        const detail = page.locator(".attempt-detail");
+        await detail.getByText("Файл: own.txt", { exact: true }).click();
+        const pending = page.waitForEvent("download");
+        await detail
+          .getByRole("button", { name: "Скачать TXT", exact: true })
+          .click();
+        const file = await pending;
+        expect(file.suggestedFilename()).toBe("own.txt");
+        expect(await readFile((await file.path())!, "utf8")).toBe(
+          "Свой исходный файл 🧪\n2+3=5",
+        );
+      }
     });
