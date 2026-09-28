@@ -1,16 +1,30 @@
-# reprep — repository documentation pack
+# reprep — AI-native platform for tutors and learners
 
-This directory is a repository-ready documentation pack for **reprep**, an AI-native workspace for independent tutors and their students.
+**reprep** is an AI-native platform for independent tutors and learners that brings scheduling, homework, materials, payments, communication and progress tracking into one place.
 
-The pack is intentionally explicit about uncertainty. It must not be read as if every statement is already approved or technically validated.
+AI helps check assignments, explain mistakes, identify learning gaps and support learners between lessons using each learner's context. The product vision also includes a more affordable standalone AI tutor. The initial audience is independent tutors and school students, especially those preparing for OGE/EGE.
 
 ## Product one-liner
 
-> reprep helps an independent tutor run an individual learning cycle in one place: assign work, receive a submission, use AI to check and explain it in the context of the learner, approve the result, and track skill gaps over time.
+> reprep combines a tutor's daily work and a learner's study process in one platform, with AI embedded in the context of each learner.
+
+The intended distinction from ordinary LMS products and marketplaces is learner-contextual AI embedded in the learning process. The business model is **subscriptions for tutors and learners**, followed by **commissions for tutor matching and payments through the platform**. Prices, usage limits and rollout order remain open.
+
+## Team
+
+| Member | Role |
+|---|---|
+| Дмитрий Ярочкин | CAIO |
+| Иван Курбан | CTO |
+| Марк Сердюк | CPO |
+
+See the [owner-approved project passport in Russian](docs/22_PROJECT_PASSPORT_RU.md). The concept describes the intended product, not completed features or validated commercial results.
 
 ## Current objective
 
 Build a pilot-ready MAX-based product for the education track of the MAX hackathon and run at least one real, safely conducted pilot with an adult tutor before submission.
+
+The first release focuses on the tutor-led learning cycle: assignment, submission, AI analysis, explanation, tutor review and confirmed progress. Scheduling, materials, communication and payment status support that workflow. Standalone AI tutoring and subscription billing are later expansion work; matching, payment processing and commissions remain outside the current hackathon scope. These release boundaries do not narrow the full product vision.
 
 ## Start here
 
@@ -43,7 +57,10 @@ Build a pilot-ready MAX-based product for the education track of the MAX hackath
 | `docs/15_OPEN_QUESTIONS.md` | Questions that must not be silently answered by agents |
 | `docs/16_DECISION_LOG.md` | Confirmed and proposed decisions with rationale |
 | `docs/17_GLOSSARY.md` | Shared vocabulary |
-| `docs/assets/roadmap-cards/` | Team roadmap cards in PNG format |
+| `docs/20_TEAM_BRIEF_RU.md` | Current team and product brief in Russian |
+| `docs/22_PROJECT_PASSPORT_RU.md` | Canonical owner-approved project description and team |
+| `docs/decisions/` | Detailed records of accepted product and architecture decisions |
+| `docs/archive/` | Superseded historical materials, not current requirements |
 | `docs/templates/` | Templates for ADRs, features, test reports and pilot notes |
 
 ## Current status snapshot

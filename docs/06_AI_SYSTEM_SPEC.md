@@ -4,6 +4,8 @@
 
 AI assists with learning feedback and tutor workflow. It does not replace tutor authority or independently establish high-stakes grades.
 
+This specification defines the tutor-led first release. The [confirmed product vision](22_PROJECT_PASSPORT_RU.md) also includes a standalone affordable AI tutor. That mode needs separate pedagogy, review, progress and safety requirements (OQ-PROD-012). It must not be implemented by silently bypassing the tutor-review requirements below or presented as already available.
+
 ## 2. AI capabilities in scope
 
 ### AI-USE-001 — analyze a learner answer `[P0]`

@@ -1,5 +1,7 @@
 # Users and journeys
 
+The journeys below describe the first tutor-led release. The broader [project concept](22_PROJECT_PASSPORT_RU.md) also includes school learners using a standalone affordable AI tutor and subscriptions for both tutors and learners.
+
 ## 1. Primary personas
 
 These are working personas, not validated demographic claims.
@@ -50,7 +52,13 @@ Unknowns:
 
 ### Parent or guardian
 
-`[FUTURE]` May pay, grant consent or request progress visibility. Not a P0 product role unless pilot or legal requirements make it necessary.
+May pay, grant consent or request progress visibility. A dedicated parent account is a future product role unless pilot or legal requirements make it necessary; required guardian participation must not be postponed merely because that account is outside P0.
+
+### Standalone AI-tutor learner
+
+`[CONFIRMED]` The full concept includes school learners, especially OGE/EGE candidates, seeking more affordable independent AI tutoring. This is a separate usage mode from the tutor-led P0 flow.
+
+`[OPEN]` Launch timing, supported subjects, appropriate feedback and progress policies without a linked human tutor, usage limits and who pays for a minor's subscription. Detailed journeys and acceptance criteria must be defined before implementation; do not label unreviewed AI output as tutor-confirmed progress.
 
 ## 2. Tutor journey
 

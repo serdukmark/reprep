@@ -14,6 +14,10 @@ This is a compact project-level log. Material engineering decisions should also 
 | D-006 | Marketplace and real payment processing are outside the hackathon scope. | Delivery focus. | Show only as future roadmap. |
 | D-007 | The team aims to run a real pilot with at least one adult tutor before submission. | Stronger evidence than a synthetic demo alone. | Pilot, privacy and support work are first-class deliverables. |
 | D-008 | Unknowns are marked rather than silently invented. | Reliability for human and agent contributors. | Open-question register is mandatory. |
+| D-009 | Current team: Дмитрий Ярочкин — CAIO; Иван Курбан — CTO; Марк Сердюк — CPO. | Explicit owner confirmation, 2026-09-28. | Supersedes team names in old roadmap cards; see ADR-001. |
+| D-010 | Full platform combines scheduling, homework, materials, payments, communication and progress, with AI embedded in the context of each learner. | Owner-approved concept, 2026-09-28. | Canonical description: `22_PROJECT_PASSPORT_RU.md`; first-release priorities remain distinct. |
+| D-011 | Business model: subscriptions for tutors and learners, followed by commissions for tutor matching and payments through the platform. | Explicit owner confirmation, 2026-09-28. | Replaces proposed-only monetization labels. Prices, rollout, usage limits and commission rates remain open; D-006 still applies to the hackathon. |
+| D-012 | A more affordable standalone AI tutor is part of the confirmed product vision. | Explicit owner confirmation, 2026-09-28. | Does not change tutor-led P0 or assert availability. Standalone pedagogy, safety and release policy require specification under OQ-PROD-012. |
 
 ## Proposed decisions pending confirmation
 

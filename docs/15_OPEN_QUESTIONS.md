@@ -45,6 +45,7 @@ Coding agents must not silently resolve these questions. Add owner, answer, sour
 | OQ-PROD-009 | Is schedule required for the hackathon MVP or only the pilot? | Product owner | P1 plan |
 | OQ-PROD-010 | Is manual payment status included in the submitted build? | Product owner | P1 plan |
 | OQ-PROD-011 | Which features are required for the first client's continued use after the hackathon? | Pilot tutor | Roadmap |
+| OQ-PROD-012 | When does standalone AI tutoring launch, and what pedagogy, progress, review and safety policies apply without a linked tutor? | CPO + CAIO + CTO, privacy review where needed | Standalone-mode specification |
 
 ## 4. AI
 
@@ -91,14 +92,17 @@ Coding agents must not silently resolve these questions. Add owner, answer, sour
 
 ## 7. Business
 
+Resolved direction on 2026-09-28: subscriptions for tutors and learners, with commissions for tutor matching and payments through the platform later (D-011). The questions below concern implementation and validation, not whether those directions belong to the concept.
+
 | ID | Question | Decision owner | Blocks |
 |---|---|---|---|
-| OQ-BIZ-001 | Who is the initial payer? | Product/research | Pricing |
+| OQ-BIZ-001 | Which subscription launches first, what is included for invited learners, and who pays for a minor's learner subscription? | CPO/research | Pricing and rollout |
 | OQ-BIZ-002 | Subscription price and usage limits? | Product/research | Business slide |
 | OQ-BIZ-003 | Is there a free trial/tier? | Product | Onboarding/business |
 | OQ-BIZ-004 | What is acceptable AI cost per active learner? | Product/engineering | Unit economics |
 | OQ-BIZ-005 | What is the first acquisition channel? | Product/research | Go-to-market |
 | OQ-BIZ-006 | What evidence supports market-size claims? | Product | Presentation |
+| OQ-BIZ-007 | When do tutor-matching and platform-payment commissions launch, and what rates and settlement rules apply? | CPO + CTO, legal review where needed | Future commission implementation |
 
 ## Resolution format
 

@@ -12,6 +12,8 @@ Before implementing or changing a feature:
 4. Search `docs/15_OPEN_QUESTIONS.md` for unresolved decisions.
 5. Search `docs/16_DECISION_LOG.md` for an existing decision.
 
+For product descriptions and team information, also read `docs/22_PROJECT_PASSPORT_RU.md`. It records the owner's confirmed concept and current team. Keep the full platform vision distinct from first-release scope. Do not treat archived roadmap images in `docs/archive/` as current requirements or team assignments.
+
 Do not infer approval from an idea appearing in a roadmap, mockup, presentation or old conversation.
 
 ## 2. Status labels are binding
@@ -63,6 +65,8 @@ Do not implement the current out-of-scope items unless `docs/03_SCOPE_AND_PRIORI
 ## 5. AI-specific rules
 
 AI output is advisory, not an authoritative grade or pedagogical decision.
+
+The requirements below apply to the tutor-led first release. The confirmed standalone AI-tutor direction needs separate pedagogy, review, progress and safety requirements before implementation (OQ-PROD-012); its existence does not authorize removing tutor review from the current flow.
 
 Required behavior:
 
