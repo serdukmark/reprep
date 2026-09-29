@@ -1,0 +1,4848 @@
+{
+  "stats": {
+    "startTime": "2026-09-26T17:06:59.227Z",
+    "duration": 1030249.279,
+    "expected": 439,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "runner_error_count": 0,
+  "cases": [
+    {
+      "title": "learner can download own data and cancel deletion before operator processing",
+      "file": "account-data.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1016
+        }
+      ]
+    },
+    {
+      "title": "pupil TXT survives autosave, submission and tutor return without rewriting history",
+      "file": "answer-files.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5867
+        }
+      ]
+    },
+    {
+      "title": "learner: real browser identity cannot fetch another learner or privileged resources",
+      "file": "audit-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 460
+        }
+      ]
+    },
+    {
+      "title": "guardian: real browser identity cannot fetch another learner or privileged resources",
+      "file": "audit-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 409
+        }
+      ]
+    },
+    {
+      "title": "colleague: real browser identity cannot fetch another learner or privileged resources",
+      "file": "audit-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 334
+        }
+      ]
+    },
+    {
+      "title": "AUD-003 legacy scheduled lesson appears on dashboard and matches schedule",
+      "file": "audit-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 442
+        }
+      ]
+    },
+    {
+      "title": "account deletion tutor request: revoked session refuses mutation and fresh login recovers",
+      "file": "audit-account-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1483
+        }
+      ]
+    },
+    {
+      "title": "account deletion tutor cancel: revoked session refuses mutation and fresh login recovers",
+      "file": "audit-account-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1844
+        }
+      ]
+    },
+    {
+      "title": "account deletion learner request: revoked session refuses mutation and fresh login recovers",
+      "file": "audit-account-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1488
+        }
+      ]
+    },
+    {
+      "title": "account deletion learner cancel: revoked session refuses mutation and fresh login recovers",
+      "file": "audit-account-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1608
+        }
+      ]
+    },
+    {
+      "title": "account deletion guardian request: revoked session refuses mutation and fresh login recovers",
+      "file": "audit-account-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1389
+        }
+      ]
+    },
+    {
+      "title": "account deletion guardian cancel: revoked session refuses mutation and fresh login recovers",
+      "file": "audit-account-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1276
+        }
+      ]
+    },
+    {
+      "title": "account deletion outsider request: revoked session refuses mutation and fresh login recovers",
+      "file": "audit-account-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1545
+        }
+      ]
+    },
+    {
+      "title": "account deletion outsider cancel: revoked session refuses mutation and fresh login recovers",
+      "file": "audit-account-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1936
+        }
+      ]
+    },
+    {
+      "title": "account export tutor: revoked session downloads nothing, fresh login exports unchanged authorized data",
+      "file": "audit-account-export-expired.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6024
+        }
+      ]
+    },
+    {
+      "title": "account export learner: revoked session downloads nothing, fresh login exports unchanged authorized data",
+      "file": "audit-account-export-expired.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1958
+        }
+      ]
+    },
+    {
+      "title": "account export guardian: revoked session downloads nothing, fresh login exports unchanged authorized data",
+      "file": "audit-account-export-expired.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1329
+        }
+      ]
+    },
+    {
+      "title": "account export outsider: revoked session downloads nothing, fresh login exports unchanged authorized data",
+      "file": "audit-account-export-expired.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1957
+        }
+      ]
+    },
+    {
+      "title": "tutor: account export and deletion fail visibly, retry once and survive reload",
+      "file": "audit-account-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1029
+        }
+      ]
+    },
+    {
+      "title": "learner: account export and deletion fail visibly, retry once and survive reload",
+      "file": "audit-account-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 948
+        }
+      ]
+    },
+    {
+      "title": "guardian: account export and deletion fail visibly, retry once and survive reload",
+      "file": "audit-account-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 938
+        }
+      ]
+    },
+    {
+      "title": "colleague: account export and deletion fail visibly, retry once and survive reload",
+      "file": "audit-account-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1009
+        }
+      ]
+    },
+    {
+      "title": "tutor: export own data and cancel deletion",
+      "file": "audit-account-roles.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 571
+        }
+      ]
+    },
+    {
+      "title": "guardian: export own data and cancel deletion",
+      "file": "audit-account-roles.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 504
+        }
+      ]
+    },
+    {
+      "title": "outsider: export own data and cancel deletion",
+      "file": "audit-account-roles.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 559
+        }
+      ]
+    },
+    {
+      "title": "refresh: delayed teacher response cannot enter the next learner session",
+      "file": "audit-account-switch.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 544
+        }
+      ]
+    },
+    {
+      "title": "open: delayed teacher response cannot enter the next learner session",
+      "file": "audit-account-switch.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 638
+        }
+      ]
+    },
+    {
+      "title": "logout clears the old schedule before the new account refresh finishes",
+      "file": "audit-account-switch.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 621
+        }
+      ]
+    },
+    {
+      "title": "delayed export cannot download previous account data after logout and a new login",
+      "file": "audit-account-switch.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 566
+        }
+      ]
+    },
+    {
+      "title": "AI UNAVAILABLE: submission survives refresh and teacher reaches verified outcome",
+      "file": "audit-ai.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 10780
+        }
+      ]
+    },
+    {
+      "title": "AI EMPTY: submission survives refresh and teacher reaches verified outcome",
+      "file": "audit-ai.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3531
+        }
+      ]
+    },
+    {
+      "title": "AI GARBAGE: submission survives refresh and teacher reaches verified outcome",
+      "file": "audit-ai.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6487
+        }
+      ]
+    },
+    {
+      "title": "AI SLOW: submission survives refresh and teacher reaches verified outcome",
+      "file": "audit-ai.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 10617
+        }
+      ]
+    },
+    {
+      "title": "assignment create: foreign relationship or work ID is denied without changing its owner data",
+      "file": "audit-assignment-write-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 865
+        }
+      ]
+    },
+    {
+      "title": "assignment update: foreign relationship or work ID is denied without changing its owner data",
+      "file": "audit-assignment-write-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 951
+        }
+      ]
+    },
+    {
+      "title": "assignment publish: foreign relationship or work ID is denied without changing its owner data",
+      "file": "audit-assignment-write-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1087
+        }
+      ]
+    },
+    {
+      "title": "attempt history learner rejects foreign list ID and recovers own history",
+      "file": "audit-attempt-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3415
+        }
+      ]
+    },
+    {
+      "title": "attempt history learner rejects foreign detail ID and recovers own history",
+      "file": "audit-attempt-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3390
+        }
+      ]
+    },
+    {
+      "title": "attempt history learner rejects foreign attachment ID and recovers own history",
+      "file": "audit-attempt-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3388
+        }
+      ]
+    },
+    {
+      "title": "attempt history tutor rejects foreign list ID and recovers own history",
+      "file": "audit-attempt-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3609
+        }
+      ]
+    },
+    {
+      "title": "attempt history tutor rejects foreign detail ID and recovers own history",
+      "file": "audit-attempt-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4134
+        }
+      ]
+    },
+    {
+      "title": "attempt history tutor rejects foreign attachment ID and recovers own history",
+      "file": "audit-attempt-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3631
+        }
+      ]
+    },
+    {
+      "title": "MAX simulated Преподаватель: independent signed sessions survive another account logout without mixed identity",
+      "file": "audit-auth-session-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1271
+        }
+      ]
+    },
+    {
+      "title": "MAX simulated Ученик: independent signed sessions survive another account logout without mixed identity",
+      "file": "audit-auth-session-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1528
+        }
+      ]
+    },
+    {
+      "title": "MAX simulated Родитель: independent signed sessions survive another account logout without mixed identity",
+      "file": "audit-auth-session-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1191
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulated Преподаватель: independent signed sessions survive another account logout without mixed identity",
+      "file": "audit-auth-session-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1323
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulated Ученик: independent signed sessions survive another account logout without mixed identity",
+      "file": "audit-auth-session-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1384
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulated Родитель: independent signed sessions survive another account logout without mixed identity",
+      "file": "audit-auth-session-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1390
+        }
+      ]
+    },
+    {
+      "title": "same numeric platform ID Преподаватель: MAX and Telegram keep separate accounts and revocations",
+      "file": "audit-auth-session-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1522
+        }
+      ]
+    },
+    {
+      "title": "same numeric platform ID Ученик: MAX and Telegram keep separate accounts and revocations",
+      "file": "audit-auth-session-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1445
+        }
+      ]
+    },
+    {
+      "title": "same numeric platform ID Родитель: MAX and Telegram keep separate accounts and revocations",
+      "file": "audit-auth-session-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1331
+        }
+      ]
+    },
+    {
+      "title": "MAX simulator registration role Преподаватель and durable logout",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 598
+        }
+      ]
+    },
+    {
+      "title": "MAX simulator registration role Ученик and durable logout",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 614
+        }
+      ]
+    },
+    {
+      "title": "MAX simulator registration role Родитель and durable logout",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 544
+        }
+      ]
+    },
+    {
+      "title": "MAX simulator rejects expired identity",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 329
+        }
+      ]
+    },
+    {
+      "title": "MAX simulator rejects duplicate identity",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 304
+        }
+      ]
+    },
+    {
+      "title": "MAX simulator rejects forged identity",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 310
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulator registration role Преподаватель and durable logout",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 636
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulator registration role Ученик and durable logout",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 630
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulator registration role Родитель and durable logout",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 647
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulator rejects expired identity",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 362
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulator rejects duplicate identity",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 337
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulator rejects forged identity",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 341
+        }
+      ]
+    },
+    {
+      "title": "MAX registration recovers from network outage without changing role or alias",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 590
+        }
+      ]
+    },
+    {
+      "title": "MAX registration recovers from lost acknowledgement without changing role or alias",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 822
+        }
+      ]
+    },
+    {
+      "title": "Telegram registration recovers from network outage without changing role or alias",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 560
+        }
+      ]
+    },
+    {
+      "title": "Telegram registration recovers from lost acknowledgement without changing role or alias",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 603
+        }
+      ]
+    },
+    {
+      "title": "MAX logout clears the previous registration alias",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 581
+        }
+      ]
+    },
+    {
+      "title": "Telegram logout clears the previous registration alias",
+      "file": "audit-auth.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 654
+        }
+      ]
+    },
+    {
+      "title": "two back then two forward transitions revalidate each cached account document",
+      "file": "audit-bfcache-history.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2764
+        }
+      ]
+    },
+    {
+      "title": "logout of a copied session in another tab invalidates a cached document on return",
+      "file": "audit-bfcache-history.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1185
+        }
+      ]
+    },
+    {
+      "title": "failed logout tutor does not restore cached account through browser back",
+      "file": "audit-bfcache-history.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1153
+        }
+      ]
+    },
+    {
+      "title": "failed logout guardian does not restore cached account through browser back",
+      "file": "audit-bfcache-history.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1110
+        }
+      ]
+    },
+    {
+      "title": "BFCache offline: hides previous account and recovers after reconnect",
+      "file": "audit-bfcache-offline.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1945
+        }
+      ]
+    },
+    {
+      "title": "BFCache tutor to learner: restores only the currently authenticated account",
+      "file": "audit-bfcache.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2012
+        }
+      ]
+    },
+    {
+      "title": "BFCache learner to outsider: restores only the currently authenticated account",
+      "file": "audit-bfcache.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1762
+        }
+      ]
+    },
+    {
+      "title": "BFCache guardian to learner: restores only the currently authenticated account",
+      "file": "audit-bfcache.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1761
+        }
+      ]
+    },
+    {
+      "title": "BFCache outsider to learner: restores only the currently authenticated account",
+      "file": "audit-bfcache.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1773
+        }
+      ]
+    },
+    {
+      "title": "BFCache tutor to tutor: restores only the currently authenticated account",
+      "file": "audit-bfcache.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1594
+        }
+      ]
+    },
+    {
+      "title": "all task types validate, preserve Unicode and reject empty form without sending",
+      "file": "audit-boundaries.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 979
+        }
+      ]
+    },
+    {
+      "title": "learner preserves answer when session expires and rejects stale writes from a second tab",
+      "file": "audit-boundaries.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8180
+        }
+      ]
+    },
+    {
+      "title": "builder validates numeric reference, choice cardinality and limits twenty tasks",
+      "file": "audit-builder-limits.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2651
+        }
+      ]
+    },
+    {
+      "title": "learner calendar ignores injected teacher and foreign relationship IDs",
+      "file": "audit-calendar-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 640
+        }
+      ]
+    },
+    {
+      "title": "tutor calendar offline error, recovery and reload produce private valid download",
+      "file": "audit-calendar-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 625
+        }
+      ]
+    },
+    {
+      "title": "learner calendar offline error, recovery and reload produce private valid download",
+      "file": "audit-calendar-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 617
+        }
+      ]
+    },
+    {
+      "title": "catalog review foreign: denied write does not expose or modify the other request",
+      "file": "audit-catalog-access-concurrency.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2280
+        }
+      ]
+    },
+    {
+      "title": "catalog review session: denied write does not expose or modify the other request",
+      "file": "audit-catalog-access-concurrency.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2316
+        }
+      ]
+    },
+    {
+      "title": "catalog two tabs same: accepted request cannot create duplicate relationships or be overwritten",
+      "file": "audit-catalog-access-concurrency.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3388
+        }
+      ]
+    },
+    {
+      "title": "catalog two tabs conflict: accepted request cannot create duplicate relationships or be overwritten",
+      "file": "audit-catalog-access-concurrency.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2878
+        }
+      ]
+    },
+    {
+      "title": "catalog filters, lost committed request, decline and unpublish are visible to learner",
+      "file": "audit-catalog-discussion.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 13541
+        }
+      ]
+    },
+    {
+      "title": "discussion validates empty and long input, retries lost acknowledgement once, survives reload and second tab",
+      "file": "audit-catalog-discussion.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6255
+        }
+      ]
+    },
+    {
+      "title": "learner catalog read: forged identities cannot expose another request or submit on its author's behalf",
+      "file": "audit-catalog-learner-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7703
+        }
+      ]
+    },
+    {
+      "title": "learner catalog write: forged identities cannot expose another request or submit on its author's behalf",
+      "file": "audit-catalog-learner-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8089
+        }
+      ]
+    },
+    {
+      "title": "catalog request: delayed response locks editable fields and duplicate action sends once",
+      "file": "audit-catalog-pending.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2579
+        }
+      ]
+    },
+    {
+      "title": "catalog review: delayed response locks editable fields and duplicate action sends once",
+      "file": "audit-catalog-pending.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 11073
+        }
+      ]
+    },
+    {
+      "title": "delayed old catalog search cannot replace results for the current query",
+      "file": "audit-catalog-race.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2741
+        }
+      ]
+    },
+    {
+      "title": "catalog profile rejects invalid fields and stale second-tab save without losing typed input",
+      "file": "audit-catalog-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1605
+        }
+      ]
+    },
+    {
+      "title": "checkbox labels remain adjacent at 1440px",
+      "file": "audit-checkbox-layout.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 493
+        }
+      ]
+    },
+    {
+      "title": "checkbox labels remain adjacent at 390px",
+      "file": "audit-checkbox-layout.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 625
+        }
+      ]
+    },
+    {
+      "title": "choice answer has a named group and exact option labels, keyboard selection survives save and reload",
+      "file": "audit-choice-answer-label.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1774
+        }
+      ]
+    },
+    {
+      "title": "AUD-001 named choice control is keyboard-accessible and saves a new tutor draft",
+      "file": "audit-choices.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 626
+        }
+      ]
+    },
+    {
+      "title": "choice popup handles long labels on narrow screen and keyboard selection",
+      "file": "audit-choices.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 445
+        }
+      ]
+    },
+    {
+      "title": "copy invitation reports denied clipboard and copies exact code after permission succeeds",
+      "file": "audit-clipboard-answers.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 472
+        }
+      ]
+    },
+    {
+      "title": "learner cannot submit missing task answers and preserves all three answer types with long Unicode text",
+      "file": "audit-clipboard-answers.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2285
+        }
+      ]
+    },
+    {
+      "title": "workspace: leaving a filled unsaved form asks before discarding it",
+      "file": "audit-collection-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 601
+        }
+      ]
+    },
+    {
+      "title": "lesson: leaving a filled unsaved form asks before discarding it",
+      "file": "audit-collection-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 582
+        }
+      ]
+    },
+    {
+      "title": "material: leaving a filled unsaved form asks before discarding it",
+      "file": "audit-collection-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 551
+        }
+      ]
+    },
+    {
+      "title": "learner cannot read foreign messages through the visible work",
+      "file": "audit-conversation-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 607
+        }
+      ]
+    },
+    {
+      "title": "learner cannot read foreign questions through the visible work",
+      "file": "audit-conversation-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 650
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot read foreign messages through the visible work",
+      "file": "audit-conversation-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 962
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot read foreign questions through the visible work",
+      "file": "audit-conversation-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 623
+        }
+      ]
+    },
+    {
+      "title": "learner messages foreign: visible refusal, retained input and authorized recovery",
+      "file": "audit-conversation-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 862
+        }
+      ]
+    },
+    {
+      "title": "learner messages session: visible refusal, retained input and authorized recovery",
+      "file": "audit-conversation-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1256
+        }
+      ]
+    },
+    {
+      "title": "tutor messages foreign: visible refusal, retained input and authorized recovery",
+      "file": "audit-conversation-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 716
+        }
+      ]
+    },
+    {
+      "title": "tutor messages session: visible refusal, retained input and authorized recovery",
+      "file": "audit-conversation-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1289
+        }
+      ]
+    },
+    {
+      "title": "learner questions foreign: visible refusal, retained input and authorized recovery",
+      "file": "audit-conversation-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 766
+        }
+      ]
+    },
+    {
+      "title": "learner questions session: visible refusal, retained input and authorized recovery",
+      "file": "audit-conversation-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1208
+        }
+      ]
+    },
+    {
+      "title": "tutor review foreign: visible refusal, retained input and authorized recovery",
+      "file": "audit-conversation-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 816
+        }
+      ]
+    },
+    {
+      "title": "tutor review session: visible refusal, retained input and authorized recovery",
+      "file": "audit-conversation-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1258
+        }
+      ]
+    },
+    {
+      "title": "workspace: retry after committed response loss creates only one resource",
+      "file": "audit-create-ack.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 675
+        }
+      ]
+    },
+    {
+      "title": "group: retry after committed response loss creates only one resource",
+      "file": "audit-create-ack.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 553
+        }
+      ]
+    },
+    {
+      "title": "lesson: retry after committed response loss creates only one resource",
+      "file": "audit-create-ack.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 629
+        }
+      ]
+    },
+    {
+      "title": "material: retry after committed response loss creates only one resource",
+      "file": "audit-create-ack.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 593
+        }
+      ]
+    },
+    {
+      "title": "deadline keeps the entered local hour across a daylight-saving boundary",
+      "file": "audit-deadline-timezone.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 497
+        }
+      ]
+    },
+    {
+      "title": "deletion tutor/learner: simultaneous requests and forged cancellation keep accounts isolated",
+      "file": "audit-deletion-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1053
+        }
+      ]
+    },
+    {
+      "title": "deletion guardian/outsider: simultaneous requests and forged cancellation keep accounts isolated",
+      "file": "audit-deletion-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 970
+        }
+      ]
+    },
+    {
+      "title": "demo tutor: offline login, double retry, reload and independent second tab",
+      "file": "audit-demo-login.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 983
+        }
+      ]
+    },
+    {
+      "title": "demo learner: offline login, double retry, reload and independent second tab",
+      "file": "audit-demo-login.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 921
+        }
+      ]
+    },
+    {
+      "title": "demo guardian: offline login, double retry, reload and independent second tab",
+      "file": "audit-demo-login.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 830
+        }
+      ]
+    },
+    {
+      "title": "demo outsider: offline login, double retry, reload and independent second tab",
+      "file": "audit-demo-login.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 984
+        }
+      ]
+    },
+    {
+      "title": "demo reset UI: cancelling preserves work, confirming restores demo and revokes the other demo sessions",
+      "file": "audit-demo-reset-ui.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3682
+        }
+      ]
+    },
+    {
+      "title": "demo reset UI preserves synthetic non-demo identities, sessions, relationship, assignment and saved learner draft",
+      "file": "audit-demo-reset-ui.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3494
+        }
+      ]
+    },
+    {
+      "title": "published assignment stays immutable and retrying a lost duplicate response creates one private copy",
+      "file": "audit-duplicate-retry.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2532
+        }
+      ]
+    },
+    {
+      "title": "draft preview and task removal, concurrent teacher edits cannot overwrite each other",
+      "file": "audit-editing.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1845
+        }
+      ]
+    },
+    {
+      "title": "group editing changes title and membership, bulk double click creates one copy per member",
+      "file": "audit-editing.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 955
+        }
+      ]
+    },
+    {
+      "title": "group: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+      "file": "audit-editor-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 497
+        }
+      ]
+    },
+    {
+      "title": "catalog: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+      "file": "audit-editor-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 630
+        }
+      ]
+    },
+    {
+      "title": "skills: cancel navigation preserves edited fields, confirmed navigation discards only unsaved edits",
+      "file": "audit-editor-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 744
+        }
+      ]
+    },
+    {
+      "title": "parallel exports tutor/learner: injected account IDs never override each tab's authenticated identity",
+      "file": "audit-export-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 850
+        }
+      ]
+    },
+    {
+      "title": "parallel exports guardian/outsider: injected account IDs never override each tab's authenticated identity",
+      "file": "audit-export-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 943
+        }
+      ]
+    },
+    {
+      "title": "account export tutor: pending double click downloads one complete private snapshot",
+      "file": "audit-export-repeat.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1268
+        }
+      ]
+    },
+    {
+      "title": "account export learner: pending double click downloads one complete private snapshot",
+      "file": "audit-export-repeat.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1895
+        }
+      ]
+    },
+    {
+      "title": "account export guardian: pending double click downloads one complete private snapshot",
+      "file": "audit-export-repeat.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1365
+        }
+      ]
+    },
+    {
+      "title": "account export outsider: pending double click downloads one complete private snapshot",
+      "file": "audit-export-repeat.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1469
+        }
+      ]
+    },
+    {
+      "title": "progress export tutor: pending double click delivers only the selected pupil's complete evidence",
+      "file": "audit-export-repeat.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3713
+        }
+      ]
+    },
+    {
+      "title": "progress export learner: pending double click delivers only the selected pupil's complete evidence",
+      "file": "audit-export-repeat.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6025
+        }
+      ]
+    },
+    {
+      "title": "calendar export tutor: pending double click downloads one complete ICS with authorized lessons and no payment",
+      "file": "audit-export-repeat.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1769
+        }
+      ]
+    },
+    {
+      "title": "calendar export learner: pending double click downloads one complete ICS with authorized lessons and no payment",
+      "file": "audit-export-repeat.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1976
+        }
+      ]
+    },
+    {
+      "title": "feedback foreign: server refusal remains visible and does not erase unsent comment",
+      "file": "audit-feedback-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3442
+        }
+      ]
+    },
+    {
+      "title": "feedback session: server refusal remains visible and does not erase unsent comment",
+      "file": "audit-feedback-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3786
+        }
+      ]
+    },
+    {
+      "title": "feedback pending response locks submitted fields and double click sends one report",
+      "file": "audit-feedback-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3179
+        }
+      ]
+    },
+    {
+      "title": "feedback after_review: empty submit rejected, double submit immutable, hints and teacher feedback follow policy",
+      "file": "audit-feedback-policy.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3760
+        }
+      ]
+    },
+    {
+      "title": "feedback hints_first: empty submit rejected, double submit immutable, hints and teacher feedback follow policy",
+      "file": "audit-feedback-policy.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3749
+        }
+      ]
+    },
+    {
+      "title": "new learner starts empty, can decline and then accept a fresh invitation",
+      "file": "audit-first-learner.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1855
+        }
+      ]
+    },
+    {
+      "title": "teacher cannot assign a work or group to a real relationship owned by a colleague",
+      "file": "audit-foreign-relations.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 928
+        }
+      ]
+    },
+    {
+      "title": "profile: expired session refuses save visibly, retains input and never persists unauthorized changes",
+      "file": "audit-form-expiry.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 857
+        }
+      ]
+    },
+    {
+      "title": "workspace: expired session refuses save visibly, retains input and never persists unauthorized changes",
+      "file": "audit-form-expiry.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 893
+        }
+      ]
+    },
+    {
+      "title": "group: expired session refuses save visibly, retains input and never persists unauthorized changes",
+      "file": "audit-form-expiry.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1103
+        }
+      ]
+    },
+    {
+      "title": "lesson: expired session refuses save visibly, retains input and never persists unauthorized changes",
+      "file": "audit-form-expiry.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1189
+        }
+      ]
+    },
+    {
+      "title": "material: expired session refuses save visibly, retains input and never persists unauthorized changes",
+      "file": "audit-form-expiry.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1009
+        }
+      ]
+    },
+    {
+      "title": "profile: blank and long input, Unicode, offline retry, double click and reload",
+      "file": "audit-forms.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 717
+        }
+      ]
+    },
+    {
+      "title": "workspace: blank and long input, Unicode, offline retry, double click and reload",
+      "file": "audit-forms.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 744
+        }
+      ]
+    },
+    {
+      "title": "group: blank and long input, Unicode, offline retry, double click and reload",
+      "file": "audit-forms.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 898
+        }
+      ]
+    },
+    {
+      "title": "lesson: blank and long input, Unicode, offline retry, double click and reload",
+      "file": "audit-forms.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 895
+        }
+      ]
+    },
+    {
+      "title": "material: blank and long input, Unicode, offline retry, double click and reload",
+      "file": "audit-forms.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 797
+        }
+      ]
+    },
+    {
+      "title": "pending generated draft cannot replace schedule selected afterwards",
+      "file": "audit-generated-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6191
+        }
+      ]
+    },
+    {
+      "title": "pending generated draft cannot replace new-draft selected afterwards",
+      "file": "audit-generated-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6227
+        }
+      ]
+    },
+    {
+      "title": "pending generated draft cannot replace new-account selected afterwards",
+      "file": "audit-generated-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6368
+        }
+      ]
+    },
+    {
+      "title": "generation offline: retry creates one private draft and survives reload",
+      "file": "audit-generation-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6428
+        }
+      ]
+    },
+    {
+      "title": "generation expired-session: retry creates one private draft and survives reload",
+      "file": "audit-generation-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6570
+        }
+      ]
+    },
+    {
+      "title": "generation lost-ack: retry creates one private draft and survives reload",
+      "file": "audit-generation-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6352
+        }
+      ]
+    },
+    {
+      "title": "generation count rejects empty, zero, fraction and over-limit without posting",
+      "file": "audit-generation-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6229
+        }
+      ]
+    },
+    {
+      "title": "slow generation shows pending state across reload and never publishes automatically",
+      "file": "audit-generation-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6495
+        }
+      ]
+    },
+    {
+      "title": "generation GET: real foreign material is denied and own retry creates one draft",
+      "file": "audit-generation-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 13796
+        }
+      ]
+    },
+    {
+      "title": "generation POST: real foreign material is denied and own retry creates one draft",
+      "file": "audit-generation-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 13872
+        }
+      ]
+    },
+    {
+      "title": "invalid generation EMPTY leaves material intact and retry available after reload",
+      "file": "audit-generation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6380
+        }
+      ]
+    },
+    {
+      "title": "invalid generation UNAVAILABLE leaves material intact and retry available after reload",
+      "file": "audit-generation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6441
+        }
+      ]
+    },
+    {
+      "title": "invalid generation GARBAGE leaves material intact and retry available after reload",
+      "file": "audit-generation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6621
+        }
+      ]
+    },
+    {
+      "title": "graph accepts empty configuration, rejects duplicates and size limits, preserves concurrent edits and offline input",
+      "file": "audit-graph-editing.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1815
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot edit another teacher group using a substituted group id",
+      "file": "audit-group-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1076
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot assign another teacher group using a substituted group id",
+      "file": "audit-group-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1112
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot lessons another teacher group using a substituted group id",
+      "file": "audit-group-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1272
+        }
+      ]
+    },
+    {
+      "title": "group bulk forms validate, preserve the other draft, retry lost ACK and clear warnings only after success",
+      "file": "audit-group-bulk-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1297
+        }
+      ]
+    },
+    {
+      "title": "group assign: cancelling navigation keeps unsubmitted bulk form",
+      "file": "audit-group-bulk-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 771
+        }
+      ]
+    },
+    {
+      "title": "group lessons: cancelling navigation keeps unsubmitted bulk form",
+      "file": "audit-group-bulk-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 769
+        }
+      ]
+    },
+    {
+      "title": "group edit: stale second tab cannot use the previous membership",
+      "file": "audit-group-concurrency.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1754
+        }
+      ]
+    },
+    {
+      "title": "group assign: stale second tab cannot use the previous membership",
+      "file": "audit-group-concurrency.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1873
+        }
+      ]
+    },
+    {
+      "title": "group lessons: stale second tab cannot use the previous membership",
+      "file": "audit-group-concurrency.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1485
+        }
+      ]
+    },
+    {
+      "title": "group assign: revoked session preserves bulk form, fresh login creates one record per learner",
+      "file": "audit-group-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2892
+        }
+      ]
+    },
+    {
+      "title": "group lessons: revoked session preserves bulk form, fresh login creates one record per learner",
+      "file": "audit-group-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2156
+        }
+      ]
+    },
+    {
+      "title": "guardian invite create: revoked tutor session cannot change access, fresh login recovers",
+      "file": "audit-guardian-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1947
+        }
+      ]
+    },
+    {
+      "title": "guardian invite revoke: revoked tutor session cannot change access, fresh login recovers",
+      "file": "audit-guardian-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2157
+        }
+      ]
+    },
+    {
+      "title": "guardian invitation create: foreign relationship or invitation stays private and unchanged",
+      "file": "audit-guardian-invitation-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3404
+        }
+      ]
+    },
+    {
+      "title": "guardian invitation revoke: foreign relationship or invitation stays private and unchanged",
+      "file": "audit-guardian-invitation-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2847
+        }
+      ]
+    },
+    {
+      "title": "revoked guardian cannot recover a child's summary from an older successful response",
+      "file": "audit-guardian-revocation-race.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6325
+        }
+      ]
+    },
+    {
+      "title": "workspace: edits made while save is in flight are blocked or preserved",
+      "file": "audit-inflight-edit.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 445
+        }
+      ]
+    },
+    {
+      "title": "lesson: edits made while save is in flight are blocked or preserved",
+      "file": "audit-inflight-edit.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 552
+        }
+      ]
+    },
+    {
+      "title": "material: edits made while save is in flight are blocked or preserved",
+      "file": "audit-inflight-edit.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 526
+        }
+      ]
+    },
+    {
+      "title": "learner invitations: foreign tutor fields and revoke ID cannot create, list or revoke for another tutor",
+      "file": "audit-invitation-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1974
+        }
+      ]
+    },
+    {
+      "title": "learner invitation accept: tutor revocation after successful preview rejects stale action and fresh code recovers",
+      "file": "audit-invitation-stale-preview.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1998
+        }
+      ]
+    },
+    {
+      "title": "learner invitation decline: tutor revocation after successful preview rejects stale action and fresh code recovers",
+      "file": "audit-invitation-stale-preview.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1802
+        }
+      ]
+    },
+    {
+      "title": "guardian prefilled invitation: revocation in tutor page denies acceptance and fresh code grants one child",
+      "file": "audit-invitation-stale-preview.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2034
+        }
+      ]
+    },
+    {
+      "title": "learner: revoked invitation cannot be accepted, including after refresh",
+      "file": "audit-invitations.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1205
+        }
+      ]
+    },
+    {
+      "title": "guardian: revoked invitation cannot be accepted, including after refresh",
+      "file": "audit-invitations.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1147
+        }
+      ]
+    },
+    {
+      "title": "colleague: revoked invitation cannot be accepted, including after refresh",
+      "file": "audit-invitations.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1237
+        }
+      ]
+    },
+    {
+      "title": "learner: expired invitation cannot be accepted, including after refresh",
+      "file": "audit-invitations.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1151
+        }
+      ]
+    },
+    {
+      "title": "guardian: expired invitation cannot be accepted, including after refresh",
+      "file": "audit-invitations.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1074
+        }
+      ]
+    },
+    {
+      "title": "colleague: expired invitation cannot be accepted, including after refresh",
+      "file": "audit-invitations.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1153
+        }
+      ]
+    },
+    {
+      "title": "learner invitation offline: visible failure then retry grants one access",
+      "file": "audit-invite-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1031
+        }
+      ]
+    },
+    {
+      "title": "learner invitation expired-session: visible failure then retry grants one access",
+      "file": "audit-invite-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1373
+        }
+      ]
+    },
+    {
+      "title": "learner invitation lost-ack: visible failure then retry grants one access",
+      "file": "audit-invite-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1199
+        }
+      ]
+    },
+    {
+      "title": "guardian invitation offline: visible failure then retry grants one access",
+      "file": "audit-invite-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1058
+        }
+      ]
+    },
+    {
+      "title": "guardian invitation expired-session: visible failure then retry grants one access",
+      "file": "audit-invite-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1171
+        }
+      ]
+    },
+    {
+      "title": "guardian invitation lost-ack: visible failure then retry grants one access",
+      "file": "audit-invite-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1035
+        }
+      ]
+    },
+    {
+      "title": "colleague invitation offline: visible failure then retry grants one access",
+      "file": "audit-invite-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1055
+        }
+      ]
+    },
+    {
+      "title": "colleague invitation expired-session: visible failure then retry grants one access",
+      "file": "audit-invite-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1241
+        }
+      ]
+    },
+    {
+      "title": "colleague invitation lost-ack: visible failure then retry grants one access",
+      "file": "audit-invite-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 993
+        }
+      ]
+    },
+    {
+      "title": "learner: accepted invitation cannot create a duplicate relationship",
+      "file": "audit-invite-reuse.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1711
+        }
+      ]
+    },
+    {
+      "title": "guardian: accepted invitation cannot create a duplicate relationship",
+      "file": "audit-invite-reuse.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1343
+        }
+      ]
+    },
+    {
+      "title": "colleague: accepted invitation cannot create a duplicate relationship",
+      "file": "audit-invite-reuse.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1162
+        }
+      ]
+    },
+    {
+      "title": "public landing does not promise demonstration when demo access is disabled",
+      "file": "audit-landing-copy.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 259
+        }
+      ]
+    },
+    {
+      "title": "switching learner clears editable plan and graph while the next learner loads or fails",
+      "file": "audit-learner-editors.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 904
+        }
+      ]
+    },
+    {
+      "title": "learner first submission: UI-revoked session refuses submission, keeps all saved answers and fresh login creates one attempt",
+      "file": "audit-learner-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3063
+        }
+      ]
+    },
+    {
+      "title": "learner returned submission: UI-revoked session refuses submission, keeps all saved answers and fresh login creates one attempt",
+      "file": "audit-learner-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3756
+        }
+      ]
+    },
+    {
+      "title": "learner progress network: visible read failure and recovery after login/reload",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 596
+        }
+      ]
+    },
+    {
+      "title": "learner plan network: visible read failure and recovery after login/reload",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 644
+        }
+      ]
+    },
+    {
+      "title": "learner skills network: visible read failure and recovery after login/reload",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 597
+        }
+      ]
+    },
+    {
+      "title": "learner catalog network: visible read failure and recovery after login/reload",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1603
+        }
+      ]
+    },
+    {
+      "title": "learner notifications network: visible read failure and recovery after login/reload",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 608
+        }
+      ]
+    },
+    {
+      "title": "learner progress session: visible read failure and recovery after login/reload",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 667
+        }
+      ]
+    },
+    {
+      "title": "learner plan session: visible read failure and recovery after login/reload",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 565
+        }
+      ]
+    },
+    {
+      "title": "learner skills session: visible read failure and recovery after login/reload",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 629
+        }
+      ]
+    },
+    {
+      "title": "learner catalog session: visible read failure and recovery after login/reload",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1183
+        }
+      ]
+    },
+    {
+      "title": "learner notifications session: visible read failure and recovery after login/reload",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 568
+        }
+      ]
+    },
+    {
+      "title": "parent links-network: polling failure clears the displayed summary and login/reload recovers",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5982
+        }
+      ]
+    },
+    {
+      "title": "parent summary-network: polling failure clears the displayed summary and login/reload recovers",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5937
+        }
+      ]
+    },
+    {
+      "title": "parent expired-session: polling failure clears the displayed summary and login/reload recovers",
+      "file": "audit-learner-parent-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5938
+        }
+      ]
+    },
+    {
+      "title": "learner manual save: foreign assignment ID is denied, retains input and correct retry survives reload",
+      "file": "audit-learner-write-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4719
+        }
+      ]
+    },
+    {
+      "title": "learner autosave: foreign assignment ID is denied, retains input and correct retry survives reload",
+      "file": "audit-learner-write-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7111
+        }
+      ]
+    },
+    {
+      "title": "learner first submission: foreign assignment ID cannot submit or overwrite another learner's original",
+      "file": "audit-learner-write-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4884
+        }
+      ]
+    },
+    {
+      "title": "learner returned submission: foreign assignment ID cannot submit or overwrite another learner's original",
+      "file": "audit-learner-write-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6698
+        }
+      ]
+    },
+    {
+      "title": "logout tutor double click shares one operation and cannot erase a later login",
+      "file": "audit-logout-double.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 604
+        }
+      ]
+    },
+    {
+      "title": "logout guardian double click shares one operation and cannot erase a later login",
+      "file": "audit-logout-double.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 495
+        }
+      ]
+    },
+    {
+      "title": "logout tutor expired: local identity and cached screens are cleared despite failed server acknowledgement",
+      "file": "audit-logout-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 516
+        }
+      ]
+    },
+    {
+      "title": "logout tutor offline: local identity and cached screens are cleared despite failed server acknowledgement",
+      "file": "audit-logout-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 564
+        }
+      ]
+    },
+    {
+      "title": "logout tutor lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+      "file": "audit-logout-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 549
+        }
+      ]
+    },
+    {
+      "title": "logout learner expired: local identity and cached screens are cleared despite failed server acknowledgement",
+      "file": "audit-logout-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 609
+        }
+      ]
+    },
+    {
+      "title": "logout learner offline: local identity and cached screens are cleared despite failed server acknowledgement",
+      "file": "audit-logout-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 606
+        }
+      ]
+    },
+    {
+      "title": "logout learner lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+      "file": "audit-logout-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 588
+        }
+      ]
+    },
+    {
+      "title": "logout guardian expired: local identity and cached screens are cleared despite failed server acknowledgement",
+      "file": "audit-logout-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 503
+        }
+      ]
+    },
+    {
+      "title": "logout guardian offline: local identity and cached screens are cleared despite failed server acknowledgement",
+      "file": "audit-logout-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 487
+        }
+      ]
+    },
+    {
+      "title": "logout guardian lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+      "file": "audit-logout-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 480
+        }
+      ]
+    },
+    {
+      "title": "logout outsider expired: local identity and cached screens are cleared despite failed server acknowledgement",
+      "file": "audit-logout-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 553
+        }
+      ]
+    },
+    {
+      "title": "logout outsider offline: local identity and cached screens are cleared despite failed server acknowledgement",
+      "file": "audit-logout-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 559
+        }
+      ]
+    },
+    {
+      "title": "logout outsider lost-ack: local identity and cached screens are cleared despite failed server acknowledgement",
+      "file": "audit-logout-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 578
+        }
+      ]
+    },
+    {
+      "title": "logout tutor: real request timeout clears this tab without claiming server revocation",
+      "file": "audit-logout-timeout.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16008
+        }
+      ]
+    },
+    {
+      "title": "logout guardian: real request timeout clears this tab without claiming server revocation",
+      "file": "audit-logout-timeout.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 15884
+        }
+      ]
+    },
+    {
+      "title": "AUD-005 retry after server committed draft but response was lost does not create duplicate",
+      "file": "audit-lost-response.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 764
+        }
+      ]
+    },
+    {
+      "title": "material creation rejects foreign relationship_id, retains form, and only creates own record on retry",
+      "file": "audit-material-create-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 917
+        }
+      ]
+    },
+    {
+      "title": "material creation rejects foreign assignment_id, retains form, and only creates own record on retry",
+      "file": "audit-material-create-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 879
+        }
+      ]
+    },
+    {
+      "title": "material creation rejects foreign lesson_id, retains form, and only creates own record on retry",
+      "file": "audit-material-create-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1137
+        }
+      ]
+    },
+    {
+      "title": "material download learner: foreign file refused, own TXT survives retry",
+      "file": "audit-material-download-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 673
+        }
+      ]
+    },
+    {
+      "title": "material download tutor: foreign file refused, own TXT survives retry",
+      "file": "audit-material-download-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 635
+        }
+      ]
+    },
+    {
+      "title": "material linked to lesson appears in the assigned work and keeps its explanatory note in library",
+      "file": "audit-material-link.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1611
+        }
+      ]
+    },
+    {
+      "title": "work status filter remains readable at 320px",
+      "file": "audit-mobile-filter.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 698
+        }
+      ]
+    },
+    {
+      "title": "work status filter remains readable at 390px",
+      "file": "audit-mobile-filter.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 853
+        }
+      ]
+    },
+    {
+      "title": "tutor: every navigation destination fits a narrow screen and survives reload",
+      "file": "audit-mobile-pages.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1291
+        }
+      ]
+    },
+    {
+      "title": "learner: every navigation destination fits a narrow screen and survives reload",
+      "file": "audit-mobile-pages.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1072
+        }
+      ]
+    },
+    {
+      "title": "two learner tabs preserve independent reminder preference changes",
+      "file": "audit-notification-concurrency.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1188
+        }
+      ]
+    },
+    {
+      "title": "tutor: notification opt-in requires contact, survives offline retry and can be disabled",
+      "file": "audit-notifications.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 966
+        }
+      ]
+    },
+    {
+      "title": "learner: notification opt-in requires contact, survives offline retry and can be disabled",
+      "file": "audit-notifications.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1230
+        }
+      ]
+    },
+    {
+      "title": "whole browser goes offline mid-answer, never claims submission and restores saved work after reconnect",
+      "file": "audit-offline.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5429
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot change colleague lesson payment through substituted id",
+      "file": "audit-payment-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 675
+        }
+      ]
+    },
+    {
+      "title": "tutor cannot change colleague lesson status through substituted id",
+      "file": "audit-payment-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 628
+        }
+      ]
+    },
+    {
+      "title": "manual payment offline: truthful state and durable retry",
+      "file": "audit-payment-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 979
+        }
+      ]
+    },
+    {
+      "title": "manual payment expired-session: truthful state and durable retry",
+      "file": "audit-payment-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1187
+        }
+      ]
+    },
+    {
+      "title": "manual payment lost-ack: truthful state and durable retry",
+      "file": "audit-payment-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1125
+        }
+      ]
+    },
+    {
+      "title": "manual payment pending opposite choices preserve last choice",
+      "file": "audit-payment-order.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2388
+        }
+      ]
+    },
+    {
+      "title": "manual payment pending same choice remains idempotent",
+      "file": "audit-payment-order.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2255
+        }
+      ]
+    },
+    {
+      "title": "lesson status pending opposite choices preserve last choice",
+      "file": "audit-payment-order.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2086
+        }
+      ]
+    },
+    {
+      "title": "lesson status pending same choice remains idempotent",
+      "file": "audit-payment-order.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2441
+        }
+      ]
+    },
+    {
+      "title": "plan stages reorder, remove, change status, link material and preserve concurrent edits",
+      "file": "audit-plan-edit.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2482
+        }
+      ]
+    },
+    {
+      "title": "plan validates required fields and limits, warns before leaving, preserves input across failed save",
+      "file": "audit-plan-material-limits.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3433
+        }
+      ]
+    },
+    {
+      "title": "material rejects non-HTTPS and oversized links without claiming success, then saves corrected Unicode note",
+      "file": "audit-plan-material-limits.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 798
+        }
+      ]
+    },
+    {
+      "title": "plan nested assignment_id: rejects another pupil of other tutor, preserves plans and recovers",
+      "file": "audit-plan-resource-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3330
+        }
+      ]
+    },
+    {
+      "title": "plan nested material_id: rejects another pupil of other tutor, preserves plans and recovers",
+      "file": "audit-plan-resource-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3078
+        }
+      ]
+    },
+    {
+      "title": "plan nested assignment_id: rejects another pupil of same tutor, preserves plans and recovers",
+      "file": "audit-plan-resource-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3270
+        }
+      ]
+    },
+    {
+      "title": "plan nested material_id: rejects another pupil of same tutor, preserves plans and recovers",
+      "file": "audit-plan-resource-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3792
+        }
+      ]
+    },
+    {
+      "title": "learner cannot open another child's plan by substituting the id in the visible screen",
+      "file": "audit-private-learning.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1187
+        }
+      ]
+    },
+    {
+      "title": "learner cannot open another child's skill-graph by substituting the id in the visible screen",
+      "file": "audit-private-learning.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1018
+        }
+      ]
+    },
+    {
+      "title": "learner cannot download another learner material by substituted file id",
+      "file": "audit-private-resources.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 544
+        }
+      ]
+    },
+    {
+      "title": "colleague sees shared templates but substituted private workspace is rejected visibly",
+      "file": "audit-private-resources.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 903
+        }
+      ]
+    },
+    {
+      "title": "linked parent cannot open child work or material, see payment notes or change lessons",
+      "file": "audit-private-resources.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 534
+        }
+      ]
+    },
+    {
+      "title": "profile tutor: body IDs rejected and query IDs cannot choose the updated account",
+      "file": "audit-profile-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1600
+        }
+      ]
+    },
+    {
+      "title": "profile learner: body IDs rejected and query IDs cannot choose the updated account",
+      "file": "audit-profile-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1547
+        }
+      ]
+    },
+    {
+      "title": "profile outsider: body IDs rejected and query IDs cannot choose the updated account",
+      "file": "audit-profile-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1474
+        }
+      ]
+    },
+    {
+      "title": "progress export tutor: foreign relationship denied without a download, own retry succeeds",
+      "file": "audit-progress-export-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 668
+        }
+      ]
+    },
+    {
+      "title": "progress export learner: foreign relationship denied without a download, own retry succeeds",
+      "file": "audit-progress-export-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 664
+        }
+      ]
+    },
+    {
+      "title": "tutor exports selected progress JSON and sees truthful empty analytics",
+      "file": "audit-progress-export.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 495
+        }
+      ]
+    },
+    {
+      "title": "question validates empty and long text, lost acknowledgement retries once, teacher reply recovers from network failure",
+      "file": "audit-question-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6250
+        }
+      ]
+    },
+    {
+      "title": "groups: network failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 571
+        }
+      ]
+    },
+    {
+      "title": "workspaces: network failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 603
+        }
+      ]
+    },
+    {
+      "title": "plan: network failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 718
+        }
+      ]
+    },
+    {
+      "title": "skills: network failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 615
+        }
+      ]
+    },
+    {
+      "title": "recommendations: network failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 609
+        }
+      ]
+    },
+    {
+      "title": "catalog: network failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 513
+        }
+      ]
+    },
+    {
+      "title": "notifications: network failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 607
+        }
+      ]
+    },
+    {
+      "title": "analytics: network failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 517
+        }
+      ]
+    },
+    {
+      "title": "groups: session failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 602
+        }
+      ]
+    },
+    {
+      "title": "workspaces: session failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 610
+        }
+      ]
+    },
+    {
+      "title": "plan: session failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 719
+        }
+      ]
+    },
+    {
+      "title": "skills: session failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 646
+        }
+      ]
+    },
+    {
+      "title": "recommendations: session failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 678
+        }
+      ]
+    },
+    {
+      "title": "catalog: session failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 606
+        }
+      ]
+    },
+    {
+      "title": "notifications: session failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 652
+        }
+      ]
+    },
+    {
+      "title": "analytics: session failure is visible and login/reload recovers",
+      "file": "audit-read-failures.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 617
+        }
+      ]
+    },
+    {
+      "title": "recommendation offline retries without another private draft",
+      "file": "audit-recommendation-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1571
+        }
+      ]
+    },
+    {
+      "title": "recommendation lost-ack retries without another private draft",
+      "file": "audit-recommendation-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1528
+        }
+      ]
+    },
+    {
+      "title": "recommendation read: foreign learner history or source work stays private",
+      "file": "audit-recommendation-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1226
+        }
+      ]
+    },
+    {
+      "title": "recommendation copy: foreign learner history or source work stays private",
+      "file": "audit-recommendation-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1423
+        }
+      ]
+    },
+    {
+      "title": "recommendation delayed duplicate cannot replace schedule chosen meanwhile",
+      "file": "audit-recommendation-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1589
+        }
+      ]
+    },
+    {
+      "title": "recommendation delayed open cannot replace schedule chosen meanwhile",
+      "file": "audit-recommendation-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1662
+        }
+      ]
+    },
+    {
+      "title": "MAX simulated registration: empty role is rejected and the same learner form recovers",
+      "file": "audit-registration-role-boundary.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 639
+        }
+      ]
+    },
+    {
+      "title": "MAX simulated registration: long role is rejected and the same learner form recovers",
+      "file": "audit-registration-role-boundary.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 687
+        }
+      ]
+    },
+    {
+      "title": "MAX simulated registration: Unicode role is rejected and the same learner form recovers",
+      "file": "audit-registration-role-boundary.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 718
+        }
+      ]
+    },
+    {
+      "title": "MAX simulated registration: organizer role is rejected and the same learner form recovers",
+      "file": "audit-registration-role-boundary.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 647
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulated registration: empty role is rejected and the same learner form recovers",
+      "file": "audit-registration-role-boundary.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 615
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulated registration: long role is rejected and the same learner form recovers",
+      "file": "audit-registration-role-boundary.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 687
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulated registration: Unicode role is rejected and the same learner form recovers",
+      "file": "audit-registration-role-boundary.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 632
+        }
+      ]
+    },
+    {
+      "title": "Telegram simulated registration: organizer role is rejected and the same learner form recovers",
+      "file": "audit-registration-role-boundary.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 627
+        }
+      ]
+    },
+    {
+      "title": "MAX Преподаватель registration empty: validation and durable identity",
+      "file": "audit-registration-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 452
+        }
+      ]
+    },
+    {
+      "title": "MAX Преподаватель registration validated: validation and durable identity",
+      "file": "audit-registration-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 622
+        }
+      ]
+    },
+    {
+      "title": "MAX Ученик registration empty: validation and durable identity",
+      "file": "audit-registration-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 587
+        }
+      ]
+    },
+    {
+      "title": "MAX Ученик registration validated: validation and durable identity",
+      "file": "audit-registration-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 529
+        }
+      ]
+    },
+    {
+      "title": "MAX Родитель registration empty: validation and durable identity",
+      "file": "audit-registration-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 441
+        }
+      ]
+    },
+    {
+      "title": "MAX Родитель registration validated: validation and durable identity",
+      "file": "audit-registration-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 501
+        }
+      ]
+    },
+    {
+      "title": "Telegram Преподаватель registration empty: validation and durable identity",
+      "file": "audit-registration-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 473
+        }
+      ]
+    },
+    {
+      "title": "Telegram Преподаватель registration validated: validation and durable identity",
+      "file": "audit-registration-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 612
+        }
+      ]
+    },
+    {
+      "title": "Telegram Ученик registration empty: validation and durable identity",
+      "file": "audit-registration-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 505
+        }
+      ]
+    },
+    {
+      "title": "Telegram Ученик registration validated: validation and durable identity",
+      "file": "audit-registration-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 591
+        }
+      ]
+    },
+    {
+      "title": "Telegram Родитель registration empty: validation and durable identity",
+      "file": "audit-registration-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 530
+        }
+      ]
+    },
+    {
+      "title": "Telegram Родитель registration validated: validation and durable identity",
+      "file": "audit-registration-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 665
+        }
+      ]
+    },
+    {
+      "title": "AUD-004 rejected work shows teacher reason and does not create progress",
+      "file": "audit-rejection.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6552
+        }
+      ]
+    },
+    {
+      "title": "AI retry: substituted foreign submission cannot be queued and own retry recovers",
+      "file": "audit-retry-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16411
+        }
+      ]
+    },
+    {
+      "title": "cancel submission preserves draft; AI retries stop honestly at limit and manual review remains available",
+      "file": "audit-retry-submit.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19436
+        }
+      ]
+    },
+    {
+      "title": "returned work resubmitted with lost acknowledgement keeps two immutable attempts and one confirmed progress result",
+      "file": "audit-return-lost-ack.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8879
+        }
+      ]
+    },
+    {
+      "title": "review two tabs same: the first teacher decision remains authoritative",
+      "file": "audit-review-concurrency.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4116
+        }
+      ]
+    },
+    {
+      "title": "review two tabs conflict: the first teacher decision remains authoritative",
+      "file": "audit-review-concurrency.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4321
+        }
+      ]
+    },
+    {
+      "title": "teacher review with network failure remains truthful and reaches learner once",
+      "file": "audit-review-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3489
+        }
+      ]
+    },
+    {
+      "title": "teacher review with lost acknowledgement remains truthful and reaches learner once",
+      "file": "audit-review-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3774
+        }
+      ]
+    },
+    {
+      "title": "teacher review with expired session remains truthful and reaches learner once",
+      "file": "audit-review-delivery.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6656
+        }
+      ]
+    },
+    {
+      "title": "review confirmed: substituted foreign submission cannot be changed and own decision recovers",
+      "file": "audit-review-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4443
+        }
+      ]
+    },
+    {
+      "title": "review corrected: substituted foreign submission cannot be changed and own decision recovers",
+      "file": "audit-review-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4667
+        }
+      ]
+    },
+    {
+      "title": "review returned: substituted foreign submission cannot be changed and own decision recovers",
+      "file": "audit-review-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6373
+        }
+      ]
+    },
+    {
+      "title": "review rejected: substituted foreign submission cannot be changed and own decision recovers",
+      "file": "audit-review-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6354
+        }
+      ]
+    },
+    {
+      "title": "late review acknowledgement cannot reopen work after tutor leaves for schedule",
+      "file": "audit-review-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1613
+        }
+      ]
+    },
+    {
+      "title": "save: completed request cannot pull user back from the schedule",
+      "file": "audit-save-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 666
+        }
+      ]
+    },
+    {
+      "title": "duplicate: completed request cannot pull user back from the schedule",
+      "file": "audit-save-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 777
+        }
+      ]
+    },
+    {
+      "title": "hung draft save times out visibly, unlocks controls and preserves answer for retry",
+      "file": "audit-save-timeout.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16248
+        }
+      ]
+    },
+    {
+      "title": "two tutor tabs preserve independent payment and lesson status changes",
+      "file": "audit-schedule-concurrent.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1139
+        }
+      ]
+    },
+    {
+      "title": "schedule cancellation, all payment notes and calendar preserve learner privacy after reload",
+      "file": "audit-schedule-files.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1813
+        }
+      ]
+    },
+    {
+      "title": "learner TXT validates type, size, encoding and empty bytes then removes a valid attachment without losing answer",
+      "file": "audit-schedule-files.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3343
+        }
+      ]
+    },
+    {
+      "title": "tutor: delayed previous learner response cannot replace current learner summary",
+      "file": "audit-selection-race.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 531
+        }
+      ]
+    },
+    {
+      "title": "guardian: delayed previous learner response cannot replace current learner summary",
+      "file": "audit-selection-race.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1458
+        }
+      ]
+    },
+    {
+      "title": "catalog profile tutor: body identity fields are rejected and query identity cannot read or update another profile",
+      "file": "audit-self-scoped-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2328
+        }
+      ]
+    },
+    {
+      "title": "catalog profile outsider: body identity fields are rejected and query identity cannot read or update another profile",
+      "file": "audit-self-scoped-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2022
+        }
+      ]
+    },
+    {
+      "title": "notifications tutor: body identity fields are rejected and query identity cannot select another account",
+      "file": "audit-self-scoped-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2087
+        }
+      ]
+    },
+    {
+      "title": "notifications learner: body identity fields are rejected and query identity cannot select another account",
+      "file": "audit-self-scoped-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3940
+        }
+      ]
+    },
+    {
+      "title": "unaccepted invitation input does not survive logout into a different learner",
+      "file": "audit-session-caches.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 602
+        }
+      ]
+    },
+    {
+      "title": "old relationships response cannot restore teacher data after a learner login",
+      "file": "audit-session-caches.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 853
+        }
+      ]
+    },
+    {
+      "title": "old lessons response cannot restore teacher data after a learner login",
+      "file": "audit-session-caches.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 690
+        }
+      ]
+    },
+    {
+      "title": "old materials response cannot restore teacher data after a learner login",
+      "file": "audit-session-caches.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 691
+        }
+      ]
+    },
+    {
+      "title": "old profile response cannot restore teacher data after a learner login",
+      "file": "audit-session-caches.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 683
+        }
+      ]
+    },
+    {
+      "title": "pending calendar download cannot deliver previous account data after login changes",
+      "file": "audit-session-downloads.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 723
+        }
+      ]
+    },
+    {
+      "title": "pending material download cannot deliver previous account data after login changes",
+      "file": "audit-session-downloads.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 858
+        }
+      ]
+    },
+    {
+      "title": "group: saved teacher content is absent for the next colleague account",
+      "file": "audit-session-screens.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 998
+        }
+      ]
+    },
+    {
+      "title": "workspace: saved teacher content is absent for the next colleague account",
+      "file": "audit-session-screens.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 867
+        }
+      ]
+    },
+    {
+      "title": "catalog: saved teacher content is absent for the next colleague account",
+      "file": "audit-session-screens.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 884
+        }
+      ]
+    },
+    {
+      "title": "plan: saved teacher content is absent for the next colleague account",
+      "file": "audit-session-screens.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1064
+        }
+      ]
+    },
+    {
+      "title": "skills: saved teacher content is absent for the next colleague account",
+      "file": "audit-session-screens.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 999
+        }
+      ]
+    },
+    {
+      "title": "lesson: saved teacher content is absent for the next colleague account",
+      "file": "audit-session-screens.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 927
+        }
+      ]
+    },
+    {
+      "title": "material: saved teacher content is absent for the next colleague account",
+      "file": "audit-session-screens.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 941
+        }
+      ]
+    },
+    {
+      "title": "notification preferences and contact state belong only to the current account",
+      "file": "audit-session-screens.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 810
+        }
+      ]
+    },
+    {
+      "title": "guardian summary and invitation buffer disappear for a new guardian identity",
+      "file": "audit-session-screens.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1501
+        }
+      ]
+    },
+    {
+      "title": "tutor profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+      "file": "audit-settings-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 848
+        }
+      ]
+    },
+    {
+      "title": "tutor notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+      "file": "audit-settings-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1080
+        }
+      ]
+    },
+    {
+      "title": "learner profile: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+      "file": "audit-settings-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1002
+        }
+      ]
+    },
+    {
+      "title": "learner notifications: cancelled navigation preserves edits, save clears warning, discard keeps saved settings",
+      "file": "audit-settings-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 977
+        }
+      ]
+    },
+    {
+      "title": "oversized AI context retains uploaded work for manual review without unsafe retry",
+      "file": "audit-submissions.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5477
+        }
+      ]
+    },
+    {
+      "title": "two learners submit concurrently and each report category handles validation and network loss",
+      "file": "audit-submissions.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7780
+        }
+      ]
+    },
+    {
+      "title": "teacher plan: another teacher's relationship rejects edits and preserves both documents",
+      "file": "audit-teacher-plan-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 795
+        }
+      ]
+    },
+    {
+      "title": "teacher skill-graph: another teacher's relationship rejects edits and preserves both documents",
+      "file": "audit-teacher-plan-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 852
+        }
+      ]
+    },
+    {
+      "title": "late template copy does not reopen editor after leaving library",
+      "file": "audit-template-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1592
+        }
+      ]
+    },
+    {
+      "title": "three task types draft before-delivery: exact input survives failure, one durable draft can be previewed and assigned",
+      "file": "audit-three-type-draft-failure.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2957
+        }
+      ]
+    },
+    {
+      "title": "three task types draft lost-ack: exact input survives failure, one durable draft can be previewed and assigned",
+      "file": "audit-three-type-draft-failure.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2822
+        }
+      ]
+    },
+    {
+      "title": "three task types draft expired-session: exact input survives failure, one durable draft can be previewed and assigned",
+      "file": "audit-three-type-draft-failure.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4127
+        }
+      ]
+    },
+    {
+      "title": "empty tutor draft creation: revoked session preserves form, fresh login creates one draft",
+      "file": "audit-tutor-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1484
+        }
+      ]
+    },
+    {
+      "title": "tutor draft editing: revoked session cannot replace saved contents and new login permits retry",
+      "file": "audit-tutor-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6823
+        }
+      ]
+    },
+    {
+      "title": "tutor publication: session revoked after draft save rejects publication until a fresh login",
+      "file": "audit-tutor-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2295
+        }
+      ]
+    },
+    {
+      "title": "tutor duplication: revoked session creates no copy, authenticated retry creates one private draft",
+      "file": "audit-tutor-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1654
+        }
+      ]
+    },
+    {
+      "title": "tutor learner invitation create: expired session preserves server state and fresh login recovers",
+      "file": "audit-tutor-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1518
+        }
+      ]
+    },
+    {
+      "title": "tutor learner invitation revoke: expired session preserves server state and fresh login recovers",
+      "file": "audit-tutor-expired-session.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1577
+        }
+      ]
+    },
+    {
+      "title": "tutor progress: a foreign relationship with confirmed evidence is denied and own selection recovers",
+      "file": "audit-tutor-progress-id-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4387
+        }
+      ]
+    },
+    {
+      "title": "tutor: refusing navigation preserves unsaved input and accepting returns to requested page",
+      "file": "audit-unsaved-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 512
+        }
+      ]
+    },
+    {
+      "title": "learner: refusing navigation preserves unsaved input and accepting returns to requested page",
+      "file": "audit-unsaved-navigation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 670
+        }
+      ]
+    },
+    {
+      "title": "skill graph refuses cycles and dangling edges, then saves corrected graph",
+      "file": "audit-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1323
+        }
+      ]
+    },
+    {
+      "title": "material rejects bad extension, empty, oversize, NUL and invalid UTF8 before upload",
+      "file": "audit-validation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 844
+        }
+      ]
+    },
+    {
+      "title": "delayed work opening cannot replace other-work chosen afterwards",
+      "file": "audit-work-navigation-race.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 579
+        }
+      ]
+    },
+    {
+      "title": "delayed work opening cannot replace schedule chosen afterwards",
+      "file": "audit-work-navigation-race.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 502
+        }
+      ]
+    },
+    {
+      "title": "delayed work opening cannot replace new-draft chosen afterwards",
+      "file": "audit-work-navigation-race.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 482
+        }
+      ]
+    },
+    {
+      "title": "workspace members: replacing visible workspace ID cannot expose a colleague's private library",
+      "file": "audit-workspace-id-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 631
+        }
+      ]
+    },
+    {
+      "title": "workspace templates: replacing visible workspace ID cannot expose a colleague's private library",
+      "file": "audit-workspace-id-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 582
+        }
+      ]
+    },
+    {
+      "title": "workspace invitations: replacing visible workspace ID cannot expose a colleague's private library",
+      "file": "audit-workspace-id-isolation.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 570
+        }
+      ]
+    },
+    {
+      "title": "workspace invitation create: forged identifiers cannot grant or revoke a colleague's access",
+      "file": "audit-workspace-invite-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 566
+        }
+      ]
+    },
+    {
+      "title": "workspace invitation revoke-foreign-space: forged identifiers cannot grant or revoke a colleague's access",
+      "file": "audit-workspace-invite-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 747
+        }
+      ]
+    },
+    {
+      "title": "workspace invitation revoke-foreign-invite: forged identifiers cannot grant or revoke a colleague's access",
+      "file": "audit-workspace-invite-access.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 654
+        }
+      ]
+    },
+    {
+      "title": "switching workspaces cannot show delayed templates from previous workspace",
+      "file": "audit-workspace-race.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 731
+        }
+      ]
+    },
+    {
+      "title": "used workspace invitation refuses a third nonmember; a fresh invitation grants exactly one shared library",
+      "file": "audit-workspace-third-user.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2788
+        }
+      ]
+    },
+    {
+      "title": "answers autosave and survive reload without the save button",
+      "file": "autosave.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5440
+        }
+      ]
+    },
+    {
+      "title": "catalog tutor offer leads to learner request and accepted study relationship",
+      "file": "catalog.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6195
+        }
+      ]
+    },
+    {
+      "title": "provider outage and lost polling recover to visible manual review",
+      "file": "failure.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 25962
+        }
+      ]
+    },
+    {
+      "title": "material generation stays a draft until tutor publishes and includes its source",
+      "file": "generation-live.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6902
+        }
+      ]
+    },
+    {
+      "title": "tutor creates group, assigns copies, and learner receives only own assignment",
+      "file": "groups.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1353
+        }
+      ]
+    },
+    {
+      "title": "guardian invitation opens only read-only summary and tutor can revoke it",
+      "file": "guardian.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 31128
+        }
+      ]
+    },
+    {
+      "title": "official Bridge snapshot emits back/closing events and rejects foreign-origin back",
+      "file": "max-sdk.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 706
+        }
+      ]
+    },
+    {
+      "title": "embedded storage denial does not prevent login",
+      "file": "max.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 536
+        }
+      ]
+    },
+    {
+      "title": "MAX URL authentication and iframe Bridge lifecycle (simulated client)",
+      "file": "max.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 937
+        }
+      ]
+    },
+    {
+      "title": "teacher plan is readable by pupil, and assignment discussion survives reload",
+      "file": "plan-discussion.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6343
+        }
+      ]
+    },
+    {
+      "title": "question remains visible on AI outage and teacher can reply without losing it",
+      "file": "questions.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 10659
+        }
+      ]
+    },
+    {
+      "title": "confirmed gap opens private practice draft and learner reports usefulness",
+      "file": "recommendation-feedback.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1660
+        }
+      ]
+    },
+    {
+      "title": "return arrives without reload; resubmission starts from saved original and archive stays immutable",
+      "file": "resubmission.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 11098
+        }
+      ]
+    },
+    {
+      "title": "profile, invitation consent, disabled MAX delivery and calendar download",
+      "file": "settings-calendar.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1618
+        }
+      ]
+    },
+    {
+      "title": "account controls remain reachable in short desktop and mobile navigation",
+      "file": "short-viewport.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 462
+        }
+      ]
+    },
+    {
+      "title": "tutor defines acyclic skill links and learner can inspect saved graph",
+      "file": "skill-graph.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1250
+        }
+      ]
+    },
+    {
+      "title": "tutor uploads TXT, learner downloads the original, tutor changes lesson status",
+      "file": "team-features.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1343
+        }
+      ]
+    },
+    {
+      "title": "work list separates overdue, active and complete; builder persists own lesson link",
+      "file": "work-status.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1697
+        }
+      ]
+    },
+    {
+      "title": "tutor assigns, learner saves/submits, real worker analyzes, tutor approves, learner sees progress",
+      "file": "workflow.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4464
+        }
+      ]
+    },
+    {
+      "title": "schedule, private payment note, material link and revocable invite",
+      "file": "workflow.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1617
+        }
+      ]
+    },
+    {
+      "title": "colleagues share template, create own draft and lose library access after removal",
+      "file": "workspaces.spec.ts",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2015
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Full sequential headless UI regression after AUD036, AUD037 and AUD038. 439/439 passed, zero skipped/flaky/unexpected/runner errors.",
+    "Loopback audit server8017, one worker; synthetic data, local AI fixture, MAX bridge simulation. Real MAX, owner windows and deployed environments excluded.",
+    "Served bundle index-9bdALV6u.js. Newly authored P0 publication/submit/attachment/retry/feedback specs are outside this run.",
+    "Matrix remains401 passed /376 untested /92 N/A,76/79 main paths. Full suite does not close untested variants."
+  ]
+}
