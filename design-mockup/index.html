@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>RePrep — макет в сторону Duolingo</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- Иконки: рисунок по мотивам Lucide (ISC), которой уже пользуется приложение -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8M13 12h8M13 18h8"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+  <symbol id="i-medal" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+</svg>
+
+<div class="stage">
+  <aside class="rail">
+    <h1>RePrep · макет</h1>
+    <p>Кликабельный прототип «в сторону Duolingo». Данные выдуманы. Приложение не затронуто.</p>
+    <div class="theme-switch" role="group" aria-label="Тема">
+      <button type="button" data-theme-set="light" aria-pressed="true"><svg class="icon"><use href="#i-sun"/></svg>Светлая</button>
+      <button type="button" data-theme-set="dark" aria-pressed="false"><svg class="icon"><use href="#i-moon"/></svg>Тёмная</button>
+    </div>
+    <nav aria-label="Экраны макета">
+      <h2>Ученик — основной путь</h2>
+      <a href="#l-home">1. Сегодня</a>
+      <a href="#l-intro">2. Новое задание</a>
+      <a href="#l-task-1">3. Задание 1 — число</a>
+      <a href="#l-task-2">4. Задание 2 — выбор</a>
+      <a href="#l-task-3">5. Задание 3 — объяснение</a>
+      <a href="#l-check">6. Проверь перед отправкой</a>
+      <a href="#l-sent">7. Отправлено</a>
+      <a href="#l-review">8. Разбор от преподавателя</a>
+      <a href="#l-path">9. Мой путь</a>
+      <h2>Репетитор</h2>
+      <a href="#t-queue">10. Проверка работ</a>
+      <h2>Родитель</h2>
+      <a href="#p-summary">11. Кабинет родителя</a>
+      <h2>Ещё</h2>
+      <a href="?gallery=1" data-plain>Все экраны сразу</a>
+      <a href="README.md" data-plain>Записка (README)</a>
+      <a href="contrast.md" data-plain>Контраст цветов</a>
+    </nav>
+  </aside>
+
+  <div class="device">
+    <main class="viewport" id="app">
+
+      <!-- 1. Сегодня -->
+      <section class="screen" id="l-home" data-title="1 · Ученик · Сегодня">
+        <header class="topbar">
+          <div class="hello" style="flex:1">
+            <div class="avatar" aria-hidden="true">С</div>
+            <div><strong style="font-size:19px">Привет, Саша!</strong><div class="muted small">Математика · с Алексом</div></div>
+          </div>
+          <span class="streak" data-when="before-flex" aria-label="Серия: 4 работы подряд сданы в срок"><svg class="icon fill"><use href="#i-flame"/></svg>4</span>
+          <span class="streak" data-when="after-flex" aria-label="Серия: 5 работ подряд сданы в срок"><svg class="icon fill"><use href="#i-flame"/></svg>5</span>
+        </header>
+        <div class="scroll">
+          <div class="card goal" data-when="before-flex">
+            <div class="ring" role="img" aria-label="Неделя: сдано 2 из 3 работ">
+              <svg viewBox="0 0 84 84"><circle class="track" cx="42" cy="42" r="34" fill="none" stroke-width="12"/><circle class="value" cx="42" cy="42" r="34" fill="none" stroke-width="12" stroke-linecap="round" stroke-dasharray="142.4 213.6"/></svg>
+              <b>2/3</b>
+            </div>
+            <div>
+              <h3>Неделя почти закрыта</h3>
+              <p class="muted small" style="margin:0">Сдано 2 работы из 3. Осталась одна — до пятницы.</p>
+            </div>
+          </div>
+          <div class="card goal green" data-when="after-flex">
+            <div class="ring" role="img" aria-label="Неделя: сданы все 3 работы">
+              <svg viewBox="0 0 84 84"><circle class="track" cx="42" cy="42" r="34" fill="none" stroke-width="12"/><circle class="value" cx="42" cy="42" r="34" fill="none" stroke-width="12" stroke-linecap="round" stroke-dasharray="213.6 213.6"/></svg>
+              <b>3/3</b>
+            </div>
+            <div>
+              <h3 style="color:var(--green-ink)">Неделя закрыта!</h3>
+              <p class="small" style="margin:0">Все 3 работы сданы. Серия — 5 работ подряд в срок.</p>
+            </div>
+          </div>
+
+          <div class="card hero next-card" data-when="before">
+            <div class="tag"><svg class="icon" style="width:18px;height:18px"><use href="#i-book"/></svg>Новое от Алекса</div>
+            <h2 class="title" style="font-size:24px">Уравнения: найди ошибку</h2>
+            <ul class="facts">
+              <li><svg class="icon"><use href="#i-list"/></svg>3 задания · около 10 минут</li>
+              <li><svg class="icon"><use href="#i-cal"/></svg>Сдать до пт, 25 сент., 20:00</li>
+            </ul>
+            <div style="margin-top:18px"><a class="btn" href="#l-intro" data-reset-send>Начать</a></div>
+          </div>
+
+          <div class="card hero" data-when="after">
+            <div class="tag" style="display:inline-flex;gap:6px;align-items:center;font-size:14px;font-weight:800;color:var(--blue-ink);margin-bottom:8px"><svg class="icon" style="width:18px;height:18px"><use href="#i-clock"/></svg>Ждёт проверки</div>
+            <h2 class="title" style="font-size:22px">Уравнения: найди ошибку</h2>
+            <p class="muted small" style="margin:0">Отправлено сегодня в 14:05. Алекс обычно проверяет за день.</p>
+          </div>
+
+          <div class="card">
+            <a class="list-row" href="#l-review" data-when="after">
+              <span class="icon-bubble" style="background:var(--green-tint);color:var(--green-ink)"><svg class="icon"><use href="#i-check"/></svg></span>
+              <span class="grow"><strong>Разбор готов: «Уравнения»</strong><span class="muted small">В макете — сразу, в жизни — после проверки</span></span>
+              <svg class="icon" style="color:var(--ink-2)"><use href="#i-chev"/></svg>
+            </a>
+            <a class="list-row" href="#l-home" data-when="before" data-toast="Старый разбор — в макете не нарисован. Разбор показан на экране 8">
+              <span class="icon-bubble" style="background:var(--green-tint);color:var(--green-ink)"><svg class="icon"><use href="#i-check"/></svg></span>
+              <span class="grow"><strong>Разбор готов: «Дроби: практикум»</strong><span class="muted small">Алекс проверил вчера вечером</span></span>
+              <svg class="icon" style="color:var(--ink-2)"><use href="#i-chev"/></svg>
+            </a>
+            <div class="list-row">
+              <span class="icon-bubble"><svg class="icon"><use href="#i-cal"/></svg></span>
+              <span class="grow"><strong>Занятие сегодня в 18:00</strong><span class="muted small">Разбираем уравнения · 60 минут</span></span>
+            </div>
+          </div>
+
+          <div class="card purple win">
+            <span class="medal" aria-hidden="true"><svg class="icon"><use href="#i-medal"/></svg></span>
+            <div><strong style="color:var(--purple-ink)">Маленькая победа</strong><div class="small">Ты исправил работу после возврата — так и растут навыки.</div></div>
+          </div>
+        </div>
+        <nav class="tabbar" aria-label="Разделы">
+          <a href="#l-home" aria-current="page"><svg class="icon"><use href="#i-home"/></svg>Сегодня</a>
+          <a href="#l-intro"><svg class="icon"><use href="#i-book"/></svg>Задания</a>
+          <a href="#l-path"><svg class="icon"><use href="#i-route"/></svg>Мой путь</a>
+          <a href="#l-home"><svg class="icon"><use href="#i-user"/></svg>Профиль</a>
+        </nav>
+      </section>
+
+      <!-- 2. Новое задание -->
+      <section class="screen" id="l-intro" data-title="2 · Ученик · Новое задание">
+        <header class="topbar">
+          <a class="icon-btn" href="#l-home" aria-label="Назад"><svg class="icon"><use href="#i-back"/></svg></a>
+          <h1>Новое задание</h1>
+        </header>
+        <div class="scroll">
+          <div style="width:88px;height:88px;border-radius:26px;background:var(--blue-tint);color:var(--blue-ink);display:grid;place-items:center;margin:4px 0 16px;box-shadow:0 5px 0 var(--blue)">
+            <svg class="icon" style="width:44px;height:44px"><use href="#i-book"/></svg>
+          </div>
+          <p class="eyebrow">От Алекса · Математика · ЕГЭ</p>
+          <h2 class="title">Уравнения: найди ошибку</h2>
+          <p>Три коротких задания. Алекс хочет посмотреть, как ты переносишь числа через знак «=».</p>
+          <ul class="facts card" style="margin-top:16px">
+            <li><svg class="icon"><use href="#i-list"/></svg>3 задания: число, выбор, объяснение</li>
+            <li><svg class="icon"><use href="#i-clock"/></svg>Около 10 минут</li>
+            <li><svg class="icon"><use href="#i-cal"/></svg>Сдать до пт, 25 сент., 20:00</li>
+            <li><svg class="icon"><use href="#i-bulb"/></svg>Есть подсказки — открывай, если застрял</li>
+          </ul>
+          <p class="eyebrow" style="margin-top:6px">Навыки</p>
+          <div class="chips"><span class="chip">Линейные уравнения</span><span class="chip">Дроби</span><span class="chip">Обоснование</span></div>
+          <p class="note" style="margin-top:16px"><svg class="icon"><use href="#i-shield"/></svg>Ответы сохраняются сами. Отправишь, когда будешь готов.</p>
+        </div>
+        <div class="footer plain"><a class="btn" href="#l-task-1">Начать</a></div>
+      </section>
+
+      <!-- 3. Задание 1: число -->
+      <section class="screen" id="l-task-1" data-title="3 · Ученик · Задание 1 (число)">
+        <div class="lesson-top">
+          <a class="icon-btn" href="#l-home" aria-label="Выйти, ответы сохранятся"><svg class="icon"><use href="#i-x"/></svg></a>
+          <div class="bar" role="progressbar" aria-label="Прогресс работы" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0"><i style="width:14%"></i></div>
+          <span class="counter">1/3</span>
+        </div>
+        <div class="scroll">
+          <span class="chip">Линейные уравнения</span>
+          <p class="prompt">Реши уравнение 2(x − 3) = 10. Чему равен x?</p>
+          <label class="sr-only" for="ans1">Твой ответ</label>
+          <input class="answer" id="ans1" inputmode="decimal" autocomplete="off" placeholder="Твой ответ" data-kind="number">
+          <div class="nudge" id="nudge1" role="status"><svg class="icon"><use href="#i-alert"/></svg><span>Здесь нужно число — например, 8 или 2,5. Буквы и «x =» писать не нужно.</span></div>
+          <div class="saved" aria-live="polite"></div>
+          <button class="hint-toggle" type="button" aria-expanded="false" aria-controls="hint1"><svg class="icon"><use href="#i-bulb"/></svg>Подсказка</button>
+          <div class="hint-body" id="hint1"><strong>Подсказка от Алекса.</strong> Сначала раскрой скобки: умножь 2 на каждое слагаемое внутри. Ответ не показываем — только первый шаг.</div>
+        </div>
+        <div class="footer"><button class="btn" type="button" data-go="l-task-2" disabled>Далее</button></div>
+      </section>
+
+      <!-- 4. Задание 2: выбор -->
+      <section class="screen" id="l-task-2" data-title="4 · Ученик · Задание 2 (выбор)">
+        <div class="lesson-top">
+          <a class="icon-btn" href="#l-home" aria-label="Выйти, ответы сохранятся"><svg class="icon"><use href="#i-x"/></svg></a>
+          <div class="bar" role="progressbar" aria-label="Прогресс работы" aria-valuemin="0" aria-valuemax="3" aria-valuenow="1"><i style="width:38%"></i></div>
+          <span class="counter">2/3</span>
+        </div>
+        <div class="scroll">
+          <span class="chip">Дроби</span>
+          <p class="prompt">Какое число равно ¾?</p>
+          <div class="options" role="radiogroup" aria-label="Варианты ответа">
+            <button class="option" type="button" role="radio" aria-checked="false"><span class="key">1</span>0,25</button>
+            <button class="option" type="button" role="radio" aria-checked="false"><span class="key">2</span>0,5</button>
+            <button class="option" type="button" role="radio" aria-checked="false" data-filled><span class="key">3</span>0,75</button>
+            <button class="option" type="button" role="radio" aria-checked="false"><span class="key">4</span>1,25</button>
+          </div>
+          <div class="saved" aria-live="polite"></div>
+          <button class="hint-toggle" type="button" aria-expanded="false" aria-controls="hint2"><svg class="icon"><use href="#i-bulb"/></svg>Подсказка</button>
+          <div class="hint-body" id="hint2"><strong>Подсказка от Алекса.</strong> Дробная черта — это деление: 3 разделить на 4.</div>
+        </div>
+        <div class="footer"><button class="btn" type="button" data-go="l-task-3" disabled>Далее</button></div>
+      </section>
+
+      <!-- 5. Задание 3: объяснение -->
+      <section class="screen" id="l-task-3" data-title="5 · Ученик · Задание 3 (объяснение)">
+        <div class="lesson-top">
+          <a class="icon-btn" href="#l-home" aria-label="Выйти, ответы сохранятся"><svg class="icon"><use href="#i-x"/></svg></a>
+          <div class="bar" role="progressbar" aria-label="Прогресс работы" aria-valuemin="0" aria-valuemax="3" aria-valuenow="2"><i style="width:70%"></i></div>
+          <span class="counter">3/3</span>
+        </div>
+        <div class="scroll">
+          <span class="chip">Обоснование</span>
+          <p class="prompt">Почему можно прибавить 6 к обеим частям уравнения?</p>
+          <label class="sr-only" for="ans3">Объяснение</label>
+          <textarea class="answer" id="ans3" placeholder="Объясни своими словами" data-kind="text"></textarea>
+          <div class="saved" aria-live="polite"></div>
+          <button class="attach" type="button"><svg class="icon"><use href="#i-clip"/></svg>Приложить решение (.txt)</button>
+        </div>
+        <div class="footer"><button class="btn" type="button" data-go="l-check" disabled>К отправке</button></div>
+      </section>
+
+      <!-- 6. Проверь перед отправкой -->
+      <section class="screen" id="l-check" data-title="6 · Ученик · Перед отправкой">
+        <header class="topbar">
+          <a class="icon-btn" href="#l-task-3" aria-label="Назад"><svg class="icon"><use href="#i-back"/></svg></a>
+          <h1>Перед отправкой</h1>
+        </header>
+        <div class="scroll">
+          <h2 class="title">Всё готово?</h2>
+          <p class="muted">Посмотри ответы ещё раз. Исправить можно прямо отсюда.</p>
+          <div class="card review-list">
+            <a class="list-row" href="#l-task-1"><span class="num">1</span><span class="grow"><span class="muted small q">2(x − 3) = 10, чему равен x?</span><span class="ans">2</span></span><svg class="icon" style="color:var(--blue-ink)"><use href="#i-pencil"/></svg><span class="sr-only">Изменить</span></a>
+            <a class="list-row" href="#l-task-2"><span class="num">2</span><span class="grow"><span class="muted small q">Какое число равно ¾?</span><span class="ans">0,75</span></span><svg class="icon" style="color:var(--blue-ink)"><use href="#i-pencil"/></svg><span class="sr-only">Изменить</span></a>
+            <a class="list-row" href="#l-task-3"><span class="num">3</span><span class="grow"><span class="muted small q">Почему можно прибавить 6?</span><span class="ans" style="font-size:17px">Чтобы равенство сохранилось: с обеих сторон делаем одно и то же.</span></span><svg class="icon" style="color:var(--blue-ink)"><use href="#i-pencil"/></svg><span class="sr-only">Изменить</span></a>
+          </div>
+          <p class="note"><svg class="icon"><use href="#i-shield"/></svg>После отправки ответы уже не поменять: Алекс увидит их такими. Если он вернёт работу — исправишь.</p>
+        </div>
+        <div class="footer plain">
+          <a class="btn" href="#l-sent"><svg class="icon"><use href="#i-send"/></svg>Отправить Алексу</a>
+        </div>
+      </section>
+
+      <!-- 7. Отправлено -->
+      <section class="screen" id="l-sent" data-title="7 · Ученик · Отправлено">
+        <div class="celebrate">
+          <div class="burst" aria-hidden="true">
+            <span style="--x:-70px;--y:-60px;background:var(--amber);left:78px;top:78px"></span>
+            <span style="--x:70px;--y:-55px;background:var(--blue);left:78px;top:78px;animation-delay:.05s"></span>
+            <span style="--x:-80px;--y:30px;background:var(--purple);left:78px;top:78px;animation-delay:.1s"></span>
+            <span style="--x:78px;--y:40px;background:var(--flame);left:78px;top:78px;animation-delay:.12s"></span>
+            <span style="--x:0px;--y:-86px;background:var(--green);left:78px;top:78px;animation-delay:.08s"></span>
+            <span style="--x:-30px;--y:80px;background:var(--blue);left:78px;top:78px;animation-delay:.15s"></span>
+            <div class="core"><svg class="icon"><use href="#i-check"/></svg></div>
+          </div>
+          <h2>Отправлено!</h2>
+          <p class="muted" style="max-width:300px">Работа у Алекса. Обычно он проверяет за день — разбор появится на главной.</p>
+          <div class="streak-up"><svg class="icon fill"><use href="#i-flame"/></svg><b>5</b><span style="text-align:left">работ подряд<br>сданы в срок</span></div>
+          <span class="chip purple" style="margin-top:10px"><svg class="icon"><use href="#i-medal"/></svg>Все работы недели сданы</span>
+        </div>
+        <div class="footer plain"><a class="btn" href="#l-home" data-after-send>Продолжить</a></div>
+      </section>
+
+      <!-- 8. Разбор -->
+      <section class="screen" id="l-review" data-title="8 · Ученик · Разбор">
+        <header class="topbar">
+          <a class="icon-btn" href="#l-home" aria-label="Назад"><svg class="icon"><use href="#i-back"/></svg></a>
+          <h1>Разбор</h1>
+        </header>
+        <div class="scroll">
+          <span class="verified"><svg class="icon" style="width:20px;height:20px"><use href="#i-shield"/></svg>Проверил Алекс · вчера, 21:10</span>
+          <p class="eyebrow" style="margin-top:14px">Уравнения: найди ошибку</p>
+          <div class="score"><b>2 из 3</b><span class="muted">верно</span></div>
+          <p>Хорошая работа! Одна ошибка — и Алекс подсказал, где она.</p>
+
+          <div class="result almost">
+            <div class="head"><svg class="icon"><use href="#i-alert"/></svg>Почти · задание 1</div>
+            <div class="your">Твой ответ: <b>2</b></div>
+            <div class="tutor"><span class="avatar" aria-hidden="true">А</span><div class="bubble">Скобки раскрыл верно — хорошее начало. Дальше: 2x − 6 = 10 → прибавь 6 к обеим частям. Проверь именно этот шаг.</div></div>
+          </div>
+          <div class="result ok">
+            <div class="head"><svg class="icon"><use href="#i-check"/></svg>Верно · задание 2</div>
+            <div class="your">Твой ответ: <b>0,75</b></div>
+            <div class="tutor"><span class="avatar" aria-hidden="true">А</span><div class="bubble">Точно: три четвёртых — это 0,75.</div></div>
+          </div>
+          <div class="result ok">
+            <div class="head"><svg class="icon"><use href="#i-check"/></svg>Верно · задание 3</div>
+            <div class="tutor"><span class="avatar" aria-hidden="true">А</span><div class="bubble">Хорошо объяснил про «весы в равновесии».</div></div>
+          </div>
+
+          <div class="section-title"><h3>Навыки после проверки</h3></div>
+          <div class="card">
+            <div class="skill-delta"><span class="grow"><strong>Дроби</strong><span class="muted small"> · верно 4 из 4</span><div class="meter" role="img" aria-label="Дроби: 4 из 4"><i style="width:100%"></i></div></span><span class="chip green"><svg class="icon"><use href="#i-check"/></svg>Освоено</span></div>
+            <div class="skill-delta"><span class="grow"><strong>Линейные уравнения</strong><span class="muted small"> · верно 1 из 3</span><div class="meter amber" role="img" aria-label="Линейные уравнения: 1 из 3"><i style="width:33%"></i></div></span><span class="chip amber"><svg class="icon"><use href="#i-alert"/></svg>Тренируем</span></div>
+          </div>
+          <div class="card amber"><strong style="color:var(--amber-ink)">Алекс вернул работу</strong><div class="small">Исправь первое задание — остальные ответы сохранятся.</div></div>
+        </div>
+        <div class="footer">
+          <a class="btn" href="#l-task-1">Исправить задание 1</a>
+          <a class="btn ghost" href="#l-home"><svg class="icon"><use href="#i-chat"/></svg>Спросить Алекса</a>
+        </div>
+      </section>
+
+      <!-- 9. Мой путь -->
+      <section class="screen" id="l-path" data-title="9 · Ученик · Мой путь">
+        <header class="topbar">
+          <h1>Мой путь</h1>
+          <span class="streak" aria-label="Серия: 5 работ подряд сданы в срок"><svg class="icon fill"><use href="#i-flame"/></svg>5</span>
+        </header>
+        <div class="scroll">
+          <div class="unit"><small style="font-weight:800;opacity:.85">МАТЕМАТИКА · ЕГЭ</small><b>Раздел 2: уравнения</b></div>
+          <div class="path">
+            <div class="node done p1"><button class="dot" type="button" aria-label="Дроби: подтверждено"><svg class="icon"><use href="#i-check"/></svg></button><span class="label">Дроби</span><span class="state">Готово · 4 из 4</span></div>
+            <div class="node done p2"><button class="dot" type="button" aria-label="Обоснование: подтверждено"><svg class="icon"><use href="#i-check"/></svg></button><span class="label">Обоснование</span><span class="state">Готово · 3 из 3</span></div>
+            <div class="node work p3"><span class="ringlet" aria-hidden="true"></span><button class="dot" type="button" aria-label="Линейные уравнения: тренируем"><svg class="icon"><use href="#i-alert"/></svg></button><span class="label">Линейные уравнения</span><span class="state">Тренируем · 1 из 3</span></div>
+            <div class="node lock p4"><button class="dot" type="button" aria-label="Квадратные уравнения: откроется позже"><svg class="icon"><use href="#i-lock"/></svg></button><span class="label">Квадратные уравнения</span><span class="state">После линейных</span></div>
+          </div>
+          <div class="card legend">
+            <span><i style="background:var(--green)"></i>Подтверждено преподавателем</span>
+            <span><i style="background:var(--amber)"></i>В последней проверке была ошибка</span>
+            <span><i style="background:var(--line)"></i>Откроется после предыдущего навыка</span>
+          </div>
+          <p class="note"><svg class="icon"><use href="#i-shield"/></svg>Путь составляет Алекс. Здесь только то, что он проверил, — это не прогноз баллов ЕГЭ.</p>
+        </div>
+        <nav class="tabbar" aria-label="Разделы">
+          <a href="#l-home"><svg class="icon"><use href="#i-home"/></svg>Сегодня</a>
+          <a href="#l-intro"><svg class="icon"><use href="#i-book"/></svg>Задания</a>
+          <a href="#l-path" aria-current="page"><svg class="icon"><use href="#i-route"/></svg>Мой путь</a>
+          <a href="#l-home"><svg class="icon"><use href="#i-user"/></svg>Профиль</a>
+        </nav>
+      </section>
+
+      <!-- 10. Репетитор: очередь проверки -->
+      <section class="screen dense" id="t-queue" data-title="10 · Репетитор · Проверка">
+        <header class="topbar">
+          <div class="avatar" aria-hidden="true" style="background:var(--green-tint);color:var(--green-ink)">А</div>
+          <h1>Проверка работ</h1>
+          <button class="icon-btn" type="button" aria-label="Ещё"><svg class="icon"><use href="#i-more"/></svg></button>
+        </header>
+        <div class="scroll">
+          <div class="stat-row">
+            <div class="stat"><small>Ждут</small><b>4</b></div>
+            <div class="stat"><small>Самая старая</small><b style="color:var(--amber-ink)">2 дня</b></div>
+            <div class="stat"><small>Обычно</small><b>5 ч</b></div>
+          </div>
+          <a class="btn" href="#t-queue">Проверить следующую</a>
+          <p class="muted small" style="text-align:center;margin:8px 0 14px">Катя · «Логарифмы: свойства» · ждёт 2 дня</p>
+          <div class="chips" role="group" aria-label="Фильтр">
+            <button class="chip on" type="button" aria-pressed="true">Ждут · 4</button>
+            <button class="chip" type="button" aria-pressed="false">Вернул · 1</button>
+            <button class="chip" type="button" aria-pressed="false">Проверено · 12</button>
+          </div>
+          <table class="table" style="margin-top:10px">
+            <thead><tr><th>Ученик и работа</th><th>Сдано</th><th class="num">Предв.</th></tr></thead>
+            <tbody>
+              <tr class="row-link"><td><strong>Катя</strong><span class="sub">Логарифмы: свойства</span></td><td>22 сент., 16:40<br><span class="status warn"><svg class="icon"><use href="#i-clock"/></svg>ждёт 2 дня</span></td><td class="num">ИИ 1/4</td></tr>
+              <tr class="row-link"><td><strong>Миша</strong><span class="sub">Проценты</span></td><td>23 сент., 09:15</td><td class="num"><span class="status off"><svg class="icon"><use href="#i-alert"/></svg>нет</span></td></tr>
+              <tr class="row-link"><td><strong>Женя</strong><span class="sub">Дроби и уравнения</span></td><td>вчера, 19:40</td><td class="num">эталон 3/3</td></tr>
+              <tr class="row-link"><td><strong>Саша</strong><span class="sub">Уравнения: найди ошибку</span></td><td>сегодня, 14:05</td><td class="num">ИИ 2/3</td></tr>
+            </tbody>
+          </table>
+          <p class="note"><svg class="icon"><use href="#i-shield"/></svg>«Предв.» — черновик ИИ или сверка с эталоном. Видите только вы; ученик получит результат после вашего решения.</p>
+          <div class="section-title"><h3>Сроки на этой неделе</h3></div>
+          <table class="table">
+            <thead><tr><th>Работа</th><th class="num">Сдали</th><th class="num">Срок</th></tr></thead>
+            <tbody>
+              <tr><td>Уравнения: найди ошибку</td><td class="num">3 из 5</td><td class="num">пт, 20:00</td></tr>
+              <tr><td>Дроби: практикум</td><td class="num"><span class="status ok"><svg class="icon"><use href="#i-check"/></svg>5 из 5</span></td><td class="num">ср, 20:00</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <nav class="tabbar" aria-label="Разделы">
+          <a href="#t-queue" aria-current="page"><svg class="icon"><use href="#i-list"/></svg>Проверка</a>
+          <a href="#t-queue"><svg class="icon"><use href="#i-users"/></svg>Ученики</a>
+          <a href="#t-queue"><svg class="icon"><use href="#i-cal"/></svg>Расписание</a>
+          <a href="#t-queue"><svg class="icon"><use href="#i-more"/></svg>Ещё</a>
+        </nav>
+      </section>
+
+      <!-- 11. Родитель -->
+      <section class="screen dense" id="p-summary" data-title="11 · Родитель · Сводка">
+        <header class="topbar">
+          <h1>Кабинет родителя</h1>
+          <button class="icon-btn" type="button" aria-label="Ещё"><svg class="icon"><use href="#i-more"/></svg></button>
+        </header>
+        <div class="scroll">
+          <div class="card row" style="display:flex">
+            <div class="avatar" aria-hidden="true">С</div>
+            <div><strong style="font-size:19px">Саша</strong><div class="muted small">Математика · ЕГЭ · репетитор Алекс</div></div>
+          </div>
+          <div class="section-title"><h3>Неделя 21–27 сент.</h3></div>
+          <table class="table">
+            <tbody>
+              <tr><td>Сдано работ</td><td class="num"><strong>3 из 3</strong></td></tr>
+              <tr><td>Из них в срок</td><td class="num"><strong>3</strong></td></tr>
+              <tr><td>Проверено преподавателем</td><td class="num"><strong>2 из 3</strong></td></tr>
+              <tr><td>Сдаёт в срок подряд</td><td class="num"><strong>5 работ</strong></td></tr>
+            </tbody>
+          </table>
+          <div class="section-title"><h3>Навыки</h3><span class="muted small">по проверкам Алекса</span></div>
+          <table class="table">
+            <thead><tr><th>Навык</th><th class="num">Верно</th><th>Последний раз</th></tr></thead>
+            <tbody>
+              <tr><td>Дроби</td><td class="num">4 из 4</td><td><span class="status ok"><svg class="icon"><use href="#i-check"/></svg>верно</span></td></tr>
+              <tr><td>Обоснование решения</td><td class="num">3 из 3</td><td><span class="status ok"><svg class="icon"><use href="#i-check"/></svg>верно</span></td></tr>
+              <tr><td>Линейные уравнения</td><td class="num">1 из 3</td><td><span class="status warn"><svg class="icon"><use href="#i-alert"/></svg>есть ошибка</span></td></tr>
+            </tbody>
+          </table>
+          <div class="section-title"><h3>Ближайшие занятия</h3></div>
+          <div class="lesson-line"><div class="date-box"><b>24</b><small>сент</small></div><div><strong>Сегодня, 18:00–19:00</strong><div class="muted small">Разбираем уравнения</div></div></div>
+          <div class="lesson-line"><div class="date-box"><b>26</b><small>сент</small></div><div><strong>Суббота, 11:00–12:00</strong><div class="muted small">Пробный вариант, часть 1</div></div></div>
+          <p class="note"><svg class="icon"><use href="#i-shield"/></svg>Здесь только результаты, которые подтвердил преподаватель, и расписание. Ответы, переписка, оплата и черновики ИИ не показываются.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
