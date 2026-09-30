@@ -28,6 +28,7 @@ import { WorkMaterials } from "./WorkMaterials";
 import { Questions } from "./Questions";
 import { Discussion } from "./Discussion";
 import { AttemptHistory } from "./AttemptHistory";
+import { AnswerProgress, SubmissionMoment } from "./SubmissionMoment";
 import { Badge, useUnsaved } from "./components";
 export const blankTask = (): Task => ({
   id: crypto.randomUUID().replaceAll("-", ""),
@@ -390,6 +391,7 @@ export function AssignmentDetail({
   update,
   edit,
   duplicate,
+  journeyEnabled = false,
 }: {
   assignment: Assignment;
   isTutor: boolean;
@@ -398,7 +400,13 @@ export function AssignmentDetail({
   update: () => Promise<void>;
   edit: () => void;
   duplicate: () => void;
+  journeyEnabled?: boolean;
 }) {
+  const [receipt, setReceipt] = useState<{
+    id: string;
+    answers: Record<string, string>;
+    attachments: Record<string, AnswerFile>;
+  } | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>(
       a.draft.revision
         ? a.draft.answers
@@ -423,13 +431,19 @@ export function AssignmentDetail({
     [note, setNote] = useState(""),
     [showHints, setShowHints] = useState<Record<string, boolean>>({});
   const s = a.submission;
-  const writable = !isTutor && (!s || s.status === "returned");
-  const priorStatus = useRef(s?.status);
+  // Keep the acknowledged original visible even if the follow-up GET fails.
+  const visibleOriginal = receipt && s?.id !== receipt.id ? receipt : s;
+  const hasMatchingSubmission = !receipt || s?.id === receipt.id;
+  const writable = !isTutor && !receipt && (!s || s.status === "returned");
+  const priorSubmission = useRef({ id: s?.id, status: s?.status });
   useEffect(() => {
     if (
       !isTutor &&
       s?.status === "returned" &&
-      priorStatus.current !== "returned"
+      hasMatchingSubmission &&
+      (priorSubmission.current.status !== "returned" ||
+        priorSubmission.current.id !== s.id ||
+        !!receipt)
     ) {
       setAnswers(a.draft.revision ? a.draft.answers : s.answers);
       setAttachments(
@@ -439,9 +453,10 @@ export function AssignmentDetail({
       setDirty(false);
       setSaveError("");
       setSaved("");
+      setReceipt(null);
     }
-    priorStatus.current = s?.status;
-  }, [s?.status, s?.id]);
+    priorSubmission.current = { id: s?.id, status: s?.status };
+  }, [s?.status, s?.id, receipt?.id]);
 
   const [reviewTasks, setReviewTasks] = useState<ReviewTask[]>([]);
   const savingRef = useRef(false),
@@ -495,12 +510,13 @@ export function AssignmentDetail({
     )
       return;
     await action(async () => {
-      await api("/assignments/" + a.id + "/submit", "POST", {
-        answers,
-        attachments,
-        revision,
-      });
+      const submitted = await api<{ id: string }>(
+        "/assignments/" + a.id + "/submit",
+        "POST",
+        { answers, attachments, revision },
+      );
       setDirty(false);
+      if (journeyEnabled) setReceipt({ id: submitted.id, answers, attachments });
       await update();
     });
   }
@@ -587,7 +603,21 @@ export function AssignmentDetail({
         )}
       </div>
       {a.instructions && <div className="instructions">{a.instructions}</div>}
-      {s && (
+      {journeyEnabled && writable && (
+        <AnswerProgress
+          answered={a.tasks.filter((task) =>
+            !!answers[task.id]?.trim() || !!attachments[task.id]?.content.trim(),
+          ).length}
+          total={a.tasks.length}
+        />
+      )}
+      {journeyEnabled &&
+        !isTutor &&
+        receipt &&
+        (!hasMatchingSubmission || !["reviewed", "returned"].includes(s?.status || "")) && (
+          <SubmissionMoment key={receipt.id} relationship={a.relationship_id} />
+        )}
+      {s && hasMatchingSubmission && (
         <div className="notice">
           {s.status === "returned"
             ? "Преподаватель вернул работу: " +
@@ -618,7 +648,9 @@ export function AssignmentDetail({
       )}
       {a.tasks.map((t, i) => {
         const assessed = s?.analysis?.tasks.find((x) => x.task_id === t.id);
-        const reviewed = s?.review?.tasks.find((x) => x.task_id === t.id);
+        const reviewed = hasMatchingSubmission
+          ? s?.review?.tasks.find((x) => x.task_id === t.id)
+          : undefined;
         return (
           <section className="card work-task" key={t.id}>
             <div className="section-head">
@@ -679,15 +711,15 @@ export function AssignmentDetail({
                 )}
               </>
             ) : (
-              s && (
+              visibleOriginal && (
                 <div className="original">
                   <span>ОРИГИНАЛЬНЫЙ ОТВЕТ УЧЕНИКА</span>
-                  <p>{s.answers[t.id]}</p>
+                  <p>{visibleOriginal.answers[t.id]}</p>
                 </div>
               )
             )}
             <AnswerAttachment
-              file={writable ? attachments[t.id] : s?.attachments?.[t.id]}
+              file={writable ? attachments[t.id] : visibleOriginal?.attachments?.[t.id]}
             />
             {writable && t.type !== "single_choice" && (
               <div>
@@ -796,7 +828,7 @@ export function AssignmentDetail({
                 <p>{reviewed.feedback}</p>
               </div>
             )}
-            {!isTutor && s?.hints?.[t.id] && (
+            {!isTutor && hasMatchingSubmission && s?.hints?.[t.id] && (
               <div className="hint">
                 <button
                   className="text-button"
@@ -928,7 +960,9 @@ export function AssignmentDetail({
         <Discussion key={"discussion-" + a.id} assignment={a.id} />
       )}
       {s && <AttemptHistory assignment={a} tutor={isTutor} />}
-      {!isTutor && s && <LearnerFeedback key={a.id} assignment={a.id} />}
+      {!isTutor && s && hasMatchingSubmission && (
+        <LearnerFeedback key={a.id} assignment={a.id} />
+      )}
     </>
   );
 }

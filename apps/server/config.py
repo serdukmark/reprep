@@ -25,6 +25,7 @@ class Settings:
     ai_daily_limit: int = 50
     guardian_data_approved: bool = False
     account_deletion_approved: bool = False
+    learning_journey_enabled: bool = False
     session_hours: int = 12
     invite_hours: int = 72
 
@@ -45,6 +46,7 @@ class Settings:
         value = cls(account_deletion_approved=get('ACCOUNT_DELETION_APPROVED','false').lower()=='true', guardian_data_approved=get('GUARDIAN_DATA_APPROVED','false').lower()=='true', ai_daily_limit=max(0,int(get('AI_DAILY_LIMIT','50'))), database=get('DATABASE_PATH', 'data/reprep.sqlite3'),
                     environment=get('APP_ENV', 'development'),
                     demo=get('DEMO_ENABLED', 'false').lower() == 'true',
+                    learning_journey_enabled=get('LEARNING_JOURNEY_ENABLED', 'false').lower() == 'true',
                     bot_token=get('MAX_BOT_TOKEN', ''),
                     telegram_token=get('TELEGRAM_BOT_TOKEN',''),
                     telegram_enabled=get('TELEGRAM_BOT_ENABLED','false').lower()=='true',

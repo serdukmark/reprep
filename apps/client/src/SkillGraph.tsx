@@ -2,6 +2,7 @@ import { ChoiceSelect } from "./ChoiceSelect";
 import { useEffect, useId, useState } from "react";
 import { api, labels } from "./api";
 import { useUnsaved } from "./components";
+import { SkillPath } from "./SkillPath";
 
 type Edge = { prerequisite: string; skill: string };
 type Node = {
@@ -21,6 +22,20 @@ type Graph = {
   note: string;
 };
 export function SkillGraph({
+  relationship,
+  tutor,
+  journeyEnabled = false,
+}: {
+  relationship: string;
+  tutor: boolean;
+  journeyEnabled?: boolean;
+}) {
+  if (!tutor && journeyEnabled)
+    return <SkillPath key={relationship} relationship={relationship} />;
+  return <SavedSkillGraph relationship={relationship} tutor={tutor} />;
+}
+
+function SavedSkillGraph({
   relationship,
   tutor,
 }: {
@@ -136,7 +151,7 @@ export function SkillGraph({
                     refY="4"
                     orient="auto"
                   >
-                    <path d="M0 0 L8 4 L0 8" fill="#718269" />
+                    <path d="M0 0 L8 4 L0 8" fill="var(--line-strong, #718269)" />
                   </marker>
                 </defs>
                 {data.edges.map((edge, i) => {
@@ -147,7 +162,7 @@ export function SkillGraph({
                       key={i}
                       d={`M${a.x + 190},${a.y + 34} C${a.x + 220},${a.y + 34} ${b.x - 30},${b.y + 34} ${b.x},${b.y + 34}`}
                       fill="none"
-                      stroke="#718269"
+                      stroke="var(--line-strong, #718269)"
                       markerEnd={`url(#${marker})`}
                     />
                   );
@@ -175,14 +190,14 @@ export function SkillGraph({
                         width={190}
                         height={68}
                         rx={10}
-                        fill={node.latest === "correct" ? "#e3eedc" : "#f4f1e9"}
-                        stroke={selected === node.skill ? "#446f3d" : "#d2d7c9"}
+                        fill={node.latest === "correct" ? "var(--green-tint, #e3eedc)" : "var(--surface-2, #f4f1e9)"}
+                        stroke={selected === node.skill ? "var(--blue, #446f3d)" : "var(--line-strong, #d2d7c9)"}
                       />
                       <text
                         x={p.x + 12}
                         y={p.y + 24}
                         fontSize={13}
-                        fill="#25302a"
+                        fill="var(--ink, #25302a)"
                       >
                         {node.skill.length > 24
                           ? node.skill.slice(0, 22) + "…"
@@ -192,7 +207,7 @@ export function SkillGraph({
                         x={p.x + 12}
                         y={p.y + 47}
                         fontSize={12}
-                        fill="#52624b"
+                        fill="var(--ink-2, #52624b)"
                       >
                         {labels[node.latest] || node.latest}
                       </text>

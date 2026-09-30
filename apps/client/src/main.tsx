@@ -49,6 +49,7 @@ import { Groups } from "./Groups";
 import { Notifications } from "./Notifications";
 import { AccountData } from "./AccountData";
 import { SkillGraph } from "./SkillGraph";
+import { StreakCard } from "./StreakCard";
 import { Catalog } from "./Catalog";
 import { Workspaces } from "./Workspaces";
 import { GuardianInvites, GuardianPortal } from "./Guardian";
@@ -64,6 +65,7 @@ type Page =
   | "catalog"
   | "settings";
 type Config = {
+  learning_journey_enabled?: boolean;
   demo_enabled: boolean;
   max_enabled: boolean;
   telegram_enabled: boolean;
@@ -717,6 +719,7 @@ function App() {
                 <AssignmentDetail
                   key={active.id}
                   assignment={active}
+                  journeyEnabled={config?.learning_journey_enabled === true}
                   isTutor={!!isTutor}
                   busy={busy}
                   action={action}
@@ -776,6 +779,15 @@ function App() {
                       </button>
                     )}
                   </div>
+                  {!isTutor && selected && config?.learning_journey_enabled && (
+                    <StreakCard
+                      key={"streak-" + selected}
+                      relationship={selected}
+                      relations={relations}
+                      select={setSelected}
+                      openPath={() => navigate("progress")}
+                    />
+                  )}
                   <div className="dashboard-grid">
                     <section className="hero-card">
                       <div className="eyebrow">
@@ -816,9 +828,9 @@ function App() {
                           <div />
                           <div />
                           <div />
-                          <b><Check size={28} /></b>
+                          <b><Check size={28} aria-hidden="true" /></b>
                         </div>
-                        <span className="orbit"><Sparkles size={40} /></span>
+                        <span className="orbit"><Sparkles size={40} aria-hidden="true" /></span>
                       </div>
                     </section>
                     <section className="today-card">
@@ -1135,6 +1147,7 @@ function App() {
                       key={"graph-" + selected}
                       relationship={selected}
                       tutor={isTutor}
+                      journeyEnabled={config?.learning_journey_enabled === true}
                     />
                   )}
                   {isTutor && (

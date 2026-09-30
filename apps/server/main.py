@@ -348,7 +348,7 @@ def create_app(settings=None, provider=None, run_worker=True):
 
     @app.get('/api/config')
     def config():
-        return {'demo_enabled': cfg.demo, 'max_enabled': bool(cfg.bot_token), 'telegram_enabled': cfg.telegram_enabled, 'assessment': engine.model if isinstance(engine, OpenRouterAdapter) else 'approved_adapter' if isinstance(engine, RemoteAdapter) else 'local_rules', 'version': '0.1.0'}
+        return {'demo_enabled': cfg.demo, 'max_enabled': bool(cfg.bot_token), 'telegram_enabled': cfg.telegram_enabled, 'learning_journey_enabled': cfg.learning_journey_enabled, 'assessment': engine.model if isinstance(engine, OpenRouterAdapter) else 'approved_adapter' if isinstance(engine, RemoteAdapter) else 'local_rules', 'version': '0.1.0'}
 
     @app.post('/api/max/webhook')
     async def max_webhook(request: Request):
@@ -1160,6 +1160,8 @@ def create_app(settings=None, provider=None, run_worker=True):
     install_marketplace(app,user,db,tutor,learner_only,fail)
     from .skill_graph import install as install_skill_graph
     install_skill_graph(app,user,db,tutor,relation,fail)
+    from .learning_journey import install as install_learning_journey
+    install_learning_journey(app,cfg,user,db,relation,fail)
     from .account_data import install as install_account_data
     install_account_data(app,cfg,user,db,submission_view,file_data,learning_plan,fail)
     from .notifications import install as install_notifications

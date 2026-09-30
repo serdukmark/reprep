@@ -1,5 +1,16 @@
 # Decision log
 
+## D-JOURNEY-001 — Локальная механика нового оформления, 2026-09-30
+
+[CONFIRMED scope / ASSUMPTION rules v1] По поручению владельца через Jarvis:
+серверная серия первых сдач в срок, реальная недельная сводка, «Мой путь» из
+графа преподавателя и подтверждённых evidence, прогресс заполнения и момент
+отправки. Правила — [ADR-014](adr/014-learning-journey.md). Флаг выключен по
+умолчанию, миграций нет. Только ветка `design/duolingo` от `f66cf6f`, без push и
+выкатки. Стенд, архив, design-mockup, style.css и базовое оформление не трогаем.
+Предложение макета о серии сохраняется как история, v1 заменяет его для этой
+обратимой реализации. Требования: FR-PROG-006/007, FR-SUB-002/003.
+
 This is a compact project-level log. Material engineering decisions should also have a detailed ADR.
 
 ## Confirmed decisions

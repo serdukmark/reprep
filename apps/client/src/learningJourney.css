@@ -1,0 +1,150 @@
+/* Layout for the optional learning journey. Theme tokens belong to style.css. */
+.learning-journey {
+  min-width: 0;
+  color: var(--ink, inherit);
+}
+.card.learning-journey {
+  background: var(--surface, Canvas);
+  border-color: var(--line, currentColor);
+}
+.learning-journey p {
+  color: var(--ink-2, inherit);
+}
+.learning-journey .journey-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.learning-journey .journey-note {
+  color: var(--ink-2, inherit);
+}
+.learning-journey .journey-message {
+  display: grid;
+  gap: 12px;
+}
+.learning-journey .journey-message button {
+  justify-self: start;
+  min-height: 44px;
+}
+.skill-path {
+  display: grid;
+  gap: 18px;
+}
+.skill-path-levels,
+.skill-path-nodes,
+.skill-path-evidence {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.skill-path-levels {
+  display: grid;
+  gap: 20px;
+}
+.skill-path-level:nth-child(even) {
+  padding-left: 28px;
+}
+.skill-path-level:nth-child(odd) {
+  padding-right: 28px;
+}
+.skill-path-nodes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 14px;
+}
+.skill-path-node {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 76px;
+  height: 100%;
+  padding: 14px;
+  text-align: left;
+  border: 2px solid var(--line-strong, currentColor);
+  border-radius: var(--radius-lg, 20px);
+  background: var(--surface, transparent);
+}
+.skill-path-node[aria-pressed="true"] {
+  outline: 3px solid var(--blue, currentColor);
+  outline-offset: 3px;
+}
+.skill-path-node:focus-visible {
+  outline: 3px solid var(--focus, currentColor);
+  outline-offset: 4px;
+}
+.skill-path-symbol {
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+  display: grid;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+.skill-path-node-confirmed .skill-path-symbol {
+  color: var(--green-ink, currentColor);
+  background: var(--green-tint, transparent);
+}
+.skill-path-node-current .skill-path-symbol {
+  color: var(--amber-ink, currentColor);
+  background: var(--amber-tint, transparent);
+}
+.skill-path-node-locked .skill-path-symbol {
+  color: var(--ink-2, currentColor);
+  background: var(--surface-2, transparent);
+}
+.skill-path-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+.skill-path-copy strong {
+  font-size: 1.08em;
+}
+.skill-path-state {
+  font-weight: 600;
+}
+.skill-path-count,
+.skill-path-parents {
+  color: var(--ink-2, inherit);
+  font-size: 0.93em;
+}
+.skill-path-detail {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--line-strong, currentColor);
+  border-radius: var(--radius, 16px);
+  background: var(--surface-2, transparent);
+  overflow-wrap: anywhere;
+}
+.skill-path-evidence {
+  display: grid;
+  gap: 12px;
+}
+.skill-path-evidence li {
+  display: grid;
+  gap: 4px;
+  border-top: 1px solid var(--line, currentColor);
+  padding-top: 12px;
+}
+.skill-path-list .skill-path-level {
+  padding: 0;
+}
+@media (max-width: 480px) {
+  .skill-path-level:nth-child(n) {
+    padding: 0;
+  }
+  .skill-path-node {
+    gap: 10px;
+    padding: 12px;
+  }
+  .skill-path-symbol {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+  }
+}

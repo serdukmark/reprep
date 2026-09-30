@@ -1,5 +1,14 @@
 # Scope and priorities
 
+## Local extension after submission freeze — 30 September 2026
+
+[CONFIRMED scope] Owner assigned reversible learning-journey mechanics in
+`design/duolingo`: server punctuality streak, existing skill graph presentation,
+filled-answer progress and submission confirmation. FR-PROG-006/007, ADR-014.
+Feature flag defaults off. This is outside the frozen f66cf6f submission build;
+no deployment, push or archive regeneration is authorized. It adds no autonomous
+grading, invented curriculum targets or new prerequisites blocking P0.
+
 ## Product vision versus release scope
 
 The [confirmed project concept](22_PROJECT_PASSPORT_RU.md) covers scheduling, homework, materials, payments, communication, progress and learner-contextual AI, including an affordable standalone AI tutor. Tutor and learner subscriptions and later tutor-matching/payment commissions are confirmed business-model directions.

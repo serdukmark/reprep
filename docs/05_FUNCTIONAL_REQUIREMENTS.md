@@ -170,6 +170,26 @@ Learner should see understandable progress without harmful ranking or unsupporte
 
 System may propose a next task or topic. It must be labelled as a recommendation and remain tutor-controlled.
 
+## Learning journey — 30 September 2026
+
+### FR-PROG-006 — server punctuality summary `[P1][CONFIRMED scope]`
+
+Owner assigned reversible implementation behind `LEARNING_JOURNEY_ENABLED=false`.
+Compute a per-relationship streak from first submission timestamps and published
+deadlines on the server. No-deadline work and retries do not earn points; missed
+deadlines reset the streak. Missing facts produce empty/insufficient states.
+Show actual weekly submitted and on-time counts. Rules v1: ADR-014.
+
+### FR-PROG-007 — learner skill path `[P1][CONFIRMED scope]`
+
+Show teacher-defined prerequisites and confirmed evidence as confirmed/current/
+locked nodes. Locks are informational. Without links, show the evidence list;
+without evidence, show an empty state. Counts are checked task results, not
+curriculum completion. Use SVG, no emoji. Disabled feature retains the old flow.
+
+FR-SUB-002/003 extension: optional filled-answer progress and saved-submission
+confirmation; weekly marker only from complete server facts. No deployment/push.
+
 ## Schedule and reminders
 
 ### FR-SCHED-001 — lesson schedule `[P1]`

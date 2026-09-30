@@ -43,8 +43,15 @@ def enrich(schema,routes,base_url):
     schemas['StudyQuestion']=obj({'id':string,'cursor':integer,'task_id':string,'question':string,'status':string,'created':string,
         'response':nullable(string),'needs_teacher':{'type':'boolean'},'draft':nullable({'type':'object','description':'Hidden from learner; contains text/status/confidence/engine/prompt_version for tutor'})})
     schemas['SkillGraphView']=obj({'revision':integer,'skills':array(string),'edges':array(ref('SkillEdge')),
-        'nodes':array(obj({'skill':string,'latest':string,'correct':integer,'total':integer,'evidence_count':integer,'prerequisites_confirmed':{'type':'boolean'}})),
+        'nodes':array(obj({'skill':string,'latest':string,'correct':integer,'total':integer,'evidence_count':integer,'evidence_ids':array(string),'prerequisites_confirmed':{'type':'boolean'}})),
         'available_skills':array(string),'note':string})
+    schemas['LearningJourneyView']=obj({
+        'streak':obj({'count':nullable(integer),'eligible_count':integer,'pending_count':integer,'excluded_count':integer}),
+        'week':obj({'starts_at':string,'ends_at':string,'time_zone':{'const':'UTC'},'total':integer,
+                    'submitted':integer,'on_time':integer,'complete':{'type':'boolean'}}),
+        'calculated_at':string,'rules_version':{'const':'v1'},
+        'data_status':{'type':'string','enum':['available','empty','insufficient_data']},'insufficient_count':integer})
+    schemas['LearningJourneyView']['description']='Read-only first-submission punctuality. Suppress counts when data_status is insufficient_data. Week is Monday to Monday UTC; completion does not mean skill mastery.'
     file_result=obj({'file_name':string,'content':string,'content_type':string,'note':string},['file_name','content'])
     id_result=obj({'id':string})
     ok_result=obj({'ok':{'type':'boolean'}})
@@ -68,6 +75,7 @@ def enrich(schema,routes,base_url):
         'deletion_status':obj({'request':nullable(obj({'id':string,'status':string,'created':string})),'note':string}),
         'request_deletion':obj({'id':string,'status':string}),'cancel_deletion':ok_result,
         'skill_graph':ref('SkillGraphView'),'save_skill_graph':ref('SkillGraphView'),
+        'journey':ref('LearningJourneyView'),
         'catalog_profile':obj({'revision':integer,'offer':nullable({'type':'object','properties':{key:value for key,value in schemas['TutorOffer']['properties'].items() if key!='revision'}})}),
         'save_catalog_profile':obj({'revision':integer}),
         'catalog':obj({'items':array(obj({'id':string,'alias':string,'revision':integer,'visible':{'type':'boolean'},'headline':string,'description':string,'subjects':array(string),'price_rub':integer,'duration':integer})),'note':string}),
@@ -92,7 +100,7 @@ def enrich(schema,routes,base_url):
         'patch_notifications':ok_result,
         'health':obj({'status':string}),
         'ready':obj({'ready':{'type':'boolean'},'checks':array(string),'external_services':string}),
-        'config':obj({'demo_enabled':{'type':'boolean'},'max_enabled':{'type':'boolean'},'telegram_enabled':{'type':'boolean'},'assessment':string,'version':string}),
+        'config':obj({'demo_enabled':{'type':'boolean'},'max_enabled':{'type':'boolean'},'telegram_enabled':{'type':'boolean'},'learning_journey_enabled':{'type':'boolean'},'assessment':string,'version':string}),
         'telegram_webhook':obj({'ok':{'type':'boolean'},'status':string}),
         'max_webhook':obj({'ok':{'type':'boolean'},'status':string}),
         'attempts':obj({'items':array(obj({'id':string,'attempt':integer,'status':string,'submitted':string})),'next_offset':nullable(integer)}),
@@ -116,7 +124,7 @@ def enrich(schema,routes,base_url):
         for method in route.methods:
             op=schema.get('paths',{}).get(route.path,{}).get(method.lower())
             if not op:continue
-            roles=['tutor','learner'] if name in {'tutor_requests','notification_settings','save_notifications','patch_notifications'} else ['guardian'] if name in {'accept_guardian','guardian_links','guardian_summary'} else ['tutor'] if name in tutors else ['learner'] if name in learners else ['tutor','learner','guardian'] if authenticated else ['MAX webhook'] if webhook else ['public']
+            roles=['tutor','learner'] if name in {'journey','tutor_requests','notification_settings','save_notifications','patch_notifications'} else ['guardian'] if name in {'accept_guardian','guardian_links','guardian_summary'} else ['tutor'] if name in tutors else ['learner'] if name in learners else ['tutor','learner','guardian'] if authenticated else ['MAX webhook'] if webhook else ['public']
             op['x-roles']=roles
             if authenticated or webhook:op['security']=[{('TelegramWebhookSecret' if 'telegram' in route.path else 'MaxWebhookSecret') if webhook else 'SessionBearer':[]}]
             if authenticated:
