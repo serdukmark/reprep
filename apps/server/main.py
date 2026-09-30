@@ -1159,7 +1159,7 @@ def create_app(settings=None, provider=None, run_worker=True):
     from .marketplace import install as install_marketplace
     install_marketplace(app,user,db,tutor,learner_only,fail)
     from .skill_graph import install as install_skill_graph
-    install_skill_graph(app,user,db,tutor,relation,fail)
+    install_skill_graph(app,cfg,user,db,tutor,relation,fail)
     from .learning_journey import install as install_learning_journey
     install_learning_journey(app,cfg,user,db,relation,fail)
     from .account_data import install as install_account_data

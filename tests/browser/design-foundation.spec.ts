@@ -8,7 +8,7 @@ test.skip(
 );
 
 const baseline = process.env.DESIGN_BASELINE === "1";
-const artifactRoot = `artifacts/design-foundation/${baseline ? "baseline" : "after"}`;
+const artifactRoot = process.env.DESIGN_ARTIFACT_ROOT || `artifacts/design-foundation/${baseline ? "baseline" : "after"}`;
 
 // Read the colors actually painted by the product, including transparent layers.
 // Expected ratios come from WCAG, not from copies of the implementation tokens.

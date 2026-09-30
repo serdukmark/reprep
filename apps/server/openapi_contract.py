@@ -43,7 +43,7 @@ def enrich(schema,routes,base_url):
     schemas['StudyQuestion']=obj({'id':string,'cursor':integer,'task_id':string,'question':string,'status':string,'created':string,
         'response':nullable(string),'needs_teacher':{'type':'boolean'},'draft':nullable({'type':'object','description':'Hidden from learner; contains text/status/confidence/engine/prompt_version for tutor'})})
     schemas['SkillGraphView']=obj({'revision':integer,'skills':array(string),'edges':array(ref('SkillEdge')),
-        'nodes':array(obj({'skill':string,'latest':string,'correct':integer,'total':integer,'evidence_count':integer,'evidence_ids':array(string),'prerequisites_confirmed':{'type':'boolean'}})),
+        'nodes':array(obj({'skill':string,'latest':string,'correct':integer,'total':integer,'evidence_count':integer,'evidence_ids':array(string),'prerequisites_confirmed':{'type':'boolean'}},['skill','latest','correct','total','evidence_count','prerequisites_confirmed'])),
         'available_skills':array(string),'note':string})
     schemas['LearningJourneyView']=obj({
         'streak':obj({'count':nullable(integer),'eligible_count':integer,'pending_count':integer,'excluded_count':integer}),

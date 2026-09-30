@@ -124,6 +124,9 @@
                     "telegram_enabled": {
                       "type": "boolean"
                     },
+                    "learning_journey_enabled": {
+                      "type": "boolean"
+                    },
                     "assessment": {
                       "type": "string"
                     },
@@ -135,6 +138,7 @@
                     "demo_enabled",
                     "max_enabled",
                     "telegram_enabled",
+                    "learning_journey_enabled",
                     "assessment",
                     "version"
                   ]
@@ -7362,6 +7366,84 @@
         ]
       }
     },
+    "/api/relationships/{id_}/learning-journey": {
+      "get": {
+        "summary": "Journey",
+        "operationId": "journey_api_relationships__id___learning_journey_get",
+        "parameters": [
+          {
+            "name": "id_",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Id "
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LearningJourneyView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authorization, role or resource visibility error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-roles": [
+          "tutor",
+          "learner"
+        ],
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
     "/api/account/export": {
       "get": {
         "summary": "Export Account",
@@ -9941,6 +10023,12 @@
                 "evidence_count": {
                   "type": "integer"
                 },
+                "evidence_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "prerequisites_confirmed": {
                   "type": "boolean"
                 }
@@ -9973,6 +10061,102 @@
           "available_skills",
           "note"
         ]
+      },
+      "LearningJourneyView": {
+        "type": "object",
+        "properties": {
+          "streak": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "eligible_count": {
+                "type": "integer"
+              },
+              "pending_count": {
+                "type": "integer"
+              },
+              "excluded_count": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "count",
+              "eligible_count",
+              "pending_count",
+              "excluded_count"
+            ]
+          },
+          "week": {
+            "type": "object",
+            "properties": {
+              "starts_at": {
+                "type": "string"
+              },
+              "ends_at": {
+                "type": "string"
+              },
+              "time_zone": {
+                "const": "UTC"
+              },
+              "total": {
+                "type": "integer"
+              },
+              "submitted": {
+                "type": "integer"
+              },
+              "on_time": {
+                "type": "integer"
+              },
+              "complete": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "starts_at",
+              "ends_at",
+              "time_zone",
+              "total",
+              "submitted",
+              "on_time",
+              "complete"
+            ]
+          },
+          "calculated_at": {
+            "type": "string"
+          },
+          "rules_version": {
+            "const": "v1"
+          },
+          "data_status": {
+            "type": "string",
+            "enum": [
+              "available",
+              "empty",
+              "insufficient_data"
+            ]
+          },
+          "insufficient_count": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "streak",
+          "week",
+          "calculated_at",
+          "rules_version",
+          "data_status",
+          "insufficient_count"
+        ],
+        "description": "Read-only first-submission punctuality. Suppress counts when data_status is insufficient_data. Week is Monday to Monday UTC; completion does not mean skill mastery."
       }
     },
     "securitySchemes": {

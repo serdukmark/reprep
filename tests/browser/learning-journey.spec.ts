@@ -5,13 +5,15 @@ import {
   Locator,
   Page,
 } from "@playwright/test";
-import { readFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
+import { inflateSync } from "node:zlib";
 import { choose } from "./audit-fixtures";
 
 type JourneyFixture = { tutor: string; learner: string; relationship: string };
 const subject = "Синтетическая алгебра: путь";
 const title = "Синтетическая работа для серии";
 const headers = (token: string) => ({ Authorization: `Bearer ${token}` });
+const artifactRoot = "artifacts/journey-integration";
 
 async function json(
   request: APIRequestContext,
@@ -85,7 +87,7 @@ async function selectJourney(page: Page, relationship: string) {
 
 async function screenshot(page: Page, name: string) {
   await page.screenshot({
-    path: `artifacts/journey/${name}.png`,
+    path: `${artifactRoot}/${name}.png`,
     fullPage: true,
   });
 }
@@ -99,7 +101,7 @@ async function narrowScreenshot(page: Page, name: string) {
     .toBe(true);
   // System Chrome may repeat viewport tiles in tall fullPage mobile captures.
   // Keep this a literal phone viewport; widgets receive dedicated captures below.
-  await page.screenshot({ path: `artifacts/journey/${name}-320.png` });
+  await page.screenshot({ path: `${artifactRoot}/${name}-320.png` });
   await page.setViewportSize({ width: 1440, height: 1000 });
 }
 
@@ -118,7 +120,13 @@ async function widgetScreenshot(
   );
   await page.setViewportSize({ width, height: Math.max(height, 800) });
   await widget.scrollIntoViewIfNeeded();
-  await widget.screenshot({ path: `artifacts/journey/${name}.png` });
+  await widget.screenshot({ path: `${artifactRoot}/${name}.png` });
+  await checkWidgetContrast(widget, name);
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+    )
+    .toBe(true);
   await page.setViewportSize(previous);
 }
 
@@ -127,12 +135,14 @@ async function inspectPathAtPhoneWidth(page: Page, path: Locator) {
   for (const state of ["confirmed", "current", "locked"]) {
     const node = path.locator(`[data-state="${state}"]`);
     await node.scrollIntoViewIfNeeded();
-    await expect(node).toBeInViewport({ ratio: 1 });
+    // Allow subpixel IntersectionObserver rounding; horizontal bounds below
+    // remain strict and catch genuine clipping at the 320 px viewport.
+    await expect(node).toBeInViewport({ ratio: 0.999 });
     const box = await node.boundingBox();
     expect(box!.x).toBeGreaterThanOrEqual(0);
     expect(box!.x + box!.width).toBeLessThanOrEqual(320);
     await page.screenshot({
-      path: `artifacts/journey/path-node-${state}-320.png`,
+      path: `${artifactRoot}/path-node-${state}-320.png`,
     });
   }
   await expect
@@ -145,44 +155,246 @@ async function inspectPathAtPhoneWidth(page: Page, path: Locator) {
   await widgetScreenshot(page, path, "path-widget-desktop", 1440);
 }
 
-async function tokenContractPreview(page: Page, widget: Locator, name: string) {
-  // Preview only: exact reference token blocks, never the mockup layout CSS.
-  // These images do not claim that the parallel foundation/theme is integrated.
-  const reference = await readFile("design-mockup/styles.css", "utf8");
-  const light = reference.match(/^:root\s*\{[\s\S]*?^\}/m)?.[0];
-  const dark = reference.match(/^\[data-theme="dark"\]\s*\{[\s\S]*?^\}/m)?.[0];
-  expect(light).toBeTruthy();
-  expect(dark).toBeTruthy();
+async function integratedThemes(page: Page, widget: Locator, name: string) {
+  // Exercise the real bundled CSS and OS preference, without injected tokens.
   const originalTheme = await page.locator("html").getAttribute("data-theme");
-  const tokens = await page.addStyleTag({ content: `${light}\n${dark}` });
+  const originalDark = await page.evaluate(
+    () => matchMedia("(prefers-color-scheme: dark)").matches,
+  );
+  await page
+    .locator("html")
+    .evaluate((root) => root.removeAttribute("data-theme"));
   try {
-    for (const theme of ["light", "dark"]) {
-      await page
-        .locator("html")
-        .evaluate(
-          (root, value) => root.setAttribute("data-theme", value),
-          theme,
-        );
+    for (const theme of ["light", "dark"] as const) {
+      await page.emulateMedia({ colorScheme: theme });
+      await expect(page.locator("body")).toHaveCSS(
+        "background-color",
+        theme === "light" ? "rgb(255, 255, 255)" : "rgb(19, 31, 36)",
+      );
+      await expect(page.locator("body")).toHaveCSS("font-size", "17px");
       await widgetScreenshot(
         page,
         widget,
-        `preview-tokens-${name}-${theme}-desktop`,
+        `integrated-${name}-${theme}-desktop`,
         1440,
       );
       await widgetScreenshot(
         page,
         widget,
-        `preview-tokens-${name}-${theme}-320`,
+        `integrated-${name}-${theme}-320`,
         320,
       );
     }
   } finally {
-    await tokens.evaluate((element) => element.remove());
+    await page.emulateMedia({ colorScheme: originalDark ? "dark" : "light" });
     await page.locator("html").evaluate((root, value) => {
       if (value === null) root.removeAttribute("data-theme");
       else root.setAttribute("data-theme", value);
     }, originalTheme);
   }
+}
+
+type Color = [number, number, number, number];
+type Measurement = {
+  element: string;
+  kind: string;
+  foreground: Color;
+  background: Color;
+  ratio: number;
+  minimum: number;
+};
+
+// Chromium native progress pseudo-elements cannot be reliably queried through
+// getComputedStyle. Decode its screenshot to measure the actually painted fill.
+function pngPixel(png: Buffer, fraction: number): Color {
+  let width = 0,
+    height = 0,
+    channels = 0;
+  const chunks: Buffer[] = [];
+  for (let offset = 8; offset < png.length;) {
+    const size = png.readUInt32BE(offset);
+    const kind = png.toString("ascii", offset + 4, offset + 8);
+    const data = png.subarray(offset + 8, offset + 8 + size);
+    if (kind === "IHDR") {
+      width = data.readUInt32BE(0);
+      height = data.readUInt32BE(4);
+      expect(data[8], "8-bit screenshot PNG").toBe(8);
+      expect([2, 6], "RGB or RGBA screenshot PNG").toContain(data[9]);
+      expect(data[12], "Non-interlaced screenshot PNG").toBe(0);
+      channels = data[9] === 6 ? 4 : 3;
+    }
+    if (kind === "IDAT") chunks.push(data);
+    offset += size + 12;
+  }
+  const raw = inflateSync(Buffer.concat(chunks));
+  const stride = width * channels;
+  const pixels = Buffer.alloc(height * stride);
+  const paeth = (a: number, b: number, c: number) => {
+    const p = a + b - c;
+    const pa = Math.abs(p - a),
+      pb = Math.abs(p - b),
+      pc = Math.abs(p - c);
+    return pa <= pb && pa <= pc ? a : pb <= pc ? b : c;
+  };
+  for (let y = 0; y < height; y++) {
+    const filter = raw[y * (stride + 1)];
+    expect(filter, "Supported PNG scanline filter").toBeLessThanOrEqual(4);
+    for (let x = 0; x < stride; x++) {
+      const i = y * stride + x;
+      const a = x >= channels ? pixels[i - channels] : 0;
+      const b = y > 0 ? pixels[i - stride] : 0;
+      const c = y > 0 && x >= channels ? pixels[i - stride - channels] : 0;
+      const prediction = [0, a, b, Math.floor((a + b) / 2), paeth(a, b, c)][
+        filter
+      ];
+      pixels[i] = (raw[y * (stride + 1) + 1 + x] + prediction) & 255;
+    }
+  }
+  const x = Math.max(0, Math.min(width - 1, Math.floor(width * fraction)));
+  const i = (Math.floor(height / 2) * width + x) * channels;
+  return [
+    pixels[i],
+    pixels[i + 1],
+    pixels[i + 2],
+    channels === 4 ? pixels[i + 3] / 255 : 1,
+  ];
+}
+
+async function checkWidgetContrast(widget: Locator, name: string) {
+  const measurements: Measurement[] = await widget.evaluate((root) => {
+    type Color = [number, number, number, number];
+    const parse = (value: string): Color => {
+      const c = value.match(/[\d.]+/g)?.map(Number) || [];
+      if (c.length < 3) throw Error(`Unsupported computed color: ${value}`);
+      return [c[0], c[1], c[2], c[3] ?? 1];
+    };
+    const over = (top: Color, bottom: Color): Color => [
+      top[0] * top[3] + bottom[0] * (1 - top[3]),
+      top[1] * top[3] + bottom[1] * (1 - top[3]),
+      top[2] * top[3] + bottom[2] * (1 - top[3]),
+      1,
+    ];
+    const background = (element: Element | null): Color => {
+      const ancestors: Element[] = [];
+      for (let current = element; current; current = current.parentElement)
+        ancestors.unshift(current);
+      return ancestors.reduce<Color>(
+        (color, item) =>
+          over(parse(getComputedStyle(item).backgroundColor), color),
+        [255, 255, 255, 1],
+      );
+    };
+    const luminance = (c: Color) =>
+      c
+        .slice(0, 3)
+        .map((v) => {
+          const s = v / 255;
+          return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+        })
+        .reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+    const results: Measurement[] = [];
+    const record = (
+      element: Element,
+      kind: string,
+      foreground: Color,
+      bg: Color,
+      minimum: number,
+    ) => {
+      const a = luminance(over(foreground, bg)),
+        b = luminance(bg);
+      results.push({
+        element: `${element.tagName.toLowerCase()}.${element.getAttribute("class") || ""} ${(element.textContent || element.getAttribute("aria-label") || "").trim().slice(0, 70)}`,
+        kind,
+        foreground,
+        background: bg,
+        ratio: (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05),
+        minimum,
+      });
+    };
+    for (const element of [root, ...root.querySelectorAll("*")]) {
+      const style = getComputedStyle(element);
+      if (
+        !element.getClientRects().length ||
+        style.visibility === "hidden" ||
+        Number(style.opacity) < 1 ||
+        element.matches(":disabled")
+      )
+        continue;
+      const bg = background(element);
+      const text = [...element.childNodes].some(
+        (child) =>
+          child.nodeType === Node.TEXT_NODE && child.textContent?.trim(),
+      );
+      if (text) {
+        const large =
+          parseFloat(style.fontSize) >= 24 ||
+          (parseFloat(style.fontSize) >= 18.66 &&
+            parseInt(style.fontWeight) >= 700);
+        record(element, "text", parse(style.color), bg, large ? 3 : 4.5);
+      }
+      if (element.tagName.toLowerCase() === "svg")
+        record(element, "status icon", parse(style.color), bg, 3);
+      if (style.outlineStyle !== "none" && parseFloat(style.outlineWidth) > 0)
+        record(
+          element,
+          "focus or selected outline",
+          parse(style.outlineColor),
+          background(element.parentElement),
+          3,
+        );
+    }
+    return results;
+  });
+  for (const progress of await widget.locator("progress").all()) {
+    const details = await progress.evaluate((element: HTMLProgressElement) => ({
+      value: element.value,
+      max: element.max,
+      label: element.getAttribute("aria-label") || "progress",
+      track: getComputedStyle(element).backgroundColor,
+    }));
+    if (details.value <= 0) continue;
+    const shot = await progress.screenshot();
+    const amount = details.value / details.max;
+    const fill = pngPixel(shot, amount / 2);
+    const track =
+      amount < 1
+        ? pngPixel(shot, amount + (1 - amount) / 2)
+        : ([...details.track.match(/[\d.]+/g)!.map(Number), 1].slice(
+            0,
+            4,
+          ) as Color);
+    const luminance = (c: Color) =>
+      c
+        .slice(0, 3)
+        .map((v) => {
+          const s = v / 255;
+          return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+        })
+        .reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+    const a = luminance(fill),
+      b = luminance(track);
+    measurements.push({
+      element: details.label,
+      kind: "painted progress fill / track",
+      foreground: fill,
+      background: track,
+      ratio: (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05),
+      minimum: 3,
+    });
+  }
+  await mkdir(artifactRoot, { recursive: true });
+  await writeFile(
+    `${artifactRoot}/${name}-contrast.json`,
+    JSON.stringify(measurements, null, 2) + "\n",
+  );
+  expect(
+    measurements.length,
+    "Actual journey content was measured",
+  ).toBeGreaterThan(0);
+  expect(
+    measurements.filter((entry) => entry.ratio < entry.minimum),
+    `Computed journey contrast: ${name}`,
+  ).toEqual([]);
 }
 
 async function noEmoji(region: Locator) {
@@ -301,6 +513,11 @@ test("journey uses real submissions, TXT progress and tutor-confirmed skill stat
     buffer: Buffer.from("Три четверти равны 0,75."),
   });
   await expect(progress).toHaveAttribute("value", "2");
+  await integratedThemes(
+    page,
+    page.getByRole("region", { name: "Прогресс ответов" }),
+    "answer-progress",
+  );
   await page
     .getByLabel("Ответ на задание 3")
     .fill("Вычесть число из обеих частей.");
@@ -346,7 +563,7 @@ test("journey uses real submissions, TXT progress and tutor-confirmed skill stat
   await noEmoji(moment);
   await screenshot(page, "submitted-desktop");
   await narrowScreenshot(page, "submitted");
-  await tokenContractPreview(page, moment, "submitted");
+  await integratedThemes(page, moment, "submitted");
   await page.unroute(`**/api/assignments/${work.id}`);
   const facts = await json(
     request,
@@ -425,7 +642,7 @@ test("journey uses real submissions, TXT progress and tutor-confirmed skill stat
   await screenshot(page, "path-reviewed-desktop");
   await narrowScreenshot(page, "path-reviewed");
   await inspectPathAtPhoneWidth(page, path);
-  await tokenContractPreview(page, path, "path");
+  await integratedThemes(page, path, "path");
   await page.getByRole("button", { name: "Сегодня", exact: true }).click();
   await expect(page.getByTestId("journey-streak")).toContainText(
     "1 подряд в срок",
@@ -433,11 +650,7 @@ test("journey uses real submissions, TXT progress and tutor-confirmed skill stat
   await noEmoji(page.getByTestId("journey-streak"));
   await screenshot(page, "streak-desktop");
   await narrowScreenshot(page, "streak");
-  await tokenContractPreview(
-    page,
-    page.getByTestId("journey-streak"),
-    "streak",
-  );
+  await integratedThemes(page, page.getByTestId("journey-streak"), "streak");
   expect(errors).toEqual([]);
 });
 

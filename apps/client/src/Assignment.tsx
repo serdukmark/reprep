@@ -432,9 +432,10 @@ export function AssignmentDetail({
     [showHints, setShowHints] = useState<Record<string, boolean>>({});
   const s = a.submission;
   // Keep the acknowledged original visible even if the follow-up GET fails.
-  const visibleOriginal = receipt && s?.id !== receipt.id ? receipt : s;
-  const hasMatchingSubmission = !receipt || s?.id === receipt.id;
-  const writable = !isTutor && !receipt && (!s || s.status === "returned");
+  const activeReceipt = journeyEnabled ? receipt : null;
+  const visibleOriginal = activeReceipt && s?.id !== activeReceipt.id ? activeReceipt : s;
+  const hasMatchingSubmission = !activeReceipt || s?.id === activeReceipt.id;
+  const writable = !isTutor && !activeReceipt && (!s || s.status === "returned");
   const priorSubmission = useRef({ id: s?.id, status: s?.status });
   useEffect(() => {
     if (
@@ -442,8 +443,8 @@ export function AssignmentDetail({
       s?.status === "returned" &&
       hasMatchingSubmission &&
       (priorSubmission.current.status !== "returned" ||
-        priorSubmission.current.id !== s.id ||
-        !!receipt)
+        (journeyEnabled &&
+          (priorSubmission.current.id !== s.id || !!activeReceipt)))
     ) {
       setAnswers(a.draft.revision ? a.draft.answers : s.answers);
       setAttachments(
@@ -456,7 +457,7 @@ export function AssignmentDetail({
       setReceipt(null);
     }
     priorSubmission.current = { id: s?.id, status: s?.status };
-  }, [s?.status, s?.id, receipt?.id]);
+  }, [s?.status, s?.id, activeReceipt?.id, journeyEnabled]);
 
   const [reviewTasks, setReviewTasks] = useState<ReviewTask[]>([]);
   const savingRef = useRef(false),

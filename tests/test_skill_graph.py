@@ -21,6 +21,7 @@ def test_graph_only_uses_confirmed_evidence_and_never_creates_it(env):
     assert result['nodes'][0]['latest']=='correct' and result['nodes'][0]['evidence_count']==1
     assert result['nodes'][1]['prerequisites_confirmed'] is True
     assert result['nodes'][1]['latest']=='unknown'
+    assert all('evidence_ids' not in node for node in result['nodes'])
     assert c.put(path,headers=h['tutor'],json=graph()).status_code==409
     assert c.put(path,headers=h['learner'],json=graph()).status_code==403
     assert c.get(path,headers=h['outsider']).status_code==404
@@ -61,6 +62,17 @@ def test_graph_merges_case_variants_without_losing_latest_evidence(env,old_corre
     variants=[row for row in history if row['skill'].casefold()=='линейные уравнения']
     assert len(variants)==2  # Raw progress API keeps its existing grouping.
     expected_ids=[row['evidence'][0]['id'] for row in variants]
+    # The disabled flag must preserve the released graph, including its response
+    # shape and existing handling of spelling variants. Enabling is opt-in.
+    legacy=c.get(path,headers=h['learner']).json()
+    assert legacy['nodes']==[
+        {'skill':'Линейные уравнения','latest':old_correctness,
+         'correct':int(old_correctness=='correct'),'total':1,'evidence_count':1,
+         'prerequisites_confirmed':True},
+        {'skill':'Следующий навык','latest':'unknown','correct':0,'total':0,
+         'evidence_count':0,'prerequisites_confirmed':old_correctness=='correct'},
+    ]
+    cfg.learning_journey_enabled=True
     result=c.get(path,headers=h['learner']).json()
     node=result['nodes'][0]
     assert node['skill']=='Линейные уравнения'
@@ -72,8 +84,10 @@ def test_graph_merges_case_variants_without_losing_latest_evidence(env,old_corre
     assert 'Линейные уравнения' in result['available_skills']
     assert 'линейные УРАВНЕНИЯ' not in result['available_skills']
     declared=app.openapi()['components']['schemas']['SkillGraphView']['properties']['nodes']['items']
-    assert 'evidence_ids' in declared['required']
+    assert 'evidence_ids' not in declared['required']
     assert declared['properties']['evidence_ids']=={'type':'array','items':{'type':'string'}}
+    cfg.learning_journey_enabled=False
+    assert c.get(path,headers=h['learner']).json()==legacy
 
 
 def test_deeper_analytics_measures_wait_and_review_disagreement_only(env):

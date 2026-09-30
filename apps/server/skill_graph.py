@@ -38,31 +38,35 @@ class SkillGraphInput(Model):
         return self
 
 
-def install(app,user,db,tutor,relation,fail):
+def install(app,cfg,user,db,tutor,relation,fail):
     def view(c,id_):
         item=one(c,'SELECT * FROM skill_graphs WHERE relationship_id=?',(id_,))
         config=json.loads(item['data']) if item else {'skills':[],'edges':[]}
-        labels={skill.casefold():skill for skill in config['skills']}
-        confirmed={}
-        for row in progress(c,id_):
-            key=row['skill'].casefold()
-            merged=confirmed.setdefault(key,{'skill':labels.get(key,row['skill']),'correct':0,'total':0,'evidence':[]})
-            merged['correct']+=row['correct']
-            merged['total']+=row['total']
-            merged['evidence'].extend(row['evidence'])
-        for merged in confirmed.values():
-            # Match progress() ordering across spelling variants; dict overwrite
-            # previously discarded evidence and could restore an older result.
-            merged['evidence'].sort(key=lambda e:(e['created'],e['id']),reverse=True)
-            merged['latest']=merged['evidence'][0]['correctness']
+        history=progress(c,id_)
+        confirmed={r['skill'].casefold():r for r in history}
+        if cfg.learning_journey_enabled:
+            labels={skill.casefold():skill for skill in config['skills']}
+            confirmed={}
+            for row in history:
+                key=row['skill'].casefold()
+                merged=confirmed.setdefault(key,{'skill':labels.get(key,row['skill']),'correct':0,'total':0,'evidence':[]})
+                merged['correct']+=row['correct']
+                merged['total']+=row['total']
+                merged['evidence'].extend(row['evidence'])
+            for merged in confirmed.values():
+                # Journey matches progress() ordering across spelling variants.
+                # Keep the released graph behavior unchanged while it is disabled.
+                merged['evidence'].sort(key=lambda e:(e['created'],e['id']),reverse=True)
+                merged['latest']=merged['evidence'][0]['correctness']
         nodes=[]
         for skill in config['skills']:
             row=confirmed.get(skill.casefold(),{})
             parents=[edge['prerequisite'] for edge in config['edges'] if edge['skill']==skill]
             nodes.append({'skill':skill,'latest':row.get('latest','unknown'),'correct':row.get('correct',0),'total':row.get('total',0),
                 'evidence_count':len(row.get('evidence',[])),
-                'evidence_ids':[e['id'] for e in row.get('evidence',[])],
                 'prerequisites_confirmed':all(confirmed.get(parent.casefold(),{}).get('latest')=='correct' for parent in parents)})
+            if cfg.learning_journey_enabled:
+                nodes[-1]['evidence_ids']=[e['id'] for e in row.get('evidence',[])]
         return {'revision':item['revision'] if item else 0,**config,'nodes':nodes,
             'available_skills':[r['skill'] for r in confirmed.values()],
             'note':'Связи задаёт преподаватель. Показан последний подтверждённый результат. Полноту освоения оценивает преподаватель.'}
