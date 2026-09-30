@@ -178,11 +178,14 @@ export async function api<T>(
   if (requestSession !== sessionVersion)
     throw new Error("Сессия изменилась. Откройте нужный раздел заново.");
   if (!res.ok)
-    throw new Error(
-      (data?.error?.message || "Не удалось выполнить действие") +
-        (data?.error?.reference_id
-          ? " · " + data.error.reference_id.slice(0, 8)
-          : ""),
+    throw Object.assign(
+      new Error(
+        (data?.error?.message || "Не удалось выполнить действие") +
+          (data?.error?.reference_id
+            ? " · " + data.error.reference_id.slice(0, 8)
+            : ""),
+      ),
+      { code: data?.error?.code as string | undefined },
     );
   return data;
 }

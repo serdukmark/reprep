@@ -1,5 +1,5 @@
 import { test, expect } from "./audit-fixtures";
-import { createHmac } from "node:crypto";
+import { createHmac, randomInt } from "node:crypto";
 test.skip(
   process.env.E2E_MAX_SIM !== "true",
   "Requires isolated server with synthetic MAX token",
@@ -27,20 +27,25 @@ test("embedded storage denial does not prevent login", async ({ page }) => {
 test("MAX URL authentication and iframe Bridge lifecycle (simulated client)", async ({
   page,
 }) => {
-  const fields = {
-    auth_date: String(Math.floor(Date.now() / 1000)),
-    user: JSON.stringify({ id: 333777, first_name: "Синтетика" }),
-    query_id: "max-browser",
+  const fresh = randomInt(100_000_000, 900_000_000);
+  // Fresh identities each run: a registered one signs in without the questionnaire.
+  const sign = (id: number) => {
+    const fields = {
+      auth_date: String(Math.floor(Date.now() / 1000)),
+      user: JSON.stringify({ id, first_name: "Синтетика" }),
+      query_id: "max-browser",
+    };
+    const signing = Object.entries(fields)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([k, v]) => k + "=" + v)
+      .join("\n");
+    const key = createHmac("sha256", "WebAppData")
+      .update("synthetic-max-test-token")
+      .digest();
+    const hash = createHmac("sha256", key).update(signing).digest("hex");
+    return new URLSearchParams({ ...fields, hash }).toString();
   };
-  const signing = Object.entries(fields)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([k, v]) => k + "=" + v)
-    .join("\n");
-  const key = createHmac("sha256", "WebAppData")
-    .update("synthetic-max-test-token")
-    .digest();
-  const hash = createHmac("sha256", key).update(signing).digest("hex");
-  const raw = new URLSearchParams({ ...fields, hash }).toString();
+  const raw = sign(fresh);
   await page.route("https://st.max.ru/js/max-web-app.js", (route) =>
     route.fulfill({
       contentType: "application/javascript",
@@ -67,7 +72,7 @@ test("MAX URL authentication and iframe Bridge lifecycle (simulated client)", as
   await page.evaluate(() => sessionStorage.clear());
   await page.goto("about:blank");
   await page.goto(
-    "/#WebAppData=" + encodeURIComponent(raw.replace("333777", "999777")),
+    "/#WebAppData=" + encodeURIComponent(raw.replace(String(fresh), String(fresh + 1))),
   );
   await page
     .getByRole("button", { name: "Войти через MAX", exact: true })
@@ -82,7 +87,7 @@ test("MAX URL authentication and iframe Bridge lifecycle (simulated client)", as
     '<iframe title="MAX simulation" src="' +
       origin +
       "/#WebAppData=" +
-      encodeURIComponent(raw) +
+      encodeURIComponent(sign(fresh + 2)) +
       '" style="width:390px;height:844px"></iframe>',
   );
   const frame = page.frameLocator("iframe");

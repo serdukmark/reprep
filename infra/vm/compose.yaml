@@ -8,9 +8,9 @@ services:
     env_file: ../../.env
     environment:
       DATABASE_PATH: /app/data/reprep.sqlite3
-      APP_ENV: production
-      DEMO_ENABLED: 'false'
-      # AI_SYNTHETIC_ONLY and AI_DATA_APPROVED come from .env; the code defaults to synthetic-only.
+      # APP_ENV, DEMO_ENABLED, AI_SYNTHETIC_ONLY and AI_DATA_APPROVED come from .env.
+      # vm_apply writes production without demo unless the release .env already sets them;
+      # the code refuses demo accounts outside APP_ENV=demo and defaults AI to synthetic-only.
     ports:
       - '127.0.0.1:${REPREP_BIND_PORT:?Verify a free VM port and set REPREP_BIND_PORT}:8000'
     volumes:

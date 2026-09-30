@@ -50,9 +50,10 @@ def apply(root, domain, port):
         lines = [s for s in lines if s.split('=', 1)[0].strip() not in values]
         lines += [k + '=' + str(v) for k, v in values.items()]
         env.write_text('\n'.join(lines) + '\n'); env.chmod(0o600)
-    update({'PUBLIC_BASE_URL': 'https://' + domain,
-            'ALLOWED_WEB_ORIGINS': '', 'APP_ENV': 'production',
-            'DEMO_ENABLED': 'false',
+    present = {s.split('=', 1)[0].strip() for s in lines if '=' in s}
+    # Production without demo unless the operator chose the public demo stand (APP_ENV=demo) in .env.
+    update({'PUBLIC_BASE_URL': 'https://' + domain, 'ALLOWED_WEB_ORIGINS': '',
+            **{k: v for k, v in (('APP_ENV', 'production'), ('DEMO_ENABLED', 'false')) if k not in present},
             'MAX_CA_BUNDLE': '/run/reprep-max-ca.pem' if (root/'max-ca.pem').stat().st_size else ''})
     print('Building client and server image', flush=True)
     run(compose + ['build'])

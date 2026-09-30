@@ -1,0 +1,164 @@
+{
+  "note": "Все данные синтетические: демо-аккаунты помечены demo=1 и «• демо», в интерфейсе — «ДЕМО · СИНТЕТИЧЕСКИЕ ДАННЫЕ».",
+  "users": [
+    {
+      "id": "demo-guardian",
+      "role": "guardian",
+      "alias": "Родитель • демо",
+      "demo": 1
+    },
+    {
+      "id": "demo-learner",
+      "role": "learner",
+      "alias": "Саша • демо",
+      "demo": 1
+    },
+    {
+      "id": "demo-learner-2",
+      "role": "learner",
+      "alias": "Женя • демо",
+      "demo": 1
+    },
+    {
+      "id": "demo-outsider",
+      "role": "tutor",
+      "alias": "Другой репетитор • демо",
+      "demo": 1
+    },
+    {
+      "id": "demo-tutor",
+      "role": "tutor",
+      "alias": "Алекс • демо",
+      "demo": 1
+    }
+  ],
+  "relationships": [
+    {
+      "id": "demo-link",
+      "tutor_id": "demo-tutor",
+      "learner_id": "demo-learner",
+      "subject": "Математика · ЕГЭ"
+    },
+    {
+      "id": "demo-link-2",
+      "tutor_id": "demo-tutor",
+      "learner_id": "demo-learner-2",
+      "subject": "Математика · ЕГЭ"
+    }
+  ],
+  "assignments": [
+    {
+      "id": "demo-assignment",
+      "tutor_id": "demo-tutor",
+      "relationship_id": "demo-link",
+      "status": "published",
+      "data": {
+        "relationship_id": "demo-link",
+        "title": "Линейные уравнения: от шага к решению",
+        "instructions": "Решите три коротких задания. Можно сохранять ответы и возвращаться к работе.",
+        "due_at": "2026-10-02T06:28:54.609634+00:00",
+        "feedback_policy": "hints_first",
+        "tasks": [
+          {
+            "id": "linear",
+            "type": "numeric",
+            "prompt": "Решите уравнение: 3x + 7 = 22. Чему равен x?",
+            "answer": "5",
+            "rubric": "Вычесть 7 из обеих частей, разделить на 3.",
+            "skill": "Линейные уравнения",
+            "options": [],
+            "hint": "Сначала оставьте слагаемое с x в одной части уравнения."
+          },
+          {
+            "id": "fraction",
+            "type": "single_choice",
+            "prompt": "Какое число равно ¾?",
+            "answer": "0,75",
+            "rubric": "",
+            "skill": "Дроби",
+            "options": [
+              "0,25",
+              "0,5",
+              "0,75",
+              "1,25"
+            ],
+            "hint": "Дробная черта означает деление числителя на знаменатель."
+          },
+          {
+            "id": "reason",
+            "type": "short_text",
+            "prompt": "Почему при решении уравнения можно вычесть одно число из обеих частей?",
+            "answer": "",
+            "rubric": "Ученик объясняет сохранение равенства при одинаковой операции с обеими частями.",
+            "skill": "Обоснование решения",
+            "options": [],
+            "hint": "Представьте две чаши весов в равновесии."
+          }
+        ]
+      }
+    },
+    {
+      "id": "demo-assignment-2",
+      "tutor_id": "demo-tutor",
+      "relationship_id": "demo-link-2",
+      "status": "published",
+      "data": {
+        "relationship_id": "demo-link-2",
+        "title": "Дроби и уравнения: самостоятельная работа",
+        "instructions": "Решите три коротких задания. Можно сохранять ответы и возвращаться к работе.",
+        "due_at": "2026-10-02T06:28:54.609634+00:00",
+        "feedback_policy": "hints_first",
+        "tasks": [
+          {
+            "id": "linear",
+            "type": "numeric",
+            "prompt": "Решите уравнение: 3x + 7 = 22. Чему равен x?",
+            "answer": "5",
+            "rubric": "Вычесть 7 из обеих частей, разделить на 3.",
+            "skill": "Линейные уравнения",
+            "options": [],
+            "hint": "Сначала оставьте слагаемое с x в одной части уравнения."
+          },
+          {
+            "id": "fraction",
+            "type": "single_choice",
+            "prompt": "Какое число равно ¾?",
+            "answer": "0,75",
+            "rubric": "",
+            "skill": "Дроби",
+            "options": [
+              "0,25",
+              "0,5",
+              "0,75",
+              "1,25"
+            ],
+            "hint": "Дробная черта означает деление числителя на знаменатель."
+          },
+          {
+            "id": "reason",
+            "type": "short_text",
+            "prompt": "Почему при решении уравнения можно вычесть одно число из обеих частей?",
+            "answer": "",
+            "rubric": "Ученик объясняет сохранение равенства при одинаковой операции с обеими частями.",
+            "skill": "Обоснование решения",
+            "options": [],
+            "hint": "Представьте две чаши весов в равновесии."
+          }
+        ]
+      }
+    }
+  ],
+  "lessons": [
+    {
+      "id": "demo-lesson",
+      "relationship_id": "demo-link",
+      "data": {
+        "relationship_id": "demo-link",
+        "title": "Разбираем уравнения",
+        "starts_at": "2026-10-01T15:00:54.609841+00:00",
+        "duration": 60,
+        "payment_status": "unknown"
+      }
+    }
+  ]
+}

@@ -46,6 +46,25 @@ def test_login_namespace_role_and_forgery(tmp_path):
         assert contract['paths']['/api/telegram/webhook']['post']['security']==[{'TelegramWebhookSecret':[]}]
 
 
+@pytest.mark.parametrize('endpoint',['/api/auth/max','/api/auth/telegram'])
+def test_repeat_launch_signs_in_without_role_or_name(tmp_path,endpoint):
+    cfg=Settings(database=str(tmp_path/'r.sqlite'),bot_token=TOKEN,telegram_token=TOKEN,telegram_enabled=True,public_base_url='https://class.example.org')
+    with TestClient(create_app(cfg,run_worker=False)) as c:
+        unknown=c.post(endpoint,json={'init_data':signed(TOKEN,555000111)})
+        assert unknown.status_code==409 and unknown.json()['error']['code']=='REGISTRATION_REQUIRED'
+        assert 'token' not in unknown.text
+        with connect(cfg.database) as db:
+            assert one(db,'SELECT count(*) AS n FROM users WHERE demo=0')['n']==0
+        first=c.post(endpoint,json={'init_data':signed(TOKEN,555000111),'role':'learner','alias':'Катя'})
+        assert first.status_code==200
+        # Another device or a reopened mini app sends only the signed launch data.
+        again=c.post(endpoint,json={'init_data':signed(TOKEN,555000111)})
+        assert again.status_code==200
+        assert again.json()['user']==first.json()['user']
+        assert again.json()['user']['role']=='learner' and again.json()['user']['alias']=='Катя'
+        assert again.json()['token']!=first.json()['token']
+
+
 def test_webhook_channel_isolation_duplicate_and_retry(tmp_path):
     cfg=Settings(database=str(tmp_path/'b.sqlite'),telegram_token=TOKEN,telegram_enabled=True,public_base_url='https://class.example.org',max_outbound_enabled=True,max_bot_enabled=True,bot_token='other-max-token',max_bot_id=111)
     event={'update_id':111,'message':{'date':int(time.time()),'text':'/start','chat':{'id':123,'type':'private'},'from':{'id':123,'is_bot':False}}}

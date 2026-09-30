@@ -70,7 +70,13 @@ def check(origin, client=None):
         return seen
     run('max_embedding_headers', 'GET', '/', embedding_allowed)
     run('anonymous_access_denied', 'GET', '/api/me', lambda r: r.status_code == 401)
-    run('demo_disabled', 'POST', '/api/auth/demo/tutor', lambda r: r.status_code == 404)
+    try:
+        demo_public = client.request('GET', origin + '/api/config').json().get('demo_enabled') is True
+    except Exception:
+        demo_public = False
+    # A public demo stand may serve only the synthetic demo accounts; otherwise demo login stays closed.
+    run('demo_matches_config', 'POST', '/api/auth/demo/tutor', lambda r:
+        (r.status_code == 200 and r.json()['user']['demo'] == 1) if demo_public else r.status_code == 404)
     run('forged_max_login_denied', 'POST', '/api/auth/max', lambda r: r.status_code == 401,
         json={'init_data': 'auth_date=1&user=%7B%22id%22%3A1%7D&hash=invalid',
               'role': 'learner', 'alias': 'Синтетическая проверка'})

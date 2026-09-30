@@ -112,11 +112,9 @@ for (const platform of ["MAX", "Telegram"]) {
           "=" +
           encodeURIComponent(raw),
       );
-      await page.getByLabel("Как к вам обращаться").fill("Неверная подпись");
-      await page
-        .getByRole("button", { name: "Войти через " + platform, exact: true })
-        .click();
+      // The launch signs in automatically; a bad identity is refused before any questionnaire.
       await expect(page.getByRole("alert")).toBeVisible();
+      await expect(page.getByLabel("Как к вам обращаться")).toHaveCount(0);
       await expect(
         page.getByRole("button", {
           name: "Войти через " + platform,
@@ -168,5 +166,8 @@ for(const platform of ['MAX','Telegram'])test(`${platform} logout clears the pre
  await page.getByLabel('Как к вам обращаться').fill('Приватное прежнее имя');
  await page.getByRole('button',{name:'Войти через '+platform,exact:true}).click();
  await page.getByRole('button',{name:/Приватное прежнее имя/}).click();await page.getByRole('button',{name:'Выйти',exact:true}).click();
- await expect(page.getByLabel('Как к вам обращаться')).toHaveValue('');
+ // A registered identity signs in again with a button; the old name is not left in a form.
+ await expect(page.getByRole('button',{name:'Войти через '+platform,exact:true})).toBeVisible();
+ await expect(page.getByLabel('Как к вам обращаться')).toHaveCount(0);
+ await expect(page.getByText('Приватное прежнее имя')).toHaveCount(0);
 });

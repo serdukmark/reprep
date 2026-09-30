@@ -1,4 +1,4 @@
-"""Export the public schema and evaluation manifest without exporting credentials."""
+"""Export the public OpenAPI schema and synthetic demo data without credentials."""
 import json
 from pathlib import Path
 from apps.server.main import create_app
@@ -27,28 +27,31 @@ def artifacts():
                 for code,description in [('401','Invalid or expired authorization'),('403','Role or origin forbidden'),('404','Resource not visible to this account')]:
                     op['responses'].setdefault(code,{'description':description})
             if method!='get':op['responses'].setdefault('409',{'description':'Version, state or replay conflict when applicable'})
-            operations.append({'method':method.upper(),'path':path,'role':role,'parameters':op.get('parameters',[]),
-                'request_body':op.get('requestBody'), 'expected_responses':op['responses'],
-                'response_contract':'See openapi.json for output envelopes, fields and role visibility; AI payloads remain extensible objects.'})
-    manifest={'schema_version':'1.0','schema_version_note':'Project manifest version; organizer parser schema not supplied',
-        'solution':'reprep','base_url':PUBLIC_BASE_URL,'local_base_url':LOCAL_BASE_URL,
-        'status':'public HTTPS stand; public endpoints: GET /api/health, GET /api/ready, GET /api/openapi.json, GET /api/docs',
-        'openapi':f'{PUBLIC_BASE_URL}/api/openapi.json','openapi_file':'openapi.json',
-        'authentication':{'production':f'POST {PUBLIC_BASE_URL}/api/auth/max; genuine signed MAX init_data required (open the mini app from the bot)',
-        'local_tutor':f'POST {LOCAL_BASE_URL}/api/auth/demo/tutor','local_learner':f'POST {LOCAL_BASE_URL}/api/auth/demo/learner',
-        'header':'Authorization: Bearer <session token>',
-        'credentials':'No keys in this file. Demo login requires DEMO_ENABLED and non-production environment, so it works only in the local Docker run.'},
-        'test_data':{'script':'python scripts/seed_demo.py','source':'apps/server/service.py','synthetic':True,
-        'note':'All demo tutors, learners, assignments and catalog profiles are fictional; they are seeded automatically in the local Docker run.'},
-        'checks':operations,'executable_checks':['tests/test_workflow.py','tests/test_failure_paths.py','tests/test_plan_discussion.py','tests/test_max.py'],
-        'release_gates':['Real MAX flow inside the messenger','Organizer DATA-API schema confirmation']}
-    return schema,manifest
+            operations.append((method.upper(),path))
+    return schema,operations
+
+
+def demo_data():
+    """Synthetic accounts and learning records the demo stand starts from (users.demo=1)."""
+    import sqlite3,tempfile
+    with tempfile.TemporaryDirectory() as d:
+        from fastapi.testclient import TestClient
+        with TestClient(create_app(Settings(database=d+'/seed.sqlite',environment='test',demo=True),run_worker=False)):pass
+        c=sqlite3.connect(d+'/seed.sqlite');c.row_factory=sqlite3.Row
+        tables={'users':'SELECT id,role,alias,demo FROM users WHERE demo=1 ORDER BY id',
+            'relationships':'SELECT * FROM relationships ORDER BY id','assignments':'SELECT id,tutor_id,relationship_id,status,data FROM assignments ORDER BY id',
+            'lessons':'SELECT * FROM lessons ORDER BY id'}
+        out={name:[dict(r) for r in c.execute(sql)] for name,sql in tables.items()}
+    for row in out['assignments']+out['lessons']:
+        row['data']=json.loads(row['data'])
+    return {'note':'Все данные синтетические: демо-аккаунты помечены demo=1 и «• демо», в интерфейсе — «ДЕМО · СИНТЕТИЧЕСКИЕ ДАННЫЕ».',**out}
 
 
 if __name__=='__main__':
     root=Path(__file__).resolve().parents[1]
-    schema,manifest=artifacts()
-    for name,value in [('openapi.json',schema),('DATA-API.yaml',manifest)]:
-        # JSON is a valid YAML 1.2 representation; keeps generation dependency-free.
-        (root/name).write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
-    print(f'Exported {len(manifest["checks"])} operations; no credentials included.')
+    schema,operations=artifacts()
+    (root/'openapi.json').write_text(json.dumps(schema,ensure_ascii=False,indent=2)+'\n')
+    (root/'test-data').mkdir(exist_ok=True)
+    (root/'test-data/demo-data.json').write_text(json.dumps(demo_data(),ensure_ascii=False,indent=2)+'\n')
+    # DATA-API.yaml is maintained by hand in the organizers' DATA-API 1.0 format and checked by their validator.
+    print(f'Exported {len(operations)} operations and synthetic demo data; no credentials included.')

@@ -50,7 +50,8 @@ def main():
             from scripts.check_public import check
             result = check(cfg.public_base_url)
             blockers = [item['check'] for item in result['checks'] if not item['passed']]
-            if cfg.demo or cfg.environment != 'production': blockers.append('production_configuration')
+            # APP_ENV=demo is the explicit public demo stand: synthetic demo accounts next to MAX sign-in.
+            if cfg.environment not in ('production', 'demo') or (cfg.demo and cfg.environment != 'demo'): blockers.append('production_configuration')
             if not cfg.max_bot_enabled or not cfg.max_outbound_enabled: blockers.append('bot_disabled')
             try:
                 api = MaxAPI(cfg)

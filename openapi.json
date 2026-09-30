@@ -8490,11 +8490,18 @@
             "title": "Init Data"
           },
           "role": {
-            "type": "string",
-            "enum": [
-              "tutor",
-              "learner",
-              "guardian"
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "tutor",
+                  "learner",
+                  "guardian"
+                ]
+              },
+              {
+                "type": "null"
+              }
             ],
             "title": "Role"
           },
@@ -8509,8 +8516,7 @@
         "additionalProperties": false,
         "type": "object",
         "required": [
-          "init_data",
-          "role"
+          "init_data"
         ],
         "title": "MaxLogin"
       },

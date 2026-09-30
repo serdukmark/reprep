@@ -101,6 +101,9 @@ function App() {
   } | null>(null);
   const [alias, setAlias] = useState(""),
     [role, setRole] = useState<"tutor" | "learner" | "guardian">("tutor");
+  // The registration form is shown only after the server reports a new identity.
+  const [registering, setRegistering] = useState(false);
+  const messengerTried = useRef(false);
   const workLoad = useRef(0);
   // Capture the displayed view now, before a child starts an asynchronous mutation.
   const activeView = workLoad.current;
@@ -236,6 +239,35 @@ function App() {
       setPage("today");
     });
   }
+  const messengerEnabled = Boolean(
+    (inTelegram && config?.telegram_enabled) || (inMax && config?.max_enabled),
+  );
+  async function messengerLogin(register: boolean) {
+    await action(async () => {
+      try {
+        const data = await api<{ token: string; user: User }>(
+          inTelegram ? "/auth/telegram" : "/auth/max",
+          "POST",
+          register
+            ? { init_data: launchData(), role, alias: alias || "Участник" }
+            : { init_data: launchData() },
+        );
+        setToken(data.token);
+        setUser(data.user);
+        setRegistering(false);
+        history.replaceState(null, "", location.pathname + (inTelegram ? "?platform=telegram" : ""));
+      } catch (e) {
+        if ((e as { code?: string }).code !== "REGISTRATION_REQUIRED") throw e;
+        setRegistering(true);
+      }
+    });
+  }
+  useEffect(() => {
+    // A launch from the messenger signs a registered person in without questions.
+    if (loading || user || !messengerEnabled || messengerTried.current) return;
+    messengerTried.current = true;
+    messengerLogin(false);
+  }, [loading, user, messengerEnabled]);
   const logoutPending = useRef(false);
   async function logout() {
     if (logoutPending.current || !mayLeave()) return;
@@ -264,6 +296,7 @@ function App() {
       setInviteInput("");
       setAlias("");
       setRole("tutor");
+      setRegistering(false);
       setToast("");
       setEditing(false);
       setMobile(false);
@@ -450,24 +483,20 @@ function App() {
               </button>
             </>
           )}
-          {((inTelegram && config?.telegram_enabled) || (inMax && config?.max_enabled)) && (
+          {messengerEnabled && !registering && (
+            <button
+              className="primary full"
+              disabled={busy}
+              onClick={() => messengerLogin(false)}
+            >
+              Войти через {platformName}
+            </button>
+          )}
+          {messengerEnabled && registering && (
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                action(async () => {
-                  const data = await api<{ token: string; user: User }>(
-                    inTelegram ? "/auth/telegram" : "/auth/max",
-                    "POST",
-                    {
-                      init_data: launchData(),
-                      role,
-                      alias: alias || "Участник",
-                    },
-                  );
-                  setToken(data.token);
-                  setUser(data.user);
-                  history.replaceState(null, "", location.pathname + (inTelegram ? "?platform=telegram" : ""));
-                });
+                messengerLogin(true);
               }}
             >
               <label>

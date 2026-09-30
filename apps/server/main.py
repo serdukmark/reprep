@@ -373,18 +373,25 @@ def create_app(settings=None, provider=None, run_worker=True):
         except RuntimeError:fail(503,'TELEGRAM_QUEUE','Повторите доставку позже')
         return {'ok':True,'status':result}
 
+    def messenger_user(c, external_id, body):
+        u = one(c, 'SELECT * FROM users WHERE external_id=?', (external_id,))
+        if u:
+            # A registered identity keeps its stored role and name; client-supplied values are ignored.
+            return u
+        if body.role is None:
+            # The client asks for a name and role only after this answer, so repeat launches skip the form.
+            fail(409, 'REGISTRATION_REQUIRED', 'Первый вход: укажите, как к вам обращаться, и выберите роль')
+        id_ = uid()
+        c.execute('INSERT INTO users(id,external_id,role,alias) VALUES(?,?,?,?)', (id_, external_id, body.role, body.alias))
+        return one(c, 'SELECT * FROM users WHERE id=?', (id_,))
+
     @app.post('/api/auth/telegram')
     def telegram_login(body: MaxLogin, request: Request, c=Depends(db)):
         auth_rate(request)
         if not cfg.telegram_enabled:fail(404,'TELEGRAM_DISABLED','Бот не подключён')
         try:external_id=verify_telegram(body.init_data,cfg.telegram_token)
         except (ValueError,KeyError,TypeError):fail(401,'TELEGRAM_SIGNATURE','Откройте приложение заново из Telegram')
-        u=one(c,'SELECT * FROM users WHERE external_id=?',(external_id,))
-        if not u:
-            id_=uid()
-            c.execute('INSERT INTO users(id,external_id,role,alias) VALUES(?,?,?,?)',(id_,external_id,body.role,body.alias))
-            u=one(c,'SELECT * FROM users WHERE id=?',(id_,))
-        return session(c,u)
+        return session(c,messenger_user(c,external_id,body))
 
     @app.post('/api/auth/demo/{persona}')
     def demo_login(persona: str, request: Request, c=Depends(db)):
@@ -400,13 +407,7 @@ def create_app(settings=None, provider=None, run_worker=True):
             external_id = verify_max(body.init_data, cfg.bot_token)
         except (ValueError, KeyError, TypeError):
             fail(401, 'MAX_SIGNATURE', 'Откройте приложение заново из MAX')
-        u = one(c, 'SELECT * FROM users WHERE external_id=?', (external_id,))
-        if not u:
-            id_ = uid()
-            c.execute('INSERT INTO users(id,external_id,role,alias) VALUES(?,?,?,?)', (id_, external_id, body.role, body.alias))
-            u = one(c, 'SELECT * FROM users WHERE id=?', (id_,))
-        # Existing role is never changed by a client-supplied role.
-        return session(c, u)
+        return session(c, messenger_user(c, external_id, body))
 
     @app.get('/api/me')
     def me(u=Depends(user)):

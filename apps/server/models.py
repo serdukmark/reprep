@@ -220,7 +220,8 @@ class TokenInput(Model):
 
 class MaxLogin(Model):
     init_data: str = Field(max_length=16000)
-    role: Literal['tutor', 'learner', 'guardian']
+    # Needed only on the first sign-in; a registered identity keeps its stored role and name.
+    role: Literal['tutor', 'learner', 'guardian'] | None = None
     alias: str = Field(default='Участник', min_length=1, max_length=60)
 
 

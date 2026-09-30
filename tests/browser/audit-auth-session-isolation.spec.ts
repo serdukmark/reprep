@@ -160,8 +160,14 @@ for (const role of ["Преподаватель", "Ученик", "Родите�
       await logout(page, role, maxAlias);
       await other.reload();
       await current(other, role, tgAlias);
-      const sameMax = await register(page, "MAX", external, role, maxAlias);
+      // A new launch of the registered MAX identity opens it without the questionnaire.
+      const relaunched = page.waitForResponse((r) => r.url().endsWith("/api/auth/max"));
+      await page.goto("about:blank");
+      await page.goto(launch("MAX", external));
+      const sameMax = (await (await relaunched).json()).user.id;
       expect(sameMax).toBe(maxId);
+      await current(page, role, maxAlias);
+      await expect(page.getByLabel("Как к вам обращаться")).toHaveCount(0);
       await logout(other, role, tgAlias);
       await page.reload();
       await current(page, role, maxAlias);

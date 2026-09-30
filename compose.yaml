@@ -3,9 +3,14 @@ services:
     build: .
     ports:
       - "127.0.0.1:8000:8000"
-    env_file: .env
+    # One command on a fresh checkout: without .env the local demo starts with rule-based checks.
+    env_file:
+      - path: .env
+        required: false
     environment:
       DATABASE_PATH: /app/data/reprep.sqlite3
+      APP_ENV: ${APP_ENV:-development}
+      DEMO_ENABLED: ${DEMO_ENABLED:-true}
     volumes:
       - reprep-data:/app/data
     mem_limit: 384m
