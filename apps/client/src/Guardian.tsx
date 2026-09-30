@@ -1,4 +1,5 @@
 import { AccountData } from "./AccountData";
+import { ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { api, date, labels, Relation, User } from "./api";
 
@@ -172,7 +173,7 @@ export function GuardianPortal({
     >
       <div className="page-heading">
         <div>
-          <div className="brand">reprep ↗</div>
+          <div className="brand">reprep <ArrowUpRight size={30} aria-hidden="true" /></div>
           <h1>Кабинет родителя</h1>
           <p>
             {user.alias}

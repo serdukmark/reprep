@@ -408,7 +408,7 @@ function App() {
       <main className="login">
         <div className="login-copy">
           <div className="brand">
-            reprep<span>↗</span>
+            reprep<span><ArrowUpRight size={30} aria-hidden="true" /></span>
           </div>
           <div className="eyebrow">ПРОСТРАНСТВО ДЛЯ РЕПЕТИТОРА И УЧЕНИКА</div>
           <h1>
@@ -609,7 +609,7 @@ function App() {
     <div className="shell">
       <aside className={"sidebar " + (mobile ? "visible" : "")}>
         <button className="brand" onClick={() => navigate("today")}>
-          reprep<span>↗</span>
+          reprep<span><ArrowUpRight size={30} aria-hidden="true" /></span>
         </button>
         <div className="workspace">
           <div className="avatar">{user.alias[0]}</div>
@@ -816,9 +816,9 @@ function App() {
                           <div />
                           <div />
                           <div />
-                          <b>✓</b>
+                          <b><Check size={28} /></b>
                         </div>
-                        <span className="orbit">✳</span>
+                        <span className="orbit"><Sparkles size={40} /></span>
                       </div>
                     </section>
                     <section className="today-card">
@@ -1351,7 +1351,7 @@ function App() {
           )}
           <footer>
             reprep <span>Место, где обучение становится понятнее.</span>
-            <span>С заботой о каждом шаге ↗</span>
+            <span>С заботой о каждом шаге <ArrowUpRight size={16} aria-hidden="true" /></span>
           </footer>
         </main>
       </div>

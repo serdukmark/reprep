@@ -1,0 +1,120 @@
+/* Shared contract from design-mockup/styles.css. Keep names and values identical.
+   Typography and spacing in the reference are literal CSS, not named tokens.
+   The system theme is the default; data-theme on html is an explicit override. */
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f7f7f7;
+  --line: #e5e5e5;
+  --line-strong: #8f8f8f;
+  --ink: #3c3c3c;
+  --ink-2: #6b6b6b;
+  --action: #2b8500;
+  --action-lip: #1d5c00;
+  --action-text: #ffffff;
+  --secondary-lip: #e5e5e5;
+  --green: #58cc02;
+  --green-track: #e3f7d1;
+  --green-tint: #eaf9dc;
+  --green-ink: #2b6a00;
+  --meter: #43a000;
+  --meter-track: #eef8e4;
+  --blue: #1487c2;
+  --blue-tint: #ddf4ff;
+  --blue-ink: #0a6591;
+  --amber: #ff9600;
+  --amber-tint: #fff4e0;
+  --amber-ink: #8a4b00;
+  --amber-line: #d07200;
+  --on-amber: #3a2000;
+  --purple: #b66ae8;
+  --purple-tint: #f5e8ff;
+  --purple-ink: #6f2aa3;
+  --flame: #e07400;
+  --on-green: #10230a;
+  --disabled-bg: #e5e5e5;
+  --disabled-text: #767676;
+  --focus: #1c7fd6;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --radius: 16px;
+  --radius-lg: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #131f24;
+    --surface: #1a2a31;
+    --surface-2: #202f36;
+    --line: #37464f;
+    --line-strong: #6b7d87;
+    --ink: #f1f7fb;
+    --ink-2: #a8b8c1;
+    --action: #93d333;
+    --action-lip: #5e9a13;
+    --action-text: #10230a;
+    --secondary-lip: #37464f;
+    --green: #93d333;
+    --green-track: #243d24;
+    --green-tint: #1f3620;
+    --green-ink: #a8e36b;
+    --meter: #93d333;
+    --meter-track: #2b4a2b;
+    --blue: #49c0f8;
+    --blue-tint: #183b4d;
+    --blue-ink: #8fd6ff;
+    --amber: #ffb020;
+    --amber-tint: #3a2e17;
+    --amber-ink: #ffcf7a;
+    --amber-line: #ffb020;
+    --on-amber: #2a1700;
+    --purple: #ce82ff;
+    --purple-tint: #33254a;
+    --purple-ink: #dfb1ff;
+    --flame: #ffa22e;
+    --on-green: #10230a;
+    --disabled-bg: #37464f;
+    --disabled-text: #a8b8c1;
+    --focus: #8fd6ff;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #131f24;
+  --surface: #1a2a31;
+  --surface-2: #202f36;
+  --line: #37464f;
+  --line-strong: #6b7d87;
+  --ink: #f1f7fb;
+  --ink-2: #a8b8c1;
+  --action: #93d333;
+  --action-lip: #5e9a13;
+  --action-text: #10230a;
+  --secondary-lip: #37464f;
+  --green: #93d333;
+  --green-track: #243d24;
+  --green-tint: #1f3620;
+  --green-ink: #a8e36b;
+  --meter: #93d333;
+  --meter-track: #2b4a2b;
+  --blue: #49c0f8;
+  --blue-tint: #183b4d;
+  --blue-ink: #8fd6ff;
+  --amber: #ffb020;
+  --amber-tint: #3a2e17;
+  --amber-ink: #ffcf7a;
+  --amber-line: #ffb020;
+  --on-amber: #2a1700;
+  --purple: #ce82ff;
+  --purple-tint: #33254a;
+  --purple-ink: #dfb1ff;
+  --flame: #ffa22e;
+  --on-green: #10230a;
+  --disabled-bg: #37464f;
+  --disabled-text: #a8b8c1;
+  --focus: #8fd6ff;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
