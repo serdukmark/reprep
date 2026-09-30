@@ -24,7 +24,7 @@ function signed(platform: string, id: number, expired = false) {
   return new URLSearchParams({ ...fields, hash }).toString();
 }
 
-for (const platform of ["MAX", "Telegram"])
+for (const platform of ["MAX"])
   for (const [role, title] of [
     ["Преподаватель", "Хороший день, чтобы учить."],
     ["Ученик", "Ваш следующий шаг."],

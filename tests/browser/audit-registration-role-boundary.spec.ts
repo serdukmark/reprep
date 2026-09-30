@@ -41,7 +41,7 @@ const invalidRoles = [
   ["organizer", "organizer"],
 ] as const;
 
-for (const platform of ["MAX", "Telegram"] as const)
+for (const platform of ["MAX"] as const)
   for (const [kind, invalidRole] of invalidRoles)
     test(`${platform} simulated registration: ${kind} role is rejected and the same learner form recovers`, async ({
       page,

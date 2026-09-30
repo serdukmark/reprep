@@ -23,7 +23,7 @@ function signed(platform: string, id: number, expired = false) {
     .digest("hex");
   return new URLSearchParams({ ...fields, hash }).toString();
 }
-for (const platform of ["MAX", "Telegram"]) {
+for (const platform of ["MAX"]) {
   for (const role of ["Преподаватель", "Ученик", "Родитель"])
     test(`${platform} simulator registration role ${role} and durable logout`, async ({
       page,
@@ -127,7 +127,7 @@ for (const platform of ["MAX", "Telegram"]) {
     });
 }
 
-for (const platform of ["MAX", "Telegram"])
+for (const platform of ["MAX"])
   for (const committed of [false, true])
     test(`${platform} registration recovers from ${committed ? 'lost acknowledgement' : 'network outage'} without changing role or alias`, async ({page}) => {
       const raw=signed(platform,Date.now());
@@ -158,7 +158,7 @@ for (const platform of ["MAX", "Telegram"])
       await expect(page.getByRole('button',{name:new RegExp('Ученик <>&')})).toBeVisible();
     });
 
-for(const platform of ['MAX','Telegram'])test(`${platform} logout clears the previous registration alias`,async({page})=>{
+for(const platform of ["MAX"])test(`${platform} logout clears the previous registration alias`,async({page})=>{
  const raw=signed(platform,Date.now());
  await page.route('https://st.max.ru/js/max-web-app.js',r=>r.fulfill({body:'window.WebApp={initData:""}'}));
  await page.route('https://telegram.org/js/telegram-web-app.js',r=>r.fulfill({body:'window.Telegram={WebApp:{initData:"",ready(){},expand(){}}}'}));

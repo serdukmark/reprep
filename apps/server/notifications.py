@@ -43,31 +43,27 @@ def valid_reminder(c,id_,stamp):
 
 
 def queue_due_reminders(cfg,stamp=None):
-    if not (cfg.telegram_enabled or (cfg.max_bot_enabled and cfg.max_outbound_enabled)):return 0
+    if not (cfg.max_bot_enabled and cfg.max_outbound_enabled):return 0
     stamp=time.time() if stamp is None else stamp;queued=0
     with connect(cfg.database) as c:
         pending=one(c,"SELECT count(*) n FROM max_outbox WHERE status IN ('queued','sending')")['n']
         users=rows(c,'SELECT u.* FROM users u JOIN notification_settings n ON n.user_id=u.id JOIN bot_contacts b ON b.external_id=u.external_id WHERE n.lessons=1 OR n.assignments=1 LIMIT 1000')
         for user in users:
-            tg=user['external_id'].startswith('telegram:')
-            if not (cfg.telegram_enabled if tg else cfg.max_bot_enabled and cfg.max_outbound_enabled):continue
+            # Accounts left from the removed Telegram channel get no messages.
+            if user['external_id'].startswith('telegram:'):continue
             for kind,due in sorted(slots(c,user,preferences(c,user['id']),stamp)):
-                key=('telegram:reminder:' if tg else 'reminder:')+hashlib.sha256(f"{user['id']}|{kind}|{due}".encode()).hexdigest()
+                key='reminder:'+hashlib.sha256(f"{user['id']}|{kind}|{due}".encode()).hexdigest()
                 if one(c,'SELECT id FROM reminder_deliveries WHERE id=?',(key,)):continue
                 if pending>=100:return queued
-                try:recipient=int(user['external_id'].removeprefix('telegram:'))
+                try:recipient=int(user['external_id'])
                 except (ValueError,TypeError):continue
                 if recipient<=0:continue
                 text='Скоро занятие. Посмотрите ближайшие занятия в расписании reprep.' if kind=='lesson' else 'Приближается срок выполнения работы. Откройте задания в reprep.'
-                if tg:
-                    from .telegram_bot import reply_body
-                    body=reply_body(cfg,text)
-                else:
-                    generated=reply_for({'update_type':'bot_started','user':{'user_id':recipient}},cfg.max_bot_id)
-                    if not generated:continue
-                    _,body=generated
-                    body['notify']=True
-                    body['text']=text
+                generated=reply_for({'update_type':'bot_started','user':{'user_id':recipient}},cfg.max_bot_id)
+                if not generated:continue
+                _,body=generated
+                body['notify']=True
+                body['text']=text
                 c.execute('INSERT INTO reminder_deliveries VALUES(?,?,?,?)',(key,user['id'],kind,due))
                 c.execute('INSERT INTO max_outbox(id,recipient,body,created) VALUES(?,?,?,?)',(key,recipient,dumps(body),stamp))
                 pending+=1;queued+=1
@@ -84,7 +80,7 @@ def install(app,cfg,user,db,fail):
         connected=bool(u['external_id'] and one(c,'SELECT external_id FROM bot_contacts WHERE external_id=?',(u['external_id'],)))
         counts=rows(c,'SELECT o.status,count(*) n FROM max_outbox o JOIN reminder_deliveries r ON r.id=o.id WHERE r.user_id=? GROUP BY o.status',(u['id'],))
         return {'lessons':bool(prefs['lessons']),'assignments':bool(prefs['assignments']),'bot_started':connected,
-            'delivery_enabled':cfg.telegram_enabled if (u['external_id'] or '').startswith('telegram:') else cfg.max_bot_enabled and cfg.max_outbound_enabled,'deliveries':{r['status']:r['n'] for r in counts},
+            'delivery_enabled':cfg.max_bot_enabled and cfg.max_outbound_enabled and not (u['external_id'] or '').startswith('telegram:'),'deliveries':{r['status']:r['n'] for r in counts},
             'note':'Занятия — в течение ближайшего часа, сроки заданий — суток. Одинаковое время объединяется в одно напоминание. Для доставки откройте диалог с ботом и отправьте /start.'}
 
     @app.put('/api/notifications')

@@ -80,4 +80,5 @@ def test_every_security_requirement_declares_its_scheme(env):
             for operation in methods.values():
                 for requirement in operation.get('security', []):
                     assert set(requirement) <= set(schemes), path
-        assert schemes['TelegramWebhookSecret']['name'] == 'X-Telegram-Bot-Api-Secret-Token'
+        assert schemes['MaxWebhookSecret']['name'] == 'X-Max-Bot-Api-Secret'
+        assert not any('telegram' in path for path in schema['paths']) and 'TelegramWebhookSecret' not in schemes

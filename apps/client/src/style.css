@@ -1824,14 +1824,6 @@ fieldset.options {
   border-color: transparent;
 }
 
-.telegram-embedded .topbar {
-  padding-top: calc(var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, 0px));
-  height: calc(76px + var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, 0px));
-}
-.telegram-embedded .content {
-  padding-bottom: calc(24px + var(--tg-safe-area-inset-bottom, 0px) + var(--tg-content-safe-area-inset-bottom, 0px));
-}
-
 /* Native radios keep keyboard and screen-reader semantics inside touch cards. */
 .registration-roles {
   border: 0;

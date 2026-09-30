@@ -2,7 +2,7 @@ import { installSessionLifecycle } from "./sessionLifecycle";
 import { ProfileSettings } from "./ProfileSettings";
 import { ChoiceSelect } from "./ChoiceSelect";
 import React, { useState, useEffect, useRef } from "react";
-import { initializeMax, launchData, bindMaxBack, inTelegram, inMax, platformName } from "./max";
+import { initializeMax, launchData, bindMaxBack, inMax, platformName } from "./max";
 import { createRoot } from "react-dom/client";
 import {
   ArrowUpRight,
@@ -68,7 +68,6 @@ type Config = {
   learning_journey_enabled?: boolean;
   demo_enabled: boolean;
   max_enabled: boolean;
-  telegram_enabled: boolean;
   assessment: string;
 };
 function App() {
@@ -242,13 +241,13 @@ function App() {
     });
   }
   const messengerEnabled = Boolean(
-    (inTelegram && config?.telegram_enabled) || (inMax && config?.max_enabled),
+    inMax && config?.max_enabled,
   );
   async function messengerLogin(register: boolean) {
     await action(async () => {
       try {
         const data = await api<{ token: string; user: User }>(
-          inTelegram ? "/auth/telegram" : "/auth/max",
+          "/auth/max",
           "POST",
           register
             ? { init_data: launchData(), role, alias: alias || "Участник" }
@@ -257,7 +256,7 @@ function App() {
         setToken(data.token);
         setUser(data.user);
         setRegistering(false);
-        history.replaceState(null, "", location.pathname + (inTelegram ? "?platform=telegram" : ""));
+        history.replaceState(null, "", location.pathname);
       } catch (e) {
         if ((e as { code?: string }).code !== "REGISTRATION_REQUIRED") throw e;
         setRegistering(true);
@@ -540,13 +539,12 @@ function App() {
               </button>
             </form>
           )}
-          {!config?.demo_enabled && !config?.max_enabled && !config?.telegram_enabled && (
+          {!config?.demo_enabled && !config?.max_enabled && (
             <div className="notice">
               Вход ещё не настроен. Администратору нужно подключить MAX.
             </div>
           )}
-          {!inMax && !inTelegram && <div className="notice">
-            {config?.telegram_enabled && <p><a href="https://t.me/MaxFuckYouBot?startapp">Открыть RePrep в Telegram</a></p>}
+          {!inMax && <div className="notice">
             {config?.max_enabled && <p><a href="https://max.ru/t792_hakaton_max_bot">Открыть RePrep в MAX</a></p>}
           </div>}
           {error && (

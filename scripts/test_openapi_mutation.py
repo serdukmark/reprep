@@ -13,7 +13,7 @@ with tempfile.TemporaryDirectory() as tmp:
         " original = contract.enrich\n"
         " def broken(*args):\n"
         "  schema = original(*args)\n"
-        "  schema['components']['securitySchemes'].pop('TelegramWebhookSecret', None)\n"
+        "  schema['components']['securitySchemes'].pop('MaxWebhookSecret', None)\n"
         "  return schema\n"
         " contract.enrich = broken\n"
     )

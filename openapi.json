@@ -121,9 +121,6 @@
                     "max_enabled": {
                       "type": "boolean"
                     },
-                    "telegram_enabled": {
-                      "type": "boolean"
-                    },
                     "learning_journey_enabled": {
                       "type": "boolean"
                     },
@@ -137,7 +134,6 @@
                   "required": [
                     "demo_enabled",
                     "max_enabled",
-                    "telegram_enabled",
                     "learning_journey_enabled",
                     "assessment",
                     "version"
@@ -199,100 +195,6 @@
           {
             "MaxWebhookSecret": []
           }
-        ]
-      }
-    },
-    "/api/telegram/webhook": {
-      "post": {
-        "summary": "Telegram Webhook",
-        "operationId": "telegram_webhook_api_telegram_webhook_post",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ok": {
-                      "type": "boolean"
-                    },
-                    "status": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "ok",
-                    "status"
-                  ]
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Invalid or expired authorization"
-          },
-          "403": {
-            "description": "Role or origin forbidden"
-          },
-          "404": {
-            "description": "Resource not visible to this account"
-          },
-          "409": {
-            "description": "Version, state or replay conflict when applicable"
-          }
-        },
-        "x-roles": [
-          "MAX webhook"
-        ],
-        "security": [
-          {
-            "TelegramWebhookSecret": []
-          }
-        ]
-      }
-    },
-    "/api/auth/telegram": {
-      "post": {
-        "summary": "Telegram Login",
-        "operationId": "telegram_login_api_auth_telegram_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MaxLogin"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Session"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Version, state or replay conflict when applicable"
-          }
-        },
-        "x-roles": [
-          "public"
         ]
       }
     },
@@ -10168,11 +10070,6 @@
         "type": "apiKey",
         "in": "header",
         "name": "X-Max-Bot-Api-Secret"
-      },
-      "TelegramWebhookSecret": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "X-Telegram-Bot-Api-Secret-Token"
       }
     }
   },

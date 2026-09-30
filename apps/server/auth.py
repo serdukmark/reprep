@@ -36,8 +36,3 @@ def verify_max(init_data: str, bot_token: str, now=None):
         raise ValueError('Invalid user')
     return str(user['id'])
 
-
-def verify_telegram(init_data: str, bot_token: str, now=None):
-    # Telegram bot-token validation uses the same documented WebAppData HMAC.
-    # Namespace is mandatory: identical numeric MAX/TG IDs are different people.
-    return 'telegram:' + verify_max(init_data, bot_token, now)

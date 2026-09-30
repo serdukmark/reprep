@@ -1,5 +1,9 @@
 import copy
+import hashlib
+import hmac
+import json
 import time
+from urllib.parse import urlencode
 from unittest.mock import patch
 import pytest
 from fastapi.testclient import TestClient
@@ -35,6 +39,41 @@ def test_max_login_uses_verified_identity_and_retains_role(tmp_path):
         bad=c.post('/api/auth/max',json={**body,'init_data':VECTOR.replace('123456789','987654321')})
         assert bad.status_code==401
         assert 'hash=' not in bad.text and TOKEN not in bad.text
+
+
+def signed(token,identity=123456789):
+    fields={'auth_date':str(int(time.time())),'user':json.dumps({'id':identity,'first_name':'Тест + Ёж'},ensure_ascii=False),'signature':'third-party-signature'}
+    secret=hmac.digest(b'WebAppData',token.encode(),'sha256')
+    fields['hash']=hmac.digest(secret,'\n'.join(k+'='+v for k,v in sorted(fields.items())).encode(),'sha256').hex()
+    return urlencode(fields)
+
+
+def test_repeat_launch_signs_in_without_role_or_name(tmp_path):
+    cfg=Settings(database=str(tmp_path/'r.sqlite'),bot_token=TOKEN)
+    with TestClient(create_app(cfg,run_worker=False)) as c:
+        unknown=c.post('/api/auth/max',json={'init_data':signed(TOKEN,555000111)})
+        assert unknown.status_code==409 and unknown.json()['error']['code']=='REGISTRATION_REQUIRED'
+        assert 'token' not in unknown.text
+        with connect(cfg.database) as db:
+            assert one(db,'SELECT count(*) AS n FROM users WHERE demo=0')['n']==0
+        first=c.post('/api/auth/max',json={'init_data':signed(TOKEN,555000111),'role':'learner','alias':'Катя'})
+        assert first.status_code==200
+        # Another device or a reopened mini app sends only the signed launch data.
+        again=c.post('/api/auth/max',json={'init_data':signed(TOKEN,555000111)})
+        assert again.status_code==200
+        assert again.json()['user']==first.json()['user']
+        assert again.json()['user']['role']=='learner' and again.json()['user']['alias']=='Катя'
+        assert again.json()['token']!=first.json()['token']
+
+
+def test_telegram_channel_is_gone(tmp_path):
+    cfg=Settings(database=str(tmp_path/'t.sqlite'),bot_token=TOKEN)
+    with TestClient(create_app(cfg,run_worker=False)) as c:
+        for path in ('/api/auth/telegram','/api/telegram/webhook'):
+            assert c.post(path,json={'init_data':signed(TOKEN)}).status_code in (404,405)
+        assert 'telegram' not in c.get('/api/config').text
+        policy=c.get('/api/config').headers['content-security-policy']
+        assert 'telegram' not in policy and 'https://max.ru' in policy
 
 
 @pytest.fixture

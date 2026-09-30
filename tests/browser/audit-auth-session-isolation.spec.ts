@@ -97,7 +97,7 @@ async function logout(page: Page, role: string, alias: string) {
   ).toBeVisible();
 }
 
-for (const platform of ["MAX", "Telegram"])
+for (const platform of ["MAX"])
   for (const role of ["Преподаватель", "Ученик", "Родитель"])
     test(`${platform} simulated ${role}: independent signed sessions survive another account logout without mixed identity`, async ({
       page,
@@ -139,39 +139,3 @@ for (const platform of ["MAX", "Telegram"])
         await other.close();
       }
     });
-
-for (const role of ["Преподаватель", "Ученик", "Родитель"])
-  test(`same numeric platform ID ${role}: MAX and Telegram keep separate accounts and revocations`, async ({
-    page,
-    browser,
-  }) => {
-    const other = await browser.newPage();
-    const external = randomInt(10_000_000_000, 90_000_000_000);
-    const maxAlias = "Участник MAX 🧪",
-      tgAlias = "Участник Telegram 🧪";
-    try {
-      const maxId = await register(page, "MAX", external, role, maxAlias);
-      const tgId = await register(other, "Telegram", external, role, tgAlias);
-      expect(tgId).not.toBe(maxId);
-      await page.reload();
-      await current(page, role, maxAlias);
-      await other.reload();
-      await current(other, role, tgAlias);
-      await logout(page, role, maxAlias);
-      await other.reload();
-      await current(other, role, tgAlias);
-      // A new launch of the registered MAX identity opens it without the questionnaire.
-      const relaunched = page.waitForResponse((r) => r.url().endsWith("/api/auth/max"));
-      await page.goto("about:blank");
-      await page.goto(launch("MAX", external));
-      const sameMax = (await (await relaunched).json()).user.id;
-      expect(sameMax).toBe(maxId);
-      await current(page, role, maxAlias);
-      await expect(page.getByLabel("Как к вам обращаться")).toHaveCount(0);
-      await logout(other, role, tgAlias);
-      await page.reload();
-      await current(page, role, maxAlias);
-    } finally {
-      await other.close();
-    }
-  });

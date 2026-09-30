@@ -1,5 +1,4 @@
-import { inTelegram } from "./max";
-const sessionKey = inTelegram ? "reprep.telegram.session" : "reprep.session";
+const sessionKey = "reprep.session";
 export type User = {
   id: string;
   role: "tutor" | "learner" | "guardian";

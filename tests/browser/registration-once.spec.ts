@@ -41,7 +41,7 @@ async function device(browser: Browser): Promise<BrowserContext> {
   return context;
 }
 
-for (const platform of ["MAX", "Telegram"] as const)
+for (const platform of ["MAX"] as const)
   test(`${platform}: name and role are asked once, later launches open the stored profile`, async ({ browser }) => {
     const id = randomInt(100_000_000_000, 900_000_000_000);
     const alias = `Ученик ${platform} ${id % 10000}`;

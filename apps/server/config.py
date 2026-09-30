@@ -8,8 +8,6 @@ class Settings:
     environment: str = 'development'
     demo: bool = False
     bot_token: str = field(default='', repr=False)
-    telegram_token: str = field(default='', repr=False)
-    telegram_enabled: bool = False
     public_base_url: str = ''
     max_bot_id: int = 0
     max_bot_enabled: bool = False
@@ -48,8 +46,6 @@ class Settings:
                     demo=get('DEMO_ENABLED', 'false').lower() == 'true',
                     learning_journey_enabled=get('LEARNING_JOURNEY_ENABLED', 'false').lower() == 'true',
                     bot_token=get('MAX_BOT_TOKEN', ''),
-                    telegram_token=get('TELEGRAM_BOT_TOKEN',''),
-                    telegram_enabled=get('TELEGRAM_BOT_ENABLED','false').lower()=='true',
                     public_base_url=get('PUBLIC_BASE_URL','').rstrip('/'),
                     max_bot_id=int(get('MAX_BOT_ID','0') or 0),
                     max_bot_enabled=get('MAX_BOT_ENABLED','false').lower()=='true',

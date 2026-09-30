@@ -29,8 +29,7 @@ class AuditProvider(OpenRouterAdapter):
 # The fixture must never send messages, even after synthetic notification opt-in.
 import apps.server.main as server_main
 server_main.process_outbox = lambda cfg: False
-server_main.telegram_bot.process_outbox = lambda cfg: False
-audit_settings=Settings(database='artifacts/deep-audit/browser.sqlite3',environment='test',demo=True,bot_token='synthetic-max-test-token',public_base_url='https://audit.invalid',telegram_enabled=True,telegram_token='synthetic-tg-test-token',ai_daily_limit=10000)
+audit_settings=Settings(database='artifacts/deep-audit/browser.sqlite3',environment='test',demo=True,bot_token='synthetic-max-test-token',public_base_url='https://audit.invalid',ai_daily_limit=10000)
 inner=create_app(audit_settings,provider=AuditProvider())
 class AuditApp:
     """Give each isolated test its own virtual client; production rate limits stay intact."""
