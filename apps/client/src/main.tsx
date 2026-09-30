@@ -674,6 +674,10 @@ function App() {
                 month: "long",
               })}
             </span>
+            {/* Always on screen, on phones too: switching roles must not require a settings detour. */}
+            <button className="text-button" onClick={logout}>
+              <LogOut size={15} aria-hidden="true" /> Выйти
+            </button>
           </div>
         </header>
         <main className="content">
@@ -1315,9 +1319,6 @@ function App() {
                       </form>
                     )}
                     <div className="settings-actions">
-                      <button className="secondary" onClick={logout}>
-                        <LogOut size={16} /> Выйти
-                      </button>
                       {user.demo && isTutor && (
                         <button
                           className="secondary"
