@@ -2,7 +2,9 @@
 
 ## Vision
 
-`[CONFIRMED]` reprep is an AI-native workspace for independent tutors and students. It aims to replace a fragmented combination of messengers, document links, calendars, payment notes and generic AI chats with a coherent learning workflow centered on the context of one learner.
+`[CONFIRMED]` reprep is an AI-native platform for independent tutors and learners that combines scheduling, homework, materials, payments, communication and progress tracking. AI helps check assignments, explain mistakes, identify learning gaps and support learners between lessons using the context of each learner. The vision also includes a more affordable standalone AI tutor.
+
+The target audience is independent tutors and school students, initially emphasizing OGE/EGE preparation. See the [canonical project passport and team](22_PROJECT_PASSPORT_RU.md), confirmed by the owner on 2026-09-28. This is the intended product, not a claim that all capabilities are implemented.
 
 ## Product promise
 
@@ -32,6 +34,8 @@ For learners:
 - tutors discovered through a future marketplace.
 
 These users are not primary for the current P0 scope.
+
+The standalone AI tutor is a confirmed product direction, not an unapproved idea. Its placement outside P0 describes release sequencing only. Its pedagogy, review policy, data permissions and pricing remain open; tutor-led review rules must not be silently removed to implement it.
 
 ## Problem statement
 
@@ -63,9 +67,11 @@ Do not artificially add career-navigation features unless official case interpre
 
 ### Current direction
 
-- `[PROPOSED]` tutor subscription;
-- `[PROPOSED]` optional learner subscription for expanded AI support;
-- `[PROPOSED][FUTURE]` commission from tutor discovery or payments through the platform.
+- `[CONFIRMED]` subscriptions for tutors;
+- `[CONFIRMED]` subscriptions for learners, including the standalone AI-support direction;
+- `[CONFIRMED]` future commissions for tutor matching and payments through the platform.
+
+These are confirmed business-model directions, not validated demand or currently operating payment services. Tutor and learner subscriptions do not by themselves determine whether both must pay for the same learning cycle.
 
 ### Unknowns
 

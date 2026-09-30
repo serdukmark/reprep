@@ -2,20 +2,23 @@
   "schema_version": "1.0",
   "schema_version_note": "Project manifest version; organizer parser schema not supplied",
   "solution": "reprep",
-  "base_url": "http://127.0.0.1:8000",
-  "status": "local-only, replace base_url with approved HTTPS before submission",
-  "openapi": "openapi.json",
+  "base_url": "https://reprep.ru",
+  "local_base_url": "http://127.0.0.1:8000",
+  "status": "public HTTPS stand; public endpoints: GET /api/health, GET /api/ready, GET /api/openapi.json, GET /api/docs",
+  "openapi": "https://reprep.ru/api/openapi.json",
+  "openapi_file": "openapi.json",
   "authentication": {
-    "local_tutor": "POST /api/auth/demo/tutor",
-    "local_learner": "POST /api/auth/demo/learner",
-    "production": "POST /api/auth/max; genuine signed init_data required",
+    "production": "POST https://reprep.ru/api/auth/max; genuine signed MAX init_data required (open the mini app from the bot)",
+    "local_tutor": "POST http://127.0.0.1:8000/api/auth/demo/tutor",
+    "local_learner": "POST http://127.0.0.1:8000/api/auth/demo/learner",
     "header": "Authorization: Bearer <session token>",
-    "credentials": "No keys in this file. Demo login requires DEMO_ENABLED and non-production environment."
+    "credentials": "No keys in this file. Demo login requires DEMO_ENABLED and non-production environment, so it works only in the local Docker run."
   },
   "test_data": {
     "script": "python scripts/seed_demo.py",
     "source": "apps/server/service.py",
-    "synthetic": true
+    "synthetic": true,
+    "note": "All demo tutors, learners, assignments and catalog profiles are fictional; they are seeded automatically in the local Docker run."
   },
   "checks": [
     {
@@ -7588,8 +7591,7 @@
     "tests/test_max.py"
   ],
   "release_gates": [
-    "Owner-provided stable HTTPS",
-    "Real MAX flow",
+    "Real MAX flow inside the messenger",
     "Organizer DATA-API schema confirmation"
   ]
 }

@@ -2,6 +2,10 @@
 
 ## 1. Objective
 
+The full [owner-approved concept](22_PROJECT_PASSPORT_RU.md) is an AI-native platform combining scheduling, homework, materials, payments, communication and progress for tutors and school learners, initially focused on OGE/EGE. It includes contextual AI support and a standalone affordable AI tutor. Monetization is tutor and learner subscriptions, with tutor-matching and payment commissions planned later.
+
+This PRD specifies the first tutor-led release within that broader vision. It does not claim the full platform is already implemented.
+
 Build a pilot-ready product that demonstrates and tests the following hypothesis:
 
 > `[PROPOSED]` If assignment, submission and AI-assisted review are combined in one learner context, an independent tutor can reduce routine checking time while the learner receives faster, more understandable feedback between lessons.
@@ -94,7 +98,7 @@ Numerical targets for time saved, retention or learning improvement are `[OPEN]`
 ## 6. Constraints
 
 - short hackathon delivery window;
-- small team of one product owner and two engineers;
+- three-person team: Марк Сердюк (CPO), Иван Курбан (CTO), Дмитрий Ярочкин (CAIO);
 - target users may include minors;
 - external AI, MAX and hosting behavior may be unresolved;
 - official case interpretation and exact submission requirements are incomplete;

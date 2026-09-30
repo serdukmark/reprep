@@ -1,5 +1,11 @@
 # Scope and priorities
 
+## Product vision versus release scope
+
+The [confirmed project concept](22_PROJECT_PASSPORT_RU.md) covers scheduling, homework, materials, payments, communication, progress and learner-contextual AI, including an affordable standalone AI tutor. Tutor and learner subscriptions and later tutor-matching/payment commissions are confirmed business-model directions.
+
+The priorities below describe the first tutor-led release, not the limits of the product vision. A future feature is not necessarily an unapproved concept, and a confirmed concept is not evidence of an implemented feature. See D-009–D-012 and ADR-001.
+
 ## Priority definitions
 
 - **P0:** the pilot and hackathon demonstration fail without this capability.
@@ -92,7 +98,7 @@ Priority does not mean implementation approval when a feature depends on an `[OP
 - advanced knowledge graph;
 - cohort benchmarking;
 - subscription billing;
-- expanded AI tutor mode;
+- standalone affordable AI-tutor mode within the confirmed vision; separate pedagogy, review and safety policy required before implementation;
 - support for many subjects and response formats;
 - richer communications.
 

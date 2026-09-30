@@ -48,7 +48,11 @@ The team lacks authority or information to decide this alone.
 
 ### Team-provided product description
 
-`[CONFIRMED]` The intended product is an AI-native platform for independent tutors and students combining learning workflow, context and operational tools.
+`[CONFIRMED]` The owner-approved description and team, confirmed on 2026-09-28, are recorded in [22_PROJECT_PASSPORT_RU.md](22_PROJECT_PASSPORT_RU.md), decisions D-009–D-012 and [ADR-001](decisions/ADR-001_PROJECT_CONCEPT_AND_TEAM.md).
+
+The platform combines scheduling, homework, materials, payments, communication and progress. Learner-contextual AI supports checking, explanations, gap identification and between-lesson help, including a standalone affordable AI-tutor direction. The business model is tutor and learner subscriptions, followed by commissions for tutor matching and payments through the platform.
+
+The confirmed concept does not assert implementation readiness or resolve prices, provider choices, release timing or safety policy for standalone mode. Materials under `archive/` are superseded history and must not override the passport or decision log.
 
 ### Organizer webinar analyzed by the team
 

@@ -9988,8 +9988,12 @@
   },
   "servers": [
     {
+      "url": "https://reprep.ru",
+      "description": "Public judging stand; sign-in only through MAX init_data, demo logins disabled"
+    },
+    {
       "url": "http://127.0.0.1:8000",
-      "description": "Local demo only; configure approved HTTPS for judging"
+      "description": "Local Docker run (docker compose up --build); demo logins enabled"
     }
   ]
 }

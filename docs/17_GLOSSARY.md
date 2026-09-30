@@ -46,7 +46,7 @@ Tutor reviews, corrects or approves important AI output rather than delegating f
 
 ## Learner
 
-The person receiving tutoring and completing assignments. May be a minor.
+The person receiving tutoring and completing assignments. May be a minor. The first release links the learner to a human tutor; the full concept also includes standalone AI tutoring.
 
 ## Learning cycle
 
@@ -87,6 +87,10 @@ A versioned element of the subject taxonomy used to classify evidence and gaps.
 ## Skill-gap candidate
 
 An AI-proposed gap tied to evidence. It is not automatically confirmed learner truth.
+
+## Standalone AI tutor
+
+A confirmed product direction offering more affordable AI-supported study with learner-specific context. It is separate from the tutor-led first release. Its release timing and pedagogy, safety and progress policies remain open.
 
 ## Tutor
 

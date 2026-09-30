@@ -1,25 +1,45 @@
-# reprep
+# reprep — AI-native платформа для репетиторов и учеников в MAX
 
-Текущий полный аудит: [результаты и вопросы к утру](docs/43_AUDIT_MORNING_RU.md), [карта сценариев](docs/41_FULL_USER_AUDIT_RU.md). Новые исправления аудита пока локальные, на стенд не выложены.
+**reprep** — учебное пространство репетитора и ученика внутри мессенджера MAX: назначение → сдача → предварительный AI-разбор → решение преподавателя → подтверждённый прогресс. Формат: чат-бот MAX с мини-приложением.
 
-Основной домен: https://reprep.ru/ — [проверки подключения и настройка MiniApp](docs/39_REPREP_DOMAIN_RU.md).
+## Для проверяющих
 
-Развёртывание на личной VM: [одна команда и проверенные ограничения](docs/35_DEPLOY_ONE_COMMAND_RU.md).
+| Что | Где |
+|---|---|
+| Мини-приложение (HTTPS) | https://reprep.ru/ |
+| Бот MAX | @t792_hakaton_max_bot («Хакатон МАХ 792»), вебхук `https://reprep.ru/api/max/webhook` |
+| OpenAPI 3.1 | https://reprep.ru/api/openapi.json, Swagger UI — https://reprep.ru/api/docs |
+| Описание API и тестовые данные | [DATA-API.yaml](DATA-API.yaml) |
+| Проверка готовности | https://reprep.ru/api/ready |
+| Запуск через Docker | `docker compose up --build -d` → http://127.0.0.1:8000 (см. «Быстрый локальный запуск») |
 
-Утро после ночной работы: [начать с одной страницы](docs/32_MORNING_FIRST_PAGE_RU.md).
+На публичном стенде вход только через MAX (подписанный `init_data`), демо-аккаунты выключены (`APP_ENV=production`, `DEMO_ENABLED=false`). Для проверки API без MAX поднимите решение из Docker локально: там доступны демо-роли преподавателя, ученика и родителя.
 
-Учебное пространство репетитора и ученика: назначение → сдача → предварительный AI-разбор → решение преподавателя → подтверждённый прогресс.
+### Что настоящее, а что смоделировано
 
-**Статус:** [публичный стенд](https://reprep.ru/) развёрнут на личной VM; HTTPS и подписка MAX проверены. Реальный пользовательский вход внутри MAX и пилот ещё не пройдены. [Отчёт выкатки](docs/36_PUBLIC_DEPLOYMENT_RU.md).
+- **Настоящее:** бот MAX и его API (`platform-api2.max.ru`), MAX Bridge мини-приложения, AI-разбор через публичный документированный API OpenRouter (модель `qwen/qwen3.8-flash`).
+- **Синтетическое:** все демо-аккаунты, ученики, задания и анкеты репетиторов вымышлены. На стенде `AI_SYNTHETIC_ONLY=true`: внешний AI применяется только к синтетическим данным, работы реальных пользователей идут на ручную проверку преподавателем.
+- **Без Docker-аналога (внешние сервисы):** MAX Bot API и OpenRouter. Без ключа OpenRouter решение работает на явно обозначенной проверке по эталонам — это **не нейросеть**.
+- **Не реализовано и не имитируется:** приём платежей и комиссии (статус оплаты фиксируется вручную, деньги не проводятся), OCR/фото, видеозвонки. Напоминания в MAX проверены тестовым транспортом, не на реальных устройствах.
 
-- [Полный checklist команды](docs/30_TEAM_CHECKLIST_RU.md), [текущие доработки](docs/31_TEAM_IMPLEMENTATION_RU.md).
-- [MAX: реальный API и временный HTTPS, оставшийся блокер](docs/29_MAX_LIVE_ATTEMPT_RU.md).
-- [Утренний отчёт](docs/22_MORNING_REPORT_RU.md) — что проверено, запуск, ограничения.
-- [Вопросы владельцу](docs/15_OPEN_QUESTIONS.md) — приоритет, варианты, временные решения.
-- [Выбор AI и реальные ответы](docs/23_AI_MODEL_COMPARISON_RU.md).
-- [MAX: подключение утром в три этапа](docs/26_MAX_START_RU.md), [сценарий демо 3–5 минут](docs/27_DEMO_SCRIPT_RU.md).
-- [Проверка отказов и ограничения](docs/28_FAILURE_TESTS_RU.md).
-- [Официальный кейс и MAX](docs/24_CASE_AND_MAX_RU.md).
+> reprep combines a tutor's daily work and a learner's study process in one platform, with AI embedded in the context of each learner.
+
+The intended distinction from ordinary LMS products and marketplaces is learner-contextual AI embedded in the learning process. The business model is **subscriptions for tutors and learners**, followed by **commissions for tutor matching and payments through the platform**. Prices, usage limits and rollout order remain open.
+
+## Team
+
+| Member | Role |
+|---|---|
+| Дмитрий Ярочкин | CAIO |
+| Иван Курбан | CTO |
+| Марк Сердюк | CPO |
+
+See the [owner-approved project passport in Russian](docs/22_PROJECT_PASSPORT_RU.md). The concept describes the intended product, not completed features or validated commercial results.
+
+The first release focuses on the tutor-led learning cycle: assignment, submission, AI analysis, explanation, tutor review and confirmed progress. Scheduling, materials, communication and payment status support that workflow. Standalone AI tutoring and subscription billing are later expansion work; matching, payment processing and commissions remain outside the current hackathon scope. These release boundaries do not narrow the full product vision.
+
+Развёртывание на VM: [одна команда и проверенные ограничения](docs/35_DEPLOY_ONE_COMMAND_RU.md), [отчёт выкатки](docs/36_PUBLIC_DEPLOYMENT_RU.md), [домен и MiniApp](docs/39_REPREP_DOMAIN_RU.md). Внутренние материалы команды: [аудит](docs/43_AUDIT_MORNING_RU.md), [checklist](docs/30_TEAM_CHECKLIST_RU.md), [вопросы владельцу](docs/15_OPEN_QUESTIONS.md).
+
 
 Для уже настроенной локальной машины: `bash scripts/demo.sh` — одна команда сборки/запуска с ожиданием healthcheck.
 
@@ -128,7 +148,10 @@ npm run test:e2e
 | `docs/15_OPEN_QUESTIONS.md` | Questions that must not be silently answered by agents |
 | `docs/16_DECISION_LOG.md` | Confirmed and proposed decisions with rationale |
 | `docs/17_GLOSSARY.md` | Shared vocabulary |
-| `docs/assets/roadmap-cards/` | Team roadmap cards in PNG format |
+| `docs/20_TEAM_BRIEF_RU.md` | Current team and product brief in Russian |
+| `docs/22_PROJECT_PASSPORT_RU.md` | Canonical owner-approved project description and team |
+| `docs/decisions/` | Detailed records of accepted product and architecture decisions |
+| `docs/archive/` | Superseded historical materials, not current requirements |
 | `docs/templates/` | Templates for ADRs, features, test reports and pilot notes |
 
 ## Дополнительные локальные MAX-проверки

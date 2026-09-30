@@ -53,7 +53,7 @@ Prepare even if not all items are mandatory:
 8. **Safety and human control** — tutor review and minor data principles.
 9. **Pilot evidence** — what was actually tested.
 10. **Architecture and reproducibility** — why it can work beyond slides.
-11. **Business and scale** — subscription direction and future scope.
+11. **Business and scale** — confirmed tutor and learner subscriptions, with future commissions for tutor matching and platform payments. Keep prices, usage limits and launch timing labelled as open or hypothetical until decided.
 12. **Team and roadmap** — ability to deliver and next steps.
 
 Adjust to official timing and slide limits once known.
