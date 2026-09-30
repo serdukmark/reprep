@@ -10,7 +10,7 @@ services:
       DATABASE_PATH: /app/data/reprep.sqlite3
       APP_ENV: production
       DEMO_ENABLED: 'false'
-      AI_SYNTHETIC_ONLY: 'true'
+      # AI_SYNTHETIC_ONLY and AI_DATA_APPROVED come from .env; the code defaults to synthetic-only.
     ports:
       - '127.0.0.1:${REPREP_BIND_PORT:?Verify a free VM port and set REPREP_BIND_PORT}:8000'
     volumes:

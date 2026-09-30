@@ -52,7 +52,7 @@ def apply(root, domain, port):
         env.write_text('\n'.join(lines) + '\n'); env.chmod(0o600)
     update({'PUBLIC_BASE_URL': 'https://' + domain,
             'ALLOWED_WEB_ORIGINS': '', 'APP_ENV': 'production',
-            'DEMO_ENABLED': 'false', 'AI_SYNTHETIC_ONLY': 'true',
+            'DEMO_ENABLED': 'false',
             'MAX_CA_BUNDLE': '/run/reprep-max-ca.pem' if (root/'max-ca.pem').stat().st_size else ''})
     print('Building client and server image', flush=True)
     run(compose + ['build'])
