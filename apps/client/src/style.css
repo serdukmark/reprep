@@ -1526,15 +1526,26 @@ fieldset.options {
     width: 100%;
   }
   .topbar {
-    height: 65px;
-    padding: 0 20px;
-    gap: 15px;
+    height: auto;
+    min-height: 65px;
+    padding: 8px 12px;
+    gap: 8px;
   }
   .topbar > span {
     display: none;
   }
   .topbar > div {
     margin-left: auto;
+    min-width: 0;
+    gap: 8px;
+  }
+  .topbar .text-button {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding-inline: 4px;
+  }
+  .topbar .demo-label {
+    min-width: 0;
   }
   .mobile-menu {
     display: grid;

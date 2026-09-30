@@ -25,6 +25,19 @@ for (const theme of ["light", "dark"] as const) {
       await expect(page.getByLabel("Как к вам обращаться")).toHaveCount(0);
       if (role !== "guardian") {
         await expect(page.locator(".assignment-row")).toHaveCount(role === "tutor" ? 2 : 1);
+        // scrollWidth alone misses a button squeezed into one letter per line.
+        const logout = page.getByRole("button", { name: "Выйти", exact: true });
+        await expect(logout).toBeVisible();
+        const geometry = await logout.evaluate((button) => {
+          const text = [...button.childNodes].find((node) => node.nodeType === Node.TEXT_NODE && node.textContent?.includes("Выйти"))!;
+          const range = document.createRange();
+          range.selectNodeContents(text);
+          const labelLines = [...range.getClientRects()].filter((rect) => rect.width > 0).length;
+          const box = button.getBoundingClientRect();
+          const bar = button.closest(".topbar")!.getBoundingClientRect();
+          return { labelLines, inside: box.top >= bar.top && box.bottom <= bar.bottom && box.left >= bar.left && box.right <= bar.right };
+        });
+        expect(geometry).toEqual({ labelLines: 1, inside: true });
       }
       await expect(page.getByRole("heading", { name: "Мой путь", exact: true })).toHaveCount(0);
       await expect(page.locator(".streak-card, .submission-moment")).toHaveCount(0);
